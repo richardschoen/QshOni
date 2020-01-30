@@ -66,7 +66,15 @@ The following example calls the ls command to list files for the /tmp directory:
       LOGSTDOUT(*NO)          
       PRTSTDOUT(*NO)          
       DLTSTDOUT(*YES)         
-```      
+```
+
+The following example runs an SQL query with db2util and exports the results as JSON to the QTEMP/STDOUTQSH outfile:
+
+```
+      QSHEXEC CMDLINE('export DB2UTIL_JSON_CONTAINER=array;db2util -o json "select * from qiws.qcustcdt"')     
+      DSPSTDOUT(*YES)                                      
+```
+
 
 # QSHEXEC command parms
 
