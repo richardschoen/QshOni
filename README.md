@@ -82,7 +82,9 @@ The following example calls the ls command to list files for the /tmp directory:
 
 
 
-# Using the QSHLOGSCAN CL command to scan the stdout outfile for the selected value after QSHEXEC has completed. The command returns a CPF9898 excape message if value not found. Otherwise a CPF9898 completion message. 
+# Using the QSHLOGSCAN CL command to scan the stdout outfile for the selected value after QSHEXEC has completed. 
+
+The command returns a CPF9898 excape message if value not found. Otherwise a CPF9898 completion message. 
 
 The following example scans the outfile log in file QTEMP/STDOUTQSH for a file named test.txt: 
 
