@@ -7,7 +7,7 @@ The main benefit of this wrapper is to be able to integrate Qshell/Pase applicat
 
 Download the **qshoni.savf** save file from the selected releases page. 
 
-https://github.com/richardschoen/QshOni/releases
+https://github.com/richardschoen/QshOni/releases  **(Latest version - V1.0.2)**
 
 Upload the **qshoni.savf** to the IFS and place it in **/tmp/qshoni.savf**
 
@@ -38,7 +38,7 @@ Run the following commands to copy the save file from github into a SAVF object
 From QSHELL/QPTERM or BASH run:
 
 ```
-/QOpenSys/pkgs/bin/wget https://github.com/richardschoen/QshOni/releases/download/V1.01/qshoni.savf
+/QOpenSys/pkgs/bin/wget https://github.com/richardschoen/QshOni/releases/download/V1.02/qshoni.savf
 --no-check-certificate -O  /qsys.lib/qgpl.lib/qshoni.file
 ```
 
