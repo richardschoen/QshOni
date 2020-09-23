@@ -65,7 +65,10 @@ The following example calls the ls command to list files for the /tmp directory:
       DSPSTDOUT(*YES)         
       LOGSTDOUT(*NO)          
       PRTSTDOUT(*NO)          
-      DLTSTDOUT(*YES)         
+      DLTSTDOUT(*YES)
+      PRTSPLF(QSHEXECLOG) 
+      PRTUSRDTA(*NONE)    
+      PRTTXT(*NONE)       
 ```
 
 The following example runs an SQL query with db2util and exports the results as JSON to the QTEMP/STDOUTQSH outfile:
@@ -80,6 +83,8 @@ The following example runs an SQL query with db2util and exports the results as 
 
 **CMDLINE** - Qsh/Pase command line sequence to run. Semicolons can be used to run multiple commands.
 
+**SETPKGPATH** - Add the IBM i Open Source Package path to PATH environment variable by calling QSHPATH command before running QSH/PASE commands. Default = *YES.
+
 **DSPSTDOUT** - Display the outfile contents. Nice when debugging. 
 
 **LOGSTDOUT** - Place STDOUT log entries into the current jobs job log. Use this if you want the log info in the IBM i joblog. All STDOUT entries are written as CPF message: **QSS9898**
@@ -88,6 +93,11 @@ The following example runs an SQL query with db2util and exports the results as 
 
 **DLTSTDOUT** - This option insures that the STDOUT IFS temp files get cleaned up after processing. All IFS log files get created in the /tmp/mono directory.
 
+**PRTSPLF** - This option holds the name of the spool file used when PRTSTDOUT = *YES. It's a nice way to customize the stdout log prints.
+
+**PRTUSRDTA** - This option holds the name of the spool file user data used when PRTSTDOUT = *YES. Default = *NONE.
+
+**PRTTXT** - This option holds the name of the spool file print txt to be used when PRTSTDOUT = *YES. Default = *NONE.
 
 
 # Using the QSHLOGSCAN CL command to scan the stdout outfile for the selected value after QSHEXEC has completed. 
@@ -106,3 +116,7 @@ The following example scans the outfile log in file QTEMP/STDOUTQSH for a file n
 **SCANFOR** - Text value to scan for on each line in the stdout outfile. The value passed IS case sensitive and must match the value in the log file.
 
 **EXACTMATCH** - *YES - Value must match exactly and be the only thing on the selected line. *NO - At least one line must contain the value somewhere in the line. Good for generic matching.
+
+# QSHPATH command parms
+
+**PKGPATH** - Specify IFS location to open source packages. ***DEFAULT = /QOpenSys/pkgs/bin**
