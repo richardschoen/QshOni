@@ -81,6 +81,8 @@ The following example runs an SQL query with db2util and exports the results as 
 
 # QSHEXEC command parms
 
+**Overview** - This CL command can be used to run a QSH/PASE command and log the results appropriately.
+
 **CMDLINE** - Qsh/Pase command line sequence to run. Semicolons can be used to run multiple commands.
 
 **SETPKGPATH** - Add the IBM i Open Source Package path to PATH environment variable by calling QSHPATH command before running QSH/PASE commands. Default = *YES.
@@ -113,10 +115,14 @@ The following example scans the outfile log in file QTEMP/STDOUTQSH for a file n
 
 # QSHLOGSCAN command parms
 
+**Overview** - This CL command is a convenience command that can be used to scan a STDOUT log for a specific value to indicate success or failure.
+
 **SCANFOR** - Text value to scan for on each line in the stdout outfile. The value passed IS case sensitive and must match the value in the log file.
 
 **EXACTMATCH** - *YES - Value must match exactly and be the only thing on the selected line. *NO - At least one line must contain the value somewhere in the line. Good for generic matching.
 
 # QSHPATH command parms
+
+**Overview** - This CL command is a convenience command to add the IBM i Open Source packages directory name to the PATH environment variable.
 
 **PKGPATH** - Specify IFS location to open source packages. ***DEFAULT = /QOpenSys/pkgs/bin**
