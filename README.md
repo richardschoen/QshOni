@@ -93,11 +93,11 @@ The following example runs an SQL query with db2util and exports the results as 
 
 **DLTSTDOUT** - This option insures that the STDOUT IFS temp files get cleaned up after processing. All IFS log files get created in the /tmp/mono directory.
 
-**PRTSPLF** - This option holds the name of the spool file used when PRTSTDOUT = *YES. It's a nice way to customize the stdout log prints.
+**PRTSPLF** - This option holds the name of the spool file used when PRTSTDOUT = *YES. It's a nice way to customize the stdout log prints. ***Default = QSHEXECLOG***
 
-**PRTUSRDTA** - This option holds the name of the spool file user data used when PRTSTDOUT = *YES. Default = *NONE.
+**PRTUSRDTA** - This option holds the name of the spool file user data used when PRTSTDOUT = *YES. ***Default = *NONE.***
 
-**PRTTXT** - This option holds the name of the spool file print txt to be used when PRTSTDOUT = *YES. Default = *NONE.
+**PRTTXT** - This option holds the name of the spool file print txt to be used when PRTSTDOUT = *YES. ***Default = *NONE.***
 
 
 # Using the QSHLOGSCAN CL command to scan the stdout outfile for the selected value after QSHEXEC has completed. 
