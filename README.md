@@ -7,7 +7,7 @@ The main benefit of this wrapper is to be able to integrate Qshell/Pase applicat
 
 Download the **qshoni.savf** save file from the selected releases page. 
 
-https://github.com/richardschoen/QshOni/releases  **(Latest version - V1.0.2)**
+https://github.com/richardschoen/QshOni/releases  **(Latest version - V1.0.3)**
 
 Upload the **qshoni.savf** to the IFS and place it in **/tmp/qshoni.savf**
 
