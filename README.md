@@ -38,7 +38,7 @@ Run the following commands to copy the save file from github into a SAVF object
 From QSHELL/QPTERM or BASH run:
 
 ```
-/QOpenSys/pkgs/bin/wget https://github.com/richardschoen/QshOni/releases/download/V1.0.2/qshoni.savf
+/QOpenSys/pkgs/bin/wget https://github.com/richardschoen/QshOni/releases/download/V1.0.3/qshoni.savf
 --no-check-certificate -O  /qsys.lib/qgpl.lib/qshoni.file
 ```
 
