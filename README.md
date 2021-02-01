@@ -101,12 +101,13 @@ The following example runs an SQL query with db2util and exports the results as 
 
 **PRTTXT** - This option holds the name of the spool file print txt to be used when PRTSTDOUT = *YES. ***Default = *NONE.***
 
-# Using the QSHEXEC CL command to call a Qsh/Pase command sequence
 
-The following example calls the ls command to list files for the /tmp directory: 
+# Using the QSHBASH CL command to call a bash command sequence
+
+The following example calls the ls command to list files for the /tmp directory using the bash command: 
 
  ```
-      QSHEXEC CMDLINE('cd /tmp;ls')   
+      QSHBASH CMDLINE('cd /tmp;ls')   
       DSPSTDOUT(*YES)         
       LOGSTDOUT(*NO)          
       PRTSTDOUT(*NO)          
@@ -119,7 +120,7 @@ The following example calls the ls command to list files for the /tmp directory:
 The following example runs an SQL query with db2util and exports the results as JSON to the QTEMP/STDOUTQSH outfile:
 
 ```
-      QSHEXEC CMDLINE('export DB2UTIL_JSON_CONTAINER=array;db2util -o json "select * from qiws.qcustcdt"')     
+      QSHBASH CMDLINE('export DB2UTIL_JSON_CONTAINER=array;db2util -o json "select * from qiws.qcustcdt"')     
       DSPSTDOUT(*YES)                                      
 ```
 
