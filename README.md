@@ -11,7 +11,7 @@ git -c http.sslVerify=false clone --recurse-submodules https://github.com/richar
 cd qshoni
 build.sh  
 ```
-After building the library the commands should be ready to use.
+After building the QSHONI library the commands should be ready to use.
 
 # Installing QSHONI library via save file and creating QSHEXEC command objects
 
