@@ -13,7 +13,7 @@ build.sh
 ```
 After building the library the commands should be ready to use.
 
-# Installing QSHONI library and creating QSHEXEC command objects
+# Installing QSHONI library via save file and creating QSHEXEC command objects
 
 Download the **qshoni.savf** save file from the selected releases page. 
 
