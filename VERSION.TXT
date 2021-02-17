@@ -1,0 +1,21 @@
+      *---------------------------------------------------------
+      * Source information
+      * @@LIBRARY: QSHONI
+      * @@FILE: SOURCE
+      * @@MEMBER: VERSION
+      * @@TYPE: TXT
+      * @@TEXT: Version Notes
+      *---------------------------------------------------------
+V1.0.1 - 8/18/019
+-Initial build
+V1.0.2 - 9/23/2020
+-Added SETPKGPATH parameter to set IBM Open Source paths
+ *DEFAULT = /QOpenSys/pkgs/bin
+-Added PRTSPLF, PRTUSRDTA and PRTTXT parameters for personalizing
+ the spool file when printing the stdout logs.
+V1.0.3 - 2/1/2021
+-Added QSHBASH command to execute selected bash command line
+ using QSHEXEC. The QSHBASH command passes through the selected
+ command line to the bash command with: bash -c <cmdline>
+ This is a convenience wrapper ovewr QSHEXEC to keep from having
+ to type bash -c when you want to run bash commands.

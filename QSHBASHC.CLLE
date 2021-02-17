@@ -1,0 +1,60 @@
+/*------------------------------------------------------------*/
+/* @@LIBRARY: QSHONI                                          */
+/* @@FILE: SOURCE                                             */
+/* @@MEMBER: QSHBASHC                                         */
+/* @@TYPE: CLLE                                               */
+/* @@TEXT: Run Bash Command via Qshell                        */
+/*------------------------------------------------------------*/
+             PGM        PARM(&CMDLINE &SETPKGPATH &DSPSTDOUT +
+                          &LOGSTDOUT &PRTSTDOUT &DLTSTDOUT &PRTSPLF +
+                          &PRTUSRDTA &PRTTXT)
+
+/*----------------------------------------------------------------------------*/
+/* Variables                                                                  */
+/*----------------------------------------------------------------------------*/
+             DCL        VAR(&CMDLINE) TYPE(*CHAR) LEN(5000)
+             DCL        VAR(&BSHCMDLINE) TYPE(*CHAR) LEN(5000)
+             DCL        VAR(&SETPKGPATH) TYPE(*CHAR) LEN(4)
+             DCL        VAR(&DSPSTDOUT) TYPE(*CHAR) LEN(4)
+             DCL        VAR(&LOGSTDOUT) TYPE(*CHAR) LEN(4)
+             DCL        VAR(&DLTSTDOUT) TYPE(*CHAR) LEN(4)
+             DCL        VAR(&PRTSTDOUT) TYPE(*CHAR) LEN(4)
+             DCL        VAR(&PRTSPLF) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&PRTUSRDTA) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&PRTTXT) TYPE(*CHAR) LEN(30)
+             DCL        VAR(&QT) TYPE(*CHAR) LEN(1) VALUE('''')
+
+/*----------------------------------------------------------------------------*/
+/* MONITOR FOR GLOBAL ERROR. ANY ERROR IS A CAUSE TO BLOW OUT OF HERE         */
+/* AND WE WANT A GRACEFUL EXIT.                                               */
+/*----------------------------------------------------------------------------*/
+             MONMSG     MSGID(CPF0000) EXEC(GOTO CMDLBL(ERRORS))
+
+/*----------------------------------------------------------------------------*/
+/* MAIN                                                                       */
+/*----------------------------------------------------------------------------*/
+
+             /* Build bash command line to pass to qshell */
+             CHGVAR     VAR(&BSHCMDLINE) VALUE('bash -c' |> &QT |< +
+                          &CMDLINE |< &QT)
+
+             /* Run the bash command via QSHEXEC */
+             QSHONI/QSHEXEC CMDLINE(&BSHCMDLINE) +
+                          SETPKGPATH(&SETPKGPATH) +
+                          DSPSTDOUT(&DSPSTDOUT) +
+                          LOGSTDOUT(&LOGSTDOUT) +
+                          PRTSTDOUT(&PRTSTDOUT) +
+                          DLTSTDOUT(&DLTSTDOUT) PRTSPLF(&PRTSPLF) +
+                          PRTUSRDTA(&PRTUSRDTA) PRTTXT(&PRTTXT)
+
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('QShell +
+                          bash command completed') MSGTYPE(*COMP)
+
+             RETURN
+
+ERRORS:
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('QShell +
+                          bash command failed') MSGTYPE(*ESCAPE)
+
+ ENDPGM:
+             ENDPGM

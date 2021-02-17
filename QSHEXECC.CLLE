@@ -1,0 +1,274 @@
+/*------------------------------------------------------------*/
+/* @@LIBRARY: QSHONI                                          */
+/* @@FILE: SOURCE                                             */
+/* @@MEMBER: QSHEXECC                                         */
+/* @@TYPE: CLLE                                               */
+/* @@TEXT: Run QShell Command Line                            */
+/*------------------------------------------------------------*/
+             PGM        PARM(&CMDLINE &SETPKGPATH &DSPSTDOUT +
+                          &LOGSTDOUT &PRTSTDOUT &DLTSTDOUT &PRTSPLF +
+                          &PRTUSRDTA &PRTTXT)
+
+/*----------------------------------------------------------------------------*/
+/* Variables                                                                  */
+/*----------------------------------------------------------------------------*/
+             DCL        VAR(&SETPKGPATH) TYPE(*CHAR) LEN(4)
+             DCL        VAR(&CMDLINE) TYPE(*CHAR) LEN(5000)
+             DCL        VAR(&INPUTFILE) TYPE(*CHAR) LEN(255)
+             DCL        VAR(&USERPW) TYPE(*CHAR) LEN(100)
+             DCL        VAR(&OWNERPW) TYPE(*CHAR) LEN(100)
+             DCL        VAR(&PDFOPTS) TYPE(*CHAR) LEN(8)
+             DCL        VAR(&REPLACE) TYPE(*CHAR) LEN(4)
+             DCL        VAR(&TEMPLATE) TYPE(*CHAR) LEN(255)
+             DCL        VAR(&OUTPUTFILE) TYPE(*CHAR) LEN(255)
+             DCL        VAR(&OUTPUTTYPE) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&PARMS) TYPE(*CHAR) LEN(2048)
+             DCL        VAR(&PARMLIST)  TYPE(*CHAR) LEN(1024)
+             DCL        VAR(&PGMPARMS1) TYPE(*CHAR) LEN(256) VALUE(' ')
+             DCL        VAR(&PGMPARMS2) TYPE(*CHAR) LEN(256) VALUE(' ')
+             DCL        VAR(&PGMPARMS3) TYPE(*CHAR) LEN(256) VALUE(' ')
+             DCL        VAR(&PGMPARMS4) TYPE(*CHAR) LEN(256) VALUE(' ')
+             DCL        VAR(&TYPE)      TYPE(*CHAR) LEN(1)
+             DCL        VAR(&CURDIR)    TYPE(*CHAR) LEN(128)
+             DCL        VAR(&CDLEN)     TYPE(*DEC)  LEN(7 0)
+             DCL        VAR(&OUTPUTDST) TYPE(*CHAR) LEN(10) VALUE('*NONE')
+             DCL        VAR(&OUTPUTACT) TYPE(*CHAR) LEN(10) VALUE('*N')
+             DCL        VAR(&QSHRTN) TYPE(*DEC) LEN(5 0)
+             DCL        VAR(&QSHRTNC) TYPE(*CHAR) LEN(5)
+             DCL        VAR(&MSGDTA) TYPE(*CHAR) LEN(200)
+             DCL        VAR(&MSGDTA4) TYPE(*CHAR) LEN(4)
+             DCL        VAR(&CPFID) TYPE(*CHAR) LEN(7)
+             DCL        VAR(&CMD) TYPE(*CHAR) LEN(9999)
+             DCL        VAR(&STDOUTIFS) TYPE(*CHAR) LEN(255)
+             DCL        VAR(&STDOUTFILE) TYPE(*CHAR) LEN(255)
+             DCL        VAR(&JOB) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&JOBNBR) TYPE(*CHAR) LEN(6)
+             DCL        VAR(&USER) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&TEMPDIR) TYPE(*CHAR) LEN(255) +
+                          VALUE('/tmp')
+             DCL        VAR(&QSHTEMP) TYPE(*CHAR) LEN(255) +
+                          VALUE('/tmp/qsh')
+             DCL        VAR(&DSPSTDOUT) TYPE(*CHAR) LEN(4)
+             DCL        VAR(&LOGSTDOUT) TYPE(*CHAR) LEN(4)
+             DCL        VAR(&DLTSTDOUT) TYPE(*CHAR) LEN(4)
+             DCL        VAR(&PRTSTDOUT) TYPE(*CHAR) LEN(4)
+             DCL        VAR(&RTNVAL) TYPE(*CHAR) LEN(6)
+             DCL        VAR(&CURJOB) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&CURUSER) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&CURNBR) TYPE(*CHAR) LEN(6)
+             DCL        VAR(&QDATE) TYPE(*CHAR) LEN(6)
+             DCL        VAR(&QTIME) TYPE(*CHAR) LEN(9)
+             DCL        VAR(&PRTSPLF) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&PRTUSRDTA) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&PRTTXT) TYPE(*CHAR) LEN(30)
+
+/*----------------------------------------------------------------------------*/
+/* MONITOR FOR GLOBAL ERROR. ANY ERROR IS A CAUSE TO BLOW OUT OF HERE         */
+/* AND WE WANT A GRACEFUL EXIT.                                               */
+/*----------------------------------------------------------------------------*/
+             MONMSG     MSGID(CPF0000) EXEC(GOTO CMDLBL(ERRORS))
+
+/*----------------------------------------------------------------------------*/
+/* MAIN                                                                       */
+/*----------------------------------------------------------------------------*/
+
+/*----------------------------------------------------------------------------*/
+/* Set environment path for QOpenSys packages if selected                     */
+/* before running any PASE/QSH commands.                                      */
+/*----------------------------------------------------------------------------*/
+             IF         COND(&SETPKGPATH *EQ '*YES') THEN(DO)
+             QSHPATH    PKGPATH(*DEFAULT)
+             ENDDO
+
+/*----------------------------------------------------------------------------*/
+/* Create temp folder in /tmp named /tmp/qsh for stdout logs */
+/*----------------------------------------------------------------------------*/
+             MKDIR      DIR(&QSHTEMP) DTAAUT(*RWX) OBJAUT(*ALL)
+             MONMSG     MSGID(CPF0000)
+
+/*----------------------------------------------------------------------------*/
+/* RETRIEVE JOB DATE/TIME INFO                           */
+/*----------------------------------------------------------------------------*/
+             RTVSYSVAL  SYSVAL(QDATE) RTNVAR(&QDATE)
+             RTVSYSVAL  SYSVAL(QTIME) RTNVAR(&QTIME)
+             RTVJOBA    JOB(&CURJOB) USER(&CURUSER) NBR(&CURNBR)
+
+/*----------------------------------------------------------------------------*/
+/* CREATE TEMPORARY OUTPUT FILE TO HOLD STDOUT RESULTS     */
+/*----------------------------------------------------------------------------*/
+             CRTPF      FILE(QTEMP/STDOUTQSH) RCDLEN(1000) +
+                          TEXT('QShell STDOUT Output') +
+                          OPTION(*NOLIST *NOSRC) MAXMBRS(*NOMAX) +
+                          SIZE(*NOMAX)
+             MONMSG     MSGID(CPF0000)
+
+/*----------------------------------------------------------------------------*/
+/* CLEAR TEMPORARY QSH OUTPUT FILE                             */
+/* BAIL OUT IF WE CANNOT CLEAR OUTPUT FILE                     */
+/*----------------------------------------------------------------------------*/
+             CLRPFM     FILE(QTEMP/STDOUTQSH)
+
+/*----------------------------------------------------------------------------*/
+/* BUILD PATH NAME FOR IFS STDOUT FILE */
+/*----------------------------------------------------------------------------*/
+             RTVJOBA    JOB(&JOB) USER(&USER) NBR(&JOBNBR)
+             CHGVAR     VAR(&STDOUTIFS) VALUE(&QSHTEMP |< +
+                          '/STDOUTQSH-' |< &JOB |< '-' |< &USER +
+                          |< '-' |< &JOBNBR |< '-' |< &QDATE |< +
+                          &QTIME |< '.TXT')
+
+/*----------------------------------------------------------------------------*/
+/* ERASE JAVA OUTPUT IF IT EXISTS */
+/*----------------------------------------------------------------------------*/
+             ERASE      OBJLNK(&STDOUTIFS)
+             MONMSG     MSGID(CPF0000)
+
+/*----------------------------------------------------------------------------*/
+/* SET THE IFS PATH TO STORE QSHELL OUTPUT FOR  */
+/* REVIEW IF NEEDED.                            */
+/*----------------------------------------------------------------------------*/
+             CHGVAR     VAR(&STDOUTFILE) VALUE('FILE=' |< &STDOUTIFS)
+
+/*----------------------------------------------------------------------------*/
+/* SET THE QSHELL STDOUT IFS FILE LOCATION      */
+/* ENVIRONMENT VARIABLE                         */
+/*----------------------------------------------------------------------------*/
+             ADDENVVAR  ENVVAR('QIBM_QSH_CMD_OUTPUT') +
+                          VALUE(&STDOUTFILE) REPLACE(*YES)
+
+             ADDENVVAR  ENVVAR(QIBM_MULTI_THREADED) VALUE(Y) +
+                        REPLACE(*YES)
+
+/*----------------------------------------------------------------------------*/
+/* BUILD THE FINAL QSH CALL                             */
+/*----------------------------------------------------------------------------*/
+             CHGVAR     VAR(&CMD) VALUE(&CMDLINE)
+
+             /* CALL THE QSH COMMAND LINE */
+             QSH        CMD(&CMDLINE)
+
+             /* READ AND PROCESS THE QSHELL RESPONSE */
+             /* TO DETERMINE QSH PROGRAM EXIT CODE  */
+ NEXTCOMP:   RCVMSG     PGMQ(*SAME) MSGTYPE(*COMP) RMV(*NO) +
+                          MSGDTA(&MSGDTA) MSGID(&CPFID)
+             /* IF MSGID IS BLANK, WE DIDN'T GET QSH0005 */
+             /* LIKE WE WERE SUPPSED TO.                 */
+             IF         COND(&CPFID *EQ '       ') THEN(DO)
+             CHGVAR     VAR(&QSHRTN) VALUE(9999)
+             CHGVAR     VAR(&QSHRTNC) VALUE(&QSHRTN)
+             GOTO       CMDLBL(DONECOMP) /* DONE WITH MSG LOOP */
+             ENDDO
+             /* QSH0005 IS THE RETURN RESPONSE FROM THE JAVA PGM */
+             IF         COND(&CPFID *EQ 'QSH0005') THEN(DO)
+             CHGVAR     VAR(&MSGDTA4) VALUE(%SST(&MSGDTA 1 4))
+             CHGVAR     VAR(&QSHRTN) VALUE(%BIN(&MSGDTA4))
+             CHGVAR     VAR(&QSHRTNC) VALUE(&QSHRTN)
+             GOTO       CMDLBL(DONECOMP) /* DONE WITH MSG LOOP */
+             ENDDO
+             GOTO       CMDLBL(NEXTCOMP) /* GET NEXT MSG UNTIL QSH */
+DONECOMP:
+
+             /* COPY STDOUT TO QTEMP OUTFILE */
+             CPYFRMSTMF FROMSTMF(&STDOUTIFS) +
+                          TOMBR('/QSYS.LIB/QTEMP.LIB/STDOUTQSH.FILE/STD+
+                          OUTQSH.MBR') MBROPT(*REPLACE) CVTDTA(*AUTO) +
+                          STMFCODPAG(*STMF) ENDLINFMT(*LF)
+             MONMSG     MSGID(CPF0000) EXEC(DO)
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Errors +
+                          occurred while copying STDOUT log to +
+                          file. Check the joblog') +
+                          MSGTYPE(*ESCAPE)
+             ENDDO
+
+             /* IF ENABLED, PRINT STDOUT RESULTS */
+             IF         COND(&PRTSTDOUT *EQ *YES) THEN(DO)
+
+             /* PRINT STDOUT LOG NOW */
+             OVRPRTF    FILE(QSYSPRT) TOFILE(QSYSPRT) PAGESIZE(198) +
+                          PRTTXT(&PRTTXT) HOLD(*YES) +
+                          USRDTA(&PRTUSRDTA) SPLFNAME(&PRTSPLF)
+
+             CPYF       FROMFILE(QTEMP/STDOUTQSH) TOFILE(QSYSPRT)
+             DLTOVR     FILE(QSYSPRT)
+
+             ENDDO
+
+             /* IF ENABLED, DISPLAY STDOUT RESULTS */
+             IF         COND(&DSPSTDOUT *EQ *YES) THEN(DO)
+             EDTF       STMF(&STDOUTIFS)
+             MONMSG     MSGID(CPF0000)
+             ENDDO
+
+             /* IF ENABLED, Erase stdout result file */
+             IF         COND(&DLTSTDOUT *EQ *YES) THEN(DO)
+             ERASE      OBJLNK(&STDOUTIFS)
+             MONMSG     MSGID(CPF0000)
+             ENDDO
+
+             /* Write STDOUT results PF to job log */
+             IF         COND(&LOGSTDOUT *EQ *YES) THEN(DO)
+             OVRDBF     FILE(STDOUTQSH) TOFILE(QTEMP/STDOUTQSH)
+             CALL       PGM(QSHSTDOUTR)
+             DLTOVR     FILE(STDOUTQSH)
+             ENDDO
+
+             IF         COND(&QSHRTN *NE 0) THEN(DO)
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('ERROR: +
+                          QShell error' |> &QSHRTNC |> 'occurred +
+                          while running command. Check +
+                          the joblog') MSGTYPE(*ESCAPE)
+             ENDDO
+
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('QShell +
+                          command completed') MSGTYPE(*COMP)
+
+             RETURN
+
+ERRORS:
+             /* COPY STDOUT TO QTEMP OUTFILE */
+             CPYFRMSTMF FROMSTMF(&STDOUTIFS) +
+                          TOMBR('/QSYS.LIB/QTEMP.LIB/STDOUTQSH.FILE/STD+
+                          OUTQSH.MBR') MBROPT(*REPLACE) CVTDTA(*AUTO) +
+                          STMFCODPAG(*STMF) ENDLINFMT(*LF)
+             MONMSG     MSGID(CPF0000) EXEC(DO)
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Errors +
+                          occurred while copying STDOUT log to +
+                          file. Check the joblog') +
+                          MSGTYPE(*ESCAPE)
+             ENDDO
+
+             /* IF ENABLED, PRINT STDOUT RESULTS */
+             IF         COND(&PRTSTDOUT *EQ *YES) THEN(DO)
+
+             /* PRINT STDOUT LOG NOW */
+             OVRPRTF    FILE(QSYSPRT) TOFILE(QSYSPRT) PAGESIZE(198) +
+                          PRTTXT(&PRTTXT) HOLD(*YES) +
+                          USRDTA(&PRTUSRDTA) SPLFNAME(&PRTSPLF)
+             CPYF       FROMFILE(QTEMP/STDOUTQSH) TOFILE(QSYSPRT)
+             DLTOVR     FILE(QSYSPRT)
+
+             ENDDO
+
+             /* IF ENABLED, DISPLAY STDOUT RESULTS */
+             IF         COND(&DSPSTDOUT *EQ *YES) THEN(DO)
+             EDTF       STMF(&STDOUTIFS)
+             MONMSG     MSGID(CPF0000)
+             ENDDO
+
+             /* IF ENABLED, Erase stdout result file */
+             IF         COND(&DLTSTDOUT *EQ *YES) THEN(DO)
+             ERASE      OBJLNK(&STDOUTIFS)
+             MONMSG     MSGID(CPF0000)
+             ENDDO
+
+             /* Write STDOUT results PF to job log */
+             IF         COND(&LOGSTDOUT *EQ *YES) THEN(DO)
+             OVRDBF     FILE(STDOUTQSH) TOFILE(QTEMP/STDOUTQSH)
+             CALL       PGM(QSHSTDOUTR)
+             DLTOVR     FILE(STDOUTQSH)
+             ENDDO
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('QShell +
+                          command failed') MSGTYPE(*ESCAPE)
+
+ ENDPGM:
+             ENDPGM

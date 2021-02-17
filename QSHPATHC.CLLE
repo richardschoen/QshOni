@@ -1,0 +1,49 @@
+/*------------------------------------------------------------*/
+/* @@LIBRARY: QSHONI                                          */
+/* @@FILE: SOURCE                                             */
+/* @@MEMBER: QSHPATHC                                         */
+/* @@TYPE: CLLE                                               */
+/* @@TEXT: Set Open Source Package Path Environment Variables */
+/*------------------------------------------------------------*/
+             PGM        PARM(&PKGPATH)
+
+             DCL        VAR(&PKGPATH) TYPE(*CHAR) LEN(255)
+             DCL        VAR(&PASEPATH) TYPE(*CHAR) LEN(1024)
+             DCL        VAR(&PATH) TYPE(*CHAR) LEN(1024)
+
+             MONMSG     MSGID(CPF0000) EXEC(GOTO CMDLBL(ERRORS))
+
+/* Set up PASE classpath for PASE */
+             CHGVAR     VAR(&PASEPATH) +
+                          VALUE('/QOpenSys/usr/bin:/usr/ccs/bin:/QOpe+
+                          nSys/usr/bin/X11:/usr/sbin:.:/usr/bin:/QOpe+
+                          nSys/usr/local/bin:/usr/local/bin:/usr/loca+
+                          /sbin:' |< &PKGPATH)
+
+             ADDENVVAR  ENVVAR(PASE_PATH) VALUE(&PASEPATH) +
+                          LEVEL(*JOB) REPLACE(*YES)
+
+/* Set general PATH for PASE */
+             CHGVAR     VAR(&PATH) +
+                          VALUE('/QOpenSys/usr/bin:/usr/ccs/bin:/QOpe+
+                          nSys/usr/bin/X11:/usr/sbin:.:/usr/bin:' +
+                          |< &PKGPATH)
+
+             ADDENVVAR  ENVVAR(PATH) VALUE(&PATH) LEVEL(*JOB) +
+                          REPLACE(*YES)
+
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Path:' +
+                          |> &PKGPATH |> 'added to PATH and +
+                          PASE_PATH environment variables') +
+                          MSGTYPE(*COMP)
+
+             RETURN
+
+ ERRORS:
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Errors +
+                          occurred while setting open source +
+                          package path. See the job log') +
+                          MSGTYPE(*ESCAPE)
+
+             ENDPGM
+
