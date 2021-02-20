@@ -7,10 +7,11 @@ There are several ways to build the library. Pick your favorite.
 
 # Installing and Building QSHONI via getrepo-qshoni.sh script
 ```
-# Download the getrepo-qshoni.sh script or create it manually in your IFS 
+# Download the getrepo-qshoni.sh script or create it manually in your IFS. 
 # Then run the getrepo-qshoni.sh script to automatically clone the repo 
-# and then auto-run build.sh to create the QSHONI library and associated 
+# and auto-run the build.sh to create the QSHONI library and associated 
 # objects.
+
 bash getrepo-qshoni.sh
 ```
 
