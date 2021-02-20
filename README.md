@@ -16,6 +16,7 @@ bash getrepo-qshoni.sh
 
 # Installing and Building QSHONI via Git clone and build.sh
 ```
+# Use this install method if you want to manuall run each command from a QSH/PASE/SSH shell.
 mkdir /qshoni
 cd /qshoni 
 git -c http.sslVerify=false clone --recurse-submodules https://github.com/richardschoen/QshOni.git
@@ -25,6 +26,8 @@ build.sh
 After building the QSHONI library the commands should be ready to use.
 
 # Installing QSHONI library via save file and creating QSHEXEC command objects
+
+Use this install method if you want to install from a save file object.
 
 Download the **qshoni.savf** save file from the selected releases page. 
 
@@ -51,6 +54,8 @@ Build the QSHONI commands
 `CALL PGM(QSHONI/SRCBLDC)`
 
 # Installing QSHONI library via wget and creating NODE command objects
+
+Use this install method if you want to install from a save file object via wget
 
 Run the following commands to copy the save file from github into a SAVF object
 
