@@ -20,4 +20,4 @@ git -c http.sslVerify=false clone --recurse-submodules ${REPONAME}
 # Change to IFS temp download directory for repo and call build.sh to create library
 cd ${INSTALLQSHONI}
 bash build.sh
-# After installation you can manually delete the INSTALLQSHONI IFS directory /tmp/QshOni
+# After installation you can manually delete the IFS directory /tmp/QshOni
