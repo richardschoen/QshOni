@@ -3,7 +3,18 @@ This IBM i library contains useful CL wrapper commands to allow Qshell and Pase 
 
 The main benefit of this wrapper is to be able to integrate Qshell/Pase applications on-the-fly with standard IBM i job streams.
 
-# Installing and Building QSHONI via Git clone
+There are several ways to build the library. Pick your favorite.
+
+# Installing and Building QSHONI via getrepo-qshoni.sh script
+```
+# Download the getrepo-qshoni.sh script or create it manually in your IFS 
+# Then run the getrepo-qshoni.sh script to automatically clone the repo 
+# and then auto-run build.sh to create the QSHONI library and associated 
+# objects.
+bash getrepo-qshoni.sh
+```
+
+# Installing and Building QSHONI via Git clone and build.sh
 ```
 mkdir /qshoni
 cd /qshoni 
