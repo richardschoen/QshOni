@@ -6,6 +6,10 @@ The main benefit of this wrapper is to be able to integrate Qshell/Pase applicat
 There are several ways to build the library. Pick your favorite.
 
 # Installing and Building QSHONI via getrepo-qshoni.sh script
+
+Use this install script if you want to run a single shell script to clone the repo and build the library.  
+https://github.com/richardschoen/QshOni/blob/master/getrepo-qshoni.sh
+
 ```
 # Download the getrepo-qshoni.sh script or create it manually in your IFS. 
 # Then run the getrepo-qshoni.sh script to automatically clone the repo 
@@ -17,7 +21,7 @@ bash getrepo-qshoni.sh
 
 # Installing and Building QSHONI via Git clone and build.sh
 ```
-# Use this install method if you want to manuall run each command from a QSH/PASE/SSH shell.
+# Use this install method if you want to manually run each command from a QSH/PASE/SSH shell.
 mkdir /qshoni
 cd /qshoni 
 git -c http.sslVerify=false clone --recurse-submodules https://github.com/richardschoen/QshOni.git
