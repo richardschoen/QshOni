@@ -6,7 +6,8 @@
 /* @@TEXT: Run Bash Command via Qshell                        */
 /*------------------------------------------------------------*/
              PGM        PARM(&CMDLINE &SETPKGPATH &DSPSTDOUT +
-                          &LOGSTDOUT &PRTSTDOUT &DLTSTDOUT &PRTSPLF +
+                          &LOGSTDOUT &PRTSTDOUT &DLTSTDOUT +
+                          &IFSSTDOUT &IFSFILE &IFSOPT &PRTSPLF +
                           &PRTUSRDTA &PRTTXT)
 
 /*----------------------------------------------------------------------------*/
@@ -19,6 +20,9 @@
              DCL        VAR(&LOGSTDOUT) TYPE(*CHAR) LEN(4)
              DCL        VAR(&DLTSTDOUT) TYPE(*CHAR) LEN(4)
              DCL        VAR(&PRTSTDOUT) TYPE(*CHAR) LEN(4)
+             DCL        VAR(&IFSSTDOUT) TYPE(*CHAR) LEN(4)
+             DCL        VAR(&IFSOPT) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&IFSFILE) TYPE(*CHAR) LEN(255)
              DCL        VAR(&PRTSPLF) TYPE(*CHAR) LEN(10)
              DCL        VAR(&PRTUSRDTA) TYPE(*CHAR) LEN(10)
              DCL        VAR(&PRTTXT) TYPE(*CHAR) LEN(30)
@@ -44,7 +48,9 @@
                           DSPSTDOUT(&DSPSTDOUT) +
                           LOGSTDOUT(&LOGSTDOUT) +
                           PRTSTDOUT(&PRTSTDOUT) +
-                          DLTSTDOUT(&DLTSTDOUT) PRTSPLF(&PRTSPLF) +
+                          DLTSTDOUT(&DLTSTDOUT) +
+                          IFSSTDOUT(&IFSSTDOUT) IFSFILE(&IFSFILE) +
+                          IFSOPT(&IFSOPT) PRTSPLF(&PRTSPLF) +
                           PRTUSRDTA(&PRTUSRDTA) PRTTXT(&PRTTXT)
 
              SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('QShell +
