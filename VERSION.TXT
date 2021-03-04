@@ -19,3 +19,6 @@ V1.0.3 - 2/1/2021
  command line to the bash command with: bash -c <cmdline>
  This is a convenience wrapper ovewr QSHEXEC to keep from having
  to type bash -c when you want to run bash commands.
+V1.0.4 - 3/3/2021                                                     
+-Added IFSSTDOUT option to QSHEXEC to copy stdout to IFS file.        
+-Added IFSSTDOUT option to QSHBASH to copy stdout to IFS file.        
