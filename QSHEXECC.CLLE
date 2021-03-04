@@ -6,7 +6,8 @@
 /* @@TEXT: Run QShell Command Line                            */
 /*------------------------------------------------------------*/
              PGM        PARM(&CMDLINE &SETPKGPATH &DSPSTDOUT +
-                          &LOGSTDOUT &PRTSTDOUT &DLTSTDOUT &PRTSPLF +
+                          &LOGSTDOUT &PRTSTDOUT &DLTSTDOUT +
+                          &IFSSTDOUT &IFSFILE &IFSOPT &PRTSPLF +
                           &PRTUSRDTA &PRTTXT)
 
 /*----------------------------------------------------------------------------*/
@@ -52,6 +53,9 @@
              DCL        VAR(&LOGSTDOUT) TYPE(*CHAR) LEN(4)
              DCL        VAR(&DLTSTDOUT) TYPE(*CHAR) LEN(4)
              DCL        VAR(&PRTSTDOUT) TYPE(*CHAR) LEN(4)
+             DCL        VAR(&IFSSTDOUT) TYPE(*CHAR) LEN(4)
+             DCL        VAR(&IFSOPT) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&IFSFILE) TYPE(*CHAR) LEN(255)
              DCL        VAR(&RTNVAL) TYPE(*CHAR) LEN(6)
              DCL        VAR(&CURJOB) TYPE(*CHAR) LEN(10)
              DCL        VAR(&CURUSER) TYPE(*CHAR) LEN(10)
@@ -71,6 +75,17 @@
 /*----------------------------------------------------------------------------*/
 /* MAIN                                                                       */
 /*----------------------------------------------------------------------------*/
+
+/*----------------------------------------------------------------------------*/
+/* If copying results to IFS and IFS file is blank, bail out.                 */
+/*----------------------------------------------------------------------------*/
+             IF         COND(&IFSSTDOUT *EQ *YES) THEN(DO)
+                IF         COND(&IFSFILE *EQ ' ') THEN(SNDPGMMSG +
+                             MSGID(CPF9898) MSGF(QCPFMSG) +
+                             MSGDTA('IFSSTDOUT was set to *YES, but no +
+                             IFS file was specified. QSHEXEC +
+                             cancelled') MSGTYPE(*ESCAPE))
+             ENDDO
 
 /*----------------------------------------------------------------------------*/
 /* Set environment path for QOpenSys packages if selected                     */
@@ -180,6 +195,23 @@ DONECOMP:
                           MSGTYPE(*ESCAPE)
              ENDDO
 
+             /* If copying results to IFS, do it now */
+             /* We copy from STDOUTQSH in QTEMP to IFS log */
+             IF         COND(&IFSSTDOUT *EQ *YES) THEN(DO)
+             CPYTOSTMF  +
+                          FROMMBR('/QSYS.LIB/QTEMP.LIB/STDOUTQSH.FILE+
+                          /STDOUTQSH.MBR') TOSTMF(&IFSFILE) +
+                          STMFOPT(&IFSOPT) CVTDTA(*AUTO) +
+                          STMFCCSID(*PCASCII) ENDLINFMT(*LF) +
+                          STMFCODPAG(*STMF)
+             /* Prevent endless loop if CPYTOSTMF fails */
+             MONMSG     MSGID(CPF0000) EXEC(DO)
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Error +
+                          copying log to IFS file' |> &IFSFILE |> +
+                          '- QSHEXEC cancelled') MSGTYPE(*ESCAPE)
+             ENDDO
+             ENDDO
+
              /* IF ENABLED, PRINT STDOUT RESULTS */
              IF         COND(&PRTSTDOUT *EQ *YES) THEN(DO)
 
@@ -235,6 +267,23 @@ ERRORS:
                           occurred while copying STDOUT log to +
                           file. Check the joblog') +
                           MSGTYPE(*ESCAPE)
+             ENDDO
+
+             /* If copying results to IFS, do it now */
+             /* We copy from STDOUTQSH in QTEMP to IFS log */
+             IF         COND(&IFSSTDOUT *EQ *YES) THEN(DO)
+             CPYTOSTMF  +
+                          FROMMBR('/QSYS.LIB/QTEMP.LIB/STDOUTQSH.FILE+
+                          /STDOUTQSH.MBR') TOSTMF(&IFSFILE) +
+                          STMFOPT(&IFSOPT) CVTDTA(*AUTO) +
+                          STMFCCSID(*PCASCII) ENDLINFMT(*LF) +
+                          STMFCODPAG(*STMF)
+             /* Prevent endless loop if CPYTOSTMF fails */
+             MONMSG     MSGID(CPF0000) EXEC(DO)
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Error +
+                          copying log to IFS file' |> &IFSFILE |> +
+                          '- QSHEXEC cancelled') MSGTYPE(*ESCAPE)
+             ENDDO
              ENDDO
 
              /* IF ENABLED, PRINT STDOUT RESULTS */
