@@ -13,7 +13,7 @@
                           VALUE(QSHONI)
              DCL        VAR(&TGTRLS) TYPE(*CHAR) LEN(10) +
                           VALUE(*CURRENT)
-             DCL        VAR(&VERSION) TYPE(*CHAR) LEN(30) VALUE(V1.0.3)
+             DCL        VAR(&VERSION) TYPE(*CHAR) LEN(30) VALUE(V1.0.4)
 
  /* Add libraries to library list */
              ADDLIBLE   LIB(&DESTLIB)
