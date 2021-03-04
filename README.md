@@ -184,7 +184,7 @@ The command is a convenience wrapper that can be used to call a bash command wit
 
 **PRTSTDOUT** - Print STDOUT to a spool file. Use this if you want a spool file of the log output.
 
-**DLTSTDOUT** - This option insures that the STDOUT IFS temp files get cleaned up after processing. All IFS log files get created in the /tmp/mono directory.
+**DLTSTDOUT** - This option insures that the STDOUT IFS temp files get cleaned up after processing. All IFS log files get created in the /tmp/qsh directory.
 
 **IFSSTDOUT** - Copy std output to an IFS file. Nice for aggregating log results to a file.
 
