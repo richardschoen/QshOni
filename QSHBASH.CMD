@@ -25,6 +25,14 @@
              PARM       KWD(DLTSTDOUT) TYPE(*CHAR) LEN(4) RSTD(*YES) +
                           DFT(*YES) VALUES(*NO *YES) PROMPT('Delete +
                           Standard Output Result')
+             PARM       KWD(IFSSTDOUT) TYPE(*CHAR) LEN(4) RSTD(*YES) +
+                          DFT(*NO) VALUES(*NO *YES) PROMPT('Copy +
+                          std output to IFS file')
+             PARM       KWD(IFSFILE) TYPE(*CHAR) LEN(255) +
+                          PROMPT('IFS file for stdout results')
+             PARM       KWD(IFSOPT) TYPE(*CHAR) LEN(10) RSTD(*YES) +
+                          DFT(*REPLACE) VALUES(*ADD *REPLACE *NONE) +
+                          PROMPT('IFS file option')
              PARM       KWD(PRTSPLF) TYPE(*CHAR) LEN(10) DFT(QSHBASHLOG) PROMPT('Print stdout spool +
                           file')
              PARM       KWD(PRTUSRDTA) TYPE(*CHAR) LEN(10) DFT(*NONE) SPCVAL((*NONE ' ')) +
