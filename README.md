@@ -97,6 +97,9 @@ The following example calls the ls command to list files for the /tmp directory:
       LOGSTDOUT(*NO)          
       PRTSTDOUT(*NO)          
       DLTSTDOUT(*YES)
+      IFSSTDOUT(*NO)
+      IFSFILE('/tmp/log.txt)
+      IFSOPT(*REPLACE)
       PRTSPLF(QSHEXECLOG) 
       PRTUSRDTA(*NONE)    
       PRTTXT(*NONE)       
@@ -116,7 +119,7 @@ The following example runs an SQL query with db2util and exports the results as 
 
 **CMDLINE** - Qsh/Pase command line sequence to run. Semicolons can be used to run multiple commands.
 
-**SETPKGPATH** - Add the IBM i Open Source Package path to PATH environment variable by calling QSHPATH command before running QSH/PASE commands. Default = *YES.
+**IFSPKGPATH** - Add the IBM i Open Source Package path to PATH environment variable by calling QSHPATH command before running QSH/PASE commands. Default = *YES.
 
 **DSPSTDOUT** - Display the outfile contents. Nice when debugging. 
 
@@ -124,7 +127,13 @@ The following example runs an SQL query with db2util and exports the results as 
 
 **PRTSTDOUT** - Print STDOUT to a spool file. Use this if you want a spool file of the log output.
 
-**DLTSTDOUT** - This option insures that the STDOUT IFS temp files get cleaned up after processing. All IFS log files get created in the /tmp/mono directory.
+**DLTSTDOUT** - This option insures that the STDOUT IFS temp files get cleaned up after processing. All IFS log files get created in the /tmp/qsh directory.
+
+**IFSSTDOUT** - Copy std output to an IFS file. Nice for aggregating log results to a file.
+
+**IFSFILE** - IFS file for stdout results. Needs to be specified if IFSSTDOUT = *YES.
+
+**IFSOPT** - IFS file option. *REPLACE = replace stdout IFS file. *ADD = Add to stdout IFS file.
 
 **PRTSPLF** - This option holds the name of the spool file used when PRTSTDOUT = *YES. It's a nice way to customize the stdout log prints. ***Default = QSHEXECLOG***
 
@@ -143,6 +152,9 @@ The following example calls the ls command to list files for the /tmp directory 
       LOGSTDOUT(*NO)          
       PRTSTDOUT(*NO)          
       DLTSTDOUT(*YES)
+      IFSSTDOUT(*NO)
+      IFSFILE('/tmp/log.txt)
+      IFSOPT(*REPLACE)
       PRTSPLF(QSHEXECLOG) 
       PRTUSRDTA(*NONE)    
       PRTTXT(*NONE)       
@@ -173,6 +185,12 @@ The command is a convenience wrapper that can be used to call a bash command wit
 **PRTSTDOUT** - Print STDOUT to a spool file. Use this if you want a spool file of the log output.
 
 **DLTSTDOUT** - This option insures that the STDOUT IFS temp files get cleaned up after processing. All IFS log files get created in the /tmp/mono directory.
+
+**IFSSTDOUT** - Copy std output to an IFS file. Nice for aggregating log results to a file.
+
+**IFSFILE** - IFS file for stdout results. Needs to be specified if IFSSTDOUT = *YES.
+
+**IFSOPT** - IFS file option. *REPLACE = replace stdout IFS file. *ADD = Add to stdout IFS file.
 
 **PRTSPLF** - This option holds the name of the spool file used when PRTSTDOUT = *YES. It's a nice way to customize the stdout log prints. ***Default = QSHBASHLOG***
 
