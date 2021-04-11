@@ -69,6 +69,30 @@ CURFILE="QSHSTDOUTR.RPGLE"
 SRCTEXT="Read and parse stdout log"
 cpy_member
 
+CURFILE="QSHIFSCHKR.RPGLE"
+SRCTEXT="Check for IFS File Existence"
+cpy_member
+
+CURFILE="QSHIFSCHKC.CLP"
+SRCTEXT="Check for IFS File Existence"
+cpy_member
+
+CURFILE="QSHIFSCHK.CMD"
+SRCTEXT="Check for IFS File Existence"
+cpy_member
+
+CURFILE="QSHPYRUN.CMD"
+SRCTEXT="Run Python Script via Qshell"
+cpy_member
+
+CURFILE="QSHPYRUNC.CLLE"
+SRCTEXT="Run Python Script via Qshell"
+cpy_member
+
+CURFILE="QSHDEMO01.RPGLE"
+SRCTEXT="Read Outfile STDOUTQSH and display via DSPLY cmd"
+cpy_member
+
 CURFILE="SRCBLDC.CLP"
 SRCTEXT="Build cmds from QSHONI/SOURCE file"   
 cpy_member
