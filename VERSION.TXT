@@ -22,3 +22,6 @@ V1.0.3 - 2/1/2021
 V1.0.4 - 3/3/2021                                                     
 -Added IFSSTDOUT option to QSHEXEC to copy stdout to IFS file.        
 -Added IFSSTDOUT option to QSHBASH to copy stdout to IFS file.        
+V1.0.5 - 4/11/2021                                        
+-Added QSHIFSCHK to check for IFS files.                  
+-Added QSHPYRUN command to run Python shell scripts.      
