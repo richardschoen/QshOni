@@ -1,9 +1,9 @@
-      //-------------------------------------------------------------------------------------------
-      // QSHDEMO01R - Read QSHELL log file STDOUTQSH from QTEMP and display
-      //              the first 52 bytes of each record with DSPLY as an
-      //              example. Your apps could do whatever they want with
-      //              the returned data.
-      //-------------------------------------------------------------------------------------------
+       //-------------------------------------------------------------------------------------------
+       // QSHDEMO01R - Read QSHELL log file STDOUTQSH from QTEMP and display
+       //              the first 52 bytes of each record with DSPLY as an
+       //              example. Your apps could do whatever they want with
+       //              the returned data.
+       //-------------------------------------------------------------------------------------------
        Dcl-F STDOUTQSH  DISK(1000) Usage(*Input) USROPN;
 
        Dcl-Ds *N psds;
@@ -18,7 +18,7 @@
        Dcl-S p_Value Char(1024);
        Dcl-S p_ExactMatch char(4);
        Dcl-S p_RtnFound char(1);
-    
+     
      C*    *entry        plist
      C*                  parm                    p_Value
      C*                  parm                    p_ExactMatch
@@ -36,8 +36,8 @@
        // Set to beginning of file
        setll *start STDOUTQSH;
 
-      // Read all records from the STDOUTQSH log file and process          ------------------------
-      // as needed. This example simply displays each entry.               ------------------------
+       // Read all records from the STDOUTQSH log file and process
+       // as needed. This example simply displays each entry.  
        dou %eof(STDOUTQSH);
 
          // Read next record
