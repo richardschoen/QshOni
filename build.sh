@@ -89,7 +89,7 @@ CURFILE="QSHPYRUNC.CLLE"
 SRCTEXT="Run Python Script via Qshell"
 cpy_member
 
-CURFILE="QSHDEMO01.RPGLE"
+CURFILE="QSHDEMO01R.RPGLE"
 SRCTEXT="Read Outfile STDOUTQSH and display via DSPLY cmd"
 cpy_member
 
