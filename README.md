@@ -58,7 +58,7 @@ Build the QSHONI commands
 
 `CALL PGM(QSHONI/SRCBLDC)`
 
-# Installing QSHONI library via wget and creating NODE command objects
+# Installing QSHONI library via wget and creating command objects
 
 Use this install method if you want to install from a save file object via wget
 
