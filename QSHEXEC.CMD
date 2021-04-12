@@ -1,10 +1,3 @@
-/*------------------------------------------------------------*/
-/* @@LIBRARY: QSHONI                                          */
-/* @@FILE: SOURCE                                             */
-/* @@MEMBER: QSHEXEC                                          */
-/* @@TYPE: CMD                                                */
-/* @@TEXT: Run QShell Command Line                            */
-/*------------------------------------------------------------*/
              CMD        PROMPT('Run Qshell Command Line')
              PARM       KWD(CMDLINE) TYPE(*CHAR) LEN(5000) MIN(1) +
                           EXPR(*YES) CASE(*MIXED) PROMPT('QSH +
