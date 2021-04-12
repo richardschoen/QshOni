@@ -1,11 +1,3 @@
-      *---------------------------------------------------------
-      * Source information
-      * @@LIBRARY: QSHONI
-      * @@FILE: SOURCE
-      * @@MEMBER: VERSION
-      * @@TYPE: TXT
-      * @@TEXT: Version Notes
-      *---------------------------------------------------------
 V1.0.1 - 8/18/019
 -Initial build
 V1.0.2 - 9/23/2020
