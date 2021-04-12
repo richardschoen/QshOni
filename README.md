@@ -86,7 +86,6 @@ Build the QSHONI commands
 `CALL PGM(QSHONI/SRCBLDC)`
 
 
-
 # Using the QSHEXEC CL command to call a Qsh/Pase command sequence
 
 The following example calls the ls command to list files for the /tmp directory: 
@@ -119,7 +118,7 @@ The following example runs an SQL query with db2util and exports the results as 
 
 **CMDLINE** - Qsh/Pase command line sequence to run. Semicolons can be used to run multiple commands.
 
-**IFSPKGPATH** - Add the IBM i Open Source Package path to PATH environment variable by calling QSHPATH command before running QSH/PASE commands. Default = *YES.
+**SETPKGPATH** - Add the IBM i Open Source Package path to PATH environment variable by calling QSHPATH command before running QSH/PASE commands. Default = *YES.
 
 **DSPSTDOUT** - Display the outfile contents. Nice when debugging. 
 
@@ -134,6 +133,8 @@ The following example runs an SQL query with db2util and exports the results as 
 **IFSFILE** - IFS file for stdout results. Needs to be specified if IFSSTDOUT = *YES.
 
 **IFSOPT** - IFS file option. *REPLACE = replace stdout IFS file. *ADD = Add to stdout IFS file.
+
+**CCSID** - When using the iToolkit component for command access, I originally had some issues with CL commands not working correctly. However I don't currently remember exactly why. This may have been solved, however I recommend still passing a value of 37 unless you are in a non US country. If you set to `*SAME`, the CCSID will stay the same as your current job with no change.
 
 **PRTSPLF** - This option holds the name of the spool file used when PRTSTDOUT = *YES. It's a nice way to customize the stdout log prints. ***Default = QSHEXECLOG***
 
@@ -192,18 +193,24 @@ The command is a convenience wrapper that can be used to call a bash command wit
 
 **IFSOPT** - IFS file option. *REPLACE = replace stdout IFS file. *ADD = Add to stdout IFS file.
 
+**CCSID** - When using the iToolkit component for command access, I originally had some issues with CL commands not working correctly. However I don't currently remember exactly why. This may have been solved, however I recommend still passing a value of 37 unless you are in a non US country. If you set to `*SAME`, the CCSID will stay the same as your current job with no change.
+
 **PRTSPLF** - This option holds the name of the spool file used when PRTSTDOUT = *YES. It's a nice way to customize the stdout log prints. ***Default = QSHBASHLOG***
 
 **PRTUSRDTA** - This option holds the name of the spool file user data used when PRTSTDOUT = *YES. ***Default = *NONE.***
 
 **PRTTXT** - This option holds the name of the spool file print txt to be used when PRTSTDOUT = *YES. ***Default = *NONE.***
 
-# Using the QSHEXEC CL command to call a Qsh/Pase command sequence
 
-The following example calls the ls command to list files for the /tmp directory: 
+# Using the QSHPYRUN CL command to run a Python script via QSHEXEC
+
+The following example calls a helloworld.py script that write to STDOUT
 
  ```
-      QSHEXEC CMDLINE('cd /tmp;ls')   
+      QSHPYRUN SCRIPTDIR('/pythonapps')       
+      SCRIPTFILE(hello.py)           
+      ARGS(Parm1 Parm2)              
+      PYVERSION(3)                   
       DSPSTDOUT(*YES)         
       LOGSTDOUT(*NO)          
       PRTSTDOUT(*NO)          
@@ -211,18 +218,10 @@ The following example calls the ls command to list files for the /tmp directory:
       IFSSTDOUT(*NO)
       IFSFILE('/tmp/log.txt)
       IFSOPT(*REPLACE)
-      PRTSPLF(QSHEXECLOG) 
+      PRTSPLF(QSHPYRUN) 
       PRTUSRDTA(*NONE)    
       PRTTXT(*NONE)       
 ```
-
-The following example runs an SQL query with db2util and exports the results as JSON to the QTEMP/STDOUTQSH outfile:
-
-```
-      QSHEXEC CMDLINE('export DB2UTIL_JSON_CONTAINER=array;db2util -o json "select * from qiws.qcustcdt"')     
-      DSPSTDOUT(*YES)                                      
-```
-
 
 # QSHPYRUN command parms
 
@@ -232,15 +231,13 @@ The following example runs an SQL query with db2util and exports the results as 
 
 **SCRIPTFILE** - The script file name you want to call without the directory path. The PYRUN command puts it all together. **Ex: hello.py**
 
-**PYVERSION** - The Python version you want to use. It should be set to either **2** for Python 2 or **3** for Python 3.
-
 **ARGS** - Command line parameter argument list. Up to 40 - 200 byte argument/parameter values can be passed to a Python script call. Each parm is automatically trimmed. Do NOT put double quotes around the parms or your program call may get errors because your parameters get compromised with extra double quotes. The double quotes are already added automatically inside the CL command processing program. Single quotes are allowed around your parmaeter data though if desired:  Ex: **'My Parm Value 1' 'My Parm Value 2'**
+
+**PYVERSION** - The Python version you want to use. It should be set to either **2** for Python 2 or **3** for Python 3.
 
 **PYPATH** - The this is the directory path to your Python binaries (python/python3). Hopefully you have already installed the Yum versions so the default path should be good. Leave value set to `*DEFAULT`. **Default= /QOpenSys/pkgs/bin**. The default path lives in the **PYPATH** data area in the **PYONI** library.
 
-**CCSID** - When using the iToolkit component for command access, I originally had some issues with CL commands not working correctly. However I don't currently remember exactly why. This may have been solved, however I recommend still passing a value of 37 unless you are in a non US country. If you set to `*SAME`, the CCSID will stay the same as your current job with no change.
-
-**IFSPKGPATH** - Add the IBM i Open Source Package path to PATH environment variable by calling QSHPATH command before running QSH/PASE commands. Default = *YES.
+**SETPKGPATH** - Add the IBM i Open Source Package path to PATH environment variable by calling QSHPATH command before running QSH/PASE commands. Default = *YES.
 
 **DSPSTDOUT** - Display the outfile contents. Nice when debugging. 
 
@@ -255,6 +252,8 @@ The following example runs an SQL query with db2util and exports the results as 
 **IFSFILE** - IFS file for stdout results. Needs to be specified if IFSSTDOUT = *YES.
 
 **IFSOPT** - IFS file option. *REPLACE = replace stdout IFS file. *ADD = Add to stdout IFS file.
+
+**CCSID** - When using the iToolkit component for command access, I originally had some issues with CL commands not working correctly. However I don't currently remember exactly why. This may have been solved, however I recommend still passing a value of 37 unless you are in a non US country. If you set to `*SAME`, the CCSID will stay the same as your current job with no change.
 
 **PRTSPLF** - This option holds the name of the spool file used when PRTSTDOUT = *YES. It's a nice way to customize the stdout log prints. ***Default = QSHEXECLOG***
 
