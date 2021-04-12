@@ -1,7 +1,7 @@
              PGM        PARM(&CMDLINE &SETPKGPATH &DSPSTDOUT +
                           &LOGSTDOUT &PRTSTDOUT &DLTSTDOUT +
-                          &IFSSTDOUT &IFSFILE &IFSOPT &PRTSPLF +
-                          &PRTUSRDTA &PRTTXT)
+                          &IFSSTDOUT &IFSFILE &IFSOPT &CCSID +
+                          &PRTSPLF &PRTUSRDTA &PRTTXT)
 
 /*----------------------------------------------------------------------------*/
 /* Variables                                                                  */
@@ -20,6 +20,7 @@
              DCL        VAR(&PRTUSRDTA) TYPE(*CHAR) LEN(10)
              DCL        VAR(&PRTTXT) TYPE(*CHAR) LEN(30)
              DCL        VAR(&QT) TYPE(*CHAR) LEN(1) VALUE('''')
+             DCL        VAR(&CCSID) TYPE(*CHAR) LEN(10)
 
 /*----------------------------------------------------------------------------*/
 /* MONITOR FOR GLOBAL ERROR. ANY ERROR IS A CAUSE TO BLOW OUT OF HERE         */
@@ -43,8 +44,9 @@
                           PRTSTDOUT(&PRTSTDOUT) +
                           DLTSTDOUT(&DLTSTDOUT) +
                           IFSSTDOUT(&IFSSTDOUT) IFSFILE(&IFSFILE) +
-                          IFSOPT(&IFSOPT) PRTSPLF(&PRTSPLF) +
-                          PRTUSRDTA(&PRTUSRDTA) PRTTXT(&PRTTXT)
+                          IFSOPT(&IFSOPT) CCSID(&CCSID) +
+                          PRTSPLF(&PRTSPLF) PRTUSRDTA(&PRTUSRDTA) +
+                          PRTTXT(&PRTTXT)
 
              SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('QShell +
                           bash command completed') MSGTYPE(*COMP)
