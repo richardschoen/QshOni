@@ -1,7 +1,7 @@
              PGM        PARM(&CMDLINE &SETPKGPATH &DSPSTDOUT +
                           &LOGSTDOUT &PRTSTDOUT &DLTSTDOUT +
-                          &IFSSTDOUT &IFSFILE &IFSOPT &PRTSPLF +
-                          &PRTUSRDTA &PRTTXT)
+                          &IFSSTDOUT &IFSFILE &IFSOPT &CCSID +
+                          &PRTSPLF &PRTUSRDTA &PRTTXT)
 
 /*----------------------------------------------------------------------------*/
 /* Variables                                                                  */
@@ -58,6 +58,7 @@
              DCL        VAR(&PRTSPLF) TYPE(*CHAR) LEN(10)
              DCL        VAR(&PRTUSRDTA) TYPE(*CHAR) LEN(10)
              DCL        VAR(&PRTTXT) TYPE(*CHAR) LEN(30)
+             DCL        VAR(&CCSID) TYPE(*CHAR) LEN(10)
 
 /*----------------------------------------------------------------------------*/
 /* MONITOR FOR GLOBAL ERROR. ANY ERROR IS A CAUSE TO BLOW OUT OF HERE         */
@@ -124,7 +125,6 @@
                           '/STDOUTQSH-' |< &JOB |< '-' |< &USER +
                           |< '-' |< &JOBNBR |< '-' |< &QDATE |< +
                           &QTIME |< '.TXT')
-
 /*----------------------------------------------------------------------------*/
 /* ERASE JAVA OUTPUT IF IT EXISTS */
 /*----------------------------------------------------------------------------*/
@@ -146,6 +146,14 @@
 
              ADDENVVAR  ENVVAR(QIBM_MULTI_THREADED) VALUE(Y) +
                         REPLACE(*YES)
+
+/*----------------------------------------------------------------------------*/
+/* Make sure iTookit CL commands will work when using the  */
+/* DB2 connectivity by setting job CCSID to 37             */
+/*----------------------------------------------------------------------------*/
+             IF         COND(&CCSID *NE *SAME) THEN(DO)
+             CHGJOB     CCSID(&CCSID)
+             ENDDO
 
 /*----------------------------------------------------------------------------*/
 /* BUILD THE FINAL QSH CALL                             */
