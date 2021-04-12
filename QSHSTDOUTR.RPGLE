@@ -1,11 +1,3 @@
-      *---------------------------------------------------------
-      * Source information
-      * @@LIBRARY: QSHONI
-      * @@FILE: SOURCE
-      * @@MEMBER: QSHSTDOUTR
-      * @@TYPE: RPGLE
-      * @@TEXT: Read and parse stdout log
-      *---------------------------------------------------------
      H DFTACTGRP(*NO) ACTGRP(*NEW)
 
      FSTDOUTQSH IF   F 1000        DISK    USROPN
