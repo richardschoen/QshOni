@@ -26,10 +26,12 @@
              PARM       KWD(IFSOPT) TYPE(*CHAR) LEN(10) RSTD(*YES) +
                           DFT(*REPLACE) VALUES(*ADD *REPLACE *NONE) +
                           PROMPT('IFS file option')
+             PARM       KWD(CCSID) TYPE(*CHAR) LEN(10) DFT(*SAME) +
+                          SPCVAL((*SAME *SAME)) PROMPT('Coded +
+                          character set ID for job')
              PARM       KWD(PRTSPLF) TYPE(*CHAR) LEN(10) DFT(QSHEXECLOG) PROMPT('Print stdout spool +
                           file')
              PARM       KWD(PRTUSRDTA) TYPE(*CHAR) LEN(10) DFT(*NONE) SPCVAL((*NONE ' ')) +
                           PROMPT('Print stdout user data')
              PARM       KWD(PRTTXT) TYPE(*CHAR) LEN(30) DFT(*NONE) SPCVAL((*NONE ' ')) CASE(*MIXED) +
                           PROMPT('Print stdout print text')
- 
