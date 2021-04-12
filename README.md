@@ -36,7 +36,7 @@ Use this install method if you want to install from a save file object.
 
 Download the **qshoni.savf** save file from the selected releases page. 
 
-https://github.com/richardschoen/QshOni/releases  **(Latest version - V1.0.3)**
+https://github.com/richardschoen/QshOni/releases  **(Latest version - V1.0.5)**
 
 Upload the **qshoni.savf** to the IFS and place it in **/tmp/qshoni.savf**
 
@@ -69,7 +69,7 @@ Run the following commands to copy the save file from github into a SAVF object
 From QSHELL/QPTERM or BASH run:
 
 ```
-/QOpenSys/pkgs/bin/wget https://github.com/richardschoen/QshOni/releases/download/V1.0.3/qshoni.savf
+/QOpenSys/pkgs/bin/wget https://github.com/richardschoen/QshOni/releases/download/V1.0.5/qshoni.savf
 --no-check-certificate -O  /qsys.lib/qgpl.lib/qshoni.file
 ```
 
