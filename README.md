@@ -228,7 +228,17 @@ The following example runs an SQL query with db2util and exports the results as 
 
 **Overview** - This CL command can be used to run a Python script via QSHEXEC and log the results appropriately.
 
-**CMDLINE** - Qsh/Pase command line sequence to run. Semicolons can be used to run multiple commands.
+**SCRIPTDIR** - The IFS directory location for the Python script. **Ex: /python**
+
+**SCRIPTFILE** - The script file name you want to call without the directory path. The PYRUN command puts it all together. **Ex: hello.py**
+
+**PYVERSION** - The Python version you want to use. It should be set to either **2** for Python 2 or **3** for Python 3.
+
+**ARGS** - Command line parameter argument list. Up to 40 - 200 byte argument/parameter values can be passed to a Python script call. Each parm is automatically trimmed. Do NOT put double quotes around the parms or your program call may get errors because your parameters get compromised with extra double quotes. The double quotes are already added automatically inside the CL command processing program. Single quotes are allowed around your parmaeter data though if desired:  Ex: **'My Parm Value 1' 'My Parm Value 2'**
+
+**PYPATH** - The this is the directory path to your Python binaries (python/python3). Hopefully you have already installed the Yum versions so the default path should be good. Leave value set to `*DEFAULT`. **Default= /QOpenSys/pkgs/bin**. The default path lives in the **PYPATH** data area in the **PYONI** library.
+
+**CCSID** - When using the iToolkit component for command access, I originally had some issues with CL commands not working correctly. However I don't currently remember exactly why. This may have been solved, however I recommend still passing a value of 37 unless you are in a non US country. If you set to `*SAME`, the CCSID will stay the same as your current job with no change.
 
 **IFSPKGPATH** - Add the IBM i Open Source Package path to PATH environment variable by calling QSHPATH command before running QSH/PASE commands. Default = *YES.
 
