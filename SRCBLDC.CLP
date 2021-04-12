@@ -1,10 +1,3 @@
-/*------------------------------------------------------------*/
-/* @@LIBRARY: QSHONI                                          */
-/* @@FILE: SOURCE                                             */
-/* @@MEMBER: SRCBLDC                                          */
-/* @@TYPE: CLP                                                */
-/* @@TEXT: Build  cmds from QSHONI/SOURCE file                */
-/*------------------------------------------------------------*/
              PGM
 
              DCL        VAR(&DESTFILE) TYPE(*CHAR) LEN(10) +
@@ -13,7 +6,7 @@
                           VALUE(QSHONI)
              DCL        VAR(&TGTRLS) TYPE(*CHAR) LEN(10) +
                           VALUE(*CURRENT)
-             DCL        VAR(&VERSION) TYPE(*CHAR) LEN(30) VALUE(V1.0.4)
+             DCL        VAR(&VERSION) TYPE(*CHAR) LEN(30) VALUE(V1.0.5)
 
  /* Add libraries to library list */
              ADDLIBLE   LIB(&DESTLIB)
@@ -56,6 +49,27 @@
                           SRCFILE(&DESTLIB/&DESTFILE) REPLACE(*NO) +
                           TGTRLS(&TGTRLS) /* V1.0.3 */
 
+             /* 1.05 - ADD IFS CHECK AND QSHPYRUN */
+             CRTCMD     CMD(&DESTLIB/QSHIFSCHK) PGM(QSHIFSCHKC) +
+                          SRCFILE(&DESTLIB/&DESTFILE) PRDLIB(&DESTLIB)
+
+             CRTCLPGM   PGM(&DESTLIB/QSHIFSCHKC) +
+                          SRCFILE(&DESTLIB/&DESTFILE) +
+                          SRCMBR(QSHIFSCHKC) REPLACE(*NO) +
+                          TGTRLS(&TGTRLS)
+
+             CRTBNDRPG  PGM(&DESTLIB/QSHIFSCHKR) +
+                          SRCFILE(&DESTLIB/&DESTFILE) +
+                          SRCMBR(QSHIFSCHKR) DFTACTGRP(*NO) +
+                          REPLACE(*NO) TGTRLS(&TGTRLS)
+
+             CRTCMD     CMD(&DESTLIB/QSHPYRUN) PGM(QSHPYRUNC) +
+                          SRCFILE(&DESTLIB/&DESTFILE) +
+                          PRDLIB(&DESTLIB) /* V1.0.5 */
+
+             CRTCLPGM   PGM(&DESTLIB/QSHPYRUNC) +
+                          SRCFILE(&DESTLIB/&DESTFILE) REPLACE(*NO) +
+                          TGTRLS(&TGTRLS) /* V1.0.5 */
 
  /* Create message file for any custom CPF messages */
  /* Initial use case is to log STDOUT msgs with own CPF ID    */
@@ -73,6 +87,11 @@
                           VALUE(&VERSION) TEXT(&DESTLIB |> 'version')
              MONMSG     MSGID(CPF0000)
              CHGDTAARA  DTAARA(&DESTLIB/VERSION *ALL) VALUE(&VERSION)
+
+ /* Create and set data area for Python binary location - 1.05 */
+             CRTDTAARA  DTAARA(QSHONI/PYPATH) TYPE(*CHAR) LEN(255) +
+                          VALUE('/QOpenSys/pkgs/bin') TEXT('Path to +
+                          Python Binaries')
 
  /* Change library desc to match the version */
              CHGLIB     LIB(QSHONI) TEXT('QShell on IBM i -' |> +
