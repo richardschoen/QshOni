@@ -1,10 +1,3 @@
-/*------------------------------------------------------------*/
-/* @@LIBRARY: QSHONI                                          */
-/* @@FILE: SOURCE                                             */
-/* @@MEMBER: QSHPATHC                                         */
-/* @@TYPE: CLLE                                               */
-/* @@TEXT: Set Open Source Package Path Environment Variables */
-/*------------------------------------------------------------*/
              PGM        PARM(&PKGPATH)
 
              DCL        VAR(&PKGPATH) TYPE(*CHAR) LEN(255)
