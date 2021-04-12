@@ -1,14 +1,6 @@
-      *---------------------------------------------------------
-      * Source information
-      * @@LIBRARY: QSHONI
-      * @@FILE: SOURCE
-      * @@MEMBER: QSHLOGSCAR
-      * @@TYPE: RPGLE
-      * @@TEXT: Scan Qshell Log File for Value
-      *---------------------------------------------------------
-    ‚  //-------------------------------------------------------------------------------------------
-    ‚  // QSHLOGSCAR - Scan Qshell Log File for Selected Value
-    ‚  //-------------------------------------------------------------------------------------------
+       //-------------------------------------------------------------------------------------------
+       // QSHLOGSCAR - Scan Qshell Log File for Selected Value
+       //-------------------------------------------------------------------------------------------
        Dcl-F STDOUTQSH  DISK(1000) Usage(*Input);
 
        Dcl-Ds *N psds;
@@ -22,7 +14,7 @@
        Dcl-S p_Value Char(1024);
        Dcl-S p_ExactMatch char(4);
        Dcl-S p_RtnFound char(1);
-    ‚
+     
      C     *entry        plist
      C                   parm                    p_Value
      C                   parm                    p_ExactMatch
@@ -33,7 +25,7 @@
        // Set to beginning of file
        setll *start STDOUTQSH;
 
-    ‚  // Read all selected documents and extract keywords                  ------------------------
+       // Read all selected documents and extract keywords               
        dou %eof(STDOUTQSH);
 
          // Read next record
