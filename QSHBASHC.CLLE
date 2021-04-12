@@ -1,10 +1,3 @@
-/*------------------------------------------------------------*/
-/* @@LIBRARY: QSHONI                                          */
-/* @@FILE: SOURCE                                             */
-/* @@MEMBER: QSHBASHC                                         */
-/* @@TYPE: CLLE                                               */
-/* @@TEXT: Run Bash Command via Qshell                        */
-/*------------------------------------------------------------*/
              PGM        PARM(&CMDLINE &SETPKGPATH &DSPSTDOUT +
                           &LOGSTDOUT &PRTSTDOUT &DLTSTDOUT +
                           &IFSSTDOUT &IFSFILE &IFSOPT &PRTSPLF +
