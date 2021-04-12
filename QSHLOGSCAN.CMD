@@ -1,10 +1,3 @@
-/*------------------------------------------------------------*/
-/* @@LIBRARY: QSHONI                                          */
-/* @@FILE: SOURCE                                             */
-/* @@MEMBER: QSHLOGSCAN                                       */
-/* @@TYPE: CMD                                                */
-/* @@TEXT: Scan Qshell Log File for Value                     */
-/*------------------------------------------------------------*/
              CMD        PROMPT('Scan Qshell Log for Value')
              PARM       KWD(SCANFOR) TYPE(*CHAR) LEN(1024) MIN(1) +
                           CASE(*MIXED) PROMPT('Value to scan for')
