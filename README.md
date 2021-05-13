@@ -266,11 +266,11 @@ The following example calls a helloworld.py script that write to STDOUT
 
 The command returns a CPF9898 excape message if value not found. Otherwise a CPF9898 completion message. 
 
-The following example scans the outfile log in file QTEMP/STDOUTQSH for a file named test.txt: 
+The following example scans the outfile log in file QTEMP/STDOUTQSH for the string 'successfully' somewhere in the output: 
 
  ```
       QSHLOGSCAN SCANFOR('successfully')   
-      EXACTMATCH(*YES)         
+      EXACTMATCH(*NO)         
 ```      
 
 # QSHLOGSCAN command parms
@@ -279,7 +279,7 @@ The following example scans the outfile log in file QTEMP/STDOUTQSH for a file n
 
 **SCANFOR** - Text value to scan for on each line in the stdout outfile. The value passed IS case sensitive and must match the value in the log file.
 
-**EXACTMATCH** - *YES - Value must match exactly and be the only thing on the selected line. *NO - At least one line must contain the value somewhere in the line. Good for generic matching.
+**EXACTMATCH** - *YES - Value must match exactly and be the onLy thing on the selected line. *NO - At least one line must contain the value somewhere in the line. Good for generic matching.
 
 # QSHPATH command parms
 
