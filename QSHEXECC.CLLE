@@ -1,11 +1,16 @@
              PGM        PARM(&CMDLINE &SETPKGPATH &DSPSTDOUT +
                           &LOGSTDOUT &PRTSTDOUT &DLTSTDOUT +
                           &IFSSTDOUT &IFSFILE &IFSOPT &CCSID +
-                          &PRTSPLF &PRTUSRDTA &PRTTXT)
+                          &PRTSPLF &PRTUSRDTA &PRTTXT &PRTHOLD +
+                          &PRTOUTQALL)
 
 /*----------------------------------------------------------------------------*/
 /* Variables                                                                  */
 /*----------------------------------------------------------------------------*/
+             DCL        VAR(&PRTHOLD) TYPE(*CHAR) LEN(4)
+             DCL        VAR(&PRTOUTQALL) TYPE(*CHAR) LEN(20)
+             DCL        VAR(&PRTOUTQ) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&PRTOUTQLIB) TYPE(*CHAR) LEN(10)
              DCL        VAR(&SETPKGPATH) TYPE(*CHAR) LEN(4)
              DCL        VAR(&CMDLINE) TYPE(*CHAR) LEN(5000)
              DCL        VAR(&INPUTFILE) TYPE(*CHAR) LEN(255)
@@ -69,6 +74,12 @@
 /*----------------------------------------------------------------------------*/
 /* MAIN                                                                       */
 /*----------------------------------------------------------------------------*/
+
+/*----------------------------------------------------------------------------*/
+/* Extract output queue info.                                                 */
+/*----------------------------------------------------------------------------*/
+             CHGVAR     VAR(&PRTOUTQ) VALUE(%SST(&PRTOUTQALL 1 10))
+             CHGVAR     VAR(&PRTOUTQLIB) VALUE(%SST(&PRTOUTQALL 11 10))
 
 /*----------------------------------------------------------------------------*/
 /* If copying results to IFS and IFS file is blank, bail out.                 */
@@ -217,9 +228,19 @@ DONECOMP:
              IF         COND(&PRTSTDOUT *EQ *YES) THEN(DO)
 
              /* PRINT STDOUT LOG NOW */
+             /* Override without specific outq */
+             IF         COND(&PRTOUTQ *EQ *SAME) THEN(DO)
              OVRPRTF    FILE(QSYSPRT) TOFILE(QSYSPRT) PAGESIZE(198) +
-                          PRTTXT(&PRTTXT) HOLD(*YES) +
+                          PRTTXT(&PRTTXT) HOLD(&PRTHOLD) +
                           USRDTA(&PRTUSRDTA) SPLFNAME(&PRTSPLF)
+             ENDDO
+             IF         COND(&PRTOUTQ *NE *SAME) THEN(DO)
+             /* Override with specific outq */
+             OVRPRTF    FILE(QSYSPRT) TOFILE(QSYSPRT) PAGESIZE(198) +
+                          PRTTXT(&PRTTXT) +
+                          OUTQ(&PRTOUTQLIB/&PRTOUTQ) HOLD(&PRTHOLD) +
+                          USRDTA(&PRTUSRDTA) SPLFNAME(&PRTSPLF)
+             ENDDO
 
              CPYF       FROMFILE(QTEMP/STDOUTQSH) TOFILE(QSYSPRT)
              DLTOVR     FILE(QSYSPRT)
@@ -291,9 +312,32 @@ ERRORS:
              IF         COND(&PRTSTDOUT *EQ *YES) THEN(DO)
 
              /* PRINT STDOUT LOG NOW */
+             /* Override without specific outq */
+             IF         COND(&PRTOUTQ *EQ *SAME) THEN(DO)
              OVRPRTF    FILE(QSYSPRT) TOFILE(QSYSPRT) PAGESIZE(198) +
-                          PRTTXT(&PRTTXT) HOLD(*YES) +
+                          PRTTXT(&PRTTXT) HOLD(&PRTHOLD) +
                           USRDTA(&PRTUSRDTA) SPLFNAME(&PRTSPLF)
+             /* Prevent endless loop if OVRPRTF fails */
+             MONMSG     MSGID(CPF0000) EXEC(DO)
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Error +
+                          overriding print file - QSHEXEC +
+                          cancelled') MSGTYPE(*ESCAPE)
+             ENDDO
+             ENDDO
+             IF         COND(&PRTOUTQ *NE *SAME) THEN(DO)
+             /* Override with specific outq */
+             OVRPRTF    FILE(QSYSPRT) TOFILE(QSYSPRT) PAGESIZE(198) +
+                          PRTTXT(&PRTTXT) +
+                          OUTQ(&PRTOUTQLIB/&PRTOUTQ) HOLD(&PRTHOLD) +
+                          USRDTA(&PRTUSRDTA) SPLFNAME(&PRTSPLF)
+             /* Prevent endless loop if OVRPRTF fails */
+             MONMSG     MSGID(CPF0000) EXEC(DO)
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Error +
+                          overriding print file - QSHEXEC +
+                          cancelled') MSGTYPE(*ESCAPE)
+             ENDDO
+             ENDDO
+
              CPYF       FROMFILE(QTEMP/STDOUTQSH) TOFILE(QSYSPRT)
              DLTOVR     FILE(QSYSPRT)
 
