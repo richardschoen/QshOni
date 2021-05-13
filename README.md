@@ -138,9 +138,13 @@ The following example runs an SQL query with db2util and exports the results as 
 
 **PRTSPLF** - This option holds the name of the spool file used when PRTSTDOUT = *YES. It's a nice way to customize the stdout log prints. ***Default = QSHEXECLOG***
 
-**PRTUSRDTA** - This option holds the name of the spool file user data used when PRTSTDOUT = *YES. ***Default = *NONE.***
+**PRTUSRDTA** - This option holds the name of the spool file user data used when PRTSTDOUT = *YES. ***Default = *NONE ***
 
-**PRTTXT** - This option holds the name of the spool file print txt to be used when PRTSTDOUT = *YES. ***Default = *NONE.***
+**PRTTXT** - This option holds the name of the spool file print txt to be used when PRTSTDOUT = *YES. ***Default = *NONE ***
+
+**PRTHOLD** - This option determines if the spool file is held if one is generated when PRTSTDOUT = *YES. ***Default = *YES ***
+
+**PRTOUTQ** - This option determines the output queue where the spool file will generated to when PRTSTDOUT = *YES. ***Default = *SAME ***
 
 
 # Using the QSHBASH CL command to call a bash command sequence
@@ -197,9 +201,13 @@ The command is a convenience wrapper that can be used to call a bash command wit
 
 **PRTSPLF** - This option holds the name of the spool file used when PRTSTDOUT = *YES. It's a nice way to customize the stdout log prints. ***Default = QSHBASHLOG***
 
-**PRTUSRDTA** - This option holds the name of the spool file user data used when PRTSTDOUT = *YES. ***Default = *NONE.***
+**PRTUSRDTA** - This option holds the name of the spool file user data used when PRTSTDOUT = *YES. ***Default = *NONE ***
 
-**PRTTXT** - This option holds the name of the spool file print txt to be used when PRTSTDOUT = *YES. ***Default = *NONE.***
+**PRTTXT** - This option holds the name of the spool file print txt to be used when PRTSTDOUT = *YES. ***Default = *NONE ***
+
+**PRTHOLD** - This option determines if the spool file is held if one is generated when PRTSTDOUT = *YES. ***Default = *YES ***
+
+**PRTOUTQ** - This option determines the output queue where the spool file will generated to when PRTSTDOUT = *YES. ***Default = *SAME ***
 
 
 # Using the QSHPYRUN CL command to run a Python script via QSHEXEC
@@ -257,9 +265,13 @@ The following example calls a helloworld.py script that write to STDOUT
 
 **PRTSPLF** - This option holds the name of the spool file used when PRTSTDOUT = *YES. It's a nice way to customize the stdout log prints. ***Default = QSHEXECLOG***
 
-**PRTUSRDTA** - This option holds the name of the spool file user data used when PRTSTDOUT = *YES. ***Default = *NONE.***
+**PRTUSRDTA** - This option holds the name of the spool file user data used when PRTSTDOUT = *YES. ***Default = *NONE ***
 
-**PRTTXT** - This option holds the name of the spool file print txt to be used when PRTSTDOUT = *YES. ***Default = *NONE.***
+**PRTTXT** - This option holds the name of the spool file print txt to be used when PRTSTDOUT = *YES. ***Default = *NONE ***
+
+**PRTHOLD** - This option determines if the spool file is held if one is generated when PRTSTDOUT = *YES. ***Default = *YES ***
+
+**PRTOUTQ** - This option determines the output queue where the spool file will generated to when PRTSTDOUT = *YES. ***Default = *SAME ***
 
 
 # Using the QSHLOGSCAN CL command to scan the stdout outfile for the selected value after QSHEXEC has completed. 
