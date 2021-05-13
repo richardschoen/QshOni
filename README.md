@@ -269,7 +269,7 @@ The command returns a CPF9898 excape message if value not found. Otherwise a CPF
 The following example scans the outfile log in file QTEMP/STDOUTQSH for a file named test.txt: 
 
  ```
-      QSHLOGSCAN SCANFOR('test.txt')   
+      QSHLOGSCAN SCANFOR('successfully')   
       EXACTMATCH(*YES)         
 ```      
 
