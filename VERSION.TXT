@@ -17,3 +17,10 @@ V1.0.4 - 3/3/2021
 V1.0.5 - 4/11/2021                                        
 -Added QSHIFSCHK to check for IFS files.                  
 -Added QSHPYRUN command to run Python shell scripts.      
+V1.0.6 - 5/13/2021                                                    
+-Added PRTHOLD parm to QSHEXEC, QSHBASH and QSHPYRUN to optionally    
+ hold the printer spool file when generated. Previously it was always 
+ HOLD-*YES.                                                           
+-Added PRTOUTQ parm to QSHEXEC, QSHBASH and QSHPYRUN to optionally    
+ send spool output to a specific output queue. Default is *SAME which 
+ will use the current job output queue.                               
