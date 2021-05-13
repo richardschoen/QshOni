@@ -1,11 +1,16 @@
              PGM        PARM(&CMDLINE &SETPKGPATH &DSPSTDOUT +
                           &LOGSTDOUT &PRTSTDOUT &DLTSTDOUT +
                           &IFSSTDOUT &IFSFILE &IFSOPT &CCSID +
-                          &PRTSPLF &PRTUSRDTA &PRTTXT)
+                          &PRTSPLF &PRTUSRDTA &PRTTXT &PRTHOLD +
+                          &PRTOUTQALL)
 
 /*----------------------------------------------------------------------------*/
 /* Variables                                                                  */
 /*----------------------------------------------------------------------------*/
+             DCL        VAR(&PRTHOLD) TYPE(*CHAR) LEN(4)
+             DCL        VAR(&PRTOUTQALL) TYPE(*CHAR) LEN(20)
+             DCL        VAR(&PRTOUTQ) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&PRTOUTQLIB) TYPE(*CHAR) LEN(10)
              DCL        VAR(&CMDLINE) TYPE(*CHAR) LEN(5000)
              DCL        VAR(&BSHCMDLINE) TYPE(*CHAR) LEN(5000)
              DCL        VAR(&SETPKGPATH) TYPE(*CHAR) LEN(4)
@@ -29,6 +34,12 @@
              MONMSG     MSGID(CPF0000) EXEC(GOTO CMDLBL(ERRORS))
 
 /*----------------------------------------------------------------------------*/
+/* Extract output queue info.                                                 */
+/*----------------------------------------------------------------------------*/
+             CHGVAR     VAR(&PRTOUTQ) VALUE(%SST(&PRTOUTQALL 1 10))
+             CHGVAR     VAR(&PRTOUTQLIB) VALUE(%SST(&PRTOUTQALL 11 10))
+
+/*----------------------------------------------------------------------------*/
 /* MAIN                                                                       */
 /*----------------------------------------------------------------------------*/
 
@@ -46,7 +57,8 @@
                           IFSSTDOUT(&IFSSTDOUT) IFSFILE(&IFSFILE) +
                           IFSOPT(&IFSOPT) CCSID(&CCSID) +
                           PRTSPLF(&PRTSPLF) PRTUSRDTA(&PRTUSRDTA) +
-                          PRTTXT(&PRTTXT)
+                          PRTTXT(&PRTTXT) PRTHOLD(&PRTHOLD) +
+                          PRTOUTQ(&PRTOUTQLIB/&PRTOUTQ)
 
              SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('QShell +
                           bash command completed') MSGTYPE(*COMP)
