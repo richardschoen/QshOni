@@ -278,11 +278,11 @@ The following example calls a helloworld.py script that write to STDOUT
 
 The command returns a CPF9898 excape message if value not found. Otherwise a CPF9898 completion message. 
 
-The following example scans the outfile log in file QTEMP/STDOUTQSH for a file named test.txt: 
+The following example scans the outfile log in file QTEMP/STDOUTQSH for a text value of ***successfully*** somewhere in any line of the log file: 
 
  ```
       QSHLOGSCAN SCANFOR('successfully')   
-      EXACTMATCH(*YES)         
+      EXACTMATCH(*NO)         
 ```      
 
 # QSHLOGSCAN command parms
