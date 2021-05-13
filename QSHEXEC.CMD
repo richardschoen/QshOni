@@ -35,3 +35,13 @@
                           PROMPT('Print stdout user data')
              PARM       KWD(PRTTXT) TYPE(*CHAR) LEN(30) DFT(*NONE) SPCVAL((*NONE ' ')) CASE(*MIXED) +
                           PROMPT('Print stdout print text')
+             PARM       KWD(PRTHOLD) TYPE(*CHAR) LEN(4) RSTD(*YES) +
+                          DFT(*YES) VALUES(*NO *YES) SPCVAL((*NONE +
+                          ' ')) CASE(*MIXED) PROMPT('Print stdout +
+                          hold spool file')
+             PARM       KWD(PRTOUTQ) TYPE(QUAL2) MIN(1) +
+                          PROMPT('Print stdout to outq')
+ QUAL2:      QUAL       TYPE(*NAME) LEN(10) DFT(*SAME) +
+                          SPCVAL((*SAME)) EXPR(*YES)
+             QUAL       TYPE(*NAME) LEN(10) DFT(*LIBL) +
+                          SPCVAL((*LIBL)) EXPR(*YES) PROMPT('Library')
