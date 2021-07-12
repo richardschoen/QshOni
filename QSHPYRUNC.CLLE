@@ -192,9 +192,18 @@
 /*----------------------------------------------------------------------------*/
 /* Set python executable */
 /*----------------------------------------------------------------------------*/
-             IF         COND(&PYVERSION *NE '3') THEN(CHGVAR +
+             IF         COND(&PYVERSION *EQ '2') THEN(CHGVAR +
                           VAR(&PYEXE) VALUE(&PYPATH |< '/python2'))
+             IF         COND(&PYVERSION *EQ '2.7') THEN(CHGVAR +
+                          VAR(&PYEXE) VALUE(&PYPATH |< '/python2.7'))
              IF         COND(&PYVERSION *EQ '3') THEN(CHGVAR +
+                          VAR(&PYEXE) VALUE(&PYPATH |< '/python3'))
+             IF         COND(&PYVERSION *EQ '3.6') THEN(CHGVAR +
+                          VAR(&PYEXE) VALUE(&PYPATH |< '/python3.6'))
+             IF         COND(&PYVERSION *EQ '3.9') THEN(CHGVAR +
+                          VAR(&PYEXE) VALUE(&PYPATH |< '/python3.9'))
+             /* Catch all set to python3 if bal version passed */
+             IF         COND(&PYEXE *EQ ' ') THEN(CHGVAR +
                           VAR(&PYEXE) VALUE(&PYPATH |< '/python3'))
 
 /*----------------------------------------------------------------------------*/
@@ -300,4 +309,4 @@
              SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Python +
                           script' |> &SCRIPTFILE |> 'failed. See +
                           the joblog or stdout log') MSGTYPE(*ESCAPE)
-             ENDPGM
+             ENDPGM 
