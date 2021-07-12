@@ -24,3 +24,6 @@ V1.0.6 - 5/13/2021
 -Added PRTOUTQ parm to QSHEXEC, QSHBASH and QSHPYRUN to optionally    
  send spool output to a specific output queue. Default is *SAME which 
  will use the current job output queue.                               
+V1.0.7 - 7/13/2021                                                    
+-Added various python version numbers to QSHPYRUN/QSHPYRYNC to handle 
+ the new Python 3.9 being installed side-by-side with 3.6.            
