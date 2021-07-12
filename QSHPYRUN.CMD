@@ -9,8 +9,9 @@
                           MAX(40) EXPR(*YES) CASE(*MIXED) +
                           INLPMTLEN(32) PROMPT('Python command line +
                           arguments')
-             PARM       KWD(PYVERSION) TYPE(*CHAR) LEN(5) RSTD(*YES) +
-                          DFT(3) VALUES(2 3) CASE(*MIXED) +
+             PARM       KWD(PYVERSION) TYPE(*CHAR) LEN(5) RSTD(*NO) +
+                          DFT(3) SPCVAL((2 2) (2.7 2.7) (3 3) (3.6 +
+                          3.6) (3.9 3.9)) CASE(*MIXED) +
                           PROMPT('Python version')
              PARM       KWD(PYPATH) TYPE(*CHAR) LEN(255) +
                           DFT(*DEFAULT) +
@@ -63,4 +64,4 @@
  QUAL2:      QUAL       TYPE(*NAME) LEN(10) DFT(*SAME) +
                           SPCVAL((*SAME)) EXPR(*YES)
              QUAL       TYPE(*NAME) LEN(10) DFT(*LIBL) +
-                          SPCVAL((*LIBL)) EXPR(*YES) PROMPT('Library')
+                          SPCVAL((*LIBL)) EXPR(*YES) PROMPT('Library') 
