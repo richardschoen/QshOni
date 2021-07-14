@@ -281,6 +281,9 @@ The command returns a CPF9898 excape message if value not found. Otherwise a CPF
 The following example scans the outfile log in file QTEMP/STDOUTQSH for a text value of ***successfully*** somewhere in any line of the log file output: 
 
  ```
+      MONMSG MSGID(CPF9898) EXEC(DO)
+      SNDPGMMSG MSG('Did not find string of success in program output.') TOUSR(RICHARD)
+      ENDDO 
       QSHLOGSCAN SCANFOR('successfully')   
       EXACTMATCH(*NO)         
 ```      
