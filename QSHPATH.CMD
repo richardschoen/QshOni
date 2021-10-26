@@ -5,3 +5,7 @@
                           '/QOpenSys/pkgs/bin') (*DEFAULT +
                           '/QOpenSys/pkgs/bin')) CASE(*MIXED) +
                           PROMPT('Open source package path')
+             PARM       KWD(PATHLOC) TYPE(*CHAR) LEN(10) RSTD(*YES) +
+                          DFT(*DTAARA) VALUES(*DTAARA *BEGIN *END) +
+                          CASE(*MONO) PROMPT('Open source path +
+                          location')
