@@ -93,6 +93,14 @@ CURFILE="QSHDEMO01R.RPGLE"
 SRCTEXT="Read Outfile STDOUTQSH and display via DSPLY cmd"
 cpy_member
 
+CURFILE="QSHQRYTMP.CMD"
+SRCTEXT="SQL Query Data to Selected Temp Table with RUNSQL"
+cpy_member
+
+CURFILE="QSHQRYTMPC.CLP"
+SRCTEXT="SQL Query Data to Selected Temp Table with RUNSQL"
+cpy_member
+
 CURFILE="SRCBLDC.CLP"
 SRCTEXT="Build cmds from QSHONI/SOURCE file"   
 cpy_member
