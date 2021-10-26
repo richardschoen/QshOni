@@ -101,7 +101,7 @@
                           VALUE('/QOpenSys/pkgs/bin') TEXT('Path to +
                           Python Binaries')
 
- /* Create and set data area for open source path loc - 1.09 */
+ /* Create and set data area for open source path loc - 1.0.9 */
              CRTDTAARA  DTAARA(QSHONI/QSHPATHLOC) TYPE(*CHAR) +
                           LEN(10) VALUE('*BEGIN') TEXT('Path +
                           position for open source packages')
