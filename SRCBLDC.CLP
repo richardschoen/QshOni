@@ -6,7 +6,7 @@
                           VALUE(QSHONI)
              DCL        VAR(&TGTRLS) TYPE(*CHAR) LEN(10) +
                           VALUE(*CURRENT)
-             DCL        VAR(&VERSION) TYPE(*CHAR) LEN(30) VALUE(V1.0.7)
+             DCL        VAR(&VERSION) TYPE(*CHAR) LEN(30) VALUE(V1.0.9)
 
  /* Add libraries to library list */
              ADDLIBLE   LIB(&DESTLIB)
@@ -71,6 +71,14 @@
                           SRCFILE(&DESTLIB/&DESTFILE) REPLACE(*NO) +
                           TGTRLS(&TGTRLS) /* V1.0.5 */
 
+             CRTCMD     CMD(&DESTLIB/QSHQRYTMP) PGM(QSHQRYTMPC) +
+                          SRCFILE(&DESTLIB/&DESTFILE) +
+                          PRDLIB(&DESTLIB) /* V1.0.8 */
+
+             CRTCLPGM   PGM(&DESTLIB/QSHQRYTMPC) +
+                          SRCFILE(&DESTLIB/&DESTFILE) REPLACE(*NO) +
+                          TGTRLS(&TGTRLS) /* V1.0.8 */
+
  /* Create message file for any custom CPF messages */
  /* Initial use case is to log STDOUT msgs with own CPF ID    */
              CRTMSGF    MSGF(&DESTLIB/QSHMSG) TEXT('Qshell CPF +
@@ -92,6 +100,11 @@
              CRTDTAARA  DTAARA(QSHONI/PYPATH) TYPE(*CHAR) LEN(255) +
                           VALUE('/QOpenSys/pkgs/bin') TEXT('Path to +
                           Python Binaries')
+
+ /* Create and set data area for open source path loc - 1.09 */
+             CRTDTAARA  DTAARA(QSHONI/QSHPATHLOC) TYPE(*CHAR) +
+                          LEN(10) VALUE('*BEGIN') TEXT('Path +
+                          position for open source packages')
 
  /* Change library desc to match the version */
              CHGLIB     LIB(QSHONI) TEXT('QShell on IBM i -' |> +
