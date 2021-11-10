@@ -3,10 +3,10 @@ uses: appleboy/ssh-action@master
 with:
   host: ${{ secrets.IBMISYS1 }}
   username: ${{ secrets.IBMIUSER }}
-  password: ${{ secrets.IBMIPASSWORD }}
-  port: 22
+  password: ${{ secrets.IBMIPASS }}
+  port: 63805
   # no inheriting env vars, must be passed through
 envs: GIT_BRANCH  
- script: |
-  echo Running on branch $GIT_BRANCH
+ script:
+  system "SNDMSG MSG(GITACTION) TOUSR(QSYSOPR)"
   
