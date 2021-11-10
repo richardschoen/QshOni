@@ -209,13 +209,14 @@ DONECOMP:
 
              /* If copying results to IFS, do it now */
              /* We copy from STDOUTQSH in QTEMP to IFS log */
+             /* V1.0.10 - Added AUT(*INDOR) */
              IF         COND(&IFSSTDOUT *EQ *YES) THEN(DO)
              CPYTOSTMF  +
                           FROMMBR('/QSYS.LIB/QTEMP.LIB/STDOUTQSH.FILE+
                           /STDOUTQSH.MBR') TOSTMF(&IFSFILE) +
                           STMFOPT(&IFSOPT) CVTDTA(*AUTO) +
                           STMFCCSID(*PCASCII) ENDLINFMT(*LF) +
-                          STMFCODPAG(*STMF)
+                          AUT(*INDIR) STMFCODPAG(*STMF)
              /* Prevent endless loop if CPYTOSTMF fails */
              MONMSG     MSGID(CPF0000) EXEC(DO)
              SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Error +
@@ -293,13 +294,14 @@ ERRORS:
 
              /* If copying results to IFS, do it now */
              /* We copy from STDOUTQSH in QTEMP to IFS log */
+             /* V1.0.10 - Added AUT(*INDOR) */
              IF         COND(&IFSSTDOUT *EQ *YES) THEN(DO)
              CPYTOSTMF  +
                           FROMMBR('/QSYS.LIB/QTEMP.LIB/STDOUTQSH.FILE+
                           /STDOUTQSH.MBR') TOSTMF(&IFSFILE) +
                           STMFOPT(&IFSOPT) CVTDTA(*AUTO) +
                           STMFCCSID(*PCASCII) ENDLINFMT(*LF) +
-                          STMFCODPAG(*STMF)
+                          AUT(*INDIR) STMFCODPAG(*STMF)
              /* Prevent endless loop if CPYTOSTMF fails */
              MONMSG     MSGID(CPF0000) EXEC(DO)
              SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Error +
