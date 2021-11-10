@@ -27,3 +27,12 @@ V1.0.6 - 5/13/2021
 V1.0.7 - 7/13/2021                                                    
 -Added various python version numbers to QSHPYRUN/QSHPYRYNC to handle 
  the new Python 3.9 being installed side-by-side with 3.6.            
+V1.0.8 - 7/16/2021                                                   
+-Added QSHQRYTMP command to use SQL to create temp files as needed.  
+V1.0.9 - 10/26/2021                                                  
+-Added parm to QSHPATH to place open source package path at begin or 
+ end of the PATH as set in the QSHPATHLOC data area. DFT=*BEGIN      
+V1.0.10 - 11/10/2021                                                 
+-Added parm AUT(*INDIR) to CPYTOSTMF commands in QSHEXECC. This will 
+ inherit output directory permissions when a log file is copied.     
+ Default CPYTOSTMF behavior (*DFT) is to set *PUBLIC access to *NONE.
