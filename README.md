@@ -296,6 +296,38 @@ The following example scans the outfile log in file QTEMP/STDOUTQSH for a text v
 
 **EXACTMATCH** - *YES - Value must match exactly and be the only thing on the selected line. *NO - At least one line must contain the value somewhere in the line. Good for generic matching.
 
+# Using the QSHQRYTMP CL command to run a SELECT query and output the results to an OUTFILE. 
+
+The command returns a CPF9898 excape message on error. Otherwise a CPF9898 completion message. 
+
+The following example queries all the records from table QIWS/QCUSCTDT and places the result in to an output table named: SQLTMP0001 in library QTEMP.
+
+ ```
+      QSHQRYTMP SQL('SELECT * FROM QIWS/QCUSTCDT')   
+           OUTFILE(SQLTMP0001)                  
+           EMPTYERROR(*YES)                     
+           PROMPT(*NO)                          
+```      
+
+# QSHQRYTMP command parms
+
+**Overview** - This CL command is a convenience command that can be used to run an SQL data selection query and create an outfile of resulting data. 
+
+**SQL** - Enter an SQL SELECT statement to query some specific data.
+
+**OUTFILE** - This is the output file/table where data gets selected in to via an SQL query. The table will get automatically created as a result of the query if it doesn't exist. 
+
+**EMPTYERROR** - This parameter determines whether a CPF9898 escape message is thrown if no records were selected by the query. *YES - Throw an escape message if no records. *NO - Don't throw an error if no records selected. Default - *YES
+
+**PROMPT** - This parameter will interactively prompt the RUNSQL statement if desired. Only use this parameter in an interactive 5250 session. *YES - Prompt for RUNSQL command. *NO - Do not prompt for RUNSQL. Default - *NO
+
+Note: The following data areas are auto-created in the current job library QTEMP to track resulting query info. You can retreive a resulting record count or the name of the outfile to check for existence in case it didn't get created for some reason such as query failure.
+```
+SQLQRYCNT - Query result record count. 
+SQLQRYFIL - Output file created by the query.
+SQLQRYLIB - Output file library for the file created by the query.
+```
+
 # QSHPATH command parms
 
 **Overview** - This CL command is a convenience command to add the IBM i Open Source packages directory name to the PATH environment variable.
