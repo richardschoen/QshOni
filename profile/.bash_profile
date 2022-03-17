@@ -1,0 +1,10 @@
+export PATH=/QOpenSys/pkgs/bin:/QOpenSys/pkg/lib:$PATH            
+# Always execute the .bashrc script when logging in with bash as  
+# default profile which will execute .base_profile upon login.    
+# If default shell is QSH, .bashrc will execute when user calls   
+# the bash command.                                               
+# This keeps all actual path logic in the .bashrc file.           
+# non-shell user                                                  
+if [ -f ~/.bashrc ]; then                                         
+ . ~/.bashrc                                                      
+fi                                                                
