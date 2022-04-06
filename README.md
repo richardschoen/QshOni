@@ -210,6 +210,61 @@ The command is a convenience wrapper that can be used to call a bash command wit
 **PRTOUTQ** - This option determines the output queue where the spool file will generated to when PRTSTDOUT = *YES. ***Default = *SAME ***
 
 
+# Using the QSHCURL CL command to call a curl command sequence
+
+The following example calls the curl command to download the google home page site contents to an IFS file. You only need to pass the parms after curl
+
+ ```
+      QSHCURL CMDLINE('http://www.google.com -o /tmp/curlout.txt')   
+      DSPSTDOUT(*YES)         
+      LOGSTDOUT(*NO)          
+      PRTSTDOUT(*NO)          
+      DLTSTDOUT(*YES)
+      IFSSTDOUT(*NO)
+      IFSFILE('/tmp/log.txt)
+      IFSOPT(*REPLACE)
+      PRTSPLF(QSHEXECLOG) 
+      PRTUSRDTA(*NONE)    
+      PRTTXT(*NONE)       
+```
+
+# QSHCURL command parms
+
+**Overview** - This CL command can be used to run a PASE curl command and log the results appropriately. 
+
+The command is a convenience wrapper that can be used to call a curl command with QSHEXEC instead of having to type the following full curl command sequence prefix on a QSHEXEC command line: ***curl http://www.sitename.com -o /tmp/curlout.txt***
+
+**CMDLINE** - Curl command line parameters.
+
+**SETPKGPATH** - Add the IBM i Open Source Package path to PATH environment variable by calling QSHPATH command before running QSH/PASE commands. Default = *YES.
+
+**DSPSTDOUT** - Display the outfile contents. Nice when debugging. 
+
+**LOGSTDOUT** - Place STDOUT log entries into the current jobs job log. Use this if you want the log info in the IBM i joblog. All STDOUT entries are written as CPF message: **QSS9898**
+
+**PRTSTDOUT** - Print STDOUT to a spool file. Use this if you want a spool file of the log output.
+
+**DLTSTDOUT** - This option insures that the STDOUT IFS temp files get cleaned up after processing. All IFS log files get created in the /tmp/qsh directory.
+
+**IFSSTDOUT** - Copy std output to an IFS file. Nice for aggregating log results to a file.
+
+**IFSFILE** - IFS file for stdout results. Needs to be specified if IFSSTDOUT = *YES.
+
+**IFSOPT** - IFS file option. *REPLACE = replace stdout IFS file. *ADD = Add to stdout IFS file.
+
+**CCSID** - When using the iToolkit component for command access, I originally had some issues with CL commands not working correctly. However I don't currently remember exactly why. This may have been solved, however I recommend still passing a value of 37 unless you are in a non US country. If you set to `*SAME`, the CCSID will stay the same as your current job with no change.
+
+**PRTSPLF** - This option holds the name of the spool file used when PRTSTDOUT = *YES. It's a nice way to customize the stdout log prints. ***Default = QSHBASHLOG***
+
+**PRTUSRDTA** - This option holds the name of the spool file user data used when PRTSTDOUT = *YES. ***Default = *NONE ***
+
+**PRTTXT** - This option holds the name of the spool file print txt to be used when PRTSTDOUT = *YES. ***Default = *NONE ***
+
+**PRTHOLD** - This option determines if the spool file is held if one is generated when PRTSTDOUT = *YES. ***Default = *YES ***
+
+**PRTOUTQ** - This option determines the output queue where the spool file will generated to when PRTSTDOUT = *YES. ***Default = *SAME ***
+
+
 # Using the QSHPYRUN CL command to run a Python script via QSHEXEC
 
 The following example calls a helloworld.py script that write to STDOUT
