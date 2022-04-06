@@ -228,6 +228,12 @@ The following example calls the curl command to download the google home page si
       PRTTXT(*NONE)       
 ```
 
+The following example calls the curl command with the --help flag to display the curl parms available
+
+```
+QSHCURL CMDLINE('--help') DSPSTDOUT(*YES) 
+```
+
 # QSHCURL command parms
 
 **Overview** - This CL command can be used to run a PASE curl command and log the results appropriately. 
