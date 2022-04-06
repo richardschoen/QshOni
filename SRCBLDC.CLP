@@ -79,6 +79,14 @@
                           SRCFILE(&DESTLIB/&DESTFILE) REPLACE(*NO) +
                           TGTRLS(&TGTRLS) /* V1.0.8 */
 
+             CRTCMD     CMD(&DESTLIB/QSHCURL) PGM(QSHCURLC) +
+                          SRCFILE(&DESTLIB/&DESTFILE) +
+                          PRDLIB(&DESTLIB) /* V1.0.12 */
+
+             CRTCLPGM   PGM(&DESTLIB/QSHCURLC) +
+                          SRCFILE(&DESTLIB/&DESTFILE) REPLACE(*NO) +
+                          TGTRLS(&TGTRLS) /* V1.0.12 */
+
  /* Create message file for any custom CPF messages */
  /* Initial use case is to log STDOUT msgs with own CPF ID    */
              CRTMSGF    MSGF(&DESTLIB/QSHMSG) TEXT('Qshell CPF +
