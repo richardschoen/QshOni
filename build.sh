@@ -101,6 +101,15 @@ CURFILE="QSHQRYTMPC.CLP"
 SRCTEXT="SQL Query Data to Selected Temp Table with RUNSQL"
 cpy_member
 
+CURFILE="QSHCURL.CMD"
+SRCTEXT="Run Curl Command via QShell"
+cpy_member
+
+CURFILE="QSHCURLC.CLP"
+SRCTEXT="Run Curl Command via QShell"
+cpy_member
+
+
 CURFILE="SRCBLDC.CLP"
 SRCTEXT="Build cmds from QSHONI/SOURCE file"   
 cpy_member
