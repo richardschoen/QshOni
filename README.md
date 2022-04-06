@@ -241,7 +241,7 @@ QSHCURL CMDLINE('--help') DSPSTDOUT(*YES)
 The command is a convenience wrapper that can be used to call a curl command with QSHEXEC instead of having to type the following full curl command sequence prefix on a QSHEXEC command line: ***curl http://www.sitename.com -o /tmp/curlout.txt***
 
 ```
-curl must ne installed in your PASE/QSH environment in /QOpensys/pkgs/bin before this will work
+curl must be installed in your PASE/QSH environment in /QOpensys/pkgs/bin before this will work
 To install curl from qshell/bash:  yum install curl
 ```
 
