@@ -36,13 +36,12 @@ V1.0.10 - 11/10/2021
 -Added parm AUT(*INDIR) to CPYTOSTMF commands in QSHEXECC. This will 
  inherit output directory permissions when a log file is copied.     
  Default CPYTOSTMF behavior (*DFT) is to set *PUBLIC access to *NONE.
- V1.0.11 - 03/16/2022
+V1.0.11 - 03/16/2022
 -Added QSHSETPROF command to create default PASE profile files
  .profile, .bash_profile and .bashrc for the selected user.
  The .profile sets default paths for STRQSH or default SSH shell.
  .bash_profile sets default paths for bash when it's default SSH shell.
  .bashrc sets default paths for bash when bash called from SSH shell
  and bash is not the default shell.
- ```V1.0.11 Changes Not released Yet```
 V1.0.12 - 04/06/2022
 -Created QSHCURL command to run the curl command.
