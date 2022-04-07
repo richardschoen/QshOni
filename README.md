@@ -399,3 +399,40 @@ SQLQRYLIB - Output file library for the file created by the query.
 **Overview** - This CL command is a convenience command to add the IBM i Open Source packages directory name to the PATH environment variable.
 
 **PKGPATH** - Specify IFS location to open source packages. ***DEFAULT = /QOpenSys/pkgs/bin**
+
+# QSHSETPROF command parms
+
+**Overview** - This CL command is a convenience command to create open source profile files for a selected user ID in their home directory.
+
+The following example creates the QShell/PASE .profile, .bashrc and .bash_rc files for the USER1 user ID.
+
+ ```
+     QSHSETPROF USER(USER1)     
+           PROFILE(*YES)   
+           BASHPROFIL(*YES)
+           BASHRC(*YES)    
+           REPLACE(*NO)   
+```      
+
+The following example creates or replaces the QShell/PASE .profile, .bashrc and .bash_rc files for the USER1 user ID.
+
+ ```
+     QSHSETPROF USER(USER1)     
+           PROFILE(*YES)   
+           BASHPROFIL(*YES)
+           BASHRC(*YES)    
+           REPLACE(*YES)   
+```      
+
+**USER** - Specify an existing user profile you want to create profile files for.
+
+**PROFILE** - This parameter is used to create a new .profile file for the selected user in /home/USERID. *YES - Create .profile. *NO - Don't create .profile. Default - *YES
+
+**BASHPROFIL** - This parameter is used to create a new .bash_profile file for the selected user in /home/USERID. *YES - Create .bash_profile. *NO - Don't create .bash_profile. Default - *YES
+
+**BASHRC** - This parameter is used to create a new .bashrc file for the selected user in /home/USERID. *YES - Create .bashrc. *NO - Don't create .bashrc. Default - *YES
+
+**REPLACE** - This parameter is used to replace .profile, .bashrc or .bash_profile if they exist. *YES - Replace files if found. *NO - Don't replace files if found. Default - *NO
+
+
+
