@@ -79,6 +79,14 @@
                           SRCFILE(&DESTLIB/&DESTFILE) REPLACE(*NO) +
                           TGTRLS(&TGTRLS) /* V1.0.8 */
 
+             CRTCMD     CMD(&DESTLIB/QSHSETPROF) PGM(QSHSETPROC) +
+                          SRCFILE(&DESTLIB/&DESTFILE) +
+                          PRDLIB(&DESTLIB) /* V1.0.11 */
+
+             CRTCLPGM   PGM(&DESTLIB/QSHSETPROC) +
+                          SRCFILE(&DESTLIB/&DESTFILE) REPLACE(*NO) +
+                          TGTRLS(&TGTRLS) /* V1.0.11 */
+
              CRTCMD     CMD(&DESTLIB/QSHCURL) PGM(QSHCURLC) +
                           SRCFILE(&DESTLIB/&DESTFILE) +
                           PRDLIB(&DESTLIB) /* V1.0.12 */
