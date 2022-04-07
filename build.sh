@@ -109,6 +109,25 @@ CURFILE="QSHCURLC.CLP"
 SRCTEXT="Run Curl Command via QShell"
 cpy_member
 
+CURFILE="QSHSETPROC.CLP"
+SRCTEXT="Set up .profile, .bash_profile and .bashrc files"
+cpy_member
+
+CURFILE="QSHSETPROF.CMD"
+SRCTEXT="Set up .profile, .bash_profile and .bashrc files"
+cpy_member
+
+CURFILE="QSHBASHRC.TXT"
+SRCTEXT="User .bashrc bash template for Opn Src Pkgs"
+cpy_member
+
+CURFILE="QSHBASHPRF.TXT"
+SRCTEXT="User .bash_profile bash template for Opn Src Pkgs"
+cpy_member
+
+CURFILE="QSHPROFILE.TXT"
+SRCTEXT="User QShell .profile template for Opn Src Pkgs"
+cpy_member
 
 CURFILE="SRCBLDC.CLP"
 SRCTEXT="Build cmds from QSHONI/SOURCE file"   
