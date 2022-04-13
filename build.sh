@@ -7,6 +7,7 @@
 SRCLIB="QSHONI"
 SRCLIBTEXT="QShell on IBM i"
 SRCFILE="SOURCE"
+SRCCCSID="37"
 dashes="---------------------------------------------------------------------------"
 
 function cpy_member
@@ -16,7 +17,7 @@ function cpy_member
 # ----------------------------------------------------------------
   SRCMEMBER=`echo "${CURFILE^^}" | cut -d'.' -f1`  # Parse PC file name prefix to member name
   SRCTYPE=`echo "${CURFILE^^}" | cut -d'.' -f2`    # Parse PC file name extenstion to souce type
-  system -v "CPYFRMSTMF FROMSTMF('${PWD}/${CURFILE}') TOMBR('/QSYS.LIB/${SRCLIB}.LIB/${SRCFILE}.FILE/${SRCMEMBER}.MBR') MBROPT(*REPLACE)"
+  system -v "CPYFRMSTMF FROMSTMF('${PWD}/${CURFILE}') TOMBR('/QSYS.LIB/${SRCLIB}.LIB/${SRCFILE}.FILE/${SRCMEMBER}.MBR') MBROPT(*REPLACE) DBFCCSID(*FILE)"
   system -v "CHGPFM FILE(${SRCLIB}/${SRCFILE}) MBR($SRCMEMBER) SRCTYPE(${SRCTYPE}) TEXT('${SRCTEXT}')" 
 }
 
@@ -26,7 +27,7 @@ echo "Starting Build of ${SRCLIBTEXT} library ${SRCLIB}"
 # Create library, clear library and create source file 
 system -v "CRTLIB ${SRCLIB} TYPE(*PROD) TEXT('${SRCLIBTEXT}')"
 system -v "CLRLIB LIB(${SRCLIB})"
-system -v "CRTSRCPF FILE(${SRCLIB}/${SRCFILE}) RCDLEN(120)"
+system -v "CRTSRCPF FILE(${SRCLIB}/${SRCFILE}) RCDLEN(120) CCSID(${SRCCCSID})"
 
 # Copy all the source members and set source types
 CURFILE="QSHBASH.CMD"
