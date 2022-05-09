@@ -5,7 +5,7 @@ The main benefit of this wrapper is to be able to integrate Qshell/Pase applicat
 
 There are several ways to build the library. Pick your favorite.
 
-# Installing and Building QSHONI via getrepo-qshoni.sh script
+# Installing and Building QSHONI via getrepo-qshoni.sh script ***(Important to change SRCCCSID variable in build.sh to your local CCSID before running build.sh)***
 
 Use this install script if you want to run a single shell script to clone the repo and build the library.  
 https://github.com/richardschoen/QshOni/blob/master/getrepo-qshoni.sh
@@ -19,7 +19,7 @@ https://github.com/richardschoen/QshOni/blob/master/getrepo-qshoni.sh
 bash getrepo-qshoni.sh
 ```
 
-# Installing and Building QSHONI via Git clone and build.sh ***Default CCSID is 37. Change to your own local CCSID in build.sh if needed ***
+# Installing and Building QSHONI via Git clone and build.sh ***(Important to change SRCCCSID variable in build.sh to your local CCSID before running build.sh)***
 ```
 # Use this install method if you want to manually run each command from a QSH/PASE/SSH shell.
 mkdir /qshoni
@@ -50,7 +50,7 @@ Restore the QSHONI library
 
 `RSTLIB SAVLIB(QSHONI) DEV(*SAVF) SAVF(QGPL/QSHONI)`
 
-Build the QSHONI commands ***Important co CHGGJOB CCSID(37) if building from SAVF***
+Build the QSHONI commands ***(Important co CHGJOB CCSID(37) before building from SAVF)***
 
 `CHGJOB CCSID(37)`
 
@@ -79,7 +79,7 @@ Restore the QSHONI library
 
 `RSTLIB SAVLIB(QSHONI) DEV(*SAVF) SAVF(QGPL/QSHONI)`
 
-Build the QSHONI commands ***Important co CHGGJOB CCSID(37) if building from SAVF***
+Build the QSHONI commands ***(Important co CHGJOB CCSID(37) before building from SAVF)***
 
 `CHGJOB CCSID(37)`
 
