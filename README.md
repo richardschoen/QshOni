@@ -19,7 +19,7 @@ https://github.com/richardschoen/QshOni/blob/master/getrepo-qshoni.sh
 bash getrepo-qshoni.sh
 ```
 
-# Installing and Building QSHONI via Git clone and build.sh
+# Installing and Building QSHONI via Git clone and build.sh ***Default CCSID is 37. Change to your own local CCSID in build.sh if needed ***
 ```
 # Use this install method if you want to manually run each command from a QSH/PASE/SSH shell.
 mkdir /qshoni
@@ -50,7 +50,9 @@ Restore the QSHONI library
 
 `RSTLIB SAVLIB(QSHONI) DEV(*SAVF) SAVF(QGPL/QSHONI)`
 
-Build the QSHONI commands
+Build the QSHONI commands ***Important co CHGGJOB CCSID(37) if building from SAVF***
+
+`CHGJOB CCSID(37)`
 
 `ADDLIBLE QSHONI`
 
@@ -77,7 +79,9 @@ Restore the QSHONI library
 
 `RSTLIB SAVLIB(QSHONI) DEV(*SAVF) SAVF(QGPL/QSHONI)`
 
-Build the QSHONI commands
+Build the QSHONI commands ***Important co CHGGJOB CCSID(37) if building from SAVF***
+
+`CHGJOB CCSID(37)`
 
 `ADDLIBLE QSHONI`
 
