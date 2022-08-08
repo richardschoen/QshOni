@@ -110,6 +110,14 @@ CURFILE="QSHCURLC.CLP"
 SRCTEXT="Run Curl Command via QShell"
 cpy_member
 
+CURFILE="QSHPORTCHK.CMD"
+SRCTEXT="Check for active TCP/IP Local Port"
+cpy_member
+
+CURFILE="QSHPORTCHC.CLP"
+SRCTEXT="Check for active TCP/IP Local Port"
+cpy_member
+
 CURFILE="QSHSETPROC.CLP"
 SRCTEXT="Set up .profile, .bash_profile and .bashrc files"
 cpy_member
