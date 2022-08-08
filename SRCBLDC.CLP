@@ -6,7 +6,8 @@
                           VALUE(QSHONI)
              DCL        VAR(&TGTRLS) TYPE(*CHAR) LEN(10) +
                           VALUE(*CURRENT)
-             DCL        VAR(&VERSION) TYPE(*CHAR) LEN(30) VALUE(V1.0.12)
+             DCL        VAR(&VERSION) TYPE(*CHAR) LEN(30) +
+                          VALUE(V1.0.13)
 
  /* Add libraries to library list */
              ADDLIBLE   LIB(&DESTLIB)
@@ -94,6 +95,14 @@
              CRTCLPGM   PGM(&DESTLIB/QSHCURLC) +
                           SRCFILE(&DESTLIB/&DESTFILE) REPLACE(*NO) +
                           TGTRLS(&TGTRLS) /* V1.0.12 */
+
+             CRTCMD     CMD(&DESTLIB/QSHPORTCHK) PGM(QSHPORTCHC) +
+                          SRCFILE(&DESTLIB/&DESTFILE) +
+                          PRDLIB(&DESTLIB) /* V1.0.13 */
+
+             CRTCLPGM   PGM(&DESTLIB/QSHPORTCHC) +
+                          SRCFILE(&DESTLIB/&DESTFILE) REPLACE(*NO) +
+                          TGTRLS(&TGTRLS) /* V1.0.13 */
 
  /* Create message file for any custom CPF messages */
  /* Initial use case is to log STDOUT msgs with own CPF ID    */
