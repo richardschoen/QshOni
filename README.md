@@ -447,5 +447,22 @@ The following example creates or replaces the QShell/PASE .profile, .bashrc and 
 
 **REPLACE** - This parameter is used to replace .profile, .bashrc or .bash_profile if they exist. *YES - Replace files if found. *NO - Don't replace files if found. Default - *NO
 
+# QSHPORTCHK command parms
+
+**Overview** - This CL command is a convenience command to use DB2 services to check if the selected TCP/IP port has an application running on it.
+
+The following example checks to see if a Postgres server instance is running on port 5432. The command completes successfully if the port is active and sends a CPF9898 escape message if the port is not active. There's also a numeric data area in QTEMP named SQLQRYCNT that will be 0 if port is not active or non-zero if the port is active.
+
+ ```
+     QSHONI/QSHPORTCHK LOCALPORT(5432)     
+           CONNTYPE(IPV4)      
+           OUTFILE(TCPTMP001)  
+```      
+
+**LOCALPORT** - Specify a specific TCP/IP port number
+
+**CONNTYPE** - This parameter is used to specify the TCP/IP connection type of IPV4 or IPV6. Default - IPV4
+
+**OUTFILE** - This parameter is used to specify a temporary output file to create in QTEMP library for the job. Default name - TCPTMP001
 
 
