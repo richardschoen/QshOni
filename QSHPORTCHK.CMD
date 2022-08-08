@@ -1,4 +1,4 @@
-             CMD        PROMPT('Check for Active TCP/IP Ports')
+             CMD        PROMPT('Check for Active TCP/IP Port')
              PARM       KWD(LOCALPORT) TYPE(*DEC) LEN(5) RANGE(1 +
                           65535) MIN(1) EXPR(*YES) PROMPT('Local port')
              PARM       KWD(CONNTYPE) TYPE(*CHAR) LEN(4) RSTD(*YES) +
