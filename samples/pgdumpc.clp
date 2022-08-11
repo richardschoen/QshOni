@@ -1,4 +1,6 @@
-/* Text: Backup Postgres Database via pg_dump to tar format  */
+/* Member name: PGDUMPC  */
+/* Source type: CLP */
+/* Text: Backup Postgres Database via pg_dump to tar format */
 /* Postgres reference link: */
 /* https://www.tecmint.com/backup-and-restore-postgresql-database/   */
              PGM        PARM(&DATABASE &OUTPUTFILE &FORMAT &REPLACE)
