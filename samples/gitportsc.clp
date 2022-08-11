@@ -1,4 +1,7 @@
-
+/* Member name: GITPORTSC.CLP */
+/* Source type: CLP */
+/* Text: Check TCP Ports for POstgreSQL/GitBucket Servers */
+/* Purpose: Check to see if selected ports are active which means servers up and running*/
              PGM
 
 
