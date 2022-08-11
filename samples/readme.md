@@ -8,7 +8,7 @@ These commands are not shipped as part of the core QSHONI library code.
 
 Log in as the ```POSTGRES``` user profile on an IBM i 5250 session or submit the command as the ```POSTGRES``` user or other authorized Postgres database user.
 
-The following example calls the Postgres pg_dump command internally to back up the selected database. After the backup the tar command is used to validate that the backup output tar file is not corrupted.
+The following example calls the Postgres pg_dump command internally to back up the selected ```gitbucket```database. After the backup the tar command is used to validate that the backup output tar file is not corrupted.
 
 ```
       PGDUMP DATABASE(gitbucket) 
