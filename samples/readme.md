@@ -4,7 +4,7 @@ This section contains useful sample commands that utilize the QSHONI library com
 
 # Using the PGDUMP CL command to back up a Postgres database to an IFS output file
 
-Log in as the POSTGRES user profile on an IBM i 5250 session or submit the command as the POSTGRES user or other authorized Postgres database user.
+Log in as the ```POSTGRES``` user profile on an IBM i 5250 session or submit the command as the ```POSTGRES``` user or other authorized Postgres database user.
 
 The following example calls the Postgres pg_dump command internally to back up the selected database. After the backup the tar command is used to validate that the backup output tar file is not corrupted.
 
@@ -32,7 +32,7 @@ The following example calls the Postgres pg_dump command internally to back up t
 
 The Postgres database must already exist and can be replaced. 
 
-Log in as the POSTGRES user profile on an IBM i 5250 session or submit the command as the POSTGRES user or other authorized Postgres database user.
+Log in as the ```POSTGRES``` user profile on an IBM i 5250 session or submit the command as the ```POSTGRES``` user or other authorized Postgres database user.
 
 The following example calls the Postgres pg_restore command internally to restore the selected database fromt he selected IFS tar file.
 
