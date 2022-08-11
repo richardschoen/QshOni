@@ -1,3 +1,5 @@
+/* Member name: PGRESTOREC */
+/* Source type: CLP */
 /* Text: Restore Postgres Database via pg_restore */
 /* Postgres reference link: */
 /* https://www.tecmint.com/backup-and-restore-postgresql-database/   */
