@@ -1,3 +1,5 @@
+/* Member name: PGRESTORE  */
+/* Source type: CMD */
 /* Text: Restore Postgres Database via pg_restore */
 /* Command processing program is: PGRESTOREC */
              CMD        PROMPT('Restore Postgres DB-pg_restore')
