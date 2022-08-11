@@ -1,3 +1,5 @@
+/* Member name: PGDUMP  */
+/* Source type: CMD */
 /* Text: Backup Postgres Database via pg_dump to tar format */
 /* Command processing program is: PGDUMPC */
              CMD        PROMPT('Backup Postgres DB via pg_dump')
