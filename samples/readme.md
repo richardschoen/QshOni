@@ -1,6 +1,8 @@
 # QSHONI sample commands
 
-This section contains useful sample commands that utilize the QSHONI library commands
+This section contains useful sample commands that utilize the QSHONI library commands. 
+
+These commands are not shipped as part of the core QSHONI library code.
 
 # Using the PGDUMP CL command to back up a Postgres database to an IFS output file
 
