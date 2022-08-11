@@ -1,4 +1,5 @@
 /* Text: Restore Postgres Database via pg_restore */
+/* Command processing program is: PGRESTOREC */
              CMD        PROMPT('Restore Postgres DB-pg_restore')
              PARM       KWD(DATABASE) TYPE(*CHAR) LEN(255) MIN(1) +
                           CASE(*MIXED) PROMPT('Postgres database name')
