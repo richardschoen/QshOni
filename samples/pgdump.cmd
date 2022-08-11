@@ -1,4 +1,5 @@
 /* Text: Backup Postgres Database via pg_dump to tar format */
+/* Command processing program is: PGDUMPC */
              CMD        PROMPT('Backup Postgres DB via pg_dump')
              PARM       KWD(DATABASE) TYPE(*CHAR) LEN(255) MIN(1) +
                           CASE(*MIXED) PROMPT('Postgres database name')
