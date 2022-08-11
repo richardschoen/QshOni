@@ -56,3 +56,9 @@ The following example calls the Postgres pg_restore command internally to restor
 **OPTIONS** - Restore options. Example: ```-c``` will clear the database of all objects before restoring and is a good idea to replace an existing database. Only use the ```-c``` option on a database that already contains objects. Otherwise the restore may fail on the first try. However a second restore try may work. ***Default = blank for no options ***
 
 **PROMPT** - On an interactive 5250 job prompt the QSHBASH command so the user can see what the QSH/PASE restore command line looks like. This might be used when testing or debugging a new restore command call. *YES = Prompt for QSHBASH. *NO = No prompting for QSHBASH. ***Default = *NO ***
+
+
+# Using the GITPORTC CL command to check TCP/IP ports for selected app server
+
+This CL program sample can be used to check ports for specific TCP/IP application servers ports being active.
+
