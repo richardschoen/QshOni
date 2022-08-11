@@ -62,3 +62,5 @@ The following example calls the Postgres pg_restore command internally to restor
 
 This CL program sample can be used to check ports for specific TCP/IP application servers ports being active.
 
+Modify as needed to fit your port check requirements.
+
