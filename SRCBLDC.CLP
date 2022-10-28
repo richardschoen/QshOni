@@ -7,7 +7,7 @@
              DCL        VAR(&TGTRLS) TYPE(*CHAR) LEN(10) +
                           VALUE(*CURRENT)
              DCL        VAR(&VERSION) TYPE(*CHAR) LEN(30) +
-                          VALUE(V1.0.13)
+                          VALUE(V1.0.14)
 
  /* Add libraries to library list */
              ADDLIBLE   LIB(&DESTLIB)
@@ -103,6 +103,18 @@
              CRTCLPGM   PGM(&DESTLIB/QSHPORTCHC) +
                           SRCFILE(&DESTLIB/&DESTFILE) REPLACE(*NO) +
                           TGTRLS(&TGTRLS) /* V1.0.13 */
+
+             QSHQRYTMP  SQL('SELECT JOB_NAME FROM +
+                          QSYS2.NETSTAT_JOB_INFO') +
+                          OUTFILE(QTEMP/TCPTMPEND) /* V1.0.14 */
+
+             CRTCMD     CMD(&DESTLIB/QSHPORTEND) PGM(QSHPORTENC) +
+                          SRCFILE(&DESTLIB/&DESTFILE) +
+                          PRDLIB(&DESTLIB) /* V1.0.14 */
+
+             CRTCLPGM   PGM(&DESTLIB/QSHPORTENC) +
+                          SRCFILE(&DESTLIB/&DESTFILE) REPLACE(*NO) +
+                          TGTRLS(&TGTRLS) /* V1.0.14 */
 
  /* Create message file for any custom CPF messages */
  /* Initial use case is to log STDOUT msgs with own CPF ID    */
