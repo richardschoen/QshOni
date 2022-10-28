@@ -118,6 +118,14 @@ CURFILE="QSHPORTCHC.CLP"
 SRCTEXT="Check for active TCP/IP Local Port"
 cpy_member
 
+CURFILE="QSHPORTEND.CMD"
+SRCTEXT="End All Jobs for Active TCP/IP Local Port"
+cpy_member
+
+CURFILE="QSHPORTENC.CLP"
+SRCTEXT="End All Jobs for Active TCP/IP Local Port"
+cpy_member
+
 CURFILE="QSHSETPROC.CLP"
 SRCTEXT="Set up .profile, .bash_profile and .bashrc files"
 cpy_member
