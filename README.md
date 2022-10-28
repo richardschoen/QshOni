@@ -459,10 +459,30 @@ The following example checks to see if a Postgres server instance is running on 
            OUTFILE(TCPTMP001)  
 ```      
 
-**LOCALPORT** - Specify a specific TCP/IP port number
+**LOCALPORT** - Specify a specific TCP/IP port number.
 
 **CONNTYPE** - This parameter is used to specify the TCP/IP connection type of IPV4 or IPV6. Default - IPV4
 
 **OUTFILE** - This parameter is used to specify a temporary output file to create in QTEMP library for the job. Default name - TCPTMP001
+
+# QSHPORTEND command parms
+
+**Overview** - This CL command is a convenience command to use DB2 services to end all jobs on a selected TCP/IP port if the port has an application running on it.
+
+The following example checks to see if a web service instance is running on port 443. The command completes successfully if the port is active or the port is not active and shows a count of jobs ended. There's also a numeric data area in QTEMP named SQLQRYCNT that will contain the number of jobs ended for the port. It will be 0 if port is not active or non-zero if the port was active and jobs were ended.
+
+ ```
+     QSHONI/QSHPORTEND LOCALPORT(443)            
+           CONNTYPE(IPV4)            
+           OUTFILE(QTEMP/TCPTMPEND)  
+```      
+
+**LOCALPORT** - Specify a specific TCP/IP port number to check for active jobs.
+
+**CONNTYPE** - This parameter is used to specify the TCP/IP connection type of IPV4 or IPV6. Default - IPV4
+
+**OUTFILE** - This parameter is used to specify a temporary output file to create in QTEMP library for the job. Default name - TCPTMP001
+
+
 
 
