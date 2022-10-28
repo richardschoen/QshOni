@@ -8,6 +8,8 @@
                           VALUE(*CURRENT)
              DCL        VAR(&VERSION) TYPE(*CHAR) LEN(30) +
                           VALUE(V1.0.14)
+             DCL        VAR(&CMD) TYPE(*CHAR) LEN(512)
+             DCL        VAR(&LEN) TYPE(*DEC) LEN(15 5)
 
  /* Add libraries to library list */
              ADDLIBLE   LIB(&DESTLIB)
@@ -104,9 +106,16 @@
                           SRCFILE(&DESTLIB/&DESTFILE) REPLACE(*NO) +
                           TGTRLS(&TGTRLS) /* V1.0.13 */
 
-             QSHQRYTMP  SQL('SELECT JOB_NAME FROM +
-                          QSYS2.NETSTAT_JOB_INFO') +
-                          OUTFILE(QTEMP/TCPTMPEND) /* V1.0.14 */
+  /*         QSHQRYTMP  SQL('SELECT JOB_NAME FROM +                       */
+  /*                      QSYS2.NETSTAT_JOB_INFO') +                      */
+  /*                      OUTFILE(QTEMP/TCPTMPEND)    V1.0.14 */
+
+
+             CHGVAR     VAR(&CMD) VALUE('QSHQRYTMP SQL(''SELECT +
+                          JOB_NAME FROM QSYS2.NETSTAT_JOB_INFO'') +
+                          OUTFILE(QTEMP/TCPTMPEND)') /* V1.0.14 */
+             CHGVAR     VAR(&LEN) VALUE(85)
+             CALL       PGM(QCMDEXC) PARM(&CMD &LEN) /* V1.0.14 */
 
              CRTCMD     CMD(&DESTLIB/QSHPORTEND) PGM(QSHPORTENC) +
                           SRCFILE(&DESTLIB/&DESTFILE) +
