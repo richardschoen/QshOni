@@ -47,3 +47,5 @@ V1.0.12 - 04/06/2022
 -Created QSHCURL command to run the curl command.
 V1.0.13 - 08/08/2022                                                       
 -Created QSHPORTCHK command to check for active IPV4 or IPV6 TCP/IP port.  
+V1.0.14 - 10/27/2022                                                                             
+-Created QSHPORTEND command to end jobs on active IPV4 or IPV6 TCP/IP port.                      
