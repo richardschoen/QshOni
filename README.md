@@ -127,7 +127,9 @@ The following example runs an SQL query with db2util and exports the results as 
 
 # QSHEXEC command parms
 
-**Overview** - This CL command can be used to run a QSH/PASE command and log the results appropriately.
+**Overview** - This CL command can be used to run a QSH/PASE command and log the results appropriately. 
+
+```Stdout Logging Note:``` During execution, the CL command always creates a temporary outfile in library QTEMP that gets automatically populated with standard output (stdout) from the QSH/PASE command process that gets run. The temporary stdout output file name is: ```QTEMP/STDOUTQSH```. If the file already exists for a subsequent run of the command, the ```QTEMP/STDOUTQSH``` temporary file is automatically cleared before running so each run gets a fresh copy of ```QTEMP/STDOUTQSH```. The ```QTEMP/STDOUTQSH``` temp file gets created automatically always, even if none of the switches such as: ```DSPSTDOUT, LOGSTDOUT, PRTSTDOUT or IFSSTDOUT``` are specified. 
 
 **CMDLINE** - Qsh/Pase command line sequence to run. Semicolons can be used to run multiple commands.
 
@@ -192,6 +194,8 @@ The following example runs an SQL query with db2util and exports the results as 
 
 The command is a convenience wrapper that can be used to call a bash command with QSHEXEC instead of having to type the following bash command sequence prefix on a QSHEXEC command line: ***bash -c cmdline***
 
+```Stdout Logging Note:``` During execution, the CL command always creates a temporary outfile in library QTEMP that gets automatically populated with standard output (stdout) from the QSH/PASE command process that gets run. The temporary stdout output file name is: ```QTEMP/STDOUTQSH```. If the file already exists for a subsequent run of the command, the ```QTEMP/STDOUTQSH``` temporary file is automatically cleared before running so each run gets a fresh copy of ```QTEMP/STDOUTQSH```. The ```QTEMP/STDOUTQSH``` temp file gets created automatically always, even if none of the switches such as: ```DSPSTDOUT, LOGSTDOUT, PRTSTDOUT or IFSSTDOUT``` are specified. 
+
 **CMDLINE** - Bash command line sequence to run. Semicolons can be used to run multiple commands.
 
 **SETPKGPATH** - Add the IBM i Open Source Package path to PATH environment variable by calling QSHPATH command before running QSH/PASE commands. Default = *YES.
@@ -253,6 +257,8 @@ QSHCURL CMDLINE('--help') DSPSTDOUT(*YES)
 
 The command is a convenience wrapper that can be used to call a curl command with QSHEXEC instead of having to type the following full curl command sequence prefix on a QSHEXEC command line: ***curl http://www.sitename.com -o /tmp/curlout.txt***
 
+```Stdout Logging Note:``` During execution, the CL command always creates a temporary outfile in library QTEMP that gets automatically populated with standard output (stdout) from the QSH/PASE command process that gets run. The temporary stdout output file name is: ```QTEMP/STDOUTQSH```. If the file already exists for a subsequent run of the command, the ```QTEMP/STDOUTQSH``` temporary file is automatically cleared before running so each run gets a fresh copy of ```QTEMP/STDOUTQSH```. The ```QTEMP/STDOUTQSH``` temp file gets created automatically always, even if none of the switches such as: ```DSPSTDOUT, LOGSTDOUT, PRTSTDOUT or IFSSTDOUT``` are specified. 
+
 ```
 curl must be installed in your PASE/QSH environment in /QOpensys/pkgs/bin before this will work
 To install curl from qshell/bash:  yum install curl
@@ -313,6 +319,8 @@ The following example calls a helloworld.py script that write to STDOUT
 # QSHPYRUN command parms
 
 **Overview** - This CL command can be used to run a Python script via QSHEXEC and log the results appropriately.
+
+```Stdout Logging Note:``` During execution, the CL command always creates a temporary outfile in library QTEMP that gets automatically populated with standard output (stdout) from the QSH/PASE command process that gets run. The temporary stdout output file name is: ```QTEMP/STDOUTQSH```. If the file already exists for a subsequent run of the command, the ```QTEMP/STDOUTQSH``` temporary file is automatically cleared before running so each run gets a fresh copy of ```QTEMP/STDOUTQSH```. The ```QTEMP/STDOUTQSH``` temp file gets created automatically always, even if none of the switches such as: ```DSPSTDOUT, LOGSTDOUT, PRTSTDOUT or IFSSTDOUT``` are specified. 
 
 **SCRIPTDIR** - The IFS directory location for the Python script. **Ex: /python**
 
