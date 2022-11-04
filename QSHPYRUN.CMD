@@ -31,7 +31,7 @@
                           standard output to job log')
              PARM       KWD(PRTSTDOUT) TYPE(*CHAR) LEN(4) RSTD(*YES) +
                           DFT(*NO) VALUES(*NO *YES) PROMPT('Prt +
-                          standard output on errors')
+                          standard output to spool file')
              PARM       KWD(DLTSTDOUT) TYPE(*CHAR) LEN(4) RSTD(*YES) +
                           DFT(*YES) VALUES(*NO *YES) PROMPT('Delete +
                           standard output result')
