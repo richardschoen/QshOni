@@ -423,7 +423,13 @@ SQLQRYLIB - Output file library for the file created by the query.
 
 # QSHSETPROF command parms
 
-**Overview** - This CL command is a convenience command to create open source profile files for a selected user ID in their home directory.
+**Overview** - This CL command is a convenience command to create open source profile files for a selected user ID in their home directory from template source files in ```QSHONI/SOURCE```:
+
+```QSHPROFILE``` generates ```.profile```
+
+```QSHBASHPRF``` generates ```.bash_profile``` 
+
+```QSHBASHRC``` generates ```.bashrc```
 
 The following example creates the QShell/PASE .profile, .bashrc and .bash_rc files for the USER1 user ID.
 
