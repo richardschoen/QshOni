@@ -2,11 +2,16 @@
                           &LOGSTDOUT &PRTSTDOUT &DLTSTDOUT +
                           &IFSSTDOUT &IFSFILE &IFSOPT &CCSID +
                           &PRTSPLF &PRTUSRDTA &PRTTXT &PRTHOLD +
-                          &PRTOUTQALL)
+                          &PRTOUTQALL &OUTFILE &MBROPT)
 
 /*----------------------------------------------------------------------------*/
 /* Variables                                                                  */
 /*----------------------------------------------------------------------------*/
+             DCL        VAR(&MBROPT) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&OUTFILE) TYPE(*CHAR) LEN(20)
+             DCL        VAR(&OUTFILPATH) TYPE(*CHAR) LEN(255)
+             DCL        VAR(&OFILE) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&OLIB) TYPE(*CHAR) LEN(10)
              DCL        VAR(&PRTHOLD) TYPE(*CHAR) LEN(4)
              DCL        VAR(&PRTOUTQALL) TYPE(*CHAR) LEN(20)
              DCL        VAR(&PRTOUTQ) TYPE(*CHAR) LEN(10)
@@ -82,6 +87,19 @@
              CHGVAR     VAR(&PRTOUTQLIB) VALUE(%SST(&PRTOUTQALL 11 10))
 
 /*----------------------------------------------------------------------------*/
+/* Extract output file info.                                                  */
+/*----------------------------------------------------------------------------*/
+             CHGVAR     VAR(&OFILE) VALUE(%SST(&OUTFILE 1 10))
+             CHGVAR     VAR(&OLIB) VALUE(%SST(&OUTFILE 11 10))
+
+/*----------------------------------------------------------------------------*/
+/* Build soft coded OUTFILE IFS style path in QTEMP - Added V1.0.16 */
+/*----------------------------------------------------------------------------*/
+             CHGVAR     VAR(&OUTFILPATH) VALUE('/QSYS.LIB/' |< &OLIB +
+                          |< '.LIB/' |< &OFILE |< '.FILE/' |< +
+                          &OFILE |< '.MBR')
+
+/*----------------------------------------------------------------------------*/
 /* If copying results to IFS and IFS file is blank, bail out.                 */
 /*----------------------------------------------------------------------------*/
              IF         COND(&IFSSTDOUT *EQ *YES) THEN(DO)
@@ -114,19 +132,48 @@
              RTVJOBA    JOB(&CURJOB) USER(&CURUSER) NBR(&CURNBR)
 
 /*----------------------------------------------------------------------------*/
-/* CREATE TEMPORARY OUTPUT FILE TO HOLD STDOUT RESULTS     */
+/* DOUBLE CHECK TO MAKE SURE OUTFILE LIBRARY EXISTS. IF NOT BAIL OUT.         */
 /*----------------------------------------------------------------------------*/
-             CRTPF      FILE(QTEMP/STDOUTQSH) RCDLEN(1000) +
-                          TEXT('QShell STDOUT Output') +
-                          OPTION(*NOLIST *NOSRC) MAXMBRS(*NOMAX) +
-                          SIZE(*NOMAX)
-             MONMSG     MSGID(CPF0000)
+             CHKOBJ     OBJ(QSYS/&OLIB) OBJTYPE(*LIB)
+             MONMSG     MSGID(CPF0000) EXEC(DO)
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Output +
+                          library' |> &OLIB |> 'does not exist. +
+                          QSHEXEC command cancelled') TOPGMQ(*PRV) +
+                          MSGTYPE(*ESCAPE)
+             ENDDO
 
 /*----------------------------------------------------------------------------*/
-/* CLEAR TEMPORARY QSH OUTPUT FILE                             */
+/* CREATE TEMPORARY OUTPUT FILE TO HOLD STDOUT RESULTS IF NOT FOUND  ALREADY  */
+/*----------------------------------------------------------------------------*/
+             CHKOBJ     OBJ(&OLIB/&OFILE) OBJTYPE(*FILE)
+             /* If file object not found, attempt to create it */
+             MONMSG     MSGID(CPF9801) EXEC(DO)
+
+             CRTPF      FILE(&OLIB/&OFILE) RCDLEN(1000) TEXT('QShell +
+                          STDOUT Output') OPTION(*NOLIST *NOSRC) +
+                          MAXMBRS(*NOMAX) SIZE(*NOMAX)
+             MONMSG     MSGID(CPF0000)
+
+             ENDDO
+
+/*----------------------------------------------------------------------------*/
+/* DOUBLE CHECK TO MAKE SURE OUTFILE EXISTS NOW. IF NOT, BAIL OUT NOW.        */
+/*----------------------------------------------------------------------------*/
+             CHKOBJ     OBJ(&OLIB/&OFILE) OBJTYPE(*FILE)
+             MONMSG     MSGID(CPF0000) EXEC(DO)
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Output +
+                          file' |> &OLIB |< '/' |< &OFILE |> 'does +
+                          not exist. QSHEXEC command cancelled') +
+                          TOPGMQ(*PRV) MSGTYPE(*ESCAPE)
+             ENDDO
+
+/*----------------------------------------------------------------------------*/
+/* CLEAR TEMPORARY QSH OUTPUT FILE IF NOT APPENDING TO IT      */
 /* BAIL OUT IF WE CANNOT CLEAR OUTPUT FILE                     */
 /*----------------------------------------------------------------------------*/
-             CLRPFM     FILE(QTEMP/STDOUTQSH)
+             IF         COND(&MBROPT *EQ *REPLACE) THEN(DO)
+             CLRPFM     FILE(&OLIB/&OFILE)
+             ENDDO
 
 /*----------------------------------------------------------------------------*/
 /* BUILD PATH NAME FOR IFS STDOUT FILE */
@@ -137,7 +184,7 @@
                           |< '-' |< &JOBNBR |< '-' |< &QDATE |< +
                           &QTIME |< '.TXT')
 /*----------------------------------------------------------------------------*/
-/* ERASE JAVA OUTPUT IF IT EXISTS */
+/* ERASE QSHELL CMD OUTPUT IF IT EXISTS */
 /*----------------------------------------------------------------------------*/
              ERASE      OBJLNK(&STDOUTIFS)
              MONMSG     MSGID(CPF0000)
@@ -185,7 +232,7 @@
              CHGVAR     VAR(&QSHRTNC) VALUE(&QSHRTN)
              GOTO       CMDLBL(DONECOMP) /* DONE WITH MSG LOOP */
              ENDDO
-             /* QSH0005 IS THE RETURN RESPONSE FROM THE JAVA PGM */
+             /* QSH0005 IS THE RETURN RESPONSE FROM THE QSHELL PGM */
              IF         COND(&CPFID *EQ 'QSH0005') THEN(DO)
              CHGVAR     VAR(&MSGDTA4) VALUE(%SST(&MSGDTA 1 4))
              CHGVAR     VAR(&QSHRTN) VALUE(%BIN(&MSGDTA4))
@@ -194,12 +241,10 @@
              ENDDO
              GOTO       CMDLBL(NEXTCOMP) /* GET NEXT MSG UNTIL QSH */
 DONECOMP:
-
-             /* COPY STDOUT TO QTEMP OUTFILE */
-             CPYFRMSTMF FROMSTMF(&STDOUTIFS) +
-                          TOMBR('/QSYS.LIB/QTEMP.LIB/STDOUTQSH.FILE/STD+
-                          OUTQSH.MBR') MBROPT(*REPLACE) CVTDTA(*AUTO) +
-                          STMFCODPAG(*STMF) ENDLINFMT(*LF)
+             /* COPY STDOUT TO QTEMP OUTFILE AND APPEND OR REPLACE TO OUTFILE */
+             CPYFRMSTMF FROMSTMF(&STDOUTIFS) TOMBR(&OUTFILPATH) +
+                          MBROPT(&MBROPT) CVTDTA(*AUTO) +
+                          ENDLINFMT(*LF) STMFCODPAG(*STMF)
              MONMSG     MSGID(CPF0000) EXEC(DO)
              SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Errors +
                           occurred while copying STDOUT log to +
@@ -211,9 +256,7 @@ DONECOMP:
              /* We copy from STDOUTQSH in QTEMP to IFS log */
              /* V1.0.10 - Added AUT(*INDOR) */
              IF         COND(&IFSSTDOUT *EQ *YES) THEN(DO)
-             CPYTOSTMF  +
-                          FROMMBR('/QSYS.LIB/QTEMP.LIB/STDOUTQSH.FILE+
-                          /STDOUTQSH.MBR') TOSTMF(&IFSFILE) +
+             CPYTOSTMF  FROMMBR(&OUTFILPATH) TOSTMF(&IFSFILE) +
                           STMFOPT(&IFSOPT) CVTDTA(*AUTO) +
                           STMFCCSID(*PCASCII) ENDLINFMT(*LF) +
                           AUT(*INDIR) STMFCODPAG(*STMF)
@@ -243,7 +286,7 @@ DONECOMP:
                           USRDTA(&PRTUSRDTA) SPLFNAME(&PRTSPLF)
              ENDDO
 
-             CPYF       FROMFILE(QTEMP/STDOUTQSH) TOFILE(QSYSPRT)
+             CPYF       FROMFILE(&OLIB/&OFILE) TOFILE(QSYSPRT)
              DLTOVR     FILE(QSYSPRT)
 
              ENDDO
@@ -262,7 +305,7 @@ DONECOMP:
 
              /* Write STDOUT results PF to job log */
              IF         COND(&LOGSTDOUT *EQ *YES) THEN(DO)
-             OVRDBF     FILE(STDOUTQSH) TOFILE(QTEMP/STDOUTQSH)
+             OVRDBF     FILE(STDOUTQSH) TOFILE(&OLIB/&OFILE)
              CALL       PGM(QSHSTDOUTR)
              DLTOVR     FILE(STDOUTQSH)
              ENDDO
@@ -275,16 +318,16 @@ DONECOMP:
              ENDDO
 
              SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('QShell +
-                          command completed') MSGTYPE(*COMP)
+                          command completed and logged to outfile' +
+                          |> &OLIB |< '/' |< &OFILE) MSGTYPE(*COMP)
 
              RETURN
 
 ERRORS:
              /* COPY STDOUT TO QTEMP OUTFILE */
-             CPYFRMSTMF FROMSTMF(&STDOUTIFS) +
-                          TOMBR('/QSYS.LIB/QTEMP.LIB/STDOUTQSH.FILE/STD+
-                          OUTQSH.MBR') MBROPT(*REPLACE) CVTDTA(*AUTO) +
-                          STMFCODPAG(*STMF) ENDLINFMT(*LF)
+             CPYFRMSTMF FROMSTMF(&STDOUTIFS) TOMBR(&OUTFILPATH) +
+                          MBROPT(&MBROPT) CVTDTA(*AUTO) +
+                          ENDLINFMT(*LF) STMFCODPAG(*STMF)
              MONMSG     MSGID(CPF0000) EXEC(DO)
              SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Errors +
                           occurred while copying STDOUT log to +
@@ -296,9 +339,7 @@ ERRORS:
              /* We copy from STDOUTQSH in QTEMP to IFS log */
              /* V1.0.10 - Added AUT(*INDOR) */
              IF         COND(&IFSSTDOUT *EQ *YES) THEN(DO)
-             CPYTOSTMF  +
-                          FROMMBR('/QSYS.LIB/QTEMP.LIB/STDOUTQSH.FILE+
-                          /STDOUTQSH.MBR') TOSTMF(&IFSFILE) +
+             CPYTOSTMF  FROMMBR(&OUTFILPATH) TOSTMF(&IFSFILE) +
                           STMFOPT(&IFSOPT) CVTDTA(*AUTO) +
                           STMFCCSID(*PCASCII) ENDLINFMT(*LF) +
                           AUT(*INDIR) STMFCODPAG(*STMF)
@@ -340,7 +381,7 @@ ERRORS:
              ENDDO
              ENDDO
 
-             CPYF       FROMFILE(QTEMP/STDOUTQSH) TOFILE(QSYSPRT)
+             CPYF       FROMFILE(&OLIB/&OFILE) TOFILE(QSYSPRT)
              DLTOVR     FILE(QSYSPRT)
 
              ENDDO
@@ -359,7 +400,7 @@ ERRORS:
 
              /* Write STDOUT results PF to job log */
              IF         COND(&LOGSTDOUT *EQ *YES) THEN(DO)
-             OVRDBF     FILE(STDOUTQSH) TOFILE(QTEMP/STDOUTQSH)
+             OVRDBF     FILE(STDOUTQSH) TOFILE(&OLIB/&OFILE)
              CALL       PGM(QSHSTDOUTR)
              DLTOVR     FILE(STDOUTQSH)
              ENDDO
