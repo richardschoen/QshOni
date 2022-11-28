@@ -161,6 +161,10 @@ The following example runs an SQL query with db2util and exports the results as 
 
 **PRTOUTQ** - This option determines the output queue where the spool file will generated to when PRTSTDOUT = *YES. ***Default = *SAME ***
 
+**OUTFILE** - Output physical file to receive STDOUT from the QSH/PASE command. Default file: ```QTEMP/STDOUTQSH```
+
+*MBROPT** - Output file option. *REPLACE = replace outfile contents. *ADD = Add to outfile contents. Generally you should replace the file contents and use an IFS output file if you want to append to a log file.
+
 
 # Using the QSHBASH CL command to call a bash command sequence
 
@@ -225,6 +229,10 @@ The command is a convenience wrapper that can be used to call a bash command wit
 **PRTHOLD** - This option determines if the spool file is held if one is generated when PRTSTDOUT = *YES. ***Default = *YES ***
 
 **PRTOUTQ** - This option determines the output queue where the spool file will generated to when PRTSTDOUT = *YES. ***Default = *SAME ***
+
+**OUTFILE** - Output physical file to receive STDOUT from the QSH/PASE command. Default file: ```QTEMP/STDOUTQSH```
+
+*MBROPT** - Output file option. *REPLACE = replace outfile contents. *ADD = Add to outfile contents. Generally you should replace the file contents and use an IFS output file if you want to append to a log file.
 
 
 # Using the QSHCURL CL command to call a curl command sequence
@@ -359,6 +367,10 @@ The following example calls a helloworld.py script that write to STDOUT
 **PRTHOLD** - This option determines if the spool file is held if one is generated when PRTSTDOUT = *YES. ***Default = *YES ***
 
 **PRTOUTQ** - This option determines the output queue where the spool file will generated to when PRTSTDOUT = *YES. ***Default = *SAME ***
+
+**OUTFILE** - Output physical file to receive STDOUT from the QSH/PASE command. Default file: ```QTEMP/STDOUTQSH```
+
+*MBROPT** - Output file option. *REPLACE = replace outfile contents. *ADD = Add to outfile contents. Generally you should replace the file contents and use an IFS output file if you want to append to a log file.
 
 
 # Using the QSHLOGSCAN CL command to scan the stdout outfile for the selected value after QSHEXEC has completed. 
