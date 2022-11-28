@@ -31,7 +31,7 @@
                           standard output to job log')
              PARM       KWD(PRTSTDOUT) TYPE(*CHAR) LEN(4) RSTD(*YES) +
                           DFT(*NO) VALUES(*NO *YES) PROMPT('Print +
-                          standard output to spool file')
+                          standard output result')
              PARM       KWD(DLTSTDOUT) TYPE(*CHAR) LEN(4) RSTD(*YES) +
                           DFT(*YES) VALUES(*NO *YES) PROMPT('Delete +
                           standard output result')
@@ -61,7 +61,16 @@
                           hold spool file')
              PARM       KWD(PRTOUTQ) TYPE(QUAL2) MIN(1) +
                           PROMPT('Print stdout to outq')
+             PARM       KWD(OUTFILE) TYPE(QUAL3) MIN(1) PROMPT('File +
+                          to receive output')
+             PARM       KWD(MBROPT) TYPE(*CHAR) LEN(10) RSTD(*YES) +
+                          DFT(*REPLACE) VALUES(*ADD *REPLACE) +
+                          PROMPT('Replace or add records')
  QUAL2:      QUAL       TYPE(*NAME) LEN(10) DFT(*SAME) +
                           SPCVAL((*SAME)) EXPR(*YES)
              QUAL       TYPE(*NAME) LEN(10) DFT(*LIBL) +
-                          SPCVAL((*LIBL)) EXPR(*YES) PROMPT('Library') 
+                          SPCVAL((*LIBL)) EXPR(*YES) PROMPT('Library')
+ QUAL3:      QUAL       TYPE(*NAME) LEN(10) DFT(STDOUTQSH) +
+                          SPCVAL((*SAME)) EXPR(*YES)
+             QUAL       TYPE(*NAME) LEN(10) DFT(QTEMP) +
+                          SPCVAL((*LIBL)) EXPR(*YES) PROMPT('Library')
