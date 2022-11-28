@@ -54,7 +54,7 @@ V1.0.15
  Prt standard output on errors to                                                          
  Print standard output result                                                              
 V1.0.16                                                                                           
--Added OUTFILE and MBROPT parms to ```QSHEXEC```, ```QSHBASH``` and ```QSHPYRUN``` commands.                 
+-Added OUTFILE and MBROPT parms to QSHEXEC, QSHBASH and QSHPYRUN commands.                 
  Default outfile is: QTEMP/STDOUTQSH. You can specifiy an outfile be placed in any library.
  However library QTEMP is job agnostic so best to always create an outfile in QTEMP and    
  copy it if saving to an IFS file isn't an option.                                         
