@@ -2,8 +2,13 @@
                           &PYPATH &SETPKGPATH &DSPSTDOUT &LOGSTDOUT +
                           &PRTSTDOUT &DLTSTDOUT &IFSSTDOUT &IFSFILE +
                           &IFSOPT &CCSID &PRTSPLF &PRTUSRDTA +
-                          &PRTTXT &PRTHOLD &PRTOUTQALL)
+                          &PRTTXT &PRTHOLD &PRTOUTQALL &OUTFILE &MBROPT)
 
+             DCL        VAR(&MBROPT) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&OUTFILE) TYPE(*CHAR) LEN(20)
+             DCL        VAR(&OUTFILPATH) TYPE(*CHAR) LEN(255)
+             DCL        VAR(&OFILE) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&OLIB) TYPE(*CHAR) LEN(10)
              DCL        VAR(&PRTHOLD) TYPE(*CHAR) LEN(4)
              DCL        VAR(&PRTOUTQALL) TYPE(*CHAR) LEN(20)
              DCL        VAR(&PRTOUTQ) TYPE(*CHAR) LEN(10)
@@ -57,6 +62,12 @@
 /*----------------------------------------------------------------------------*/
              CHGVAR     VAR(&PRTOUTQ) VALUE(%SST(&PRTOUTQALL 1 10))
              CHGVAR     VAR(&PRTOUTQLIB) VALUE(%SST(&PRTOUTQALL 11 10))
+
+/*----------------------------------------------------------------------------*/
+/* Extract output file info. Added V1.0.16                                    */
+/*----------------------------------------------------------------------------*/
+             CHGVAR     VAR(&OFILE) VALUE(%SST(&OUTFILE 1 10))
+             CHGVAR     VAR(&OLIB) VALUE(%SST(&OUTFILE 11 10))
 
 /*----------------------------------------------------------------------------*/
 /* If default python path data area, retreive from data area */
@@ -293,7 +304,8 @@
                           IFSOPT(&IFSOPT) CCSID(&CCSID) +
                           PRTSPLF(&PRTSPLF) PRTUSRDTA(&PRTUSRDTA) +
                           PRTTXT(&PRTTXT) PRTHOLD(&PRTHOLD) +
-                          PRTOUTQ(&PRTOUTQLIB/&PRTOUTQ)
+                          PRTOUTQ(&PRTOUTQLIB/&PRTOUTQ) +
+                          OUTFILE(&OLIB/&OFILE) MBROPT(&MBROPT)
 
  NORMAL:
              SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Python +
@@ -309,4 +321,4 @@
              SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Python +
                           script' |> &SCRIPTFILE |> 'failed. See +
                           the joblog or stdout log') MSGTYPE(*ESCAPE)
-             ENDPGM 
+             ENDPGM
