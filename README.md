@@ -246,7 +246,7 @@ The following example calls the curl command to download the google home page si
       PRTSTDOUT(*NO)          
       DLTSTDOUT(*YES)
       IFSSTDOUT(*NO)
-      IFSFILE('/tmp/log.txt)
+      IFSFILE('/tmp/log.txt')
       IFSOPT(*REPLACE)
       PRTSPLF(QSHEXECLOG) 
       PRTUSRDTA(*NONE)    
@@ -309,7 +309,7 @@ The following example calls a helloworld.py script that write to STDOUT
 
  ```
       QSHPYRUN SCRIPTDIR('/pythonapps')       
-      SCRIPTFILE(hello.py)           
+      SCRIPTFILE('hello.py')           
       ARGS(Parm1 Parm2)              
       PYVERSION(3)                   
       DSPSTDOUT(*YES)         
@@ -317,7 +317,7 @@ The following example calls a helloworld.py script that write to STDOUT
       PRTSTDOUT(*NO)          
       DLTSTDOUT(*YES)
       IFSSTDOUT(*NO)
-      IFSFILE('/tmp/log.txt)
+      IFSFILE('/tmp/log.txt')
       IFSOPT(*REPLACE)
       PRTSPLF(QSHPYRUN) 
       PRTUSRDTA(*NONE)    
