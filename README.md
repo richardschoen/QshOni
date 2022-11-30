@@ -177,7 +177,7 @@ The following example calls the ls command to list files for the /tmp directory 
       PRTSTDOUT(*NO)          
       DLTSTDOUT(*YES)
       IFSSTDOUT(*NO)
-      IFSFILE('/tmp/log.txt)
+      IFSFILE('/tmp/log.txt')
       IFSOPT(*REPLACE)
       PRTSPLF(QSHEXECLOG) 
       PRTUSRDTA(*NONE)    
