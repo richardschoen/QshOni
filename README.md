@@ -342,6 +342,10 @@ The following example calls a helloworld.py script that write to STDOUT
 
 **SETPKGPATH** - Add the IBM i Open Source Package path to PATH environment variable by calling QSHPATH command before running QSH/PASE commands. Default = *YES.
 
+**USEVENV** - Use virtual environment - If set to *YES, run your Python script using an existing Python virtual environment as specified in the Python virtual environment path. The IFS directory and virtual environment must exist. Default = *No.
+
+**VENVPATH** - Virtual environment path - Specify an existing IFS directory that also contains a valid Python virtual environment. Cannot be blank or non-existant if USEVENV=*yes or the QSHPYRUN command will fail.
+
 **DSPSTDOUT** - Display the outfile contents. Nice when debugging. 
 
 **LOGSTDOUT** - Place STDOUT log entries into the current jobs job log. Use this if you want the log info in the IBM i joblog. All STDOUT entries are written as CPF message: **QSS9898**
@@ -372,6 +376,7 @@ The following example calls a helloworld.py script that write to STDOUT
 
 **MBROPT** - Output file option. Default: ```*REPLACE``` *REPLACE = replace outfile contents. *ADD = Add to outfile contents. Generally you should replace the file contents. If you want to append to a log file it's recommended to use the IFS output file option to write or append to an IFS file log. This is much more amenable to log readers or processors.
 
+**DEBUGCMD** - Debug QSHEXEC command - If set to *YES, your job must be running interactively and it will display the command line that QSHPYRUN composed to execute via QSHEXEC before it runs. This is good for debugging or you are curious what the exec QSHEXEC command will look like. Under the covers QSHPYRUN utilizes the QSHEXEC command to run the Python command line. 
 
 # Using the QSHLOGSCAN CL command to scan the stdout outfile for the selected value after QSHEXEC has completed. 
 
