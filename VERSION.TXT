@@ -61,3 +61,7 @@ V1.0.16 - 11/28/2022
  Default outfile member option is: *REPLACE  (Available options - *ADD/*REPLACE)           
  You can replace or add to the contents of an outfile. Generally *REPLACE should be used.  
  However you can copy the outfile anywhere you want after the commands complete.           
+V1.0.17 - 12/3/2022                                                                               
+-Added USEVENV and VENVPATH variables to the QSHPYRUN command.                                    
+ If USEVENV value is *YES then a valid virtual environment base directory name must be specified  
+ for the VENVPATH value. And it must be configured as a Python virtual environment.               
