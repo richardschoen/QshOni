@@ -23,6 +23,12 @@
                           RSTD(*YES) DFT(*YES) VALUES(*NO *YES) +
                           EXPR(*YES) CASE(*MIXED) PROMPT('Set +
                           QOpenSys yum package path')
+             PARM       KWD(USEVENV) TYPE(*CHAR) LEN(4) RSTD(*YES) +
+                          DFT(*NO) VALUES(*NO *YES) EXPR(*YES) +
+                          CASE(*MIXED) PROMPT('Use virtual +
+                          environment')
+             PARM       KWD(VENVPATH) TYPE(*CHAR) LEN(255) DFT('') +
+                          PROMPT('Virtual environment base path')
              PARM       KWD(DSPSTDOUT) TYPE(*CHAR) LEN(4) RSTD(*YES) +
                           DFT(*NO) VALUES(*NO *YES) PROMPT('Display +
                           standard output result')
@@ -66,6 +72,9 @@
              PARM       KWD(MBROPT) TYPE(*CHAR) LEN(10) RSTD(*YES) +
                           DFT(*REPLACE) VALUES(*ADD *REPLACE) +
                           PROMPT('Replace or add records')
+             PARM       KWD(DEBUGCMD) TYPE(*CHAR) LEN(4) RSTD(*YES) +
+                          DFT(*NO) VALUES(*NO *YES) EXPR(*YES) +
+                          CASE(*MIXED) PROMPT('Debug QSHEXEC command')
  QUAL2:      QUAL       TYPE(*NAME) LEN(10) DFT(*SAME) +
                           SPCVAL((*SAME)) EXPR(*YES)
              QUAL       TYPE(*NAME) LEN(10) DFT(*LIBL) +
