@@ -166,6 +166,90 @@ The following example runs an SQL query with db2util and exports the results as 
 **MBROPT** - Output file option. Default: ```*REPLACE``` *REPLACE = replace outfile contents. *ADD = Add to outfile contents. Generally you should replace the file contents. If you want to append to a log file it's recommended to use the IFS output file option to write or append to an IFS file log. This is much more amenable to log readers or processors.
 
 
+# Using the QSHEXECSRC CL command to call a Qsh/Pase command sequence from a classic IBM i source member
+
+The following example calls a QShell source member QSHELL01 stored in source file QSHONI/SOURCE to run the ls command to list files for the /tmp directory: 
+
+ ```
+      QSHEXECSRC SRCFILE(QSHONI/SOURCE)
+      SRCMBR(QSHELL01)      
+      CMDPARM(' ')               
+      DSPSTDOUT(*YES)         
+      LOGSTDOUT(*NO)          
+      PRTSTDOUT(*NO)          
+      DLTSTDOUT(*YES)
+      IFSSTDOUT(*NO)
+      IFSFILE('/tmp/log.txt')
+      IFSOPT(*REPLACE)
+      PRTSPLF(QSHEXECLOG) 
+      PRTUSRDTA(*NONE)    
+      PRTTXT(*NONE)       
+      RMVTMPSCR(*YES)            
+      PROMPTCMD(*NO)                   
+```
+
+Sample QShell source member: QSHONI/SOURCE(QSHELL01) Type: TXT Text: QShell script to List Files in /tmp folder
+```
+cd /tmp
+ls -l
+```
+
+# QSHEXECSRC command parms
+
+**Overview** - This CL command can be used to run a QSH/PASE command shall script from a classic source physical file member and log the results appropriately.   
+
+The use case would be for an app where you want to store your QShell/PASE/Python/PHP/Etc. scripts as part of your library source and execute those scripts directly from a source physical file.
+
+```Stdout Logging Note:``` During execution, the CL command always creates a temporary outfile in library QTEMP that gets automatically populated with standard output (stdout) from the QSH/PASE command process that gets run. The temporary stdout output file name is: ```QTEMP/STDOUTQSH```. If the file already exists for a subsequent run of the command, the ```QTEMP/STDOUTQSH``` temporary file is automatically cleared before running so each run gets a fresh copy of ```QTEMP/STDOUTQSH```. The ```QTEMP/STDOUTQSH``` temp file gets created automatically always, even if none of the switches such as: ```DSPSTDOUT, LOGSTDOUT, PRTSTDOUT or IFSSTDOUT``` are specified. 
+
+**SRCFILE** - Source physical file where QShell/PASE script is stored. 
+
+**SRCMBR** - Source member name where QShell/PASE script is stored. Script is automatically copied to an IFS based temp file in IFS dir ```/tmp/qsh``` for execution. The IFS temp file is auto-deleted by default after it runs unless you specify *NO to the RMVTMPSCR parameter.    
+
+Changes to your script source members can be made usig via the SEU, RDi or VS Code editors.   
+ 
+**CMDPARM** - Command line parms to pass to the selected Qsh/Pase script that runs. If no parameters are needed simply pass ```' '``` for the CMDPARM value.    
+
+Parameters can be delimited with double quotes if needed.   
+```Ex: "parm1" "parm2" "parm3"```
+
+**SETPKGPATH** - Add the IBM i Open Source Package path to PATH environment variable by calling QSHPATH command before running QSH/PASE commands. Default = *YES.
+
+**DSPSTDOUT** - Display the outfile contents. Nice when debugging. 
+
+**LOGSTDOUT** - Place STDOUT log entries into the current jobs job log. Use this if you want the log info in the IBM i joblog. All STDOUT entries are written as CPF message: **QSS9898**
+
+**PRTSTDOUT** - Print STDOUT to a spool file. Use this if you want a spool file of the log output.
+
+**DLTSTDOUT** - This option insures that the STDOUT IFS temp files get cleaned up after processing. All IFS log files get created in the /tmp/qsh directory.
+
+**IFSSTDOUT** - Copy std output to an IFS file. Nice for aggregating log results to a file.
+
+**IFSFILE** - IFS file for stdout results. Needs to be specified if IFSSTDOUT = *YES.
+
+**IFSOPT** - IFS file option. *REPLACE = replace stdout IFS file. *ADD = Add to stdout IFS file.
+
+**CCSID** - When using the iToolkit component for command access, I originally had some issues with CL commands not working correctly. However I don't currently remember exactly why. This may have been solved, however I recommend still passing a value of 37 unless you are in a non US country. If you set to `*SAME`, the CCSID will stay the same as your current job with no change.
+
+**PRTSPLF** - This option holds the name of the spool file used when PRTSTDOUT = *YES. It's a nice way to customize the stdout log prints. ***Default = QSHEXECLOG***
+
+**PRTUSRDTA** - This option holds the name of the spool file user data used when PRTSTDOUT = *YES. ***Default = *NONE ***
+
+**PRTTXT** - This option holds the name of the spool file print txt to be used when PRTSTDOUT = *YES. ***Default = *NONE ***
+
+**PRTHOLD** - This option determines if the spool file is held if one is generated when PRTSTDOUT = *YES. ***Default = *YES ***
+
+**PRTOUTQ** - This option determines the output queue where the spool file will generated to when PRTSTDOUT = *YES. ***Default = *SAME ***
+
+**OUTFILE** - Output physical file to receive STDOUT from the QSH/PASE command. Default file: ```QTEMP/STDOUTQSH```  This output file ```always gets created and populated```.
+
+**MBROPT** - Output file option. Default: ```*REPLACE``` *REPLACE = replace outfile contents. *ADD = Add to outfile contents. Generally you should replace the file contents. If you want to append to a log file it's recommended to use the IFS output file option to write or append to an IFS file log. This is much more amenable to log readers or processors.  
+
+**RMVTMPSCR** - This option determines if the temporary IFS script file is auto-deleted after running. Normally the selection should be *YES to delete the temp file. Otherwise specify *NO if you are debugging for some reason. ***Default = *YES ***  
+
+**PROMPTCMD** - This option determines if the ```QSH``` command is prompted interactively for testing or review of the actual QShell command line with parameter values before running the command. Normally the selection should be *NO since prompting is only needed if testing. Specify *YES if you are debugging for some reason and want the QSH command to prompt on an interactive 5250 session before running. ***Default = *NO ***
+
+
 # Using the QSHBASH CL command to call a bash command sequence
 
 The following example calls the ls command to list files for the /tmp directory using the bash command: 
@@ -343,6 +427,11 @@ The following example calls a helloworld.py script that write to STDOUT
 **SETPKGPATH** - Add the IBM i Open Source Package path to PATH environment variable by calling QSHPATH command before running QSH/PASE commands. Default = *YES.
 
 **USEVENV** - Use virtual environment - If set to *YES, run your Python script using an existing Python virtual environment as specified in the Python virtual environment path. The IFS directory and virtual environment must exist. Default = *No.
+
+```
+Note: When using virtual environment, you will need to make sure the PYPATH data area value is set to ' ' or pass ' '   
+to the PYPATH parameter to make sure the system level python binary does not picked up. Each venv has its own python executable
+```
 
 **VENVPATH** - Virtual environment path - Specify an existing IFS directory that also contains a valid Python virtual environment. Cannot be blank or non-existant if USEVENV=*yes or the QSHPYRUN command will fail.
 
