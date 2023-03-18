@@ -196,7 +196,7 @@ ls -l
 
 # QSHEXECSRC command parms
 
-**Overview** - This CL command can be used to run a QSH/PASE command shall script from a classic source physical file member and log the results appropriately.   
+**Overview** - This CL command can be used to run a QSH/PASE command shell script from a classic source physical file member and log the results appropriately.   
 
 The use case would be for an app where you want to store your QShell/PASE/Python/PHP/Etc. scripts as part of your library source and execute those scripts directly from a source physical file.
 
