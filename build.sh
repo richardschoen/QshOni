@@ -39,7 +39,7 @@ SRCTEXT="Run Bash Command via Qshell"
 cpy_member
 
 CURFILE="QSHEXEC.CMD"                
-SRCTEXT="Run Bash Command via Qshell"                          
+SRCTEXT="Run QShell Command Line"                          
 cpy_member
 
 CURFILE="QSHEXECC.CLLE"
