@@ -188,7 +188,7 @@ The following example calls a QShell source member QSHELL01 stored in source fil
       PROMPTCMD(*NO)                   
 ```
 
-Sample QShell source member: QSHONI/SOURCE(QSHELL01) Type: TXT Text: QShell script to List Files in /tmp folder
+Sample QShell source member: ```QSHONI/SOURCE(QSHELL01)``` Type: TXT Text: QShell script to List Files in /tmp folder
 ```
 cd /tmp
 ls -l
