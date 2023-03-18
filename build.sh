@@ -146,6 +146,14 @@ CURFILE="QSHPROFILE.TXT"
 SRCTEXT="User QShell .profile template for Opn Src Pkgs"
 cpy_member
 
+CURFILE="QSHEXECSRC.CMD"                
+SRCTEXT="Run QShell .sh script from Source File Member"
+cpy_member
+
+CURFILE="QSHEXECSCC.CLLE"
+SRCTEXT="Run QShell .sh script from Source File Member"
+cpy_member
+
 CURFILE="SRCBLDC.CLP"
 SRCTEXT="Build cmds from QSHONI/SOURCE file"   
 cpy_member
