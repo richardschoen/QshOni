@@ -66,7 +66,7 @@ V1.0.17 - 12/3/2022
  If USEVENV value is *YES then a valid virtual environment base directory name must be specified  
  for the VENVPATH value. And it must be configured as a Python virtual environment.               
 V1.0.18 - 2/25/2023                                                                        
--Added QSHEXECSRC command to execute a QShell .sh script stored in a source physical file. 
+-Added QSHEXECSRC command to execute a QShell .sh script stored in a source physical file. Not released yet though.
 V1.0.19 - 3/18/2023                                                                                 
 -Updated QSHPYRUNC to support running python binary without a qualified path. The qualified path    
  can apparently cause issues when running python in a virtual environment. The wrong python binary  
