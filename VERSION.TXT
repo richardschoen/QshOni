@@ -74,3 +74,8 @@ V1.0.19 - 3/18/2023
 -When using QSHPYRUN with a virtual environment, the PYPATH parm can be changed from *DEFAULT to ' '
  or change the PYPATH data area to blanks instead of /QOpenSys/pkgs/bin and the path will never     
  get qualified and will always use the current binary search path.                                  
+V1.0.20 - 3/24/2023                                                                                    
+-Updated QSHPYRUN to support a 'cd /scriptpath' directory change before running a Python script.       
+ The new CHGSCRDIR parameter will support fully qualifying or not qualifying entire script path.       
+ If *NO is specified, script path is fully qualified. (Default and same as previous versions)          
+ If *YES is specified, a 'cd /scriptpath" is performed and script path is not fully qualified.         
