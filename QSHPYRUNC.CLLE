@@ -3,8 +3,10 @@
                           &DSPSTDOUT &LOGSTDOUT &PRTSTDOUT +                                                
                           &DLTSTDOUT &IFSSTDOUT &IFSFILE &IFSOPT +                                          
                           &CCSID &PRTSPLF &PRTUSRDTA &PRTTXT +                                              
-                          &PRTHOLD &PRTOUTQALL &OUTFILE &MBROPT &DEBUGCMD)                                  
+                          &PRTHOLD &PRTOUTQALL &OUTFILE &MBROPT &DEBUGCMD &CHGSCRDIR)                       
                                                                                                             
+             DCL        VAR(&CHGSCRDIR) TYPE(*CHAR) LEN(4)    /* 1.0.20 */                                  
+             DCL        VAR(&CHGDIRCMD) TYPE(*CHAR) LEN(255)  /* 1.0.20 */                                  
              DCL        VAR(&DEBUGCMD) TYPE(*CHAR) LEN(4)                                                   
              DCL        VAR(&USEVENV) TYPE(*CHAR) LEN(4)                                                    
              DCL        VAR(&VENVPATH) TYPE(*CHAR) LEN(255)                                                 
@@ -26,6 +28,7 @@
              DCL        VAR(&PYEXE) TYPE(*CHAR) LEN(100)                                                    
              DCL        VAR(&PYVERSION) TYPE(*CHAR) LEN(5)                                                  
              DCL        VAR(&SCRIPTFILE) TYPE(*CHAR) LEN(255)                                               
+             DCL        VAR(&SCRIPTFULL) TYPE(*CHAR) LEN(255) /* 1.0.20 */                                  
              DCL        VAR(&SCRIPTSTR) TYPE(*CHAR) LEN(1)                                                  
              DCL        VAR(&ARGS) TYPE(*CHAR) LEN(8002)                                                    
              DCL        VAR(&ARGS2) TYPE(*CHAR) LEN(8000)                                                   
@@ -322,14 +325,29 @@
              /* concatenate py dir with script file name         */                                         
              IF         COND(&PYSCRDIR *NE ' ' *AND &SCRIPTSTR *NE +                                        
                           '/') THEN(DO)                                                                     
+                                                                                                            
+             /* Build full path to script for existence check */                                            
+             CHGVAR     VAR(&SCRIPTFULL) VALUE(&PYSCRDIR |< '/' +                                           
+                          |< &SCRIPTFILE)                                                                   
+                                                                                                            
+             /* Qualify script dir if not changing directory to script dir  */                              
+             IF         COND(&CHGSCRDIR *NE *YES) THEN(DO)                                                  
              CHGVAR     VAR(&SCRIPTFILE) VALUE(&PYSCRDIR |< '/' +                                           
                           |< &SCRIPTFILE)                                                                   
+             ENDDO                                                                                          
+                                                                                                            
+             /* Don't qualify script file dir if changing directory to script dir  */                       
+             /* because we will be in the correct directory already.          */                            
+             IF         COND(&CHGSCRDIR *EQ *YES) THEN(DO)                                                  
+             CHGVAR     VAR(&SCRIPTFILE) VALUE(&SCRIPTFILE)                                                 
+             ENDDO                                                                                          
+                                                                                                            
              ENDDO                                                                                          
                                                                                                             
 /*----------------------------------------------------------------------------*/                            
 /* Make sure python script exists */                                                                        
 /*----------------------------------------------------------------------------*/                            
-             QSHIFSCHK  FILNAM(&SCRIPTFILE)                                                                 
+             QSHIFSCHK  FILNAM(&SCRIPTFULL)                                                                 
              /* EXISTS, DO NOTHING SPECIAL */                                                               
              MONMSG     MSGID(CPF9897) EXEC(DO)                                                             
              ENDDO                                                                                          
@@ -337,19 +355,29 @@
              /* DOES NOT EXIST. BAIL OUT */                                                                 
              MONMSG     MSGID(CPF9898) EXEC(DO)                                                             
              SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Python +                                       
-                          script file' |> &SCRIPTFILE |> 'does not +                                        
+                          script file' |> &SCRIPTFULL |> 'does not +                                        
                           exist') MSGTYPE(*ESCAPE)                                                          
+             ENDDO                                                                                          
+                                                                                                            
+/*----------------------------------------------------------------------------*/                            
+/* Append change directory command to python script file if needed            */                            
+/*----------------------------------------------------------------------------*/                            
+             IF         COND(&CHGSCRDIR *NE *YES) THEN(DO)                                                  
+             CHGVAR     VAR(&CHGDIRCMD) VALUE(' ')                                                          
+             ENDDO                                                                                          
+             IF         COND(&CHGSCRDIR *EQ *YES) THEN(DO)                                                  
+             CHGVAR     VAR(&CHGDIRCMD) VALUE('cd' |> &PYSCRDIR |< ';')                                     
              ENDDO                                                                                          
                                                                                                             
 /*----------------------------------------------------------------------------*/                            
 /* Build python command call with parms for venv is *YES */                                                 
 /*----------------------------------------------------------------------------*/                            
              IF         COND(&USEVENV *NE *YES) THEN(DO)                                                    
-             CHGVAR     VAR(&CMD) VALUE(&PYEXE |> &SCRIPTFILE |> +                                          
+             CHGVAR     VAR(&CMD) VALUE(&CHGDIRCMD |< &PYEXE |> &SCRIPTFILE |> +                            
                           &ARGS2)                                                                           
              ENDDO                                                                                          
              IF         COND(&USEVENV *EQ *YES) THEN(DO)                                                    
-             CHGVAR     VAR(&CMD) VALUE(&VENVACT |< &PYEXE |> &SCRIPTFILE |> +                              
+             CHGVAR     VAR(&CMD) VALUE(&VENVACT |< &CHGDIRCMD |< &PYEXE |> &SCRIPTFILE |> +                
                           &ARGS2 |< &VENVDEACT)                                                             
              ENDDO                                                                                          
                                                                                                             
@@ -385,16 +413,16 @@
                                                                                                             
  NORMAL:                                                                                                    
              SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Python +                                       
-                          script' |> &SCRIPTFILE |> 'completed +                                            
+                          script' |> &SCRIPTFULL |> 'completed +                                            
                           successfully with no errors') MSGTYPE(*COMP)                                      
              RETURN                                                                                         
                                                                                                             
 /*----------------------------------------------------------------------------*/                            
-/* Handle Errors */                                                                                          
+/* Handle Errors */                                                                                         
 /*----------------------------------------------------------------------------*/                            
  ERRORS:                                                                                                    
                                                                                                             
              SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Python +                                       
-                          script' |> &SCRIPTFILE |> 'failed. See +                                          
+                          script' |> &SCRIPTFULL |> 'failed. See +                                          
                           the joblog or stdout log') MSGTYPE(*ESCAPE)                                       
              ENDPGM                                                                                         
