@@ -81,6 +81,16 @@
 /*----------------------------------------------------------------------------*/
 
 /*----------------------------------------------------------------------------*/
+/* Create record count data area */
+/*----------------------------------------------------------------------------*/
+             CHKOBJ     OBJ(QTEMP/QSHRTNCOD) OBJTYPE(*DTAARA)
+             MONMSG     MSGID(CPF0000) EXEC(DO)
+             CRTDTAARA  DTAARA(QTEMP/QSHRTNCOD) TYPE(*DEC) LEN(4 0) +
+                          TEXT('QShell/Pase Return Code')
+             ENDDO
+             CHGDTAARA  DTAARA(QTEMP/QSHRTNCOD *ALL) VALUE(0)
+
+/*----------------------------------------------------------------------------*/
 /* Extract output queue info.                                                 */
 /*----------------------------------------------------------------------------*/
              CHGVAR     VAR(&PRTOUTQ) VALUE(%SST(&PRTOUTQALL 1 10))
@@ -230,6 +240,7 @@
              IF         COND(&CPFID *EQ '       ') THEN(DO)
              CHGVAR     VAR(&QSHRTN) VALUE(9999)
              CHGVAR     VAR(&QSHRTNC) VALUE(&QSHRTN)
+             CHGDTAARA  DTAARA(QTEMP/QSHRTNCOD *ALL) VALUE(&QSHRTN)
              GOTO       CMDLBL(DONECOMP) /* DONE WITH MSG LOOP */
              ENDDO
              /* QSH0005 IS THE RETURN RESPONSE FROM THE QSHELL PGM */
@@ -237,6 +248,7 @@
              CHGVAR     VAR(&MSGDTA4) VALUE(%SST(&MSGDTA 1 4))
              CHGVAR     VAR(&QSHRTN) VALUE(%BIN(&MSGDTA4))
              CHGVAR     VAR(&QSHRTNC) VALUE(&QSHRTN)
+             CHGDTAARA  DTAARA(QTEMP/QSHRTNCOD *ALL) VALUE(&QSHRTN)
              GOTO       CMDLBL(DONECOMP) /* DONE WITH MSG LOOP */
              ENDDO
              GOTO       CMDLBL(NEXTCOMP) /* GET NEXT MSG UNTIL QSH */
