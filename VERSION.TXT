@@ -80,5 +80,5 @@ V1.0.20 - 3/24/2023
  If *NO is specified, script path is fully qualified. (Default and same as previous versions)          
  If *YES is specified, a 'cd /scriptpath" is performed and script path is not fully qualified.         
 V1.0.21 - 4/13/2023                                                    
--Updated QSHEXEC to create data area QTEMP/QSHRTNCOD to capture the    
+-Updated QSHEXECC to create data area QTEMP/QSHRTNCOD to capture the    
  QSH exit return code value so it can be checked from a CL/RPG program.
