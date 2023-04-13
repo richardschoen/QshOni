@@ -85,7 +85,7 @@
 /*----------------------------------------------------------------------------*/
              CHKOBJ     OBJ(QTEMP/QSHRTNCOD) OBJTYPE(*DTAARA)
              MONMSG     MSGID(CPF0000) EXEC(DO)
-             CRTDTAARA  DTAARA(QTEMP/QSHRTNCOD) TYPE(*DEC) LEN(4 0) +
+             CRTDTAARA  DTAARA(QTEMP/QSHRTNCOD) TYPE(*DEC) LEN(5 0) +
                           TEXT('QShell/Pase Return Code')
              ENDDO
              CHGDTAARA  DTAARA(QTEMP/QSHRTNCOD *ALL) VALUE(0)
