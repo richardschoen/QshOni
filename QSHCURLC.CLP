@@ -2,11 +2,12 @@
                           &LOGSTDOUT &PRTSTDOUT &DLTSTDOUT +
                           &IFSSTDOUT &IFSFILE &IFSOPT &CCSID +
                           &PRTSPLF &PRTUSRDTA &PRTTXT &PRTHOLD +
-                          &PRTOUTQALL)
+                          &PRTOUTQALL &PASEJOBNAM)
 
 /*----------------------------------------------------------------------------*/
 /* Variables                                                                  */
 /*----------------------------------------------------------------------------*/
+             DCL        VAR(&PASEJOBNAM) TYPE(*CHAR) LEN(10)
              DCL        VAR(&PRTHOLD) TYPE(*CHAR) LEN(4)
              DCL        VAR(&PRTOUTQALL) TYPE(*CHAR) LEN(20)
              DCL        VAR(&PRTOUTQ) TYPE(*CHAR) LEN(10)
@@ -58,7 +59,8 @@
                           IFSOPT(&IFSOPT) CCSID(&CCSID) +
                           PRTSPLF(&PRTSPLF) PRTUSRDTA(&PRTUSRDTA) +
                           PRTTXT(&PRTTXT) PRTHOLD(&PRTHOLD) +
-                          PRTOUTQ(&PRTOUTQLIB/&PRTOUTQ)
+                          PRTOUTQ(&PRTOUTQLIB/&PRTOUTQ) +
+                          PASEJOBNAM(&PASEJOBNAM)
 
              SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('QShell +
                           curl command completed') MSGTYPE(*COMP)
