@@ -82,3 +82,19 @@ V1.0.20 - 3/24/2023
 V1.0.21 - 4/13/2023                                                    
 -Updated QSHEXECC to create data area QTEMP/QSHRTNCOD to capture the    
  QSH exit return code value so it can be checked from a CL/RPG program.
+V1.0.22 - 4/14/2023                                                  
+-Updated QSHEXECC to create data area QTEMP/STDOUTIFS to capture the 
+ temporary STDOUT IFS file name used to capture QSH/PASE output.     
+ This value is only useful if you use the DLTSTDOUT(*NO) value.      
+ If DLTSTDOUT(*YES) is specified, the temp file gets removed after   
+ the process completes, although the STDOUT contents do get copied   
+ to temp file QTEMP/STDOUTQSH before removing the temporary IFS file.
+ Under normal circumstances you should always use DLTSTDOUT(*YES).   
+V1.0.23 - 5/1/2023                                                   
+-Added PASEJOBNAM parm to the following commands:                    
+QSHEXEC, QSHEXECSRC, QSHBASH, QSHPYRUN, QSHCURL                     
+If set to *DEFAULT, standard thread names are used: QP0ZSPWP        
+If value is set for job name, that job name is applied to           
+all forked/spawned thread jobs by automatically adding the          
+environment variable PASE_FORK_JOBNAME with selected job name   
+before launching and thread jobs. 
