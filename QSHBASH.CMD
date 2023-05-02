@@ -46,6 +46,9 @@
              PARM       KWD(MBROPT) TYPE(*CHAR) LEN(10) RSTD(*YES) +
                           DFT(*REPLACE) VALUES(*ADD *REPLACE) +
                           PROMPT('Replace or add records')
+             PARM       KWD(PASEJOBNAM) TYPE(*CHAR) LEN(10) +
+                          DFT(*DEFAULT) CASE(*MIXED) PROMPT('PASE +
+                          fork thread job names')
  QUAL2:      QUAL       TYPE(*NAME) LEN(10) DFT(*SAME) +
                           SPCVAL((*SAME)) EXPR(*YES)
              QUAL       TYPE(*NAME) LEN(10) DFT(*LIBL) +
