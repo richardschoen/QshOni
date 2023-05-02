@@ -2,11 +2,12 @@
                           &LOGSTDOUT &PRTSTDOUT &DLTSTDOUT +
                           &IFSSTDOUT &IFSFILE &IFSOPT &CCSID +
                           &PRTSPLF &PRTUSRDTA &PRTTXT &PRTHOLD +
-                          &PRTOUTQALL &OUTFILE &MBROPT)
+                          &PRTOUTQALL &OUTFILE &MBROPT &PASEJOBNAM)
 
 /*----------------------------------------------------------------------------*/
 /* Variables                                                                  */
 /*----------------------------------------------------------------------------*/
+             DCL        VAR(&PASEJOBNAM) TYPE(*CHAR) LEN(10)
              DCL        VAR(&MBROPT) TYPE(*CHAR) LEN(10)
              DCL        VAR(&OUTFILE) TYPE(*CHAR) LEN(20)
              DCL        VAR(&OUTFILPATH) TYPE(*CHAR) LEN(255)
@@ -70,7 +71,8 @@
                           PRTSPLF(&PRTSPLF) PRTUSRDTA(&PRTUSRDTA) +
                           PRTTXT(&PRTTXT) PRTHOLD(&PRTHOLD) +
                           PRTOUTQ(&PRTOUTQLIB/&PRTOUTQ) +
-                          OUTFILE(&OLIB/&OFILE) MBROPT(&MBROPT)
+                          OUTFILE(&OLIB/&OFILE) MBROPT(&MBROPT) +
+                          PASEJOBNAM(&PASEJOBNAM)
 
              SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('QShell +
                           bash command completed') MSGTYPE(*COMP)
