@@ -165,6 +165,7 @@ The following example runs an SQL query with db2util and exports the results as 
 
 **MBROPT** - Output file option. Default: ```*REPLACE``` *REPLACE = replace outfile contents. *ADD = Add to outfile contents. Generally you should replace the file contents. If you want to append to a log file it's recommended to use the IFS output file option to write or append to an IFS file log. This is much more amenable to log readers or processors.
 
+**PASEJOBNAM** - PASE fork thread job names. Set PASE_FORM_JOBNAME environment variable to set forked thread jobs to have a unique name other than: QP0ZSPWP which is the default. Set the value or *DEFAULT=QP0ZSPWP.
 
 # Using the QSHEXECSRC CL command to call a Qsh/Pase command sequence from a classic IBM i source member
 
@@ -245,6 +246,8 @@ Parameters can be delimited with double quotes if needed.
 
 **MBROPT** - Output file option. Default: ```*REPLACE``` *REPLACE = replace outfile contents. *ADD = Add to outfile contents. Generally you should replace the file contents. If you want to append to a log file it's recommended to use the IFS output file option to write or append to an IFS file log. This is much more amenable to log readers or processors.  
 
+**PASEJOBNAM** - PASE fork thread job names. Set PASE_FORM_JOBNAME environment variable to set forked thread jobs to have a unique name other than: QP0ZSPWP which is the default. Set the value or *DEFAULT=QP0ZSPWP.
+
 **RMVTMPSCR** - This option determines if the temporary IFS script file is auto-deleted after running. Normally the selection should be *YES to delete the temp file. Otherwise specify *NO if you are debugging for some reason. ***Default = *YES ***  
 
 **PROMPTCMD** - This option determines if the ```QSH``` command is prompted interactively for testing or review of the actual QShell command line with parameter values before running the command. Normally the selection should be *NO since prompting is only needed if testing. Specify *YES if you are debugging for some reason and want the QSH command to prompt on an interactive 5250 session before running. ***Default = *NO ***
@@ -318,6 +321,7 @@ The command is a convenience wrapper that can be used to call a bash command wit
 
 **MBROPT** - Output file option. Default: ```*REPLACE``` *REPLACE = replace outfile contents. *ADD = Add to outfile contents. Generally you should replace the file contents. If you want to append to a log file it's recommended to use the IFS output file option to write or append to an IFS file log. This is much more amenable to log readers or processors.
 
+**PASEJOBNAM** - PASE fork thread job names. Set PASE_FORM_JOBNAME environment variable to set forked thread jobs to have a unique name other than: QP0ZSPWP which is the default. Set the value or *DEFAULT=QP0ZSPWP.
 
 # Using the QSHCURL CL command to call a curl command sequence
 
@@ -386,6 +390,7 @@ To install curl from qshell/bash:  yum install curl
 
 **PRTOUTQ** - This option determines the output queue where the spool file will generated to when PRTSTDOUT = *YES. ***Default = *SAME ***
 
+**PASEJOBNAM** - PASE fork thread job names. Set PASE_FORM_JOBNAME environment variable to set forked thread jobs to have a unique name other than: QP0ZSPWP which is the default. Set the value or *DEFAULT=QP0ZSPWP.
 
 # Using the QSHPYRUN CL command to run a Python script via QSHEXEC
 
@@ -464,6 +469,8 @@ to the PYPATH parameter to make sure the system level python binary does not pic
 **OUTFILE** - Output physical file to receive STDOUT from the QSH/PASE command. Default file: ```QTEMP/STDOUTQSH```  This output file ```always gets created and populated```.
 
 **MBROPT** - Output file option. Default: ```*REPLACE``` *REPLACE = replace outfile contents. *ADD = Add to outfile contents. Generally you should replace the file contents. If you want to append to a log file it's recommended to use the IFS output file option to write or append to an IFS file log. This is much more amenable to log readers or processors.
+
+**PASEJOBNAM** - PASE fork thread job names. Set PASE_FORM_JOBNAME environment variable to set forked thread jobs to have a unique name other than: QP0ZSPWP which is the default. Set the value or *DEFAULT=QP0ZSPWP.
 
 **DEBUGCMD** - Debug QSHEXEC command - If set to *YES, your job must be running interactively and it will display the command line that QSHPYRUN composed to execute via QSHEXEC before it runs. This is good for debugging or you are curious what the exec QSHEXEC command will look like. Under the covers QSHPYRUN utilizes the QSHEXEC command to run the Python command line. 
 
