@@ -2,11 +2,12 @@
                           &LOGSTDOUT &PRTSTDOUT &DLTSTDOUT +
                           &IFSSTDOUT &IFSFILE &IFSOPT &CCSID +
                           &PRTSPLF &PRTUSRDTA &PRTTXT &PRTHOLD +
-                          &PRTOUTQALL &OUTFILE &MBROPT)
+                          &PRTOUTQALL &OUTFILE &MBROPT &PASEJOBNAM)
 
 /*----------------------------------------------------------------------------*/
 /* Variables                                                                  */
 /*----------------------------------------------------------------------------*/
+             DCL        VAR(&PASEJOBNAM) TYPE(*CHAR) LEN(10)
              DCL        VAR(&MBROPT) TYPE(*CHAR) LEN(10)
              DCL        VAR(&OUTFILE) TYPE(*CHAR) LEN(20)
              DCL        VAR(&OUTFILPATH) TYPE(*CHAR) LEN(255)
@@ -89,6 +90,18 @@
                           TEXT('QShell/Pase Return Code')
              ENDDO
              CHGDTAARA  DTAARA(QTEMP/QSHRTNCOD *ALL) VALUE(0)
+
+/*----------------------------------------------------------------------------*/
+/* Create stdout IFS file data area          */
+/* Only useful if you set DLTSTDOUT(*NO)     */
+/*----------------------------------------------------------------------------*/
+             CHKOBJ     OBJ(QTEMP/STDOUTIFS) OBJTYPE(*DTAARA)
+             MONMSG     MSGID(CPF0000) EXEC(DO)
+             CRTDTAARA  DTAARA(QTEMP/STDOUTIFS) TYPE(*CHAR) LEN(255) +
+                          TEXT('QShell/Pase IFS File for Temporary +
+                          STDOUT')
+             ENDDO
+             CHGDTAARA  DTAARA(QTEMP/STDOUTIFS *ALL) VALUE(' ')
 
 /*----------------------------------------------------------------------------*/
 /* Extract output queue info.                                                 */
@@ -193,6 +206,9 @@
                           '/STDOUTQSH-' |< &JOB |< '-' |< &USER +
                           |< '-' |< &JOBNBR |< '-' |< &QDATE |< +
                           &QTIME |< '.TXT')
+
+             /* Save STDOUTIFS file name to data area */
+             CHGDTAARA  DTAARA(QTEMP/STDOUTIFS *ALL) VALUE(&STDOUTIFS)
 /*----------------------------------------------------------------------------*/
 /* ERASE QSHELL CMD OUTPUT IF IT EXISTS */
 /*----------------------------------------------------------------------------*/
@@ -204,6 +220,27 @@
 /* REVIEW IF NEEDED.                            */
 /*----------------------------------------------------------------------------*/
              CHGVAR     VAR(&STDOUTFILE) VALUE('FILE=' |< &STDOUTIFS)
+
+/*----------------------------------------------------------------------------*/
+/* Set the PASE_FORK_JOBNAME env variable to set thread job names.   */
+/* Has TR requiremnents                                              */
+/*----------------------------------------------------------------------------*/
+             IF         COND(&PASEJOBNAM *NE *DEFAULT) THEN(DO)
+             ADDENVVAR  ENVVAR('PASE_FORK_JOBNAME') +
+                          VALUE(&PASEJOBNAM) REPLACE(*YES)
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) +
+                          MSGDTA('Environment variable +
+                          PASE_FORK_JOBNAME is set to:' |> +
+                          &PASEJOBNAM) TOPGMQ(*SAME) MSGTYPE(*DIAG)
+             ENDDO
+             IF         COND(&PASEJOBNAM *EQ *DEFAULT) THEN(DO)
+             RMVENVVAR  ENVVAR('PASE_FORK_JOBNAME')
+             MONMSG     MSGID(CPF0000)
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) +
+                          MSGDTA('Environment variable +
+                          PASE_FORK_JOBNAME removed') TOPGMQ(*SAME) +
+                          MSGTYPE(*DIAG)
+             ENDDO
 
 /*----------------------------------------------------------------------------*/
 /* SET THE QSHELL STDOUT IFS FILE LOCATION      */
