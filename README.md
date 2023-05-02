@@ -5,7 +5,7 @@ The main benefit of this wrapper is to be able to integrate Qshell/Pase applicat
 
 There are several ways to build the library. Pick your favorite.
 
-# Check version info
+# Check latest version info
 https://github.com/richardschoen/QshOni/blob/master/VERSION.TXT   
    
 # Installing and Building QSHONI via getrepo-qshoni.sh script 
