@@ -51,6 +51,12 @@
 /*----------------------------------------------------------------------------*/
 /* MAIN                                                                       */
 /*----------------------------------------------------------------------------*/
+             /* Output file is required */
+             IF         COND(&OUTPUTFILE *EQ ' ') THEN(DO)
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Output +
+                          file name must be specified') +
+                          MSGTYPE(*ESCAPE)
+             ENDDO
 
              /* Check for output file and replace if selected and exists */
              QSHONI/QSHIFSCHK FILNAM(&OUTPUTFILE)
