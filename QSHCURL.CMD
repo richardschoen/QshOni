@@ -41,6 +41,9 @@
                           hold spool file')
              PARM       KWD(PRTOUTQ) TYPE(QUAL2) MIN(1) +
                           PROMPT('Print stdout to outq')
+             PARM       KWD(PASEJOBNAM) TYPE(*CHAR) LEN(10) +
+                          DFT(*DEFAULT) CASE(*MIXED) PROMPT('PASE +
+                          fork thread job names')
  QUAL2:      QUAL       TYPE(*NAME) LEN(10) DFT(*SAME) +
                           SPCVAL((*SAME)) EXPR(*YES)
              QUAL       TYPE(*NAME) LEN(10) DFT(*LIBL) +
