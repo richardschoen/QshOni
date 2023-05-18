@@ -1,0 +1,14 @@
+/* Text: Start MariaDB Server */
+             PGM
+
+/* Submit the MariaDB Startup PASE command via QShell. */
+/* QSHEXEC handles all the multithreading setup.       */
+/* Database is in /QOpenSys/var/lib/mariadb/data       */
+             SBMJOB     CMD(QSHONI/QSHEXEC +
+                          CMDLINE('/QOpenSys/pkgs/bin/mysqld_safe +
+                          --datadir=/QOpenSys/var/lib/mariadb/data') +
+                          PRTSTDOUT(*YES) PRTSPLF(STRMARIADB)) +
+                          JOB(STRMARIADB) JOBQ(QSYSNOMAX) +
+                          JOBMSGQFL(*WRAP)
+
+             ENDPGM
