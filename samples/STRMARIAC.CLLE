@@ -8,7 +8,7 @@
                           CMDLINE('/QOpenSys/pkgs/bin/mysqld_safe +
                           --datadir=/QOpenSys/var/lib/mariadb/data') +
                           PRTSTDOUT(*YES) PRTSPLF(STRMARIADB)) +
-                          JOB(STRMARIADB) JOBQ(QSYSNOMAX) +
+                          JOB(STRMARIADB) JOBQ(QUSRNOMAX) +
                           JOBMSGQFL(*WRAP)
 
              ENDPGM
