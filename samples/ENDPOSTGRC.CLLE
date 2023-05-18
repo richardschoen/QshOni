@@ -1,0 +1,30 @@
+/* Text: End PostgreSQL Server Instance */
+/* Data in /postgres directory          */
+             PGM        PARM(&USERID)
+             DCL        VAR(&USERID) TYPE(*CHAR) LEN(10)
+
+             MONMSG     MSGID(CPF0000) EXEC(GOTO CMDLBL(ERRORS))
+
+             IF         COND(&USERID *EQ *USERID) THEN(DO)
+             RTVJOBA    USER(&USERID)
+             ENDDO
+
+             /* Submit the PostgreSQL shutdown */
+             SBMJOB     CMD(QSHONI/QSHEXEC CMDLINE('pg_ctl -D +
+                          /postgres stop') SETPKGPATH(*YES) +
+                          DSPSTDOUT(*NO) PRTSTDOUT(*YES) +
+                          PRTSPLF(ENDPOSTGR)) JOB(ENDPOSTGR) +
+                          JOBQ(QUSRNOMAX) USER(&USERID) +
+                          JOBMSGQFL(*WRAP)
+
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) +
+                          MSGDTA('PostgreSQL shutdown job +
+                          submitted') MSGTYPE(*COMP)
+
+             RETURN
+ERRORS:
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Error +
+                          occurred ending PostgreSQL. Check the +
+                          job log') MSGTYPE(*ESCAPE)
+
+             ENDPGM
