@@ -1,0 +1,48 @@
+/* Text: Start NGINX Web Server */
+             PGM        PARM(&NGINXBIN &NGCONFDIR &NGINXCONF +
+                          &DSPSTDOUT &LOGSTDOUT &PRTSTDOUT &DLTSTDOUT)
+
+             DCL        VAR(&CMD) TYPE(*CHAR) LEN(5000)
+             DCL        VAR(&NGINXBIN) TYPE(*CHAR) LEN(255)
+             DCL        VAR(&NGCONFDIR) TYPE(*CHAR) LEN(255)
+             DCL        VAR(&NGINXCONF) TYPE(*CHAR) LEN(255)
+             DCL        VAR(&DSPSTDOUT) TYPE(*CHAR) LEN(4)
+             DCL        VAR(&LOGSTDOUT) TYPE(*CHAR) LEN(4)
+             DCL        VAR(&PRTSTDOUT) TYPE(*CHAR) LEN(4)
+             DCL        VAR(&DLTSTDOUT) TYPE(*CHAR) LEN(4)
+             DCL        VAR(&DSPSTDOUT) TYPE(*CHAR) LEN(4)
+             DCL        VAR(&DLTSTDOUT) TYPE(*CHAR) LEN(4)
+
+/*----------------------------------------------------------------------------*/
+/* MONITOR FOR GLOBAL ERROR. ANY ERROR IS A CAUSE TO BLOW OUT OF HERE         */
+/* AND WE WANT A GRACEFUL EXIT.                                               */
+/*----------------------------------------------------------------------------*/
+             MONMSG     MSGID(CPF0000) EXEC(GOTO CMDLBL(ERRORS))
+
+/*----------------------------------------------------------------------------*/
+/* Call stop nginx via QSHEXEC */
+/*----------------------------------------------------------------------------*/
+             CHGVAR     VAR(&CMD) VALUE(&NGINXBIN |> '-c' |> +
+                          &NGCONFDIR |< '/' |< &NGINXCONF)
+
+             QSHONI/QSHEXEC CMDLINE(&CMD) DSPSTDOUT(&DSPSTDOUT) +
+                          LOGSTDOUT(&LOGSTDOUT) +
+                          PRTSTDOUT(&PRTSTDOUT) +
+                          DLTSTDOUT(&DLTSTDOUT) PRTSPLF(ENDNGINX)
+
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('NGINX +
+                          server start completed normally') +
+                          MSGTYPE(*COMP)
+
+             RETURN
+/*----------------------------------------------------------------------------*/
+/* HANDLE ERRORS     */
+/*----------------------------------------------------------------------------*/
+ERRORS:
+
+             /* Send error escape message */
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Errors +
+                          occurred while starting NGINX. Check the +
+                          joblog') MSGTYPE(*ESCAPE)
+
+             ENDPGM
