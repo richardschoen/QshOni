@@ -1,0 +1,47 @@
+/* Text: End NGINX Web Server */
+             PGM        PARM(&NGINXBIN &DSPSTDOUT &LOGSTDOUT +
+                          &PRTSTDOUT &DLTSTDOUT)
+
+             DCL        VAR(&CMD) TYPE(*CHAR) LEN(5000)
+             DCL        VAR(&NGINXBIN) TYPE(*CHAR) LEN(255)
+             DCL        VAR(&DSPSTDOUT) TYPE(*CHAR) LEN(4)
+             DCL        VAR(&LOGSTDOUT) TYPE(*CHAR) LEN(4)
+             DCL        VAR(&PRTSTDOUT) TYPE(*CHAR) LEN(4)
+             DCL        VAR(&DLTSTDOUT) TYPE(*CHAR) LEN(4)
+             DCL        VAR(&DSPSTDOUT) TYPE(*CHAR) LEN(4)
+             DCL        VAR(&DLTSTDOUT) TYPE(*CHAR) LEN(4)
+
+/*----------------------------------------------------------------------------*/
+/* MONITOR FOR GLOBAL ERROR. ANY ERROR IS A CAUSE TO BLOW OUT OF HERE         */
+/* AND WE WANT A GRACEFUL EXIT.                                               */
+/*----------------------------------------------------------------------------*/
+             MONMSG     MSGID(CPF0000) EXEC(GOTO CMDLBL(ERRORS))
+
+/*----------------------------------------------------------------------------*/
+/* Call stop nginx via QSHEXEC.                                               */
+/* We use kill to locate the nginx process id file and kill the job.          */
+/*----------------------------------------------------------------------------*/
+             CHGVAR     VAR(&CMD) VALUE('kill -QUIT $( cat +
+                          /QOpenSys/etc/nginx/logs/nginx.pid )')
+
+             QSHONI/QSHEXEC CMDLINE(&CMD) DSPSTDOUT(&DSPSTDOUT) +
+                          LOGSTDOUT(&LOGSTDOUT) +
+                          PRTSTDOUT(&PRTSTDOUT) +
+                          DLTSTDOUT(&DLTSTDOUT) PRTSPLF(ENDNGINX)
+
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('NGINX +
+                          server end completed normally') +
+                          MSGTYPE(*COMP)
+
+             RETURN
+/*----------------------------------------------------------------------------*/
+/* HANDLE ERRORS     */
+/*----------------------------------------------------------------------------*/
+ERRORS:
+
+             /* Send error escape message */
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Errors +
+                          occurred while ending NGINX. Check the +
+                          joblog') MSGTYPE(*ESCAPE)
+
+             ENDPGM
