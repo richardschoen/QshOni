@@ -4,6 +4,19 @@ This section contains useful sample commands that utilize the QSHONI library com
 
 These commands are not shipped as part of the core QSHONI library code.
 
+## DB2 CL Command
+This command wraps the DB2 QShell utility and writes the results to the IFS. The DB2UTIL command is a little more functional because it will write as delimited csv or json format but some may want to use the db2 command instead. If you use db2 you will haveto parse the file yourself for columns. It generally works to determine column widths based on the -------- column headers which generally match the data width. There is also a record count at the end. 
+
+The following example queries QIWS/QCUSTCDT to a file in the IFS.   
+
+```
+DB2 SQL('select * from qiws.qcustcdt') 
+    GENOPT('-v')                       
+    OUTPUTFILE('/tmp/test.txt')        
+    OPTION(*REPLACE)                   
+```
+
+
 # Using the PGDUMP CL command to back up a Postgres database to an IFS output file
 
 Log in as the ```POSTGRES``` user profile on an IBM i 5250 session or submit the command as the ```POSTGRES``` user or other authorized Postgres database user.
