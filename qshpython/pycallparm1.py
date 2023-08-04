@@ -119,7 +119,8 @@ try: # Try to perform main logic
    
    # Set and write return parameter values to STDOUT
    returnval01=args.parm1.strip()  # Return value passed in parm 1 
-   returnval02="Return 2"  # Return any text value you want 
+   # Return a sample 255 char value
+   returnval02="123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456710012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345672001234567890123456789012345678901234567890123456785012345"  
    returnval03="Return 3"  # Return any text value you want 
    returnval04="Return 4"  # Return any text value you want 
    returnval05="Return 5"  # Return any text value you want 
