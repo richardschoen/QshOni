@@ -613,12 +613,24 @@ The following example checks to see if a web service instance is running on port
 
 **OUTFILE** - This parameter is used to specify a temporary output file to create in QTEMP library for the job. Default name - TCPTMP001
 
-# Using the QSHPYCALL CL command to run a Python script via QSHEXEC
+# Using the QSHPYCALL CL command to run a Python script via QSHEXEC and return parameter values
 
-The following example calls a pycallparm1.py script that returns parameters
+The following example calls a script named ```pycallparm1.py``` that returns parameters from within an existing program. 
+```See CL sample QSHPYCALLT in the QSHONI library```
 
  ```
-      QSHPYRUN SCRIPTDIR('/qshpython')       
+       DCL        VAR(&RETURN01) TYPE(*CHAR) LEN(255)     
+       DCL        VAR(&RETURN02) TYPE(*CHAR) LEN(255)     
+       DCL        VAR(&RETURN03) TYPE(*CHAR) LEN(255)     
+       DCL        VAR(&RETURN04) TYPE(*CHAR) LEN(255)     
+       DCL        VAR(&RETURN05) TYPE(*CHAR) LEN(255)     
+       DCL        VAR(&RETURN06) TYPE(*CHAR) LEN(255)     
+       DCL        VAR(&RETURN07) TYPE(*CHAR) LEN(255)     
+       DCL        VAR(&RETURN08) TYPE(*CHAR) LEN(255)     
+       DCL        VAR(&RETURN09) TYPE(*CHAR) LEN(255)     
+       DCL        VAR(&RETURN10) TYPE(*CHAR) LEN(255)     
+
+      QSHPYCALL SCRIPTDIR('/qshpython')       
       SCRIPTFILE('pycallparm1.py')           
       ARGS(Parm1 Parm2)              
       PYVERSION(3)                   
@@ -631,7 +643,17 @@ The following example calls a pycallparm1.py script that returns parameters
       IFSOPT(*REPLACE)
       PRTSPLF(QSHPYRUN) 
       PRTUSRDTA(*NONE)    
-      PRTTXT(*NONE)       
+      PRTTXT(*NONE)
+      RETURN01(&RETURN01)
+      RETURN01(&RETURN02)
+      RETURN01(&RETURN03)
+      RETURN01(&RETURN04)
+      RETURN01(&RETURN05)
+      RETURN01(&RETURN06)
+      RETURN01(&RETURN07)
+      RETURN01(&RETURN08)
+      RETURN01(&RETURN09)
+      RETURN01(&RETURN10)
 ```
 
 # QSHPYCALL command parms
@@ -695,7 +717,7 @@ to the PYPATH parameter to make sure the system level python binary does not pic
 
 **DEBUGCMD** - Debug QSHEXEC command - If set to *YES, your job must be running interactively and it will display the command line that QSHPYRUN composed to execute via QSHEXEC before it runs. This is good for debugging or you are curious what the exec QSHEXEC command will look like. Under the covers QSHPYRUN utilizes the QSHEXEC command to run the Python command line. 
 
-**RETURN01 - RETURN10** - These parameters can return values from the called Python script if it writes return values to the STDOUT log using the print() command. The special format we look for to return values is:  
+**RETURN01 - RETURN10** - These 255 character parameters can return values from the called Python script if it writes return values to the STDOUT log using the print() command. The special format we look for to return values is:  
 ```RETURNPARM01: I am return value 1```
 ``` - ```
 ```RETURNPARM10: I am return value 10```
