@@ -613,6 +613,89 @@ The following example checks to see if a web service instance is running on port
 
 **OUTFILE** - This parameter is used to specify a temporary output file to create in QTEMP library for the job. Default name - TCPTMP001
 
+# Using the QSHPYCALL CL command to run a Python script via QSHEXEC
 
+The following example calls a pycallparm1.py script that returns parameters
 
+ ```
+      QSHPYRUN SCRIPTDIR('/qshpython')       
+      SCRIPTFILE('pycallparm1.py')           
+      ARGS(Parm1 Parm2)              
+      PYVERSION(3)                   
+      DSPSTDOUT(*YES)         
+      LOGSTDOUT(*NO)          
+      PRTSTDOUT(*NO)          
+      DLTSTDOUT(*YES)
+      IFSSTDOUT(*NO)
+      IFSFILE('/tmp/log.txt')
+      IFSOPT(*REPLACE)
+      PRTSPLF(QSHPYRUN) 
+      PRTUSRDTA(*NONE)    
+      PRTTXT(*NONE)       
+```
 
+# QSHPYCALL command parms
+
+**Overview** - This CL command can be used to run a Python script via QSHEXEC and return up to 10 parameter values from the STDOUt log info. Note: The CL command must be embeddedin a CL program since it returns parameter values to the calling CL, RPG or COBOL program. 
+
+```Stdout Logging Note:``` During execution, the CL command always creates a temporary outfile in library QTEMP that gets automatically populated with standard output (stdout) from the QSH/PASE command process that gets run. The temporary stdout output file name is: ```QTEMP/STDOUTQSH```. If the file already exists for a subsequent run of the command, the ```QTEMP/STDOUTQSH``` temporary file is automatically cleared before running so each run gets a fresh copy of ```QTEMP/STDOUTQSH```. The ```QTEMP/STDOUTQSH``` temp file gets created automatically always, even if none of the switches such as: ```DSPSTDOUT, LOGSTDOUT, PRTSTDOUT or IFSSTDOUT``` are specified. 
+
+**SCRIPTDIR** - The IFS directory location for the Python script. **Ex: /python**
+
+**SCRIPTFILE** - The script file name you want to call without the directory path. The PYRUN command puts it all together. **Ex: hello.py**
+
+**ARGS** - Command line parameter argument list. Up to 40 - 200 byte argument/parameter values can be passed to a Python script call. Each parm is automatically trimmed. Do NOT put double quotes around the parms or your program call may get errors because your parameters get compromised with extra double quotes. The double quotes are already added automatically inside the CL command processing program. Single quotes are allowed around your parmaeter data though if desired:  Ex: **'My Parm Value 1' 'My Parm Value 2'**
+
+**PYVERSION** - The Python version you want to use. It should be set to either **2 or 2.7** for Python 2 or **3, 3.6 or 3.9** for Python 3.
+
+**PYPATH** - The this is the directory path to your Python binaries (python/python3). Hopefully you have already installed the Yum versions so the default path should be good. Leave value set to `*DEFAULT`. **Default= /QOpenSys/pkgs/bin**. The default path lives in the **PYPATH** data area in the **PYONI** library.
+
+**SETPKGPATH** - Add the IBM i Open Source Package path to PATH environment variable by calling QSHPATH command before running QSH/PASE commands. Default = *YES.
+
+**USEVENV** - Use virtual environment - If set to *YES, run your Python script using an existing Python virtual environment as specified in the Python virtual environment path. The IFS directory and virtual environment must exist. Default = *No.
+
+```
+Note: When using virtual environment, you will need to make sure the PYPATH data area value is set to ' ' or pass ' '   
+to the PYPATH parameter to make sure the system level python binary does not picked up. Each venv has its own python executable
+```
+
+**VENVPATH** - Virtual environment path - Specify an existing IFS directory that also contains a valid Python virtual environment. Cannot be blank or non-existant if USEVENV=*yes or the QSHPYRUN command will fail.
+
+**DSPSTDOUT** - Display the outfile contents. Nice when debugging. 
+
+**LOGSTDOUT** - Place STDOUT log entries into the current jobs job log. Use this if you want the log info in the IBM i joblog. All STDOUT entries are written as CPF message: **QSS9898**
+
+**PRTSTDOUT** - Print STDOUT to a spool file. Use this if you want a spool file of the log output.
+
+**DLTSTDOUT** - This option insures that the STDOUT IFS temp files get cleaned up after processing. All IFS log files get created in the /tmp/qsh directory.
+
+**IFSSTDOUT** - Copy std output to an IFS file. Nice for aggregating log results to a file.
+
+**IFSFILE** - IFS file for stdout results. Needs to be specified if IFSSTDOUT = *YES.
+
+**IFSOPT** - IFS file option. *REPLACE = replace stdout IFS file. *ADD = Add to stdout IFS file.
+
+**CCSID** - When using the iToolkit component for command access, I originally had some issues with CL commands not working correctly. However I don't currently remember exactly why. This may have been solved, however I recommend still passing a value of 37 unless you are in a non US country. If you set to `*SAME`, the CCSID will stay the same as your current job with no change.
+
+**PRTSPLF** - This option holds the name of the spool file used when PRTSTDOUT = *YES. It's a nice way to customize the stdout log prints. ***Default = QSHEXECLOG***
+
+**PRTUSRDTA** - This option holds the name of the spool file user data used when PRTSTDOUT = *YES. ***Default = *NONE ***
+
+**PRTTXT** - This option holds the name of the spool file print txt to be used when PRTSTDOUT = *YES. ***Default = *NONE ***
+
+**PRTHOLD** - This option determines if the spool file is held if one is generated when PRTSTDOUT = *YES. ***Default = *YES ***
+
+**PRTOUTQ** - This option determines the output queue where the spool file will generated to when PRTSTDOUT = *YES. ***Default = *SAME ***
+
+**OUTFILE** - Output physical file to receive STDOUT from the QSH/PASE command. Default file: ```QTEMP/STDOUTQSH```  This output file ```always gets created and populated```.
+
+**MBROPT** - Output file option. Default: ```*REPLACE``` *REPLACE = replace outfile contents. *ADD = Add to outfile contents. Generally you should replace the file contents. If you want to append to a log file it's recommended to use the IFS output file option to write or append to an IFS file log. This is much more amenable to log readers or processors.
+
+**PASEJOBNAM** - PASE fork thread job names. Set PASE_FORK_JOBNAME environment variable to set forked thread jobs to have a unique name other than: QP0ZSPWP which is the default. Set the value or *DEFAULT=QP0ZSPWP.
+
+**DEBUGCMD** - Debug QSHEXEC command - If set to *YES, your job must be running interactively and it will display the command line that QSHPYRUN composed to execute via QSHEXEC before it runs. This is good for debugging or you are curious what the exec QSHEXEC command will look like. Under the covers QSHPYRUN utilizes the QSHEXEC command to run the Python command line. 
+
+**RETURN01 - RETURN10** - These parameters can return values from the called Python script if it writes return values to the STDOUT log using the print() command. The special format we look for to return values is:  
+```RETURNPARM01: I am return value 1```
+``` - ```
+```RETURNPARM10: I am return value 10```
