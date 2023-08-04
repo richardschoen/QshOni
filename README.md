@@ -717,7 +717,7 @@ to the PYPATH parameter to make sure the system level python binary does not pic
 
 **DEBUGCMD** - Debug QSHEXEC command - If set to *YES, your job must be running interactively and it will display the command line that QSHPYRUN composed to execute via QSHEXEC before it runs. This is good for debugging or you are curious what the exec QSHEXEC command will look like. Under the covers QSHPYRUN utilizes the QSHEXEC command to run the Python command line. 
 
-**RETURN01 - RETURN10** - These 255 character parameters can return values from the called Python script if it writes return values to the STDOUT log using the print() command. The special format we look for to return values is:  
-```RETURNPARM01: I am return value 1```
-``` - ```
-```RETURNPARM10: I am return value 10```
+**RETURN01 - RETURN10** - These 255 character parameters can return values from the called Python script if it writes return values to the STDOUT log using the Python print() command. The special format we look for to return values is:     
+```RETURNPARM01: I am return value 1```   
+``` - ```   
+```RETURNPARM10: I am return value 10```   
