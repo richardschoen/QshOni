@@ -98,3 +98,23 @@ If value is set for job name, that job name is applied to
 all forked/spawned thread jobs by automatically adding the          
 environment variable PASE_FORK_JOBNAME with selected job name   
 before launching and thread jobs. 
+V1.0.24 - 8/4/2023
+-Created QSHPYCALL command. This is a variation of the QSHPYRUN cmd. It
+ will run a Python script and return parameter values as long as they
+ are prefixed in STDOUT with: ```RETURNPARM01:``` - ```RETURNPARM10:```
+ Statements can be written to STDOUT using the print() statement
+ in a Python script. See sample script: ```pycallparl1.py`` on the
+ GitHub site.
+ Example STDOUT value: ```"RETURNPARM01:I am return value 1"```
+ Would return: ```"I am return value 1"``` to the QSHPYCALL command
+ return parameter 1.
+ QSHPYCALL is mainly a convenience wrapper for RPG/CL/COBOL developers
+ who might want to do some quick work in Python and return it for
+ use in their RPG/CL/COBOL programs. They are generallly used to the
+ call/parm convention of RPG/CL/COBOL programming.
+ -Qualify RUNSQL command as QSYS/RUNSQL in QSHQRYTMPC.
+  Ran into a case where a customer has their own custom RUNSQL
+  command which was totally different than QSYS/RUNSQL in the
+  system library list. This cause the command to crash due to
+  having different parameters. Qualifying RUNSQL to QSYS should
+  resolve this issue.
