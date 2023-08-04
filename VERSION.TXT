@@ -101,7 +101,7 @@ before launching and thread jobs.
 V1.0.24 - 8/4/2023
 -Created QSHPYCALL command. This is a variation of the QSHPYRUN cmd. It
  will run a Python script and return parameter values as long as they
- are prefixed in STDOUT with: ```RETURNPARM01:``` - ```RETURNPARM10:```
+ are prefixed in STDOUT with: ```RETURNPARM01: - RETURNPARM10:```
  Statements can be written to STDOUT using the print() statement
  in a Python script. See sample script: ```pycallparl1.py`` on the
  GitHub site.
