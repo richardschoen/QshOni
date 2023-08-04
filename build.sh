@@ -162,6 +162,26 @@ CURFILE="DB2UTILC.CLLE"
 SRCTEXT="Execute db2util Query to IFS Output File via bash"
 cpy_member
 
+CURFILE="QSHPYCALL.CMD"
+SRCTEXT="Run Python Script via Qshell and Return Parms"
+cpy_member
+
+CURFILE="QSHPYCALLC.CLLE"
+SRCTEXT="Run Python Script via Qshell and Return Parms"
+cpy_member
+
+CURFILE="QSHPYCALLT.CLLE"
+SRCTEXT="Test Call to QSHPYCALL"
+cpy_member
+
+CURFILE="QSHGETPARM.CMD"
+SRCTEXT="Scan Qshell Log File for Parameter Values"
+cpy_member
+
+CURFILE="QSHGETPARR.RPGLE"
+SRCTEXT="Run Python Script via Qshell and Return Parms"
+cpy_member
+
 CURFILE="SRCBLDC.CLP"
 SRCTEXT="Build cmds from QSHONI/SOURCE file"   
 cpy_member
