@@ -1,0 +1,122 @@
+             CMD        PROMPT('Run Python and Return Parms')
+             PARM       KWD(SCRIPTDIR) TYPE(*CHAR) LEN(255) MIN(1) +
+                          EXPR(*YES) CASE(*MIXED) PROMPT('Python +
+                          script directory')
+             PARM       KWD(SCRIPTFILE) TYPE(*CHAR) LEN(255) MIN(1) +
+                          EXPR(*YES) CASE(*MIXED) PROMPT('Python +
+                          script file name')
+             PARM       KWD(ARGS) TYPE(*CHAR) LEN(200) RSTD(*NO) +
+                          MAX(40) EXPR(*YES) CASE(*MIXED) +
+                          INLPMTLEN(32) PROMPT('Python command line +
+                          arguments')
+             PARM       KWD(PYVERSION) TYPE(*CHAR) LEN(5) RSTD(*NO) +
+                          DFT(3) SPCVAL((2 2) (2.7 2.7) (3 3) (3.6 +
+                          3.6) (3.9 3.9)) CASE(*MIXED) +
+                          PROMPT('Python version')
+             PARM       KWD(PYPATH) TYPE(*CHAR) LEN(255) +
+                          DFT(*DEFAULT) +
+                          SPCVAL(('/QOpenSys/pkgs/bin' +
+                          '/QOpenSys/pkgs/bin') (*DEFAULT +
+                          *DEFAULT)) EXPR(*YES) CASE(*MIXED) +
+                          PROMPT('Python bin path')
+             PARM       KWD(SETPKGPATH) TYPE(*CHAR) LEN(4) +
+                          RSTD(*YES) DFT(*YES) VALUES(*NO *YES) +
+                          EXPR(*YES) CASE(*MIXED) PROMPT('Set +
+                          QOpenSys yum package path')
+             PARM       KWD(USEVENV) TYPE(*CHAR) LEN(4) RSTD(*YES) +
+                          DFT(*NO) VALUES(*NO *YES) EXPR(*YES) +
+                          CASE(*MIXED) PROMPT('Use virtual +
+                          environment')
+             PARM       KWD(VENVPATH) TYPE(*CHAR) LEN(255) DFT('') +
+                          PROMPT('Virtual environment base path')
+             PARM       KWD(DSPSTDOUT) TYPE(*CHAR) LEN(4) RSTD(*YES) +
+                          DFT(*NO) VALUES(*NO *YES) PROMPT('Display +
+                          standard output result')
+             PARM       KWD(LOGSTDOUT) TYPE(*CHAR) LEN(4) RSTD(*YES) +
+                          DFT(*NO) VALUES(*NO *YES) PROMPT('Log +
+                          standard output to job log')
+             PARM       KWD(PRTSTDOUT) TYPE(*CHAR) LEN(4) RSTD(*YES) +
+                          DFT(*NO) VALUES(*NO *YES) PROMPT('Print +
+                          standard output result')
+             PARM       KWD(DLTSTDOUT) TYPE(*CHAR) LEN(4) RSTD(*YES) +
+                          DFT(*YES) VALUES(*NO *YES) PROMPT('Delete +
+                          standard output result')
+             PARM       KWD(IFSSTDOUT) TYPE(*CHAR) LEN(4) RSTD(*YES) +
+                          DFT(*NO) VALUES(*NO *YES) PROMPT('Copy +
+                          std output to IFS file')
+             PARM       KWD(IFSFILE) TYPE(*CHAR) LEN(255) +
+                          PROMPT('IFS file for stdout results')
+             PARM       KWD(IFSOPT) TYPE(*CHAR) LEN(10) RSTD(*YES) +
+                          DFT(*REPLACE) VALUES(*ADD *REPLACE *NONE) +
+                          PROMPT('IFS file option')
+             PARM       KWD(CCSID) TYPE(*CHAR) LEN(10) DFT(37) +
+                          SPCVAL((*SAME *SAME)) PROMPT('Coded +
+                          character set ID for job')
+             PARM       KWD(PRTSPLF) TYPE(*CHAR) LEN(10) +
+                          DFT(QSHPYRUN) PROMPT('Print stdout spool +
+                          file')
+             PARM       KWD(PRTUSRDTA) TYPE(*CHAR) LEN(10) +
+                          DFT(*NONE) SPCVAL((*NONE ' ')) +
+                          PROMPT('Print stdout user data')
+             PARM       KWD(PRTTXT) TYPE(*CHAR) LEN(30) DFT(*NONE) +
+                          SPCVAL((*NONE ' ')) CASE(*MIXED) +
+                          PROMPT('Print stdout print text')
+             PARM       KWD(PRTHOLD) TYPE(*CHAR) LEN(4) RSTD(*YES) +
+                          DFT(*YES) VALUES(*NO *YES) SPCVAL((*NONE +
+                          ' ')) CASE(*MIXED) PROMPT('Print stdout +
+                          hold spool file')
+             PARM       KWD(PRTOUTQ) TYPE(QUAL2) MIN(1) +
+                          PROMPT('Print stdout to outq')
+             PARM       KWD(OUTFILE) TYPE(QUAL3) MIN(1) PROMPT('File +
+                          to receive output')
+             PARM       KWD(MBROPT) TYPE(*CHAR) LEN(10) RSTD(*YES) +
+                          DFT(*REPLACE) VALUES(*ADD *REPLACE) +
+                          PROMPT('Replace or add records')
+             PARM       KWD(PASEJOBNAM) TYPE(*CHAR) LEN(10) +
+                          DFT(*DEFAULT) CASE(*MIXED) PROMPT('PASE +
+                          fork thread job names')
+             PARM       KWD(DEBUGCMD) TYPE(*CHAR) LEN(4) RSTD(*YES) +
+                          DFT(*NO) VALUES(*NO *YES) EXPR(*YES) +
+                          CASE(*MIXED) PROMPT('Debug QSHEXEC command')
+             PARM       KWD(CHGSCRDIR) TYPE(*CHAR) LEN(4) RSTD(*YES) +
+                          DFT(*NO) VALUES(*NO *YES) EXPR(*YES) +
+                          CASE(*MIXED) PROMPT('Change to script +
+                          directory')
+             PARM       KWD(RETURN01) TYPE(*CHAR) LEN(255) +
+                          RTNVAL(*YES) CASE(*MIXED) PROMPT('Return +
+                          parm 1 (255)')
+             PARM       KWD(RETURN02) TYPE(*CHAR) LEN(255) +
+                          RTNVAL(*YES) CASE(*MIXED) PROMPT('Return +
+                          parm 2 (255)')
+             PARM       KWD(RETURN03) TYPE(*CHAR) LEN(255) +
+                          RTNVAL(*YES) CASE(*MIXED) PROMPT('Return +
+                          parm 3 (255)')
+             PARM       KWD(RETURN04) TYPE(*CHAR) LEN(255) +
+                          RTNVAL(*YES) CASE(*MIXED) PROMPT('Return +
+                          parm 4 (255)')
+             PARM       KWD(RETURN05) TYPE(*CHAR) LEN(255) +
+                          RTNVAL(*YES) CASE(*MIXED) PROMPT('Return +
+                          parm 5 (255)')
+             PARM       KWD(RETURN06) TYPE(*CHAR) LEN(255) +
+                          RTNVAL(*YES) CASE(*MIXED) PROMPT('Return +
+                          parm 6 (255)')
+             PARM       KWD(RETURN07) TYPE(*CHAR) LEN(255) +
+                          RTNVAL(*YES) CASE(*MIXED) PROMPT('Return +
+                          parm 7 (255)')
+             PARM       KWD(RETURN08) TYPE(*CHAR) LEN(255) +
+                          RTNVAL(*YES) CASE(*MIXED) PROMPT('Return +
+                          parm 8 (255)')
+             PARM       KWD(RETURN09) TYPE(*CHAR) LEN(255) +
+                          RTNVAL(*YES) CASE(*MIXED) PROMPT('Return +
+                          parm 9 (255)')
+             PARM       KWD(RETURN10) TYPE(*CHAR) LEN(255) +
+                          RTNVAL(*YES) CASE(*MIXED) PROMPT('Return +
+                          parm 10 (255)')
+ QUAL2:      QUAL       TYPE(*NAME) LEN(10) DFT(*SAME) +
+                          SPCVAL((*SAME)) EXPR(*YES)
+             QUAL       TYPE(*NAME) LEN(10) DFT(*LIBL) +
+                          SPCVAL((*LIBL)) EXPR(*YES) PROMPT('Library')
+ QUAL3:      QUAL       TYPE(*NAME) LEN(10) DFT(STDOUTQSH) +
+                          SPCVAL((*SAME)) EXPR(*YES)
+             QUAL       TYPE(*NAME) LEN(10) DFT(QTEMP) +
+                          SPCVAL((*LIBL)) EXPR(*YES) PROMPT('Library')
