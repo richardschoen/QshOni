@@ -1,0 +1,63 @@
+             PGM
+
+             DCL        VAR(&RETURN01) TYPE(*CHAR) LEN(255)
+             DCL        VAR(&RETURN02) TYPE(*CHAR) LEN(255)
+             DCL        VAR(&RETURN03) TYPE(*CHAR) LEN(255)
+             DCL        VAR(&RETURN04) TYPE(*CHAR) LEN(255)
+             DCL        VAR(&RETURN05) TYPE(*CHAR) LEN(255)
+             DCL        VAR(&RETURN06) TYPE(*CHAR) LEN(255)
+             DCL        VAR(&RETURN07) TYPE(*CHAR) LEN(255)
+             DCL        VAR(&RETURN08) TYPE(*CHAR) LEN(255)
+             DCL        VAR(&RETURN09) TYPE(*CHAR) LEN(255)
+             DCL        VAR(&RETURN10) TYPE(*CHAR) LEN(255)
+             /* Set DSPSTDOUT to *YES to display STDOUT info */
+             DCL        VAR(&DSPSTDOUT) TYPE(*CHAR) LEN(4) VALUE(*NO)
+
+             MONMSG     MSGID(CPF0000) EXEC(GOTO CMDLBL(ERRORS))
+
+/*----------------------------------------------------------*/
+/* Call python script pycallparl1.py and return parm values */
+/* If no RETURNPARMxx is found in the STDOUT log, the return*/
+/* parameter values come back blanks.                       */
+/*----------------------------------------------------------*/
+             QSHPYCALL  SCRIPTDIR('/qshpython') +
+                          SCRIPTFILE(pycallparm1.py) +
+                          ARGS('--parm1=input value 1') +
+                          DSPSTDOUT(&DSPSTDOUT) RETURN01(&RETURN01) +
+                          RETURN02(&RETURN02) RETURN03(&RETURN03) +
+                          RETURN04(&RETURN04) RETURN05(&RETURN05) +
+                          RETURN06(&RETURN06) RETURN07(&RETURN07) +
+                          RETURN08(&RETURN08) RETURN09(&RETURN09) +
+                          RETURN10(&RETURN10)
+
+/*----------------------------------------------------------*/
+/* Output return parameter values to joglog messages        */
+/*----------------------------------------------------------*/
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) +
+                          MSGDTA('RETURN01:' |> &RETURN01)
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) +
+                          MSGDTA('RETURN02:' |> &RETURN02)
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) +
+                          MSGDTA('RETURN03:' |> &RETURN03)
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) +
+                          MSGDTA('RETURN04:' |> &RETURN04)
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) +
+                          MSGDTA('RETURN05:' |> &RETURN05)
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) +
+                          MSGDTA('RETURN06:' |> &RETURN06)
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) +
+                          MSGDTA('RETURN07:' |> &RETURN07)
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) +
+                          MSGDTA('RETURN08:' |> &RETURN08)
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) +
+                          MSGDTA('RETURN09:' |> &RETURN09)
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) +
+                          MSGDTA('RETURN10:' |> &RETURN10)
+
+             RETURN
+
+ERRORS:
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Errors +
+                          occurred')
+
+             ENDPGM
