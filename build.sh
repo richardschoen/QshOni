@@ -182,6 +182,14 @@ CURFILE="QSHGETPARR.RPGLE"
 SRCTEXT="Run Python Script via Qshell and Return Parms"
 cpy_member
 
+CURFILE="QSHPHPRUN.CMD"
+SRCTEXT="Run PHP Script via QShell   "
+cpy_member
+
+CURFILE="QSHPHPRUNC.CLLE"
+SRCTEXT="Run PHP Script via QShell   "
+cpy_member
+
 CURFILE="SRCBLDC.CLP"
 SRCTEXT="Build cmds from QSHONI/SOURCE file"   
 cpy_member
