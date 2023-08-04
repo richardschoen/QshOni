@@ -57,12 +57,12 @@
                           '/' |< &TEMPFILE)
 
              IF         COND(&PROMPT *EQ *YES) THEN(DO)
-             ? RUNSQL   ??SQL(&SQL) ??COMMIT(*NONE)
+             ? QSYS/RUNSQL   ??SQL(&SQL) ??COMMIT(*NONE)
              MONMSG     MSGID(CPF0000)
              ENDDO
 
              IF         COND(&PROMPT *NE *YES) THEN(DO)
-             RUNSQL     SQL(&SQL) COMMIT(*NONE)
+             QSYS/RUNSQL     SQL(&SQL) COMMIT(*NONE)
              MONMSG     MSGID(CPF0000)
              ENDDO
 
@@ -72,7 +72,7 @@
              CHGVAR     VAR(&SQL) VALUE('create table' |> &TEMPLIB +
                           |< '/' |< &TEMPFILE |> 'as (' |< +
                           &SQLQUERY |< ') with data')
-             RUNSQL     SQL(&SQL) COMMIT(*NONE)
+             QSYS/RUNSQL     SQL(&SQL) COMMIT(*NONE)
 
 /*----------------------------------------------------------------------------*/
 /* Get record count */
