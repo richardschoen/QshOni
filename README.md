@@ -634,7 +634,7 @@ The following example calls a script named ```pycallparm1.py``` that returns par
 
       QSHPYCALL SCRIPTDIR('/qshpython')       
       SCRIPTFILE('pycallparm1.py')           
-      ARGS(Parm1 Parm2)              
+      ARGS('--parm1=inputvalue1')              
       PYVERSION(3)                   
       DSPSTDOUT(*YES)         
       LOGSTDOUT(*NO)          
@@ -728,9 +728,10 @@ to the PYPATH parameter to make sure the system level python binary does not pic
 
 **Note: The QSHCALL command must be embedded into a CL program because it contains CL return variables.  
 
-The following example calls the ls command to list files for the /tmp directory: 
+The following example calls a script named ```pycallparm1.py``` that returns parameters from within an existing program.   
+```See CL sample QSHCALLT in the QSHONI library```
 
- ```
+```
       DCL        VAR(&RETURN01) TYPE(*CHAR) LEN(255)     
       DCL        VAR(&RETURN02) TYPE(*CHAR) LEN(255)     
       DCL        VAR(&RETURN03) TYPE(*CHAR) LEN(255)     
@@ -742,7 +743,7 @@ The following example calls the ls command to list files for the /tmp directory:
       DCL        VAR(&RETURN09) TYPE(*CHAR) LEN(255)     
       DCL        VAR(&RETURN10) TYPE(*CHAR) LEN(255)     
 
-      QSHCALL CMDLINE('cd /tmp;ls')   
+      QSHCALL CMDLINE('python3 /qshpython/pycallparm1.py --parm1=inputvalue1')   
       DSPSTDOUT(*YES)         
       LOGSTDOUT(*NO)          
       PRTSTDOUT(*NO)          
