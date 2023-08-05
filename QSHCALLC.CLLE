@@ -157,7 +157,7 @@
                 IF         COND(&IFSFILE *EQ ' ') THEN(SNDPGMMSG +
                              MSGID(CPF9898) MSGF(QCPFMSG) +
                              MSGDTA('IFSSTDOUT was set to *YES, but no +
-                             IFS file was specified. QSHEXEC +
+                             IFS file was specified. QSHCALL +
                              cancelled') MSGTYPE(*ESCAPE))
              ENDDO
 
@@ -189,7 +189,7 @@
              MONMSG     MSGID(CPF0000) EXEC(DO)
              SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Output +
                           library' |> &OLIB |> 'does not exist. +
-                          QSHEXEC command cancelled') TOPGMQ(*PRV) +
+                          QSHCALL command cancelled') TOPGMQ(*PRV) +
                           MSGTYPE(*ESCAPE)
              ENDDO
 
@@ -214,7 +214,7 @@
              MONMSG     MSGID(CPF0000) EXEC(DO)
              SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Output +
                           file' |> &OLIB |< '/' |< &OFILE |> 'does +
-                          not exist. QSHEXEC command cancelled') +
+                          not exist. QSHCALL command cancelled') +
                           TOPGMQ(*PRV) MSGTYPE(*ESCAPE)
              ENDDO
 
@@ -341,7 +341,7 @@ DONECOMP:
              MONMSG     MSGID(CPF0000) EXEC(DO)
              SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Error +
                           copying log to IFS file' |> &IFSFILE |> +
-                          '- QSHEXEC cancelled') MSGTYPE(*ESCAPE)
+                          '- QSHCALL cancelled') MSGTYPE(*ESCAPE)
              ENDDO
              ENDDO
 
@@ -433,7 +433,7 @@ ERRORS:
              MONMSG     MSGID(CPF0000) EXEC(DO)
              SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Error +
                           copying log to IFS file' |> &IFSFILE |> +
-                          '- QSHEXEC cancelled') MSGTYPE(*ESCAPE)
+                          '- QSHCALL cancelled') MSGTYPE(*ESCAPE)
              ENDDO
              ENDDO
 
@@ -449,7 +449,7 @@ ERRORS:
              /* Prevent endless loop if OVRPRTF fails */
              MONMSG     MSGID(CPF0000) EXEC(DO)
              SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Error +
-                          overriding print file - QSHEXEC +
+                          overriding print file - QSHCALL +
                           cancelled') MSGTYPE(*ESCAPE)
              ENDDO
              ENDDO
@@ -462,7 +462,7 @@ ERRORS:
              /* Prevent endless loop if OVRPRTF fails */
              MONMSG     MSGID(CPF0000) EXEC(DO)
              SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Error +
-                          overriding print file - QSHEXEC +
+                          overriding print file - QSHCALL +
                           cancelled') MSGTYPE(*ESCAPE)
              ENDDO
              ENDDO
