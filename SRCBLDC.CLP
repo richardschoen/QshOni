@@ -155,7 +155,7 @@
 
              CRTBNDRPG  PGM(&DESTLIB/QSHGETPARR) +
                           SRCFILE(&DESTLIB/&DESTFILE) +
-                          SRCMBR(QSHIFSCHKR) DFTACTGRP(*NO) +
+                          SRCMBR(QSHGETPARR) DFTACTGRP(*NO) +
                           REPLACE(*NO) TGTRLS(&TGTRLS) /* 1.0.25 */
 
              CRTCMD     CMD(&DESTLIB/QSHPYCALL) PGM(QSHPYCALLC) +
@@ -168,6 +168,19 @@
                           TGTRLS(&TGTRLS) /* 1.0.25 */
 
              CRTCLPGM   PGM(&DESTLIB/QSHPYCALLT) +
+                          SRCFILE(&DESTLIB/&DESTFILE) REPLACE(*NO) +
+                          TGTRLS(&TGTRLS) /* 1.0.25 */
+
+             CRTCMD     CMD(&DESTLIB/QSHCALL) PGM(QSHCALLC) +
+                          SRCFILE(&DESTLIB/&DESTFILE) ALLOW(*IPGM +
+                          *BPGM *IMOD *BMOD) PRDLIB(&DESTLIB) /* +
+                          1.0.25 */
+
+             CRTCLPGM   PGM(&DESTLIB/QSHCALLC) +
+                          SRCFILE(&DESTLIB/&DESTFILE) REPLACE(*NO) +
+                          TGTRLS(&TGTRLS) /* 1.0.25 */
+
+             CRTCLPGM   PGM(&DESTLIB/QSHCALLT) +
                           SRCFILE(&DESTLIB/&DESTFILE) REPLACE(*NO) +
                           TGTRLS(&TGTRLS) /* 1.0.25 */
 
