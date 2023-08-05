@@ -20,9 +20,8 @@
 /* If no RETURNPARMxx is found in the STDOUT log, the return*/
 /* parameter values come back blanks.                       */
 /*----------------------------------------------------------*/
-             QSHPYCALL  SCRIPTDIR('/qshpython') +
-                          SCRIPTFILE(pycallparm1.py) +
-                          ARGS('--parm1=input value 1') +
+             QSHCALL    CMDLINE('python3 /qshpython/pycallparm1.py +
+                          --parm1=inputvalue1') +
                           DSPSTDOUT(&DSPSTDOUT) RETURN01(&RETURN01) +
                           RETURN02(&RETURN02) RETURN03(&RETURN03) +
                           RETURN04(&RETURN04) RETURN05(&RETURN05) +
