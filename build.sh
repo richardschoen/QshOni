@@ -183,11 +183,23 @@ SRCTEXT="Run Python Script via Qshell and Return Parms"
 cpy_member
 
 CURFILE="QSHPHPRUN.CMD"
-SRCTEXT="Run PHP Script via QShell   "
+SRCTEXT="Run PHP Script via QShell"
 cpy_member
 
 CURFILE="QSHPHPRUNC.CLLE"
-SRCTEXT="Run PHP Script via QShell   "
+SRCTEXT="Run PHP Script via QShell"
+cpy_member
+
+CURFILE="QSHCALL.CMD"
+SRCTEXT="Run QShell Command Line and Return Parms"
+cpy_member
+
+CURFILE="QSHCALLC.CLLE"
+SRCTEXT="Run QShell Command Line and Return Parms"
+cpy_member
+
+CURFILE="QSHCALLT.CLLE"
+SRCTEXT="Test Call to QSHCALL"
 cpy_member
 
 CURFILE="SRCBLDC.CLP"
