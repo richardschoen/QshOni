@@ -1,14 +1,15 @@
-             PGM        PARM(&PYSCRDIR &SCRIPTFILE &ARGS &PYVERSION +
-                          &PYPATH &SETPKGPATH &USEVENV &VENVPATH +
-                          &DSPSTDOUT &LOGSTDOUT &PRTSTDOUT +
-                          &DLTSTDOUT &IFSSTDOUT &IFSFILE &IFSOPT +
-                          &CCSID &PRTSPLF &PRTUSRDTA &PRTTXT +
-                          &PRTHOLD &PRTOUTQALL &OUTFILE &MBROPT +
-                          &PASEJOBNAM &DEBUGCMD &CHGSCRDIR +
+             PGM        PARM(&CMDLINE &SETPKGPATH &DSPSTDOUT +
+                          &LOGSTDOUT &PRTSTDOUT &DLTSTDOUT +
+                          &IFSSTDOUT &IFSFILE &IFSOPT &CCSID +
+                          &PRTSPLF &PRTUSRDTA &PRTTXT &PRTHOLD +
+                          &PRTOUTQALL &OUTFILE &MBROPT &PASEJOBNAM +
                           &RETURN01 &RETURN02 &RETURN03 &RETURN04 +
                           &RETURN05 &RETURN06 &RETURN07 &RETURN08 +
                           &RETURN09 &RETURN10)
 
+/*----------------------------------------------------------------------------*/
+/* Variables                                                                  */
+/*----------------------------------------------------------------------------*/
              DCL        VAR(&RETURN01) TYPE(*CHAR) LEN(255)
              DCL        VAR(&RETURN02) TYPE(*CHAR) LEN(255)
              DCL        VAR(&RETURN03) TYPE(*CHAR) LEN(255)
@@ -20,13 +21,6 @@
              DCL        VAR(&RETURN09) TYPE(*CHAR) LEN(255)
              DCL        VAR(&RETURN10) TYPE(*CHAR) LEN(255)
              DCL        VAR(&PASEJOBNAM) TYPE(*CHAR) LEN(10)
-             DCL        VAR(&CHGSCRDIR) TYPE(*CHAR) LEN(4)    /* 1.0.20 */
-             DCL        VAR(&CHGDIRCMD) TYPE(*CHAR) LEN(255)  /* 1.0.20 */
-             DCL        VAR(&DEBUGCMD) TYPE(*CHAR) LEN(4)
-             DCL        VAR(&USEVENV) TYPE(*CHAR) LEN(4)
-             DCL        VAR(&VENVPATH) TYPE(*CHAR) LEN(255)
-             DCL        VAR(&VENVACT) TYPE(*CHAR) LEN(300)
-             DCL        VAR(&VENVDEACT) TYPE(*CHAR) LEN(300)
              DCL        VAR(&MBROPT) TYPE(*CHAR) LEN(10)
              DCL        VAR(&OUTFILE) TYPE(*CHAR) LEN(20)
              DCL        VAR(&OUTFILPATH) TYPE(*CHAR) LEN(255)
@@ -37,50 +31,68 @@
              DCL        VAR(&PRTOUTQ) TYPE(*CHAR) LEN(10)
              DCL        VAR(&PRTOUTQLIB) TYPE(*CHAR) LEN(10)
              DCL        VAR(&SETPKGPATH) TYPE(*CHAR) LEN(4)
-             DCL        VAR(&CCSID) TYPE(*CHAR) LEN(10)
-             DCL        VAR(&PYSCRDIR) TYPE(*CHAR) LEN(255)
-             DCL        VAR(&PYPATH) TYPE(*CHAR) LEN(255)
-             DCL        VAR(&PYEXE) TYPE(*CHAR) LEN(100)
-             DCL        VAR(&PYVERSION) TYPE(*CHAR) LEN(5)
-             DCL        VAR(&SCRIPTFILE) TYPE(*CHAR) LEN(255)
-             DCL        VAR(&SCRIPTFULL) TYPE(*CHAR) LEN(255) /* 1.0.20 */
-             DCL        VAR(&SCRIPTSTR) TYPE(*CHAR) LEN(1)
-             DCL        VAR(&ARGS) TYPE(*CHAR) LEN(8002)
-             DCL        VAR(&ARGS2) TYPE(*CHAR) LEN(8000)
-             DCL        VAR(&CT) TYPE(*DEC) STG(*AUTO) LEN(3 0)
-             DCL        VAR(&PRTTEXT) TYPE(*CHAR) LEN(30) +
-                          VALUE('Python Script Stdout')
-             DCL        VAR(&APPDIR) TYPE(*CHAR) LEN(255)
-             DCL        VAR(&CMD) TYPE(*CHAR) LEN(5000)
-             DCL        VAR(&STDOUTFILE) TYPE(*CHAR) LEN(255)
-             DCL        VAR(&STDOUTIFS) TYPE(*CHAR) LEN(255)
-             DCL        VAR(&QDATE) TYPE(*CHAR) LEN(6)
-             DCL        VAR(&QTIME) TYPE(*CHAR) LEN(9)
-             DCL        VAR(&JOB) TYPE(*CHAR) LEN(10)
-             DCL        VAR(&USER) TYPE(*CHAR) LEN(10)
-             DCL        VAR(&JOBNBR) TYPE(*CHAR) LEN(6)
-             DCL        VAR(&TEMPDIR) TYPE(*CHAR) LEN(255) +
-                          VALUE('/tmp')
-             DCL        VAR(&PYTEMP) TYPE(*CHAR) LEN(255) +
-                          VALUE('/tmp/qsh')
+             DCL        VAR(&CMDLINE) TYPE(*CHAR) LEN(5000)
+             DCL        VAR(&INPUTFILE) TYPE(*CHAR) LEN(255)
+             DCL        VAR(&USERPW) TYPE(*CHAR) LEN(100)
+             DCL        VAR(&OWNERPW) TYPE(*CHAR) LEN(100)
+             DCL        VAR(&PDFOPTS) TYPE(*CHAR) LEN(8)
+             DCL        VAR(&REPLACE) TYPE(*CHAR) LEN(4)
+             DCL        VAR(&TEMPLATE) TYPE(*CHAR) LEN(255)
+             DCL        VAR(&OUTPUTFILE) TYPE(*CHAR) LEN(255)
+             DCL        VAR(&OUTPUTTYPE) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&PARMS) TYPE(*CHAR) LEN(2048)
+             DCL        VAR(&PARMLIST)  TYPE(*CHAR) LEN(1024)
+             DCL        VAR(&PGMPARMS1) TYPE(*CHAR) LEN(256) VALUE(' ')
+             DCL        VAR(&PGMPARMS2) TYPE(*CHAR) LEN(256) VALUE(' ')
+             DCL        VAR(&PGMPARMS3) TYPE(*CHAR) LEN(256) VALUE(' ')
+             DCL        VAR(&PGMPARMS4) TYPE(*CHAR) LEN(256) VALUE(' ')
+             DCL        VAR(&TYPE)      TYPE(*CHAR) LEN(1)
+             DCL        VAR(&CURDIR)    TYPE(*CHAR) LEN(128)
+             DCL        VAR(&CDLEN)     TYPE(*DEC)  LEN(7 0)
+             DCL        VAR(&OUTPUTDST) TYPE(*CHAR) LEN(10) VALUE('*NONE')
+             DCL        VAR(&OUTPUTACT) TYPE(*CHAR) LEN(10) VALUE('*N')
              DCL        VAR(&QSHRTN) TYPE(*DEC) LEN(5 0)
              DCL        VAR(&QSHRTNC) TYPE(*CHAR) LEN(5)
              DCL        VAR(&MSGDTA) TYPE(*CHAR) LEN(200)
              DCL        VAR(&MSGDTA4) TYPE(*CHAR) LEN(4)
              DCL        VAR(&CPFID) TYPE(*CHAR) LEN(7)
+             DCL        VAR(&CMD) TYPE(*CHAR) LEN(9999)
+             DCL        VAR(&STDOUTIFS) TYPE(*CHAR) LEN(255)
+             DCL        VAR(&STDOUTFILE) TYPE(*CHAR) LEN(255)
+             DCL        VAR(&JOB) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&JOBNBR) TYPE(*CHAR) LEN(6)
+             DCL        VAR(&USER) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&TEMPDIR) TYPE(*CHAR) LEN(255) +
+                          VALUE('/tmp')
+             DCL        VAR(&QSHTEMP) TYPE(*CHAR) LEN(255) +
+                          VALUE('/tmp/qsh')
              DCL        VAR(&DSPSTDOUT) TYPE(*CHAR) LEN(4)
-             DCL        VAR(&DLTSTDOUT) TYPE(*CHAR) LEN(4)
              DCL        VAR(&LOGSTDOUT) TYPE(*CHAR) LEN(4)
+             DCL        VAR(&DLTSTDOUT) TYPE(*CHAR) LEN(4)
              DCL        VAR(&PRTSTDOUT) TYPE(*CHAR) LEN(4)
-             DCL        VAR(&PRTSPLF) TYPE(*CHAR) LEN(10)
-             DCL        VAR(&PRTUSRDTA) TYPE(*CHAR) LEN(10)
-             DCL        VAR(&PRTTXT) TYPE(*CHAR) LEN(30)
              DCL        VAR(&IFSSTDOUT) TYPE(*CHAR) LEN(4)
              DCL        VAR(&IFSOPT) TYPE(*CHAR) LEN(10)
              DCL        VAR(&IFSFILE) TYPE(*CHAR) LEN(255)
-             DCL        VAR(&PYPATHSEP) TYPE(*CHAR) LEN(1) VALUE(' ') /* 1.0.19 */
+             DCL        VAR(&RTNVAL) TYPE(*CHAR) LEN(6)
+             DCL        VAR(&CURJOB) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&CURUSER) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&CURNBR) TYPE(*CHAR) LEN(6)
+             DCL        VAR(&QDATE) TYPE(*CHAR) LEN(6)
+             DCL        VAR(&QTIME) TYPE(*CHAR) LEN(9)
+             DCL        VAR(&PRTSPLF) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&PRTUSRDTA) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&PRTTXT) TYPE(*CHAR) LEN(30)
+             DCL        VAR(&CCSID) TYPE(*CHAR) LEN(10)
 
+/*----------------------------------------------------------------------------*/
+/* MONITOR FOR GLOBAL ERROR. ANY ERROR IS A CAUSE TO BLOW OUT OF HERE         */
+/* AND WE WANT A GRACEFUL EXIT.                                               */
+/*----------------------------------------------------------------------------*/
              MONMSG     MSGID(CPF0000) EXEC(GOTO CMDLBL(ERRORS))
+
+/*----------------------------------------------------------------------------*/
+/* MAIN                                                                       */
+/*----------------------------------------------------------------------------*/
 
 /*----------------------------------------------------------------------------*/
 /* Init return parm values                                                    */
@@ -96,6 +108,29 @@
              CHGVAR     VAR(&RETURN09) VALUE(' ')
              CHGVAR     VAR(&RETURN10) VALUE(' ')
 
+
+/*----------------------------------------------------------------------------*/
+/* Create return code data area */
+/*----------------------------------------------------------------------------*/
+             CHKOBJ     OBJ(QTEMP/QSHRTNCOD) OBJTYPE(*DTAARA)
+             MONMSG     MSGID(CPF0000) EXEC(DO)
+             CRTDTAARA  DTAARA(QTEMP/QSHRTNCOD) TYPE(*DEC) LEN(5 0) +
+                          TEXT('QShell/Pase Return Code')
+             ENDDO
+             CHGDTAARA  DTAARA(QTEMP/QSHRTNCOD *ALL) VALUE(0)
+
+/*----------------------------------------------------------------------------*/
+/* Create stdout IFS file data area          */
+/* Only useful if you set DLTSTDOUT(*NO)     */
+/*----------------------------------------------------------------------------*/
+             CHKOBJ     OBJ(QTEMP/STDOUTIFS) OBJTYPE(*DTAARA)
+             MONMSG     MSGID(CPF0000) EXEC(DO)
+             CRTDTAARA  DTAARA(QTEMP/STDOUTIFS) TYPE(*CHAR) LEN(255) +
+                          TEXT('QShell/Pase IFS File for Temporary +
+                          STDOUT')
+             ENDDO
+             CHGDTAARA  DTAARA(QTEMP/STDOUTIFS *ALL) VALUE(' ')
+
 /*----------------------------------------------------------------------------*/
 /* Extract output queue info.                                                 */
 /*----------------------------------------------------------------------------*/
@@ -103,343 +138,260 @@
              CHGVAR     VAR(&PRTOUTQLIB) VALUE(%SST(&PRTOUTQALL 11 10))
 
 /*----------------------------------------------------------------------------*/
-/* Extract output file info. Added V1.0.16                                    */
+/* Extract output file info.                                                  */
 /*----------------------------------------------------------------------------*/
              CHGVAR     VAR(&OFILE) VALUE(%SST(&OUTFILE 1 10))
              CHGVAR     VAR(&OLIB) VALUE(%SST(&OUTFILE 11 10))
 
 /*----------------------------------------------------------------------------*/
-/* Set virtual env activate and deactivate commands if using venv             */
+/* Build soft coded OUTFILE IFS style path in QTEMP - Added V1.0.16 */
 /*----------------------------------------------------------------------------*/
+             CHGVAR     VAR(&OUTFILPATH) VALUE('/QSYS.LIB/' |< &OLIB +
+                          |< '.LIB/' |< &OFILE |< '.FILE/' |< +
+                          &OFILE |< '.MBR')
 
-             /* Set the activate and deactivate command line values */
-             IF         COND(&USEVENV *EQ *YES) THEN(DO)
-             CHGVAR     VAR(&VENVACT) VALUE('source' |> &VENVPATH |< +
-                          '/bin/activate;')
-             CHGVAR     VAR(&VENVDEACT) VALUE(';deactivate')
-
-             /* If env path blank, bail out */
-             IF         COND(&VENVPATH *EQ ' ') THEN(DO)
-             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Virtual +
-                          environment base path cannot be blank') +
-                          MSGTYPE(*ESCAPE)
-             ENDDO
-
-             /* Make sure venv exists */
-             QSHIFSCHK   FILNAM(&VENVPATH)
-             /* EXISTS, DO NOTHING SPECIAL */
-             MONMSG     MSGID(CPF9897) EXEC(DO)
-             ENDDO
-
-             /* VENV PATH NOT FOUND. BAIL OUT */
-             MONMSG     MSGID(CPF9898) EXEC(DO)
-             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) +
-                          MSGDTA('Virtual environment base path' +
-                          |> &VENVPATH |> 'not found') +
-                          MSGTYPE(*ESCAPE)
-             ENDDO
-
-             /* Log environment name in the joblog */
-             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('VENV: Using +
-                          Python virtual environment' |> &VENVPATH) +
-                          TOPGMQ(*SAME) MSGTYPE(*DIAG)
-
+/*----------------------------------------------------------------------------*/
+/* If copying results to IFS and IFS file is blank, bail out.                 */
+/*----------------------------------------------------------------------------*/
+             IF         COND(&IFSSTDOUT *EQ *YES) THEN(DO)
+                IF         COND(&IFSFILE *EQ ' ') THEN(SNDPGMMSG +
+                             MSGID(CPF9898) MSGF(QCPFMSG) +
+                             MSGDTA('IFSSTDOUT was set to *YES, but no +
+                             IFS file was specified. QSHEXEC +
+                             cancelled') MSGTYPE(*ESCAPE))
              ENDDO
 
 /*----------------------------------------------------------------------------*/
-/* If default python path data area, retreive from data area */
+/* Set environment path for QOpenSys packages if selected                     */
+/* before running any PASE/QSH commands.                                      */
 /*----------------------------------------------------------------------------*/
-             IF         COND(&PYPATH *EQ *DEFAULT) THEN(DO)
-             RTVDTAARA  DTAARA(QSHONI/PYPATH *ALL) RTNVAR(&PYPATH)
+             IF         COND(&SETPKGPATH *EQ '*YES') THEN(DO)
+             QSHPATH    PKGPATH(*DEFAULT)
              ENDDO
 
 /*----------------------------------------------------------------------------*/
-/* If PYPATH <> ' ', add path separator because we will prefix Python command */
-/* Otherwise we don't need a path separator because we will call Python       */
-/* without a path qualifier. V1.0.19                                          */
+/* Create temp folder in /tmp named /tmp/qsh for stdout logs */
 /*----------------------------------------------------------------------------*/
-             IF         COND(&PYPATH *NE ' ') THEN(DO)
-             CHGVAR     VAR(&PYPATHSEP) VALUE('/')
-             ENDDO
+             MKDIR      DIR(&QSHTEMP) DTAAUT(*RWX) OBJAUT(*ALL)
+             MONMSG     MSGID(CPF0000)
 
 /*----------------------------------------------------------------------------*/
-/* Parse command line parms - up to 40 cmd line args */
-/*----------------------------------------------------------------------------*/
-             CHGVAR     VAR(&CT) VALUE(%BINARY(&ARGS 1 2))
-             IF         COND(&CT > 0) THEN(CHGVAR VAR(&ARGS2) +
-                          VALUE('"' |< %SST(&ARGS 3 200) |< '"'))
-             IF         COND(&CT > 1) THEN(CHGVAR VAR(&ARGS2) +
-                          VALUE(&ARGS2 |> '"' |< %SST(&ARGS 203 +
-                          200) |< '"'))
-             IF         COND(&CT > 2) THEN(CHGVAR VAR(&ARGS2) +
-                          VALUE(&ARGS2 |> '"' |< %SST(&ARGS 403 +
-                          200) |< '"'))
-             IF         COND(&CT > 3) THEN(CHGVAR VAR(&ARGS2) +
-                          VALUE(&ARGS2 |> '"' |< %SST(&ARGS 603 +
-                          200) |< '"'))
-             IF         COND(&CT > 4) THEN(CHGVAR VAR(&ARGS2) +
-                          VALUE(&ARGS2 |> '"' |< %SST(&ARGS 803 +
-                          200) |< '"'))
-             IF         COND(&CT > 5) THEN(CHGVAR VAR(&ARGS2) +
-                          VALUE(&ARGS2 |> '"' |< %SST(&ARGS 1003 +
-                          200) |< '"'))
-             IF         COND(&CT > 6) THEN(CHGVAR VAR(&ARGS2) +
-                          VALUE(&ARGS2 |> '"' |< %SST(&ARGS 1203 +
-                          200) |< '"'))
-             IF         COND(&CT > 7) THEN(CHGVAR VAR(&ARGS2) +
-                          VALUE(&ARGS2 |> '"' |< %SST(&ARGS 1403 +
-                          200) |< '"'))
-             IF         COND(&CT > 8) THEN(CHGVAR VAR(&ARGS2) +
-                          VALUE(&ARGS2 |> '"' |< %SST(&ARGS 1603 +
-                          200) |< '"'))
-             IF         COND(&CT > 9) THEN(CHGVAR VAR(&ARGS2) +
-                          VALUE(&ARGS2 |> '"' |< %SST(&ARGS 1803 +
-                          200) |< '"'))
-             IF         COND(&CT > 10) THEN(CHGVAR VAR(&ARGS2) +
-                          VALUE(&ARGS2 |> '"' |< %SST(&ARGS 2003 +
-                          200) |< '"'))
-             IF         COND(&CT > 11) THEN(CHGVAR VAR(&ARGS2) +
-                          VALUE(&ARGS2 |> '"' |< %SST(&ARGS 2203 +
-                          200) |< '"'))
-             IF         COND(&CT > 12) THEN(CHGVAR VAR(&ARGS2) +
-                          VALUE(&ARGS2 |> '"' |< %SST(&ARGS 2403 +
-                          200) |< '"'))
-             IF         COND(&CT > 13) THEN(CHGVAR VAR(&ARGS2) +
-                          VALUE(&ARGS2 |> '"' |< %SST(&ARGS 2603 +
-                          200) |< '"'))
-             IF         COND(&CT > 14) THEN(CHGVAR VAR(&ARGS2) +
-                          VALUE(&ARGS2 |> '"' |< %SST(&ARGS 2803 +
-                          200) |< '"'))
-             IF         COND(&CT > 15) THEN(CHGVAR VAR(&ARGS2) +
-                          VALUE(&ARGS2 |> '"' |< %SST(&ARGS 3003 +
-                          200) |< '"'))
-             IF         COND(&CT > 16) THEN(CHGVAR VAR(&ARGS2) +
-                          VALUE(&ARGS2 |> '"' |< %SST(&ARGS 3203 +
-                          200) |< '"'))
-             IF         COND(&CT > 17) THEN(CHGVAR VAR(&ARGS2) +
-                          VALUE(&ARGS2 |> '"' |< %SST(&ARGS 3403 +
-                          200) |< '"'))
-             IF         COND(&CT > 18) THEN(CHGVAR VAR(&ARGS2) +
-                          VALUE(&ARGS2 |> '"' |< %SST(&ARGS 3603 +
-                          200) |< '"'))
-             IF         COND(&CT > 19) THEN(CHGVAR VAR(&ARGS2) +
-                          VALUE(&ARGS2 |> '"' |< %SST(&ARGS 3803 +
-                          200) |< '"'))
-             IF         COND(&CT > 20) THEN(CHGVAR VAR(&ARGS2) +
-                          VALUE(&ARGS2 |> '"' |< %SST(&ARGS 4003 +
-                          200) |< '"'))
-             IF         COND(&CT > 21) THEN(CHGVAR VAR(&ARGS2) +
-                          VALUE(&ARGS2 |> '"' |< %SST(&ARGS 4203 +
-                          200) |< '"'))
-             IF         COND(&CT > 22) THEN(CHGVAR VAR(&ARGS2) +
-                          VALUE(&ARGS2 |> '"' |< %SST(&ARGS 4403 +
-                          200) |< '"'))
-             IF         COND(&CT > 23) THEN(CHGVAR VAR(&ARGS2) +
-                          VALUE(&ARGS2 |> '"' |< %SST(&ARGS 4603 +
-                          200) |< '"'))
-             IF         COND(&CT > 24) THEN(CHGVAR VAR(&ARGS2) +
-                          VALUE(&ARGS2 |> '"' |< %SST(&ARGS 4803 +
-                          200) |< '"'))
-             IF         COND(&CT > 25) THEN(CHGVAR VAR(&ARGS2) +
-                          VALUE(&ARGS2 |> '"' |< %SST(&ARGS 5003 +
-                          200) |< '"'))
-             IF         COND(&CT > 26) THEN(CHGVAR VAR(&ARGS2) +
-                          VALUE(&ARGS2 |> '"' |< %SST(&ARGS 5203 +
-                          200) |< '"'))
-             IF         COND(&CT > 27) THEN(CHGVAR VAR(&ARGS2) +
-                          VALUE(&ARGS2 |> '"' |< %SST(&ARGS 5403 +
-                          200) |< '"'))
-             IF         COND(&CT > 28) THEN(CHGVAR VAR(&ARGS2) +
-                          VALUE(&ARGS2 |> '"' |< %SST(&ARGS 5603 +
-                          200) |< '"'))
-             IF         COND(&CT > 29) THEN(CHGVAR VAR(&ARGS2) +
-                          VALUE(&ARGS2 |> '"' |< %SST(&ARGS 5803 +
-                          200) |< '"'))
-             IF         COND(&CT > 30) THEN(CHGVAR VAR(&ARGS2) +
-                          VALUE(&ARGS2 |> '"' |< %SST(&ARGS 6003 +
-                          200) |< '"'))
-             IF         COND(&CT > 31) THEN(CHGVAR VAR(&ARGS2) +
-                          VALUE(&ARGS2 |> '"' |< %SST(&ARGS 6203 +
-                          200) |< '"'))
-             IF         COND(&CT > 32) THEN(CHGVAR VAR(&ARGS2) +
-                          VALUE(&ARGS2 |> '"' |< %SST(&ARGS 6403 +
-                          200) |< '"'))
-             IF         COND(&CT > 33) THEN(CHGVAR VAR(&ARGS2) +
-                          VALUE(&ARGS2 |> '"' |< %SST(&ARGS 6603 +
-                          200) |< '"'))
-             IF         COND(&CT > 34) THEN(CHGVAR VAR(&ARGS2) +
-                          VALUE(&ARGS2 |> '"' |< %SST(&ARGS 6803 +
-                          200) |< '"'))
-             IF         COND(&CT > 35) THEN(CHGVAR VAR(&ARGS2) +
-                          VALUE(&ARGS2 |> '"' |< %SST(&ARGS 7003 +
-                          200) |< '"'))
-             IF         COND(&CT > 36) THEN(CHGVAR VAR(&ARGS2) +
-                          VALUE(&ARGS2 |> '"' |< %SST(&ARGS 7203 +
-                          200) |< '"'))
-             IF         COND(&CT > 37) THEN(CHGVAR VAR(&ARGS2) +
-                          VALUE(&ARGS2 |> '"' |< %SST(&ARGS 7403 +
-                          200) |< '"'))
-             IF         COND(&CT > 38) THEN(CHGVAR VAR(&ARGS2) +
-                          VALUE(&ARGS2 |> '"' |< %SST(&ARGS 7603 +
-                          200) |< '"'))
-             IF         COND(&CT > 39) THEN(CHGVAR VAR(&ARGS2) +
-                          VALUE(&ARGS2 |> '"' |< %SST(&ARGS 7803 +
-                          200) |< '"'))
-
-/*----------------------------------------------------------------------------*/
-/* Set python executable          */
-/* Added PYPATHSEP - V1.0.19      */
-/*----------------------------------------------------------------------------*/
-             IF         COND(&PYVERSION *EQ '2') THEN(CHGVAR +
-                          VAR(&PYEXE) VALUE(&PYPATH |< &PYPATHSEP |< 'python2'))
-             IF         COND(&PYVERSION *EQ '2.7') THEN(CHGVAR +
-                          VAR(&PYEXE) VALUE(&PYPATH |< &PYPATHSEP |< 'python2.7'))
-             IF         COND(&PYVERSION *EQ '3') THEN(CHGVAR +
-                          VAR(&PYEXE) VALUE(&PYPATH |< &PYPATHSEP |< 'python3'))
-             IF         COND(&PYVERSION *EQ '3.6') THEN(CHGVAR +
-                          VAR(&PYEXE) VALUE(&PYPATH |< &PYPATHSEP |< 'python3.6'))
-             IF         COND(&PYVERSION *EQ '3.9') THEN(CHGVAR +
-                          VAR(&PYEXE) VALUE(&PYPATH |< &PYPATHSEP |< 'python3.9'))
-             /* Catch all set to python3 if blank or invalid version passed */
-             IF         COND(&PYEXE *EQ ' ') THEN(CHGVAR +
-                          VAR(&PYEXE) VALUE(&PYPATH |< &PYPATHSEP |< 'python3'))
-
-/*----------------------------------------------------------------------------*/
-/* Make sure QSHONITMP library and IFS directory created */
-/*----------------------------------------------------------------------------*/
-             CHKOBJ     OBJ(QSHONITMP) OBJTYPE(*LIB)
-             MONMSG     MSGID(CPF9801) EXEC(DO)
-             CRTLIB     LIB(QSHONITMP) TEXT('Qshoni Temp File +
-                          Library') AUT(*ALL)
-             ENDDO
-
-/*----------------------------------------------------------------------------*/
-/* Make sure /tmp folder exists */
-/*----------------------------------------------------------------------------*/
-             QSHIFSCHK   FILNAM(&TEMPDIR)
-             /* EXISTS, DO NOTHING SPECIAL */
-             MONMSG     MSGID(CPF9897) EXEC(DO)
-             ENDDO
-
-             /* DOES NOT EXIST. BAIL OUT */
-             MONMSG     MSGID(CPF9898) EXEC(DO)
-             MKDIR      DIR(&TEMPDIR) DTAAUT(*RWX) OBJAUT(*ALL)
-             ENDDO
-
-/*----------------------------------------------------------------------------*/
-/* Make sure /tmp/qsh exist for logs */
-/*----------------------------------------------------------------------------*/
-             QSHIFSCHK   FILNAM(&PYTEMP)
-             /* EXISTS, DO NOTHING SPECIAL */
-             MONMSG     MSGID(CPF9897) EXEC(DO)
-             ENDDO
-
-             /* DOES NOT EXIST. BAIL OUT */
-             MONMSG     MSGID(CPF9898) EXEC(DO)
-             MKDIR      DIR(&PYTEMP) DTAAUT(*RWX) OBJAUT(*ALL)
-             ENDDO
-
-/*----------------------------------------------------------------------------*/
-/* Retreive system values for job */
+/* RETRIEVE JOB DATE/TIME INFO                           */
 /*----------------------------------------------------------------------------*/
              RTVSYSVAL  SYSVAL(QDATE) RTNVAR(&QDATE)
              RTVSYSVAL  SYSVAL(QTIME) RTNVAR(&QTIME)
+             RTVJOBA    JOB(&CURJOB) USER(&CURUSER) NBR(&CURNBR)
+
+/*----------------------------------------------------------------------------*/
+/* DOUBLE CHECK TO MAKE SURE OUTFILE LIBRARY EXISTS. IF NOT BAIL OUT.         */
+/*----------------------------------------------------------------------------*/
+             CHKOBJ     OBJ(QSYS/&OLIB) OBJTYPE(*LIB)
+             MONMSG     MSGID(CPF0000) EXEC(DO)
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Output +
+                          library' |> &OLIB |> 'does not exist. +
+                          QSHEXEC command cancelled') TOPGMQ(*PRV) +
+                          MSGTYPE(*ESCAPE)
+             ENDDO
+
+/*----------------------------------------------------------------------------*/
+/* CREATE TEMPORARY OUTPUT FILE TO HOLD STDOUT RESULTS IF NOT FOUND  ALREADY  */
+/*----------------------------------------------------------------------------*/
+             CHKOBJ     OBJ(&OLIB/&OFILE) OBJTYPE(*FILE)
+             /* If file object not found, attempt to create it */
+             MONMSG     MSGID(CPF9801) EXEC(DO)
+
+             CRTPF      FILE(&OLIB/&OFILE) RCDLEN(1000) TEXT('QShell +
+                          STDOUT Output') OPTION(*NOLIST *NOSRC) +
+                          MAXMBRS(*NOMAX) SIZE(*NOMAX)
+             MONMSG     MSGID(CPF0000)
+
+             ENDDO
+
+/*----------------------------------------------------------------------------*/
+/* DOUBLE CHECK TO MAKE SURE OUTFILE EXISTS NOW. IF NOT, BAIL OUT NOW.        */
+/*----------------------------------------------------------------------------*/
+             CHKOBJ     OBJ(&OLIB/&OFILE) OBJTYPE(*FILE)
+             MONMSG     MSGID(CPF0000) EXEC(DO)
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Output +
+                          file' |> &OLIB |< '/' |< &OFILE |> 'does +
+                          not exist. QSHEXEC command cancelled') +
+                          TOPGMQ(*PRV) MSGTYPE(*ESCAPE)
+             ENDDO
+
+/*----------------------------------------------------------------------------*/
+/* CLEAR TEMPORARY QSH OUTPUT FILE IF NOT APPENDING TO IT      */
+/* BAIL OUT IF WE CANNOT CLEAR OUTPUT FILE                     */
+/*----------------------------------------------------------------------------*/
+             IF         COND(&MBROPT *EQ *REPLACE) THEN(DO)
+             CLRPFM     FILE(&OLIB/&OFILE)
+             ENDDO
+
+/*----------------------------------------------------------------------------*/
+/* BUILD PATH NAME FOR IFS STDOUT FILE */
+/*----------------------------------------------------------------------------*/
              RTVJOBA    JOB(&JOB) USER(&USER) NBR(&JOBNBR)
+             CHGVAR     VAR(&STDOUTIFS) VALUE(&QSHTEMP |< +
+                          '/STDOUTQSH-' |< &JOB |< '-' |< &USER +
+                          |< '-' |< &JOBNBR |< '-' |< &QDATE |< +
+                          &QTIME |< '.TXT')
 
-             /* Get first char of script file to check for / */
-             /* If path starts with slash do not use dtaara  */
-             CHGVAR     VAR(&SCRIPTSTR) VALUE(%SST(&SCRIPTFILE 1 1))
+             /* Save STDOUTIFS file name to data area */
+             CHGDTAARA  DTAARA(QTEMP/STDOUTIFS *ALL) VALUE(&STDOUTIFS)
+/*----------------------------------------------------------------------------*/
+/* ERASE QSHELL CMD OUTPUT IF IT EXISTS */
+/*----------------------------------------------------------------------------*/
+             ERASE      OBJLNK(&STDOUTIFS)
+             MONMSG     MSGID(CPF0000)
 
-             /* If cur py dir set and script file has no slash / */
-             /* concatenate py dir with script file name         */
-             IF         COND(&PYSCRDIR *NE ' ' *AND &SCRIPTSTR *NE +
-                          '/') THEN(DO)
+/*----------------------------------------------------------------------------*/
+/* SET THE IFS PATH TO STORE QSHELL OUTPUT FOR  */
+/* REVIEW IF NEEDED.                            */
+/*----------------------------------------------------------------------------*/
+             CHGVAR     VAR(&STDOUTFILE) VALUE('FILE=' |< &STDOUTIFS)
 
-             /* Build full path to script for existence check */
-             CHGVAR     VAR(&SCRIPTFULL) VALUE(&PYSCRDIR |< '/' +
-                          |< &SCRIPTFILE)
-
-             /* Qualify script dir if not changing directory to script dir  */
-             IF         COND(&CHGSCRDIR *NE *YES) THEN(DO)
-             CHGVAR     VAR(&SCRIPTFILE) VALUE(&PYSCRDIR |< '/' +
-                          |< &SCRIPTFILE)
+/*----------------------------------------------------------------------------*/
+/* Set the PASE_FORK_JOBNAME env variable to set thread job names.   */
+/* Has TR requiremnents                                              */
+/*----------------------------------------------------------------------------*/
+             IF         COND(&PASEJOBNAM *NE *DEFAULT) THEN(DO)
+             ADDENVVAR  ENVVAR('PASE_FORK_JOBNAME') +
+                          VALUE(&PASEJOBNAM) REPLACE(*YES)
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) +
+                          MSGDTA('Environment variable +
+                          PASE_FORK_JOBNAME is set to:' |> +
+                          &PASEJOBNAM) TOPGMQ(*SAME) MSGTYPE(*DIAG)
              ENDDO
-
-             /* Don't qualify script file dir if changing directory to script dir  */
-             /* because we will be in the correct directory already.          */
-             IF         COND(&CHGSCRDIR *EQ *YES) THEN(DO)
-             CHGVAR     VAR(&SCRIPTFILE) VALUE(&SCRIPTFILE)
-             ENDDO
-
+             IF         COND(&PASEJOBNAM *EQ *DEFAULT) THEN(DO)
+             RMVENVVAR  ENVVAR('PASE_FORK_JOBNAME')
+             MONMSG     MSGID(CPF0000)
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) +
+                          MSGDTA('Environment variable +
+                          PASE_FORK_JOBNAME removed') TOPGMQ(*SAME) +
+                          MSGTYPE(*DIAG)
              ENDDO
 
 /*----------------------------------------------------------------------------*/
-/* Make sure python script exists */
+/* SET THE QSHELL STDOUT IFS FILE LOCATION      */
+/* ENVIRONMENT VARIABLE                         */
 /*----------------------------------------------------------------------------*/
-             QSHIFSCHK  FILNAM(&SCRIPTFULL)
-             /* EXISTS, DO NOTHING SPECIAL */
-             MONMSG     MSGID(CPF9897) EXEC(DO)
-             ENDDO
+             ADDENVVAR  ENVVAR('QIBM_QSH_CMD_OUTPUT') +
+                          VALUE(&STDOUTFILE) REPLACE(*YES)
 
-             /* DOES NOT EXIST. BAIL OUT */
-             MONMSG     MSGID(CPF9898) EXEC(DO)
-             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Python +
-                          script file' |> &SCRIPTFULL |> 'does not +
-                          exist') MSGTYPE(*ESCAPE)
-             ENDDO
+             ADDENVVAR  ENVVAR(QIBM_MULTI_THREADED) VALUE(Y) +
+                        REPLACE(*YES)
 
 /*----------------------------------------------------------------------------*/
-/* Append change directory command to python script file if needed            */
+/* Make sure iTookit CL commands will work when using the  */
+/* DB2 connectivity by setting job CCSID to 37             */
 /*----------------------------------------------------------------------------*/
-             IF         COND(&CHGSCRDIR *NE *YES) THEN(DO)
-             CHGVAR     VAR(&CHGDIRCMD) VALUE(' ')
-             ENDDO
-             IF         COND(&CHGSCRDIR *EQ *YES) THEN(DO)
-             CHGVAR     VAR(&CHGDIRCMD) VALUE('cd' |> &PYSCRDIR |< ';')
+             IF         COND(&CCSID *NE *SAME) THEN(DO)
+             CHGJOB     CCSID(&CCSID)
              ENDDO
 
 /*----------------------------------------------------------------------------*/
-/* Build python command call with parms for venv is *YES */
+/* BUILD THE FINAL QSH CALL                             */
 /*----------------------------------------------------------------------------*/
-             IF         COND(&USEVENV *NE *YES) THEN(DO)
-             CHGVAR     VAR(&CMD) VALUE(&CHGDIRCMD |< &PYEXE |> &SCRIPTFILE |> +
-                          &ARGS2)
+             CHGVAR     VAR(&CMD) VALUE(&CMDLINE)
+
+             /* CALL THE QSH COMMAND LINE */
+             QSH        CMD(&CMDLINE)
+
+             /* READ AND PROCESS THE QSHELL RESPONSE */
+             /* TO DETERMINE QSH PROGRAM EXIT CODE  */
+ NEXTCOMP:   RCVMSG     PGMQ(*SAME) MSGTYPE(*COMP) RMV(*NO) +
+                          MSGDTA(&MSGDTA) MSGID(&CPFID)
+             /* IF MSGID IS BLANK, WE DIDN'T GET QSH0005 */
+             /* LIKE WE WERE SUPPSED TO.                 */
+             IF         COND(&CPFID *EQ '       ') THEN(DO)
+             CHGVAR     VAR(&QSHRTN) VALUE(9999)
+             CHGVAR     VAR(&QSHRTNC) VALUE(&QSHRTN)
+             CHGDTAARA  DTAARA(QTEMP/QSHRTNCOD *ALL) VALUE(&QSHRTN)
+             GOTO       CMDLBL(DONECOMP) /* DONE WITH MSG LOOP */
              ENDDO
-             IF         COND(&USEVENV *EQ *YES) THEN(DO)
-             CHGVAR     VAR(&CMD) VALUE(&VENVACT |< &CHGDIRCMD |< &PYEXE |> &SCRIPTFILE |> +
-                          &ARGS2 |< &VENVDEACT)
+             /* QSH0005 IS THE RETURN RESPONSE FROM THE QSHELL PGM */
+             IF         COND(&CPFID *EQ 'QSH0005') THEN(DO)
+             CHGVAR     VAR(&MSGDTA4) VALUE(%SST(&MSGDTA 1 4))
+             CHGVAR     VAR(&QSHRTN) VALUE(%BIN(&MSGDTA4))
+             CHGVAR     VAR(&QSHRTNC) VALUE(&QSHRTN)
+             CHGDTAARA  DTAARA(QTEMP/QSHRTNCOD *ALL) VALUE(&QSHRTN)
+             GOTO       CMDLBL(DONECOMP) /* DONE WITH MSG LOOP */
+             ENDDO
+             GOTO       CMDLBL(NEXTCOMP) /* GET NEXT MSG UNTIL QSH */
+DONECOMP:
+             /* COPY STDOUT TO QTEMP OUTFILE AND APPEND OR REPLACE TO OUTFILE */
+             CPYFRMSTMF FROMSTMF(&STDOUTIFS) TOMBR(&OUTFILPATH) +
+                          MBROPT(&MBROPT) CVTDTA(*AUTO) +
+                          ENDLINFMT(*LF) STMFCODPAG(*STMF)
+             MONMSG     MSGID(CPF0000) EXEC(DO)
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Errors +
+                          occurred while copying STDOUT log to +
+                          file. Check the joblog') +
+                          MSGTYPE(*ESCAPE)
              ENDDO
 
-/*----------------------------------------------------------------------------*/
-/* Call QSHEXEC command to run python script via Qshell */
-/*----------------------------------------------------------------------------*/
-             IF         COND(&DEBUGCMD *EQ *YES) THEN(DO)
-           ? QSHONI/QSHEXEC CMDLINE(&CMD) SETPKGPATH(&SETPKGPATH) +
-                          DSPSTDOUT(&DSPSTDOUT) +
-                          LOGSTDOUT(&LOGSTDOUT) +
-                          PRTSTDOUT(&PRTSTDOUT) +
-                          DLTSTDOUT(&DLTSTDOUT) +
-                          IFSSTDOUT(&IFSSTDOUT) IFSFILE(&IFSFILE) +
-                          IFSOPT(&IFSOPT) CCSID(&CCSID) +
-                          PRTSPLF(&PRTSPLF) PRTUSRDTA(&PRTUSRDTA) +
-                          PRTTXT(&PRTTXT) PRTHOLD(&PRTHOLD) +
-                          PRTOUTQ(&PRTOUTQLIB/&PRTOUTQ) +
-                          OUTFILE(&OLIB/&OFILE) MBROPT(&MBROPT) +
-                          PASEJOBNAM(&PASEJOBNAM)
+             /* If copying results to IFS, do it now */
+             /* We copy from STDOUTQSH in QTEMP to IFS log */
+             /* V1.0.10 - Added AUT(*INDOR) */
+             IF         COND(&IFSSTDOUT *EQ *YES) THEN(DO)
+             CPYTOSTMF  FROMMBR(&OUTFILPATH) TOSTMF(&IFSFILE) +
+                          STMFOPT(&IFSOPT) CVTDTA(*AUTO) +
+                          STMFCCSID(*PCASCII) ENDLINFMT(*LF) +
+                          AUT(*INDIR) STMFCODPAG(*STMF)
+             /* Prevent endless loop if CPYTOSTMF fails */
+             MONMSG     MSGID(CPF0000) EXEC(DO)
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Error +
+                          copying log to IFS file' |> &IFSFILE |> +
+                          '- QSHEXEC cancelled') MSGTYPE(*ESCAPE)
              ENDDO
-             IF         COND(&DEBUGCMD *NE *YES) THEN(DO)
-             QSHONI/QSHEXEC CMDLINE(&CMD) SETPKGPATH(&SETPKGPATH) +
-                          DSPSTDOUT(&DSPSTDOUT) +
-                          LOGSTDOUT(&LOGSTDOUT) +
-                          PRTSTDOUT(&PRTSTDOUT) +
-                          DLTSTDOUT(&DLTSTDOUT) +
-                          IFSSTDOUT(&IFSSTDOUT) IFSFILE(&IFSFILE) +
-                          IFSOPT(&IFSOPT) CCSID(&CCSID) +
-                          PRTSPLF(&PRTSPLF) PRTUSRDTA(&PRTUSRDTA) +
-                          PRTTXT(&PRTTXT) PRTHOLD(&PRTHOLD) +
-                          PRTOUTQ(&PRTOUTQLIB/&PRTOUTQ) +
-                          OUTFILE(&OLIB/&OFILE) MBROPT(&MBROPT) +
-                          PASEJOBNAM(&PASEJOBNAM)
+             ENDDO
+
+             /* IF ENABLED, PRINT STDOUT RESULTS */
+             IF         COND(&PRTSTDOUT *EQ *YES) THEN(DO)
+
+             /* PRINT STDOUT LOG NOW */
+             /* Override without specific outq */
+             IF         COND(&PRTOUTQ *EQ *SAME) THEN(DO)
+             OVRPRTF    FILE(QSYSPRT) TOFILE(QSYSPRT) PAGESIZE(198) +
+                          PRTTXT(&PRTTXT) HOLD(&PRTHOLD) +
+                          USRDTA(&PRTUSRDTA) SPLFNAME(&PRTSPLF)
+             ENDDO
+             IF         COND(&PRTOUTQ *NE *SAME) THEN(DO)
+             /* Override with specific outq */
+             OVRPRTF    FILE(QSYSPRT) TOFILE(QSYSPRT) PAGESIZE(198) +
+                          PRTTXT(&PRTTXT) +
+                          OUTQ(&PRTOUTQLIB/&PRTOUTQ) HOLD(&PRTHOLD) +
+                          USRDTA(&PRTUSRDTA) SPLFNAME(&PRTSPLF)
+             ENDDO
+
+             CPYF       FROMFILE(&OLIB/&OFILE) TOFILE(QSYSPRT)
+             DLTOVR     FILE(QSYSPRT)
+
+             ENDDO
+
+             /* IF ENABLED, DISPLAY STDOUT RESULTS */
+             IF         COND(&DSPSTDOUT *EQ *YES) THEN(DO)
+             EDTF       STMF(&STDOUTIFS)
+             MONMSG     MSGID(CPF0000)
+             ENDDO
+
+             /* IF ENABLED, Erase stdout result file */
+             IF         COND(&DLTSTDOUT *EQ *YES) THEN(DO)
+             ERASE      OBJLNK(&STDOUTIFS)
+             MONMSG     MSGID(CPF0000)
+             ENDDO
+
+             /* Write STDOUT results PF to job log */
+             IF         COND(&LOGSTDOUT *EQ *YES) THEN(DO)
+             OVRDBF     FILE(STDOUTQSH) TOFILE(&OLIB/&OFILE)
+             CALL       PGM(QSHSTDOUTR)
+             DLTOVR     FILE(STDOUTQSH)
+             ENDDO
+
+             IF         COND(&QSHRTN *NE 0) THEN(DO)
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('ERROR: +
+                          QShell error' |> &QSHRTNC |> 'occurred +
+                          while running command. Check +
+                          the joblog') MSGTYPE(*ESCAPE)
              ENDDO
 
 /*----------------------------------------------------------------------------*/
@@ -451,18 +403,95 @@
                           RETURN07(&RETURN07) RETURN08(&RETURN08) +
                           RETURN09(&RETURN09) RETURN10(&RETURN10)
 
- NORMAL:
-             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Python +
-                          script' |> &SCRIPTFULL |> 'completed +
-                          successfully with no errors') MSGTYPE(*COMP)
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('QShell +
+                          command completed and logged to outfile' +
+                          |> &OLIB |< '/' |< &OFILE) MSGTYPE(*COMP)
+
              RETURN
 
-/*----------------------------------------------------------------------------*/
-/* Handle Errors */
-/*----------------------------------------------------------------------------*/
- ERRORS:
+ERRORS:
+             /* COPY STDOUT TO QTEMP OUTFILE */
+             CPYFRMSTMF FROMSTMF(&STDOUTIFS) TOMBR(&OUTFILPATH) +
+                          MBROPT(&MBROPT) CVTDTA(*AUTO) +
+                          ENDLINFMT(*LF) STMFCODPAG(*STMF)
+             MONMSG     MSGID(CPF0000) EXEC(DO)
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Errors +
+                          occurred while copying STDOUT log to +
+                          file. Check the joblog') +
+                          MSGTYPE(*ESCAPE)
+             ENDDO
 
-             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Python +
-                          script' |> &SCRIPTFULL |> 'failed. See +
-                          the joblog or stdout log') MSGTYPE(*ESCAPE)
+             /* If copying results to IFS, do it now */
+             /* We copy from STDOUTQSH in QTEMP to IFS log */
+             /* V1.0.10 - Added AUT(*INDOR) */
+             IF         COND(&IFSSTDOUT *EQ *YES) THEN(DO)
+             CPYTOSTMF  FROMMBR(&OUTFILPATH) TOSTMF(&IFSFILE) +
+                          STMFOPT(&IFSOPT) CVTDTA(*AUTO) +
+                          STMFCCSID(*PCASCII) ENDLINFMT(*LF) +
+                          AUT(*INDIR) STMFCODPAG(*STMF)
+             /* Prevent endless loop if CPYTOSTMF fails */
+             MONMSG     MSGID(CPF0000) EXEC(DO)
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Error +
+                          copying log to IFS file' |> &IFSFILE |> +
+                          '- QSHEXEC cancelled') MSGTYPE(*ESCAPE)
+             ENDDO
+             ENDDO
+
+             /* IF ENABLED, PRINT STDOUT RESULTS */
+             IF         COND(&PRTSTDOUT *EQ *YES) THEN(DO)
+
+             /* PRINT STDOUT LOG NOW */
+             /* Override without specific outq */
+             IF         COND(&PRTOUTQ *EQ *SAME) THEN(DO)
+             OVRPRTF    FILE(QSYSPRT) TOFILE(QSYSPRT) PAGESIZE(198) +
+                          PRTTXT(&PRTTXT) HOLD(&PRTHOLD) +
+                          USRDTA(&PRTUSRDTA) SPLFNAME(&PRTSPLF)
+             /* Prevent endless loop if OVRPRTF fails */
+             MONMSG     MSGID(CPF0000) EXEC(DO)
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Error +
+                          overriding print file - QSHEXEC +
+                          cancelled') MSGTYPE(*ESCAPE)
+             ENDDO
+             ENDDO
+             IF         COND(&PRTOUTQ *NE *SAME) THEN(DO)
+             /* Override with specific outq */
+             OVRPRTF    FILE(QSYSPRT) TOFILE(QSYSPRT) PAGESIZE(198) +
+                          PRTTXT(&PRTTXT) +
+                          OUTQ(&PRTOUTQLIB/&PRTOUTQ) HOLD(&PRTHOLD) +
+                          USRDTA(&PRTUSRDTA) SPLFNAME(&PRTSPLF)
+             /* Prevent endless loop if OVRPRTF fails */
+             MONMSG     MSGID(CPF0000) EXEC(DO)
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Error +
+                          overriding print file - QSHEXEC +
+                          cancelled') MSGTYPE(*ESCAPE)
+             ENDDO
+             ENDDO
+
+             CPYF       FROMFILE(&OLIB/&OFILE) TOFILE(QSYSPRT)
+             DLTOVR     FILE(QSYSPRT)
+
+             ENDDO
+
+             /* IF ENABLED, DISPLAY STDOUT RESULTS */
+             IF         COND(&DSPSTDOUT *EQ *YES) THEN(DO)
+             EDTF       STMF(&STDOUTIFS)
+             MONMSG     MSGID(CPF0000)
+             ENDDO
+
+             /* IF ENABLED, Erase stdout result file */
+             IF         COND(&DLTSTDOUT *EQ *YES) THEN(DO)
+             ERASE      OBJLNK(&STDOUTIFS)
+             MONMSG     MSGID(CPF0000)
+             ENDDO
+
+             /* Write STDOUT results PF to job log */
+             IF         COND(&LOGSTDOUT *EQ *YES) THEN(DO)
+             OVRDBF     FILE(STDOUTQSH) TOFILE(&OLIB/&OFILE)
+             CALL       PGM(QSHSTDOUTR)
+             DLTOVR     FILE(STDOUTQSH)
+             ENDDO
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('QShell +
+                          command failed') MSGTYPE(*ESCAPE)
+
+ ENDPGM:
              ENDPGM
