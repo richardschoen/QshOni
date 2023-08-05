@@ -719,7 +719,9 @@ to the PYPATH parameter to make sure the system level python binary does not pic
 
 **DEBUGCMD** - Debug QSHEXEC command - If set to *YES, your job must be running interactively and it will display the command line that QSHPYRUN composed to execute via QSHEXEC before it runs. This is good for debugging or you are curious what the exec QSHEXEC command will look like. Under the covers QSHPYRUN utilizes the QSHEXEC command to run the Python command line. 
 
-**RETURN01 - RETURN10** - These 255 character parameters can return values from the called Python script if it writes return values to the STDOUT log using the Python print() command. The special format we look for to return values is:     
+**RETURN01 - RETURN10** - These 255 character parameters can return values from the called Python script if it writes return values to the STDOUT log using the Python print() command.    
+
+The special format we look for to return values from STDOUT is:     
 ```RETURNPARM01: I am return value 1```   
 ``` - ```   
 ```RETURNPARM10: I am return value 10```   
@@ -808,7 +810,9 @@ The following example calls a script named ```pycallparm1.py``` that returns par
 
 **PASEJOBNAM** - PASE fork thread job names. Set PASE_FORK_JOBNAME environment variable to set forked thread jobs to have a unique name other than: QP0ZSPWP which is the default. Set the value or *DEFAULT=QP0ZSPWP.  
 
-**RETURN01 - RETURN10** - These 255 character parameters can return values from the called Python script if it writes return values to the STDOUT log using the Python print() command. The special format we look for to return values is:     
+**RETURN01 - RETURN10** - These 255 character parameters can return values from the called Python script if it writes return values to the STDOUT log using the Python print() command.   
+
+The special format we look for to return values from STDOUT is:     
 ```RETURNPARM01: I am return value 1```   
 ``` - ```   
 ```RETURNPARM10: I am return value 10```   
