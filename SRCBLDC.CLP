@@ -148,6 +148,16 @@
                           SRCFILE(&DESTLIB/&DESTFILE) REPLACE(*NO) +
                           TGTRLS(&TGTRLS) /* 1.0.23 */
 
+             CRTCMD     CMD(&DESTLIB/QSHGETPARM) PGM(QSHGETPARR) +
+                          SRCFILE(&DESTLIB/&DESTFILE) ALLOW(*IPGM +
+                          *BPGM *IMOD *BMOD) PRDLIB(&DESTLIB) /* +
+                          1.0.25 */
+
+             CRTBNDRPG  PGM(&DESTLIB/QSHGETPARR) +
+                          SRCFILE(&DESTLIB/&DESTFILE) +
+                          SRCMBR(QSHIFSCHKR) DFTACTGRP(*NO) +
+                          REPLACE(*NO) TGTRLS(&TGTRLS) /* 1.0.25 */
+
              CRTCMD     CMD(&DESTLIB/QSHPYCALL) PGM(QSHPYCALLC) +
                           SRCFILE(&DESTLIB/&DESTFILE) ALLOW(*IPGM +
                           *BPGM *IMOD *BMOD) PRDLIB(&DESTLIB) /* +
@@ -160,16 +170,6 @@
              CRTCLPGM   PGM(&DESTLIB/QSHPYCALLT) +
                           SRCFILE(&DESTLIB/&DESTFILE) REPLACE(*NO) +
                           TGTRLS(&TGTRLS) /* 1.0.25 */
-
-             CRTCMD     CMD(&DESTLIB/QSHGETPARM) PGM(QSHGETPARR) +
-                          SRCFILE(&DESTLIB/&DESTFILE) ALLOW(*IPGM +
-                          *BPGM *IMOD *BMOD) PRDLIB(&DESTLIB) /* +
-                          1.0.25 */
-
-             CRTBNDRPG  PGM(&DESTLIB/QSHGETPARR) +
-                          SRCFILE(&DESTLIB/&DESTFILE) +
-                          SRCMBR(QSHIFSCHKR) DFTACTGRP(*NO) +
-                          REPLACE(*NO) TGTRLS(&TGTRLS) /* 1.0.25 */
 
  /* Create message file for any custom CPF messages */
  /* Initial use case is to log STDOUT msgs with own CPF ID    */
