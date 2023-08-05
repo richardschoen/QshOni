@@ -78,7 +78,7 @@
              PARM       KWD(DEBUGCMD) TYPE(*CHAR) LEN(4) RSTD(*YES) +
                           DFT(*NO) VALUES(*NO *YES) EXPR(*YES) +
                           CASE(*MIXED) PROMPT('Debug QSHEXEC command')
-             PARM       KWD(CHGSCRDIR) TYPE(*CHAR) LEN(4) RSTD(*YES) +
+             PARM       KWD(CHGSCRDIR) TYPE(*CHAR) LEN(4) RSTD(*YES) + 
                           DFT(*NO) VALUES(*NO *YES) EXPR(*YES) +
                           CASE(*MIXED) PROMPT('Change to script +
                           directory')
