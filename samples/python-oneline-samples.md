@@ -48,6 +48,20 @@ python3 -c 'import datetime; print(datetime.datetime.now())'
 ```
 python3 -c 'import datetime as dt; print(dt.date.today()- dt.timedelta(days=7))'
 ```
+## Python output last Friday's date
+List of Python commands before one-liner
+```
+from datetime import date, timedelta
+friday = 4
+today = date.today()
+delta = today.weekday() - friday
+last_friday = today - timedelta((7 if delta < 0 else 0) + delta)
+print(last_friday)
+```
+One liner
+```
+ python3 -c 'from datetime import date, timedelta; friday = 4; today = date.today(); delta = today.weekday() - friday; last_friday = today - timedelta((7 if delta < 0 else 0) + delta); print(last_friday)'
+```
 
 
 
