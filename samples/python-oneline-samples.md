@@ -1,5 +1,5 @@
 # One line Python command samples
-These samples can be easily run with the relevant QSHONI commands to run simple Python one line Python commands and bring them back for use from within a RPG, CL or COBOL application program. Apparently PHP and other languages support the ability to run non-scripted programs also.   
+These samples can be easily run with the relevant QSHONI commands to run simple one line Python commands and bring the results back for use from within a RPG, CL or COBOL application program. Apparently PHP and other languages support the ability to run non-scripted programs also.   
 
 ## Generate and return UUID via QSHEXEC or QSHCALL
 
