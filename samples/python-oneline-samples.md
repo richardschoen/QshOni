@@ -5,7 +5,7 @@ These samples can be easily run with the relevant QSHONI commands to run simple 
 
 This example uses QSHEXEC. The UUID result can be read from STDOUT log file QTEMP/STDOUTQSH.    
 ```
-QSHEXEC CMDLINE('python3 -c ''import uuid; print(str(uuid.uuid4()))''')
+QSHEXEC CMDLINE('python3 -c ''import uuid; print(uuid.uuid4())''')
 ```                    
 
 This example uses QSHCALL. The UUID result will return in parameter &RTNPARM01.
