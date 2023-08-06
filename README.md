@@ -9,6 +9,9 @@ There are several ways to build the library. Pick your favorite.
 https://github.com/richardschoen/QshOni/blob/master/VERSION.TXT   
 
 ```Two new commands added: QSHCALL and QSYPYCALL to call Python or other open source and return parameters.```
+
+# Check out one-liner Python samples
+https://github.com/richardschoen/QshOni/blob/master/samples/python-oneline-samples.md
    
 # Installing and Building QSHONI via getrepo-qshoni.sh script 
 
