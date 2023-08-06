@@ -1,0 +1,117 @@
+               PGM        PARM(&SRCFILEALL &SRCMBR &IFSFILE &REPLACE)
+
+/*----------------------------------------------------------------------------*/
+/* Variables                                                                  */
+/*----------------------------------------------------------------------------*/
+             DCL        VAR(&REPLACE) TYPE(*CHAR) LEN(4)
+             DCL        VAR(&TMPSCRIPT) TYPE(*CHAR) LEN(255)
+             DCL        VAR(&SRCMBR) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&SRCLIB) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&SRCFILE) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&SRCFILEALL) TYPE(*CHAR) LEN(20)
+             DCL        VAR(&JOB) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&JOBNBR) TYPE(*CHAR) LEN(6)
+             DCL        VAR(&USER) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&TEMPDIR) TYPE(*CHAR) LEN(255) +
+                          VALUE('/tmp')
+             DCL        VAR(&QSHTEMP) TYPE(*CHAR) LEN(255) +
+                          VALUE('/tmp/qsh')
+             DCL        VAR(&IFSFILE) TYPE(*CHAR) LEN(255)
+             DCL        VAR(&CURJOB) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&CURUSER) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&CURNBR) TYPE(*CHAR) LEN(6)
+             DCL        VAR(&QDATE) TYPE(*CHAR) LEN(6)
+             DCL        VAR(&QTIME) TYPE(*CHAR) LEN(9)
+             DCL        VAR(&CCSID) TYPE(*CHAR) LEN(10)
+
+/*----------------------------------------------------------------------------*/
+/* MONITOR FOR GLOBAL ERROR. ANY ERROR IS A CAUSE TO BLOW OUT OF HERE         */
+/* AND WE WANT A GRACEFUL EXIT.                                               */
+/*----------------------------------------------------------------------------*/
+             MONMSG     MSGID(CPF0000) EXEC(GOTO CMDLBL(ERRORS))
+
+/*----------------------------------------------------------------------------*/
+/* MAIN                                                                       */
+/*----------------------------------------------------------------------------*/
+
+/*----------------------------------------------------------------------------*/
+/* RETRIEVE JOB DATE/TIME INFO                           */
+/*----------------------------------------------------------------------------*/
+             RTVSYSVAL  SYSVAL(QDATE) RTNVAR(&QDATE)
+             RTVSYSVAL  SYSVAL(QTIME) RTNVAR(&QTIME)
+             RTVJOBA    JOB(&CURJOB) USER(&CURUSER) NBR(&CURNBR)
+
+/*----------------------------------------------------------------------------*/
+/* Extract source member info                                                 */
+/*----------------------------------------------------------------------------*/
+             CHGVAR     VAR(&SRCFILE) VALUE(%SST(&SRCFILEALL 1 10))
+             CHGVAR     VAR(&SRCLIB) VALUE(%SST(&SRCFILEALL 11 10))
+
+/*----------------------------------------------------------------------------*/
+/* Does source member exist                                                   */
+/*----------------------------------------------------------------------------*/
+             CHKOBJ     OBJ(&SRCLIB/&SRCFILE) OBJTYPE(*FILE) +
+                          MBR(&SRCMBR)
+             MONMSG     MSGID(CPF0000) EXEC(DO)
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Error +
+                          checking for source member' |> &SRCLIB |< +
+                          '/' |< &SRCFILE |< '(' |< &SRCMBR |< ')') +
+                          MSGTYPE(*ESCAPE)
+             ENDDO
+
+/*----------------------------------------------------------------------------*/
+/* Create temp folder in /tmp named /tmp/qsh for stdout logs */
+/*----------------------------------------------------------------------------*/
+             MKDIR      DIR(&QSHTEMP) DTAAUT(*RWX) OBJAUT(*ALL)
+             MONMSG     MSGID(CPF0000)
+
+/*----------------------------------------------------------------------------*/
+/* Build temp script file name                                      */
+/*----------------------------------------------------------------------------*/
+             IF         COND(&IFSFILE *EQ *GENERATE) THEN(DO)
+             CHGVAR     VAR(&TMPSCRIPT) VALUE(&QSHTEMP |< '/' |< +
+                          &SRCMBR |< '_' |< &QDATE |< &QTIME |< '_' +
+                          |< &CURUSER |< '.sh')
+             ENDDO
+             IF         COND(&IFSFILE *NE *GENERATE) THEN(DO)
+             CHGVAR     VAR(&TMPSCRIPT) VALUE(&IFSFILE)
+             ENDDO
+
+/*----------------------------------------------------------------------------*/
+/* If IFS file exists, check for replace                            */
+/*----------------------------------------------------------------------------*/
+             QSHIFSCHK  FILNAM(&IFSFILE)
+             MONMSG     MSGID(CPF9898) EXEC(DO)
+             ENDDO
+             MONMSG     MSGID(CPF9897) EXEC(DO)
+             IF         COND(&REPLACE *EQ *NO) THEN(DO)
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Source +
+                          member not copied. IFS destination file' +
+                          |> &IFSFILE |> 'exists and replace is set +
+                          to *NO') MSGTYPE(*ESCAPE)
+             ENDDO
+             ENDDO
+
+/*----------------------------------------------------------------------------*/
+/* Copy source member script to IFS to run it                       */
+/*----------------------------------------------------------------------------*/
+             CPYTOSTMF  FROMMBR('/QSYS.LIB/' |< &SRCLIB |< '.LIB/' +
+                          |< &SRCFILE |< '.FILE/' |< &SRCMBR |< +
+                          '.MBR') TOSTMF(&TMPSCRIPT) +
+                          STMFOPT(*REPLACE) CVTDTA(*AUTO) +
+                          STMFCCSID(*PCASCII) ENDLINFMT(*LF) +
+                          AUT(*INDIR) STMFCODPAG(*STMF)
+
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Source +
+                          member' |> &SRCLIB |< '/' |< &SRCFILE |< +
+                          '.' |< &SRCMBR |> 'copied to IFS file' |> +
+                          &TMPSCRIPT) MSGTYPE(*COMP)
+
+             RETURN
+
+ERRORS:
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Error +
+                          copying source  member' |> &SRCLIB |< '/' +
+                          |< &SRCFILE |< '.' |< &SRCMBR) +
+                          MSGTYPE(*ESCAPE)
+             ENDPGM
