@@ -34,6 +34,11 @@ python3 -c 'import uuid; print("RETURNPARM01:"+str(uuid.uuid4()))'
 python3 -c 'import uuid; print(uuid.uuid4())'
 ```
 
+## Python output any print() statement result
+```
+python3 -c 'print("RETURNPARM01:Hello World")'
+```
+
 ## Python output current date (Ex: 2023-08-04)
 ```
 python3 -c 'from datetime import date; print(date.today())'
