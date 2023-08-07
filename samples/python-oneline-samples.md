@@ -67,8 +67,4 @@ One liner
 ```
  python3 -c 'from datetime import date, timedelta; friday = 4; today = date.today(); delta = today.weekday() - friday; last_friday = today - timedelta((7 if delta < 0 else 0) + delta); print(last_friday)'
 ```
-
-
-
-
-
+**Note** that the Python builtin `datetime` library defines no symbolic constants for weekdays. It offers only `datetime.date.weekday()` numbering the days 0-6 starting with Monday, and `datetime.date.isoweekday()` numbering the days 1-7 starting with Monday. Our one-liner defines `friday = 4` for clarity; the definition is not necessary.
