@@ -18,12 +18,12 @@ Temp file QTEMP/SQLTMP0001 was created from query. 0000000001 records.
 
 Notice that you need the extra single quotes on character values because CL commands require you to double things up when passing single quote delimited values like a character based query string.
 
-There are also 3 data areas that get automatically created in the jobs current QTEMP library. These data areas return the temporary table name and record count info in case your process needs to know these values. 
-``
+There are also 3 data areas that get automatically created in the jobs current QTEMP library. These data areas return the temporary table name and record count info in case your process needs to know these values.    
+```
 QTEMP/SQLQRYCNT - Query Result Record Count
 QTEMP/SQLQRYFIL - Query Result File Name
 QTEMP/SQLQRYLIB - Query Result Lib Name
-```
+```    
 QSHQRYTMP consists of a single CL command and CL command processing program that takes advantage of the power of the RUNSQL CL command to do most of it's work. 
 
 I hope you enjoy using this command for creating SQL result files on-the-fly.  I have found it very useful.
