@@ -1,5 +1,5 @@
 # Query IBM i Data using SQL via the QSHQRYTMP command
-If you're an AS/400 - IBM i developer you no doubt remember the days of OPNQRYF, GSORT or writing temporary files with a custom RPG program to create a summary file or some other temporary work table.   
+If you're an IBM i-AS/400 developer you no doubt remember the days of OPNQRYF, GSORT or writing temporary files with a custom RPG program to create a summary file or some other temporary work table.   
 
 The QSHQRYTMP command which is part of the Qhell on i utilities is a high level wrapper over the RUNSQL command that allows any SQL select command to be run and automatically written to an output file for further processing.   
 
