@@ -98,7 +98,7 @@ If value is set for job name, that job name is applied to
 all forked/spawned thread jobs by automatically adding the          
 environment variable PASE_FORK_JOBNAME with selected job name   
 before launching and thread jobs. 
-V1.0.24 - 8/4/2023
+V1.0.24/V1.0.25 - 8/4/2023
 -Created QSHPYCALL command. This is a variation of the QSHPYRUN cmd. It
  will run a Python script and return parameter values as long as they
  are prefixed in STDOUT with: RETURNPARM01: - RETURNPARM10:
