@@ -8,7 +8,7 @@ There are several ways to build the library. Pick your favorite.
 # Check latest version info (Current Version 1.0.25 - 8/4/2023)  
 https://github.com/richardschoen/QshOni/blob/master/VERSION.TXT   
 
-```Two new commands added: QSHCALL and QSYPYCALL to call Python or other open source and return parameters.```
+```Two new commands added: QSHCALL and QSHPYCALL to call Python or other open source and return parameters.```
 
 # Check out one-liner Python samples
 https://github.com/richardschoen/QshOni/blob/master/samples/python-oneline-samples.md
