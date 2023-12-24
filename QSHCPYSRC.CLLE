@@ -1,0 +1,146 @@
+             PGM        PARM(&SRCFILEALL &SRCMBR &SRCTYPE &TOIFSFILE +
+                          &IFSOPT)
+
+/*----------------------------------------------------------------------------*/
+/* Variables                                                                  */
+/*----------------------------------------------------------------------------*/
+             DCL        VAR(&IFSOPT) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&TOIFSFILE) TYPE(*CHAR) LEN(255)
+             DCL        VAR(&TMPSCRIPT) TYPE(*CHAR) LEN(255)
+             DCL        VAR(&SRCTYPE) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&SRCTYPTMP) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&SRCMBR) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&SRCLIB) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&SRCFILE) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&SRCFILEALL) TYPE(*CHAR) LEN(20)
+             DCL        VAR(&MBROPT) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&OUTFILE) TYPE(*CHAR) LEN(20)
+             DCL        VAR(&OUTFILPATH) TYPE(*CHAR) LEN(255)
+             DCL        VAR(&OFILE) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&OLIB) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&QSHRTN) TYPE(*DEC) LEN(5 0)
+             DCL        VAR(&QSHRTNC) TYPE(*CHAR) LEN(5)
+             DCL        VAR(&MSGDTA) TYPE(*CHAR) LEN(200)
+             DCL        VAR(&MSGDTA4) TYPE(*CHAR) LEN(4)
+             DCL        VAR(&CPFID) TYPE(*CHAR) LEN(7)
+             DCL        VAR(&CMD) TYPE(*CHAR) LEN(9999)
+             DCL        VAR(&STDOUTIFS) TYPE(*CHAR) LEN(255)
+             DCL        VAR(&STDOUTFILE) TYPE(*CHAR) LEN(255)
+             DCL        VAR(&JOB) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&JOBNBR) TYPE(*CHAR) LEN(6)
+             DCL        VAR(&USER) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&TEMPDIR) TYPE(*CHAR) LEN(255) +
+                          VALUE('/tmp')
+             DCL        VAR(&QSHTEMP) TYPE(*CHAR) LEN(255) +
+                          VALUE('/tmp/qsh')
+             DCL        VAR(&DSPSTDOUT) TYPE(*CHAR) LEN(4)
+             DCL        VAR(&LOGSTDOUT) TYPE(*CHAR) LEN(4)
+             DCL        VAR(&DLTSTDOUT) TYPE(*CHAR) LEN(4)
+             DCL        VAR(&PRTSTDOUT) TYPE(*CHAR) LEN(4)
+             DCL        VAR(&IFSSTDOUT) TYPE(*CHAR) LEN(4)
+             DCL        VAR(&IFSOPT) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&IFSFILE) TYPE(*CHAR) LEN(255)
+             DCL        VAR(&RTNVAL) TYPE(*CHAR) LEN(6)
+             DCL        VAR(&CURJOB) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&CURUSER) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&CURNBR) TYPE(*CHAR) LEN(6)
+             DCL        VAR(&QDATE) TYPE(*CHAR) LEN(6)
+             DCL        VAR(&QTIME) TYPE(*CHAR) LEN(9)
+             DCL        VAR(&PRTTXT) TYPE(*CHAR) LEN(30)
+             DCL        VAR(&CCSID) TYPE(*CHAR) LEN(10)
+
+/*----------------------------------------------------------------------------*/
+/* MONITOR FOR GLOBAL ERROR. ANY ERROR IS A CAUSE TO BLOW OUT OF HERE         */
+/* AND WE WANT A GRACEFUL EXIT.                                               */
+/*----------------------------------------------------------------------------*/
+             MONMSG     MSGID(CPF0000) EXEC(GOTO CMDLBL(ERRORS))
+
+/*----------------------------------------------------------------------------*/
+/* MAIN                                                                       */
+/*----------------------------------------------------------------------------*/
+
+/*----------------------------------------------------------------------------*/
+/* RETRIEVE JOB DATE/TIME INFO                           */
+/*----------------------------------------------------------------------------*/
+             RTVSYSVAL  SYSVAL(QDATE) RTNVAR(&QDATE)
+             RTVSYSVAL  SYSVAL(QTIME) RTNVAR(&QTIME)
+             RTVJOBA    JOB(&CURJOB) USER(&CURUSER) NBR(&CURNBR)
+
+/*----------------------------------------------------------------------------*/
+/* Extract source member info                                                 */
+/*----------------------------------------------------------------------------*/
+             CHGVAR     VAR(&SRCFILE) VALUE(%SST(&SRCFILEALL 1 10))
+             CHGVAR     VAR(&SRCLIB) VALUE(%SST(&SRCFILEALL 11 10))
+
+/*----------------------------------------------------------------------------*/
+/* Create temporary IFS source name data area                                 */
+/*----------------------------------------------------------------------------*/
+             CRTDTAARA  DTAARA(QTEMP/TMPSRCFILE) TYPE(*CHAR) +
+                          LEN(255) TEXT('Temp Source IFS Member')
+             MONMSG     MSGID(CPF0000)
+             CHGDTAARA  DTAARA(QTEMP/TMPSRCFILE *ALL) VALUE(' ')
+
+/*----------------------------------------------------------------------------*/
+/* Does source member exist                                                   */
+/*----------------------------------------------------------------------------*/
+             CHKOBJ     OBJ(&SRCLIB/&SRCFILE) OBJTYPE(*FILE) +
+                          MBR(&SRCMBR)
+             MONMSG     MSGID(CPF0000) EXEC(DO)
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Error +
+                          checking for source member' |> &SRCLIB |< +
+                          '/' |< &SRCFILE |< '(' |< &SRCMBR |< ')') +
+                          MSGTYPE(*ESCAPE)
+             ENDDO
+
+             /* Get source type if *MEMBER for source type */
+             IF         COND(&SRCTYPE *EQ *MEMBER) THEN(DO)
+             RTVMBRD    FILE(&SRCLIB/&SRCFILE) MBR(&SRCMBR) +
+                          SRCTYPE(&SRCTYPTMP)
+             ENDDO
+             IF         COND(&SRCTYPE *NE *MEMBER) THEN(DO)
+             CHGVAR     VAR(&SRCTYPTMP) VALUE(&SRCTYPE)
+             ENDDO
+
+
+/*----------------------------------------------------------------------------*/
+/* Build temp script file name                                      */
+/*----------------------------------------------------------------------------*/
+             IF         COND(&TOIFSFILE *EQ *GENERATE) THEN(DO)
+             CHGVAR     VAR(&TMPSCRIPT) VALUE(&QSHTEMP |< '/' |< +
+                          &SRCMBR |< '_' |< &QDATE |< &QTIME |< +
+                          &CURUSER |< '.' |< &SRCTYPTMP)
+             ENDDO
+             IF         COND(&TOIFSFILE *NE *GENERATE) THEN(DO)
+             CHGVAR     VAR(&TMPSCRIPT) VALUE(&TOIFSFILE)
+             ENDDO
+
+/*----------------------------------------------------------------------------*/
+/* Copy source member script to IFS                       */
+/*----------------------------------------------------------------------------*/
+             /* Set temp script output file name */
+             CHGDTAARA  DTAARA(QTEMP/TMPSRCFILE *ALL) +
+                          VALUE(&TMPSCRIPT)
+
+             CPYTOSTMF  FROMMBR('/QSYS.LIB/' |< &SRCLIB |< '.LIB/' +
+                          |< &SRCFILE |< '.FILE/' |< &SRCMBR |< +
+                          '.MBR') TOSTMF(&TMPSCRIPT) +
+                          STMFOPT(&IFSOPT) CVTDTA(*AUTO) +
+                          STMFCCSID(*PCASCII) ENDLINFMT(*LF) +
+                          AUT(*INDIR) STMFCODPAG(*STMF)
+
+
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Source +
+                          member' |> &SRCLIB |< '/' |< &SRCFILE |< +
+                          '(' |< &SRCMBR |< ') was copied to IFS +
+                          file' |> &TMPSCRIPT) MSGTYPE(*COMP)
+
+             RETURN
+
+ERRORS:
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Source +
+                          member' |> &SRCLIB |< '/' |< &SRCFILE |< +
+                          '(' |< &SRCMBR |< ') copy to IFS file +
+                          failed. Check the job log') MSGTYPE(*ESCAPE)
+
+ ENDPGM:
+             ENDPGM
