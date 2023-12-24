@@ -202,6 +202,18 @@ CURFILE="QSHCALLT.CLLE"
 SRCTEXT="Test Call to QSHCALL"
 cpy_member
 
+CURFILE="QSHCALLT.CLLE"
+SRCTEXT="Test Call to QSHCALL"
+cpy_member
+
+CURFILE="QSHCPYSRC.CMD"
+SRCTEXT="Copy Source Member to IFS File"
+cpy_member
+
+CURFILE="QSHCPYSRCC.CLLE"
+SRCTEXT="Copy Source Member to IFS File"
+cpy_member
+
 CURFILE="SRCBLDC.CLP"
 SRCTEXT="Build cmds from QSHONI/SOURCE file"   
 cpy_member

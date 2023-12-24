@@ -133,3 +133,9 @@ V1.0.24/V1.0.25 - 8/4/2023
   system library list. This cause the command to crash due to
   having different parameters. Qualifying RUNSQL to QSYS should
   resolve this issue.
+
+V1.0.26 = 12/24/2023                                                  
+-Created QSHCPYSRC command to copy source member to IFS file.         
+ This will allow developers to store Python and other script files    
+ in a source physical file if desired and copy to IFS at runtime      
+ as a temporary file.                                                 
