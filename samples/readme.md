@@ -4,6 +4,44 @@ This section contains useful sample commands that utilize the QSHONI library com
 
 These commands are not shipped as part of the core QSHONI library code.
 
+## GREPSRCLIB CL Command - Search Library Source Members using Grep
+This command uses the QSHEXEC command internally to wrap the grep ```QShell``` utility to allow selected source libraries, files and members to be scanned based for a text value based on an IFS file pattern. 
+
+grep scan output results are written to the ```STDOUTQSH``` outfile in ```QTEMP``` and optionally to an IFS output file, spool file or the job log. 
+
+The following example scans ```all source members``` in source file ```QCLSRC``` in library ```MYDEVLIB``` for the following string value: ```monmsg``` and displays the results on screen and to a spool file.
+
+```
+ GREPSRCLIB SRCLIBRARY(MYDEVLIB)      
+            SRCFILE(QCLSRC)           
+            SEARCHFOR(monmsg)         
+            PROMPTCMD(*NO)            
+            DSPSTDOUT(*YES) 
+            PRTSTDOUT(*YES)          
+```
+
+Sample results.  
+```
+/QSYS.LIB/MYDEVLIB.LIB/QCLSRC.FILE/TEST001C.MBR:19:  MSGID(CPF0000) EXEC(GOTO CMDLBL(ERRORS))  
+/QSYS.LIB/MYDEVLIB.LIB/QCLSRC.FILE/TEST002C.MBR:27:  MSGID(CPF0000) EXEC(DO)  
+/QSYS.LIB/MYDEVLIB.LIB/QCLSRC.FILE/TEST004C.MBR:44:  MSGID(CPF0000) EXEC(DO)  
+/QSYS.LIB/MYDEVLIB.LIB/QCLSRC.FILE/TEST006C.MBR:22:  MSGID(CPF0000) EXEC(GOTO CMDLBL(ERRORS))  
+```
+
+The following example scans ```all source members``` in source file ```QCLSRC``` in library ```MYDEVLIB``` for the following string value: ```monmsg``` and displays the results on screen and to a spool file. Prior to running the command the prompt for the QSHEXEC command is displayed so the user can see the grep command used to scan the selected files.
+
+Ex grep command: ```/usr/bin/grep -i -n "monmsg" /QSYS.LIB/MYDEVLIB.LIB/QCLSRC.FILE/*.MBR```                                                     
+
+```
+ GREPSRCLIB SRCLIBRARY(MYDEVLIB)      
+            SRCFILE(QCLSRC)           
+            SEARCHFOR(monmsg)         
+            PROMPTCMD(*NO)            
+            DSPSTDOUT(*YES) 
+            PRTSTDOUT(*YES)   
+            PROMPTCMD(*YES)       
+```
+
 ## STRNGINX CL Command - Start NGINX Web Server
 This command starts the NGINX web server.
 
