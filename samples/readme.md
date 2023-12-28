@@ -5,7 +5,7 @@ This section contains useful sample commands that utilize the QSHONI library com
 These commands are not shipped as part of the core QSHONI library code.
 
 ## GREPSRCLIB CL Command - Search Library Source Members using Grep
-This command uses the QSHEXEC command internally to wrap the ```grep QShell``` utility to allow selected source libraries, files and members to be scanned for a text value based on an IFS file pattern. 
+This command uses the QSHEXEC command internally to wrap the ```grep QShell``` utility to allow selected source libraries, files and members to be scanned for a text string value based on an IFS file pattern. The ```-i``` and ```-n``` flags are used internally so scans are case insensitive and include the line number where the selected value is found in the scanned file.    
 
 grep scan output results are written to the ```STDOUTQSH``` outfile in ```QTEMP``` and optionally to an IFS output file, spool file or the job log. 
 
@@ -30,7 +30,8 @@ Sample results.
 
 The following example scans ```all source members``` in source file ```QCLSRC``` in library ```MYDEVLIB``` for the following string value: ```monmsg``` and displays the results on screen and to a spool file. Prior to running the command the prompt for the QSHEXEC command is displayed so the user can see the grep command used to scan the selected files.
 
-Ex grep command: ```/usr/bin/grep -i -n "monmsg" /QSYS.LIB/MYDEVLIB.LIB/QCLSRC.FILE/*.MBR```                                                     
+Ex grep command which is case insensitive (```-i```) and includes line numbers (```-n```) by default: 
+```/usr/bin/grep -i -n "monmsg" /QSYS.LIB/MYDEVLIB.LIB/QCLSRC.FILE/*.MBR```                                                     
 
 ```
  GREPSRCLIB SRCLIBRARY(MYDEVLIB)      
