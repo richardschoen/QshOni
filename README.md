@@ -729,9 +729,16 @@ to the PYPATH parameter to make sure the system level python binary does not pic
 
 **RETURN01 - RETURN10** - These 255 character parameters can return values from the called Python script if it writes return values to the STDOUT log using the Python print() command.    
 
-The special format we look for to return values from STDOUT is:     
+The special prefix format we look for in the STDOUT log to return values from STDOUT is:     
 ```RETURNPARM01: I am return value 1```   
-``` - ```   
+```RETURNPARM01: I am return value 2```   
+```RETURNPARM01: I am return value 3```   
+```RETURNPARM01: I am return value 4```   
+```RETURNPARM01: I am return value 5```   
+```RETURNPARM01: I am return value 6```   
+```RETURNPARM01: I am return value 7```   
+```RETURNPARM01: I am return value 8```   
+```RETURNPARM01: I am return value 9```   
 ```RETURNPARM10: I am return value 10```   
 
 # Using the QSHCALL CL command to call a Qsh/Pase command sequence and return up to 10 - 255 character parameters.  
@@ -823,7 +830,14 @@ https://github.com/richardschoen/QshOni/tree/master/qshpython
 
 **RETURN01 - RETURN10** - These 255 character parameters can return values from the called Python script if it writes return values to the STDOUT log using the Python print() command.   
 
-The special format we look for to return values from STDOUT is:     
+The special prefix format we look for in the STDOUT log to return values from STDOUT is:     
 ```RETURNPARM01: I am return value 1```   
-``` - ```   
+```RETURNPARM01: I am return value 2```   
+```RETURNPARM01: I am return value 3```   
+```RETURNPARM01: I am return value 4```   
+```RETURNPARM01: I am return value 5```   
+```RETURNPARM01: I am return value 6```   
+```RETURNPARM01: I am return value 7```   
+```RETURNPARM01: I am return value 8```   
+```RETURNPARM01: I am return value 9```   
 ```RETURNPARM10: I am return value 10```   
