@@ -665,10 +665,10 @@ The following example calls a script named ```pycallparm1.py``` that returns par
 
 # QSHPYCALL command parms
 
-**Overview** - This CL command can be used to run a Python script via QSHEXEC and return up to 10 parameter values from the STDOUt log info. Note: The CL command must be embeddedin a CL program since it returns parameter values to the calling CL, RPG or COBOL program. 
+**Overview** - This CL command can be used to run a Python script via QSHEXEC and return up to 10 parameter values from the STDOUt log info. Note: The QSHPYCALL CL command must be embedded in a CL program since it returns parameter values to the calling CL, RPG or COBOL program. 
 
-Samples python script: 
-https://github.com/richardschoen/QshOni/tree/master/qshpython
+Sample python script: ```pycallparm1.py``` located here:   
+https://github.com/richardschoen/QshOni/tree/master/qshpython   
 
 ```Stdout Logging Note:``` During execution, the CL command always creates a temporary outfile in library QTEMP that gets automatically populated with standard output (stdout) from the QSH/PASE command process that gets run. The temporary stdout output file name is: ```QTEMP/STDOUTQSH```. If the file already exists for a subsequent run of the command, the ```QTEMP/STDOUTQSH``` temporary file is automatically cleared before running so each run gets a fresh copy of ```QTEMP/STDOUTQSH```. The ```QTEMP/STDOUTQSH``` temp file gets created automatically always, even if none of the switches such as: ```DSPSTDOUT, LOGSTDOUT, PRTSTDOUT or IFSSTDOUT``` are specified. 
 
@@ -778,7 +778,10 @@ The following example calls a script named ```pycallparm1.py``` that returns par
 
 # QSHCALL command parms
 
-**Overview** - This CL command can be used to run a QSH/PASE command and log the results appropriately. 
+**Overview** - This CL command can be used to run a QSH/PASE command via QSHEXEC and return up to 10 parameter values from the STDOUt log info. Note: The QSHCALL CL command must be embedded in a CL program since it returns parameter values to the calling CL, RPG or COBOL program. 
+
+Sample python script: ```pycallparm1.py``` located here:   
+https://github.com/richardschoen/QshOni/tree/master/qshpython   
 
 ```Stdout Logging Note:``` During execution, the CL command always creates a temporary outfile in library QTEMP that gets automatically populated with standard output (stdout) from the QSH/PASE command process that gets run. The temporary stdout output file name is: ```QTEMP/STDOUTQSH```. If the file already exists for a subsequent run of the command, the ```QTEMP/STDOUTQSH``` temporary file is automatically cleared before running so each run gets a fresh copy of ```QTEMP/STDOUTQSH```. The ```QTEMP/STDOUTQSH``` temp file gets created automatically always, even if none of the switches such as: ```DSPSTDOUT, LOGSTDOUT, PRTSTDOUT or IFSSTDOUT``` are specified. 
 
