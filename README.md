@@ -665,7 +665,7 @@ The following example calls a script named ```pycallparm1.py``` that returns par
 
 # QSHPYCALL command parms
 
-**Overview** - This CL command can be used to run a Python script via QSHEXEC and return up to 10 parameter values from the STDOUt log info. Note: The QSHPYCALL CL command must be embedded in a CL program since it returns parameter values to the calling CL, RPG or COBOL program. 
+**Overview** - For those of us who are classic RPG, COBOL and CL developers who are used to calling programs and returning parameter values via CALL/PARM, this CL command can be used to run a Python script via QSHEXEC and return up to 10 parameter values from the STDOUt log info. Note: The QSHPYCALL CL command must be embedded in a CL program since it returns parameter values to the calling CL, RPG or COBOL program. 
 
 Sample python script: ```pycallparm1.py``` located here:   
 https://github.com/richardschoen/QshOni/tree/master/qshpython   
@@ -778,7 +778,7 @@ The following example calls a script named ```pycallparm1.py``` that returns par
 
 # QSHCALL command parms
 
-**Overview** - This CL command can be used to run a QSH/PASE command via QSHEXEC and return up to 10 parameter values from the STDOUt log info. Note: The QSHCALL CL command must be embedded in a CL program since it returns parameter values to the calling CL, RPG or COBOL program. 
+**Overview** - For those of us who are classic RPG, COBOL and CL developers who are used to calling programs and returning parameter values via CALL/PARM, this CL command can be used to run a QSH/PASE command via QSHEXEC and return up to 10 parameter values from the STDOUt log info. Note: The QSHCALL CL command must be embedded in a CL program since it returns parameter values to the calling CL, RPG or COBOL program. 
 
 Sample python script: ```pycallparm1.py``` located here:   
 https://github.com/richardschoen/QshOni/tree/master/qshpython   
