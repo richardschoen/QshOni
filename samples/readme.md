@@ -5,7 +5,7 @@ This section contains useful sample commands that utilize the QSHONI library com
 These commands are not shipped as part of the core QSHONI library code.
 
 ## GREPSRCLIB CL Command - Search Library Source Members using Grep
-This command uses the QSHEXEC command internally to wrap the ```grep QShell``` utility to allow selected source libraries, files and members to be scanned based for a text value based on an IFS file pattern. 
+This command uses the QSHEXEC command internally to wrap the ```grep QShell``` utility to allow selected source libraries, files and members to be scanned for a text value based on an IFS file pattern. 
 
 grep scan output results are written to the ```STDOUTQSH``` outfile in ```QTEMP``` and optionally to an IFS output file, spool file or the job log. 
 
