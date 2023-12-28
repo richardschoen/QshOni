@@ -12,6 +12,9 @@ https://github.com/richardschoen/QshOni/blob/master/VERSION.TXT
 
 # Check out one-liner Python samples
 https://github.com/richardschoen/QshOni/blob/master/samples/python-oneline-samples.md
+
+# Check out sample CL wrapper use-case commands that use QSHEXEC   
+https://github.com/richardschoen/QshOni/tree/master/samples   
    
 # Installing and Building QSHONI via getrepo-qshoni.sh script 
 
