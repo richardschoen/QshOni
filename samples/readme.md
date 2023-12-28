@@ -30,7 +30,7 @@ Sample results.
 
 The following example scans ```all source members``` in source file ```QCLSRC``` in library ```MYDEVLIB``` for the following string value: ```monmsg``` and displays the results on screen and to a spool file. Prior to running the command the prompt for the QSHEXEC command is displayed so the user can see the grep command used to scan the selected files.
 
-Ex grep command which is case insensitive (```-i```) and includes line numbers (```-n```) by default: 
+Ex grep command which is case insensitive (```-i```) and includes line numbers (```-n```) by default:   
 ```/usr/bin/grep -i -n "monmsg" /QSYS.LIB/MYDEVLIB.LIB/QCLSRC.FILE/*.MBR```                                                     
 
 ```
