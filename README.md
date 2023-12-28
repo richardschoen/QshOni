@@ -731,14 +731,14 @@ to the PYPATH parameter to make sure the system level python binary does not pic
 
 The special prefix format we look for in the STDOUT log to return values from STDOUT is:     
 ```RETURNPARM01: I am return value 1```   
-```RETURNPARM01: I am return value 2```   
-```RETURNPARM01: I am return value 3```   
-```RETURNPARM01: I am return value 4```   
-```RETURNPARM01: I am return value 5```   
-```RETURNPARM01: I am return value 6```   
-```RETURNPARM01: I am return value 7```   
-```RETURNPARM01: I am return value 8```   
-```RETURNPARM01: I am return value 9```   
+```RETURNPARM02: I am return value 2```   
+```RETURNPARM03: I am return value 3```   
+```RETURNPARM04: I am return value 4```   
+```RETURNPARM05: I am return value 5```   
+```RETURNPARM06: I am return value 6```   
+```RETURNPARM07: I am return value 7```   
+```RETURNPARM08: I am return value 8```   
+```RETURNPARM09: I am return value 9```   
 ```RETURNPARM10: I am return value 10```   
 
 # Using the QSHCALL CL command to call a Qsh/Pase command sequence and return up to 10 - 255 character parameters.  
@@ -832,12 +832,12 @@ https://github.com/richardschoen/QshOni/tree/master/qshpython
 
 The special prefix format we look for in the STDOUT log to return values from STDOUT is:     
 ```RETURNPARM01: I am return value 1```   
-```RETURNPARM01: I am return value 2```   
-```RETURNPARM01: I am return value 3```   
-```RETURNPARM01: I am return value 4```   
-```RETURNPARM01: I am return value 5```   
-```RETURNPARM01: I am return value 6```   
-```RETURNPARM01: I am return value 7```   
-```RETURNPARM01: I am return value 8```   
-```RETURNPARM01: I am return value 9```   
+```RETURNPARM02: I am return value 2```   
+```RETURNPARM03: I am return value 3```   
+```RETURNPARM04: I am return value 4```   
+```RETURNPARM05: I am return value 5```   
+```RETURNPARM06: I am return value 6```   
+```RETURNPARM07: I am return value 7```   
+```RETURNPARM08: I am return value 8```   
+```RETURNPARM09: I am return value 9```   
 ```RETURNPARM10: I am return value 10```   
