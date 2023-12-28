@@ -1,4 +1,4 @@
-/* Text: Search Source Members Using Grep */
+/* Text: Search Library Source Members using Grep */
              CMD        PROMPT('Search Library Src Members')
              PARM       KWD(SRCLIBRARY) TYPE(*CHAR) LEN(10) MIN(1) +
                           EXPR(*YES) CASE(*MIXED) PROMPT('Source +
