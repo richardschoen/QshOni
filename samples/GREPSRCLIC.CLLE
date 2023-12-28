@@ -1,0 +1,120 @@
+/* Text: Search Library Source Members using Grep */
+             PGM        PARM(&SRCLIBRARY &SRCFILE &SRCMEMBER +
+                          &SEARCHFOR &PROMPTCMD &SETPKGPATH +
+                          &DSPSTDOUT &LOGSTDOUT &PRTSTDOUT +
+                          &DLTSTDOUT &IFSSTDOUT &IFSFILE &IFSOPT +
+                          &CCSID &PRTSPLF &PRTUSRDTA &PRTTXT +
+                          &PRTHOLD &PRTOUTQALL &PASEJOBNAM)
+
+/*----------------------------------------------------------------------------*/
+/* Variables                                                                  */
+/*----------------------------------------------------------------------------*/
+             DCL        VAR(&PROMPTCMD) TYPE(*CHAR) LEN(4)
+             DCL        VAR(&SRCLIBRARY) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&SRCFILE) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&SRCMEMBER) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&IFSPATH) TYPE(*CHAR) LEN(255)
+             DCL        VAR(&SEARCHFOR) TYPE(*CHAR) LEN(50)
+             DCL        VAR(&PRTHOLD) TYPE(*CHAR) LEN(4)
+             DCL        VAR(&PRTOUTQALL) TYPE(*CHAR) LEN(20)
+             DCL        VAR(&PRTOUTQ) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&PRTOUTQLIB) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&CMDLINE) TYPE(*CHAR) LEN(5000)
+             DCL        VAR(&CURLCMDLIN) TYPE(*CHAR) LEN(5000)
+             DCL        VAR(&SETPKGPATH) TYPE(*CHAR) LEN(4)
+             DCL        VAR(&DSPSTDOUT) TYPE(*CHAR) LEN(4)
+             DCL        VAR(&LOGSTDOUT) TYPE(*CHAR) LEN(4)
+             DCL        VAR(&DLTSTDOUT) TYPE(*CHAR) LEN(4)
+             DCL        VAR(&PRTSTDOUT) TYPE(*CHAR) LEN(4)
+             DCL        VAR(&IFSSTDOUT) TYPE(*CHAR) LEN(4)
+             DCL        VAR(&IFSOPT) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&IFSFILE) TYPE(*CHAR) LEN(255)
+             DCL        VAR(&PRTSPLF) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&PRTUSRDTA) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&PRTTXT) TYPE(*CHAR) LEN(30)
+             DCL        VAR(&QT) TYPE(*CHAR) LEN(1) VALUE('''')
+             DCL        VAR(&CCSID) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&PASEJOBNAM) TYPE(*CHAR) LEN(10)
+
+/*----------------------------------------------------------------------------*/
+/* MONITOR FOR GLOBAL ERROR. ANY ERROR IS A CAUSE TO BLOW OUT OF HERE         */
+/* AND WE WANT A GRACEFUL EXIT.                                               */
+/*----------------------------------------------------------------------------*/
+             MONMSG     MSGID(CPF0000) EXEC(GOTO CMDLBL(ERRORS))
+
+/*----------------------------------------------------------------------------*/
+/* Extract output queue info.                                                 */
+/*----------------------------------------------------------------------------*/
+             CHGVAR     VAR(&PRTOUTQ) VALUE(%SST(&PRTOUTQALL 1 10))
+             CHGVAR     VAR(&PRTOUTQLIB) VALUE(%SST(&PRTOUTQALL 11 10))
+
+/*----------------------------------------------------------------------------*/
+/* MAIN                                                                       */
+/*----------------------------------------------------------------------------*/
+             /* Search for value is required */
+             IF         COND(&SEARCHFOR *EQ ' ') THEN(DO)
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Search +
+                          for value must be specified') +
+                          MSGTYPE(*ESCAPE)
+             ENDDO
+
+             /* Build grep command line to pass to qshell or bash  */
+             /* Make sure to use /usr/bin/grep which is QShell */
+             CHGVAR     VAR(&CURLCMDLIN) VALUE('/usr/bin/grep -i -n +
+                          "' |< &SEARCHFOR |< '"' |> '/QSYS.LIB/' +
+                          |< &SRCLIBRARY |< '.LIB/' |< &SRCFILE |< +
+                          '.FILE/' |< &SRCMEMBER |< '.MBR')
+
+             /* Set search value in print text field */
+             /* in case we print.                    */
+             IF         COND(&PRTTXT *EQ ' ') THEN(DO)
+             CHGVAR     VAR(&PRTTXT) VALUE('Search for:' |< +
+                          &SEARCHFOR)
+             ENDDO
+
+             /* Run the grep command via QSHEXEC */
+             IF         COND(&PROMPTCMD *NE *YES) THEN(DO)
+             QSHONI/QSHEXEC CMDLINE(&CURLCMDLIN) +
+                          SETPKGPATH(&SETPKGPATH) +
+                          DSPSTDOUT(&DSPSTDOUT) +
+                          LOGSTDOUT(&LOGSTDOUT) +
+                          PRTSTDOUT(&PRTSTDOUT) +
+                          DLTSTDOUT(&DLTSTDOUT) +
+                          IFSSTDOUT(&IFSSTDOUT) IFSFILE(&IFSFILE) +
+                          IFSOPT(&IFSOPT) CCSID(&CCSID) +
+                          PRTSPLF(&PRTSPLF) PRTUSRDTA(&PRTUSRDTA) +
+                          PRTTXT(&PRTTXT) +
+                          PRTHOLD(&PRTHOLD) +
+                          PRTOUTQ(&PRTOUTQLIB/&PRTOUTQ) +
+                          MBROPT(*REPLACE) PASEJOBNAM(&PASEJOBNAM)
+             ENDDO
+
+             /* Prompt the grep command via QSHEXEC */
+             IF         COND(&PROMPTCMD *EQ *YES) THEN(DO)
+             ?          QSHONI/QSHEXEC ??CMDLINE(&CURLCMDLIN) +
+                          ??SETPKGPATH(&SETPKGPATH) +
+                          ??DSPSTDOUT(&DSPSTDOUT) +
+                          ??LOGSTDOUT(&LOGSTDOUT) +
+                          ??PRTSTDOUT(&PRTSTDOUT) +
+                          ??DLTSTDOUT(&DLTSTDOUT) +
+                          ??IFSSTDOUT(&IFSSTDOUT) +
+                          ??IFSFILE(&IFSFILE) ??IFSOPT(&IFSOPT) +
+                          ??CCSID(&CCSID) ??PRTSPLF(&PRTSPLF) +
+                          ??PRTUSRDTA(&PRTUSRDTA) ??PRTTXT(&PRTTXT) +
+                          ??PRTHOLD(&PRTHOLD) +
+                          ??PRTOUTQ(&PRTOUTQLIB/&PRTOUTQ) +
+                          ??MBROPT(*REPLACE) ??PASEJOBNAM(&PASEJOBNAM)
+             ENDDO
+
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('grep +
+                          command completed searching for:' |> +
+                          &SEARCHFOR) MSGTYPE(*COMP)
+
+             RETURN
+
+ERRORS:
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('grep +
+                          command failed') MSGTYPE(*ESCAPE)
+
+ ENDPGM:
+             ENDPGM
