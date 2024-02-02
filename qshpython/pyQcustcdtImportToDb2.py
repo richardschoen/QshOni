@@ -4,7 +4,7 @@
 #
 # Description: 
 # This script will read the selected CSV file and 
-# insert the records to yuour specified version 
+# insert the records to your specified version 
 # of the QIWS/QCUSTCDT file. 
 # Before using make a copy of QIWS/QCUSTCDT to QIWS/QCUSTCDT2
 #
