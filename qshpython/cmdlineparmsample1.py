@@ -165,7 +165,7 @@ except SystemExit as ex:
      ### Set exitcode and exitmessage message for stdout. 
      ### Ex comes back as same value as ex.code from argparse SystemExit
      exitcode=ex.code # set return code for stdout
-     exitmessage=str(ex) # set exit message for stdout
+     exitmessage=f"Command line argument error:{str(ex)}" # set exit message for stdout
      ###Enable the following for detailed trace
      ###print('Traceback Info') # output traceback info for stdout
      ###traceback.print_exc()      
