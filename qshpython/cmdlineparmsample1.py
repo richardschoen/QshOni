@@ -23,8 +23,6 @@
 # --replace - Replace existing=True-replace, False-Do not replace
 # Valid formats: --replace=true  or 
 #                --replace true     
-#                --replace="filename.txt"
-#                --replace "filename.txt"
 #
 # Pip packages needed:
 # None - argparse is a standard module.
