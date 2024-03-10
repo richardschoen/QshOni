@@ -161,8 +161,9 @@ try: # Try to perform main logic
 #------------------------------------------------
 # System Exit occurred. Most likely from argument parser
 except SystemExit as ex:
-     #print("Command line argument error.")
-     #######print("Command line arguments triggered script exit.")
+     ### print("Command line argument error.")
+     ### Set exitcode and exitmessage message for stdout. 
+     ### Ex comes back as same value as ex.code from argparse SystemExit
      exitcode=ex.code # set return code for stdout
      exitmessage=str(ex) # set exit message for stdout
      ###Enable the following for detailed trace
