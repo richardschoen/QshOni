@@ -1,6 +1,6 @@
-      //-------------------------------------------------------------------------------------------
-      // QSHGETPARR - Scan Qshell Log File for Selected Return Values
-      //-------------------------------------------------------------------------------------------
+       //-------------------------------------------------------------------------------------------
+       // QSHGETPARR - Scan Qshell Log File for Selected Return Values 
+       //-------------------------------------------------------------------------------------------
        Dcl-F STDOUTQSH  DISK(1000) Usage(*Input);
 
        Dcl-Ds *N psds;
@@ -25,7 +25,7 @@
        Dcl-S p_ExactMatch char(4);
        Dcl-S p_RtnFound char(1);
        Dcl-S p_Count int(10);
-    
+
      C     *entry        plist
      C                   parm                    p_Return01
      C                   parm                    p_Return02
