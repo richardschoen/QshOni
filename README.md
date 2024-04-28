@@ -348,7 +348,7 @@ The following example calls a bash source member QSHELL01 stored in source file 
       IFSSTDOUT(*NO)
       IFSFILE('/tmp/log.txt')
       IFSOPT(*REPLACE)
-      PRTSPLF(QSHEXECLOG) 
+      PRTSPLF(QSHBASHLOG) 
       PRTUSRDTA(*NONE)    
       PRTTXT(*NONE)       
       RMVTMPSCR(*YES)            
