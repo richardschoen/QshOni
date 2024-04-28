@@ -138,4 +138,9 @@ V1.0.26 = 12/24/2023
 -Created QSHCPYSRC command to copy source member to IFS file.         
  This will allow developers to store Python and other script files    
  in a source physical file if desired and copy to IFS at runtime      
- as a temporary file.                                                 
+ as a temporary file.                          
+
+V1.0.27 = 4/28/2024                                               
+-Added QSHBASHSRC command to execute a QShell .sh script stored in
+ a source physical file. This is essentially a bash version of the
+ QSHEXECSRC command which runs a script via QShell.               
