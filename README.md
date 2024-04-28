@@ -5,7 +5,7 @@ The main benefit of this wrapper is to be able to integrate Qshell/Pase applicat
 
 There are several ways to build the library. Pick your favorite.
 
-# Check latest version info (Current Version 1.0.25 - 8/4/2023)  
+# Check latest version info (Current Version 1.0.26 - 4/18/2024)  
 https://github.com/richardschoen/QshOni/blob/master/VERSION.TXT   
 
 ```Two new commands added: QSHCALL and QSHPYCALL to call Python or other open source and return parameters.```
