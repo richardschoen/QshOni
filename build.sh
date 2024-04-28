@@ -154,6 +154,14 @@ CURFILE="QSHEXECSCC.CLLE"
 SRCTEXT="Run QShell .sh script from Source File Member"
 cpy_member
 
+CURFILE="QSHBASHSRC.CMD"                
+SRCTEXT="Run Bash .sh script from Source File Member"
+cpy_member
+
+CURFILE="QSHBASHSCC.CLLE"
+SRCTEXT="Run Bash .sh script from Source File Member"
+cpy_member
+
 CURFILE="DB2UTIL.CMD"                
 SRCTEXT="Execute db2util Query to IFS Output File via bash"
 cpy_member
