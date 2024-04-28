@@ -43,7 +43,7 @@
        // Set to beginning of file
        setll *start STDOUTQSH;
 
-      // Read all selected documents and extract keywords                  
+      // Read all selected documents and extract keywords
        dou %eof(STDOUTQSH);
 
          // Read next record
