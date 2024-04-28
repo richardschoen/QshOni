@@ -33,7 +33,7 @@
              PARM       KWD(CCSID) TYPE(*CHAR) LEN(10) DFT(*SAME) +
                           SPCVAL((*SAME *SAME)) PROMPT('Coded +
                           character set ID for job')
-             PARM       KWD(PRTSPLF) TYPE(*CHAR) LEN(10) DFT(QSHEXECLOG) PROMPT('Print stdout spool +
+             PARM       KWD(PRTSPLF) TYPE(*CHAR) LEN(10) DFT(QSHBASHLOG) PROMPT('Print stdout spool +
                           file')
              PARM       KWD(PRTUSRDTA) TYPE(*CHAR) LEN(10) DFT(*NONE) SPCVAL((*NONE ' ')) +
                           PROMPT('Print stdout user data')
