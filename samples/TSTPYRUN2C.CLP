@@ -11,6 +11,8 @@
              DCL        VAR(&CLCMD) TYPE(*CHAR) LEN(9999)
              DCL        VAR(&CLCMDLEN) TYPE(*DEC) LEN(15 5)
 
+             MONMSG     MSGID(CPF0000) EXEC(GOTO CMDLBL(ERRORS))
+
              /* Build QSHPYRUN command from passed args, */
              CALL       PGM(TSTPYRUNR) PARM(&ARGS &CLCMD &CLCMDLEN)
 
@@ -21,6 +23,13 @@
              CALL       PGM(QCMDEXC) PARM(&CLCMD &CLCMDLEN)
 
              /* Ignore prompting exit error. Remove for prod */
-             MONMSG     MSGID(CPF0000)
+             MONMSG     MSGID(CPF6801)
+
+             RETURN
+
+             /* Handle Errors */
+ERRORS:
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Errors +
+                          occurred. Check the joblog') MSGTYPE(*ESCAPE)
 
              ENDPGM
