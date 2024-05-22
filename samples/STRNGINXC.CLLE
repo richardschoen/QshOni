@@ -1,10 +1,9 @@
 /* Text: Start NGINX Web Server */
-             PGM        PARM(&NGINXBIN &NGCONFDIR &NGINXCONF +
+             PGM        PARM(&NGINXBIN &NGINXCONF +
                           &DSPSTDOUT &LOGSTDOUT &PRTSTDOUT &DLTSTDOUT)
 
              DCL        VAR(&CMD) TYPE(*CHAR) LEN(5000)
              DCL        VAR(&NGINXBIN) TYPE(*CHAR) LEN(255)
-             DCL        VAR(&NGCONFDIR) TYPE(*CHAR) LEN(255)
              DCL        VAR(&NGINXCONF) TYPE(*CHAR) LEN(255)
              DCL        VAR(&DSPSTDOUT) TYPE(*CHAR) LEN(4)
              DCL        VAR(&LOGSTDOUT) TYPE(*CHAR) LEN(4)
@@ -20,15 +19,15 @@
              MONMSG     MSGID(CPF0000) EXEC(GOTO CMDLBL(ERRORS))
 
 /*----------------------------------------------------------------------------*/
-/* Call stop nginx via QSHEXEC */
+/* Call start nginx via QSHEXEC */
 /*----------------------------------------------------------------------------*/
              CHGVAR     VAR(&CMD) VALUE(&NGINXBIN |> '-c' |> +
-                          &NGCONFDIR |< '/' |< &NGINXCONF)
+                          &NGINXCONF)
 
              QSHONI/QSHEXEC CMDLINE(&CMD) DSPSTDOUT(&DSPSTDOUT) +
                           LOGSTDOUT(&LOGSTDOUT) +
                           PRTSTDOUT(&PRTSTDOUT) +
-                          DLTSTDOUT(&DLTSTDOUT) PRTSPLF(ENDNGINX)
+                          DLTSTDOUT(&DLTSTDOUT) PRTSPLF(STRNGINX)
 
              SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('NGINX +
                           server start completed normally') +
