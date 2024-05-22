@@ -1,9 +1,10 @@
 /* Text: End NGINX Web Server */
-             PGM        PARM(&NGINXBIN &DSPSTDOUT &LOGSTDOUT +
-                          &PRTSTDOUT &DLTSTDOUT)
+             PGM        PARM(&NGINXBIN &NGINXCONF +
+                          &DSPSTDOUT &LOGSTDOUT &PRTSTDOUT &DLTSTDOUT)
 
              DCL        VAR(&CMD) TYPE(*CHAR) LEN(5000)
              DCL        VAR(&NGINXBIN) TYPE(*CHAR) LEN(255)
+             DCL        VAR(&NGINXCONF) TYPE(*CHAR) LEN(255)
              DCL        VAR(&DSPSTDOUT) TYPE(*CHAR) LEN(4)
              DCL        VAR(&LOGSTDOUT) TYPE(*CHAR) LEN(4)
              DCL        VAR(&PRTSTDOUT) TYPE(*CHAR) LEN(4)
@@ -18,11 +19,10 @@
              MONMSG     MSGID(CPF0000) EXEC(GOTO CMDLBL(ERRORS))
 
 /*----------------------------------------------------------------------------*/
-/* Call stop nginx via QSHEXEC.                                               */
-/* We use kill to locate the nginx process id file and kill the job.          */
+/* Call stop nginx via QSHEXEC */
 /*----------------------------------------------------------------------------*/
-             CHGVAR     VAR(&CMD) VALUE('kill -QUIT $( cat +
-                          /QOpenSys/etc/nginx/logs/nginx.pid )')
+             CHGVAR     VAR(&CMD) VALUE(&NGINXBIN |> '-c' |> +
+                          &NGINXCONF |> '-s stop')
 
              QSHONI/QSHEXEC CMDLINE(&CMD) DSPSTDOUT(&DSPSTDOUT) +
                           LOGSTDOUT(&LOGSTDOUT) +
