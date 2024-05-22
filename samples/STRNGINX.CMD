@@ -3,12 +3,9 @@
              PARM       KWD(NGINXBIN) TYPE(*CHAR) LEN(255) +
                           DFT('/QopenSys/pkgs/bin/nginx') +
                           CASE(*MIXED) PROMPT('NGINX runtime binary')
-             PARM       KWD(NGXCONFDIR) TYPE(*CHAR) LEN(255) +
-                          DFT('/QopenSys/etc/nginx') CASE(*MIXED) +
-                          PROMPT('NGINX config directory')
              PARM       KWD(NGINXCONF) TYPE(*CHAR) LEN(255) +
-                          DFT('nginx.conf') CASE(*MIXED) +
-                          PROMPT('NGINX config file')
+                          DFT('/QOpenSys/etc/nginx/nginx.conf') +
+                          CASE(*MIXED) PROMPT('NGINX config file')
              PARM       KWD(DSPSTDOUT) TYPE(*CHAR) LEN(4) RSTD(*YES) +
                           DFT(*NO) VALUES(*NO *YES) PROMPT('Display +
                           standard output result')
