@@ -51,7 +51,14 @@ The following sample starts NGINX in its default IFS location.
 ```
 STRNGINX NGINXBIN('/QopenSys/pkgs/bin/nginx')            
          NGINXCONF('/QOpenSys/etc/nginx.conf')                         
-```                                                         
+```
+
+The following example submits STRNGINX to batch using a specific NGINX configured user profile of NGINX1.  
+
+```
+SBMJOB CMD(STRNGINX NGINXBIN('/QopenSys/pkgs/bin/nginx') PRTSTDOUT(*YES))   
+        NGINXCONF('/QOpenSys/etc/nginx.conf') JOB(STRNGINX) JOBQ(QUSRNOMAX) USER(NGINX1)
+```
 
 ## ENDNGINX CL Command - End NGINX Web Server
 This command ends the NGINX web server.   
@@ -63,7 +70,12 @@ ENDNGINX NGINXBIN('/QopenSys/pkgs/bin/nginx')
          NGINXCONF('/QOpenSys/etc/nginx.conf')                         
 ```                                                         
 
+The following example submits ENDNGINX to batch using a specific NGINX configured user profile of NGINX1.  
 
+```
+SBMJOB CMD(ENDNGINX NGINXBIN('/QopenSys/pkgs/bin/nginx') PRTSTDOUT(*YES))   
+        NGINXCONF('/QOpenSys/etc/nginx.conf') JOB(ENDNGINX) JOBQ(QUSRNOMAX) USER(NGINX1)
+```
 
 ## DB2 CL Command
 This command wraps the DB2 QShell utility and writes the results to the IFS. The DB2UTIL command is a little more functional because it will write as delimited csv or json format but some may want to use the db2 command instead. If you use db2 you will haveto parse the file yourself for columns. It generally works to determine column widths based on the -------- column headers which generally match the data width. There is also a record count at the end. 
