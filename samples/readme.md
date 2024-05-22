@@ -44,24 +44,26 @@ Example grep command which is case insensitive (```-i```) and includes line numb
 ```
 
 ## STRNGINX CL Command - Start NGINX Web Server
-This command starts the NGINX web server.
+This command starts the NGINX web server.   
 
 The following sample starts NGINX in its default IFS location.   
 
 ```
 STRNGINX NGINXBIN('/QopenSys/pkgs/bin/nginx')            
-         NGXCONFDIR('/QopenSys/etc/nginx')               
-         NGINXCONF('nginx.conf')                         
+         NGINXCONF('/QOpenSys/etc/nginx.conf')                         
 ```                                                         
 
 ## ENDNGINX CL Command - End NGINX Web Server
-This command ends the NGINX web server usng the PASE/AIX process id created in IFS file for last NGINX start. File name is: ```/QOpenSys/etc/nginx/logs/nginx.pid ```     
+This command ends the NGINX web server.   
 
-The following sample ends NGINX in its default IFS location.  The NGINXBIN parameter is not currently needed since we end the job based on process id. 
+The following sample ends NGINX using the config file it was started with.  
 
 ```
-ENDNGINX
+ENDNGINX NGINXBIN('/QopenSys/pkgs/bin/nginx')            
+         NGINXCONF('/QOpenSys/etc/nginx.conf')                         
 ```                                                         
+
+
 
 ## DB2 CL Command
 This command wraps the DB2 QShell utility and writes the results to the IFS. The DB2UTIL command is a little more functional because it will write as delimited csv or json format but some may want to use the db2 command instead. If you use db2 you will haveto parse the file yourself for columns. It generally works to determine column widths based on the -------- column headers which generally match the data width. There is also a record count at the end. 
