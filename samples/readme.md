@@ -56,7 +56,7 @@ STRNGINX NGINXBIN('/QopenSys/pkgs/bin/nginx')
 The following example submits STRNGINX to batch using a specific NGINX configured user profile of NGINX1.  
 
 ```
-SBMJOB CMD(STRNGINX NGINXBIN('/QopenSys/pkgs/bin/nginx') PRTSTDOUT(*YES) NGINXCONF('/QOpenSys/etc/nginx.conf'))   
+SBMJOB CMD(STRNGINX NGINXBIN('/QopenSys/pkgs/bin/nginx') PRTSTDOUT(*YES) NGINXCONF('/QOpenSys/etc/nginx/nginx.conf'))   
         JOB(STRNGINX) JOBQ(QUSRNOMAX) USER(NGINX1)
 ```
 
@@ -73,7 +73,7 @@ ENDNGINX NGINXBIN('/QopenSys/pkgs/bin/nginx')
 The following example submits ENDNGINX to batch using a specific NGINX configured user profile of NGINX1.  
 
 ```
-SBMJOB CMD(ENDNGINX NGINXBIN('/QopenSys/pkgs/bin/nginx') PRTSTDOUT(*YES) NGINXCONF('/QOpenSys/etc/nginx.conf'))   
+SBMJOB CMD(ENDNGINX NGINXBIN('/QopenSys/pkgs/bin/nginx') PRTSTDOUT(*YES) NGINXCONF('/QOpenSys/etc/nginx/nginx.conf'))   
         JOB(ENDNGINX) JOBQ(QUSRNOMAX) USER(NGINX1)
 ```
 
