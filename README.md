@@ -10,7 +10,9 @@ https://github.com/richardschoen/QshOni/blob/master/VERSION.TXT
 
 ```
 1.0.28 - Created RPG Service Program Wrapper for QSHEXEC and QSHBASH commands. Service program name: QSHONISRV
-Also created 2 RPG test programs QSHONIPR01 - to test QSHEXEC from RPG and QSHONIPR02 to test QSHBASH from RPG.
+Also created 2 RPG test programs:
+QSHONIPR01 - to test running a QShell/PASE commmand via QSHEXEC from RPG and processing STDOUT outfile all from a single RPG program.
+QSHONIPR02 - to test running a QShell/PASE commmand via QSHBASH from RPG and processing STDOUT outfile all from a single RPG program.
 
 1.0.27 - Two new commands added: QSHCALL and QSHPYCALL to call Python or other open source and return parameters.
 ```
