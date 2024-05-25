@@ -8,7 +8,10 @@ There are several ways to build the library. Pick your favorite.
 # Check latest version info (Current Version 1.0.28 - 5/24/2024)  
 https://github.com/richardschoen/QshOni/blob/master/VERSION.TXT   
 
-```1.0.28 - Created RPG Service Program Wrapper for QSHEXEC and QSHBASH commands. Service program name: QSHONISRV```   
+```1.0.28 - Created RPG Service Program Wrapper for QSHEXEC and QSHBASH commands. Service program name: QSHONISRV
+Also created 2 RPG test programs QSHONIPR01 - to test QSHEXEC from RPG and QSHONIPR02 to test QSHBASH from RPG.
+```   
+
 ```1.0.27 - Two new commands added: QSHCALL and QSHPYCALL to call Python or other open source and return parameters.```
 
 # Check out one-liner Python samples
