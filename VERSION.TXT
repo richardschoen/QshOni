@@ -144,3 +144,9 @@ V1.0.27 = 4/28/2024
 -Added QSHBASHSRC command to execute a QShell .sh script stored in
  a source physical file. This is essentially a bash version of the
  QSHEXECSRC command which runs a script via QShell.               
+
+V1.0.28 = 5/24/2024
+-Added QSHONISRV service program to execute pase commands with
+ QSHEXEC OR QSHBASH.
+-Added QSHONIPR01 RPG program to test the QSHEXEC service program call.
+-Added QSHONIPR02 RPG program to test the QSHEXEC service program call.

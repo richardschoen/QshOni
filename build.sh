@@ -222,6 +222,22 @@ CURFILE="QSHCPYSRCC.CLLE"
 SRCTEXT="Copy Source Member to IFS File"
 cpy_member
 
+CURFILE="QSHONISRV.RPGLE"
+SRCTEXT="QShell on i - Wrapper Service Program"
+cpy_member
+
+CURFILE="QSHONISRVH.RPGLE"
+SRCTEXT="QShell on i - Wrapper Service Program - Include"
+cpy_member
+
+CURFILE="QSHONIPR01.RPGLE"
+SRCTEXT="QSHONISRV Service Program Tester 1 - QSHEXEC"
+cpy_member
+
+CURFILE="QSHONIPR02.RPGLE"
+SRCTEXT="QSHONISRV Service Program Tester 2 - QSHBASH"
+cpy_member
+
 CURFILE="SRCBLDC.CLP"
 SRCTEXT="Build cmds from QSHONI/SOURCE file"   
 cpy_member

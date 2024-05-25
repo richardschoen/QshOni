@@ -7,7 +7,7 @@
              DCL        VAR(&TGTRLS) TYPE(*CHAR) LEN(10) +
                           VALUE(*CURRENT)
              DCL        VAR(&VERSION) TYPE(*CHAR) LEN(30) +
-                          VALUE(V1.0.27)
+                          VALUE(V1.0.28)
              DCL        VAR(&QSHPYTHON) TYPE(*CHAR) LEN(255)
              DCL        VAR(&CMD) TYPE(*CHAR) LEN(512)
              DCL        VAR(&LEN) TYPE(*DEC) LEN(15 5)
@@ -184,21 +184,49 @@
                           SRCFILE(&DESTLIB/&DESTFILE) REPLACE(*NO) +
                           TGTRLS(&TGTRLS) /* 1.0.25 */
 
-             CRTCMD     CMD(&DESTLIB/QSHCPYSRC) PGM(QSHCPYSRCC) +    
-                          SRCFILE(&DESTLIB/&DESTFILE) ALLOW(*IPGM +  
-                          *BPGM *IMOD *BMOD) PRDLIB(&DESTLIB) /* +   
-                          1.0.26 */                                  
-                                                                     
-             CRTCLPGM   PGM(&DESTLIB/QSHCPYSRCC) +                   
-                          SRCFILE(&DESTLIB/&DESTFILE) REPLACE(*NO) + 
-                          TGTRLS(&TGTRLS) /* 1.0.26 */ 
+             CRTCMD     CMD(&DESTLIB/QSHCPYSRC) PGM(QSHCPYSRCC) +
+                          SRCFILE(&DESTLIB/&DESTFILE) ALLOW(*IPGM +
+                          *BPGM *IMOD *BMOD) PRDLIB(&DESTLIB) /* +
+                          1.0.26 */
 
-             CRTCMD     CMD(&DESTLIB/QSHBASHSRC) PGM(QSHBASHSCC) +    
-                          SRCFILE(&DESTLIB/&DESTFILE) PRDLIB(&DESTLIB)
-                                                                      
-             CRTCLPGM   PGM(&DESTLIB/QSHBASHSCC) +                    
-                          SRCFILE(&DESTLIB/&DESTFILE) REPLACE(*NO) +  
-                          TGTRLS(&TGTRLS) /* 1.0.27 */                
+             CRTCLPGM   PGM(&DESTLIB/QSHCPYSRCC) +
+                          SRCFILE(&DESTLIB/&DESTFILE) REPLACE(*NO) +
+                          TGTRLS(&TGTRLS) /* 1.0.26 */
+
+             CRTCMD     CMD(&DESTLIB/QSHBASHSRC) PGM(QSHBASHSCC) +
+                          SRCFILE(&DESTLIB/&DESTFILE) +
+                          PRDLIB(&DESTLIB) /* 1.0.27 */
+
+             CRTCLPGM   PGM(&DESTLIB/QSHBASHSCC) +
+                          SRCFILE(&DESTLIB/&DESTFILE) REPLACE(*NO) +
+                          TGTRLS(&TGTRLS) /* 1.0.27 */
+
+             CRTRPGMOD  MODULE(&DESTLIB/QSHONISRV) +
+                          SRCFILE(&DESTLIB/&DESTFILE) +
+                          DBGVIEW(*SOURCE) /* 1.0.28 */
+
+             CRTSRVPGM  SRVPGM(&DESTLIB/QSHONISRV) +
+                          MODULE(&DESTLIB/QSHONISRV) EXPORT(*ALL) +
+                          BNDSRVPGM(*NONE) BNDDIR(*NONE) +
+                          ACTGRP(*CALLER) /* 1.0.28 */
+
+             CRTBNDDIR  BNDDIR(&DESTLIB/QSHONISRV) TEXT('Binding +
+                          Directory for QSHONISRV Service Program') +
+                          /* 1.0.28 */
+
+             ADDBNDDIRE BNDDIR(&DESTLIB/QSHONISRV) +
+                          OBJ((&DESTLIB/QSHONISRV *SRVPGM *IMMED)) +
+                          POSITION(*LAST) /* 1.0.28 */
+
+             CRTBNDRPG  PGM(&DESTLIB/QSHONIPR01) +
+                          SRCFILE(&DESTLIB/&DESTFILE) +
+                          SRCMBR(QSHONIPR01) DFTACTGRP(*NO) +
+                          REPLACE(*NO) TGTRLS(&TGTRLS) /* 1.0.28 */
+
+             CRTBNDRPG  PGM(&DESTLIB/QSHONIPR02) +
+                          SRCFILE(&DESTLIB/&DESTFILE) +
+                          SRCMBR(QSHONIPR02) DFTACTGRP(*NO) +
+                          REPLACE(*NO) TGTRLS(&TGTRLS) /* 1.0.28 */
 
  /* Create message file for any custom CPF messages */
  /* Initial use case is to log STDOUT msgs with own CPF ID    */
