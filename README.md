@@ -5,10 +5,11 @@ The main benefit of this wrapper is to be able to integrate Qshell/Pase applicat
 
 There are several ways to build the library. Pick your favorite.
 
-# Check latest version info (Current Version 1.0.27 - 4/18/2024)  
+# Check latest version info (Current Version 1.0.28 - 5/24/2024)  
 https://github.com/richardschoen/QshOni/blob/master/VERSION.TXT   
 
-```Two new commands added: QSHCALL and QSHPYCALL to call Python or other open source and return parameters.```
+```1.0.28 - Created RPG Service Program Wrapper for QSHEXEC and QSHBASH commands. Service program name: QSHONISRV```   
+```1.0.27 - Two new commands added: QSHCALL and QSHPYCALL to call Python or other open source and return parameters.```
 
 # Check out one-liner Python samples
 https://github.com/richardschoen/QshOni/blob/master/samples/python-oneline-samples.md
