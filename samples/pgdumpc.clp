@@ -4,7 +4,7 @@
 /* Postgres reference link: */
 /* https://www.tecmint.com/backup-and-restore-postgresql-database/   */
              PGM        PARM(&DATABASE &OUTPUTFILE &FORMAT &OPTIONS +
-                          &REPLACE)
+                          &PROMPT &REPLACE)
 
              DCL        VAR(&CMDLINE) TYPE(*CHAR) LEN(1000)
              DCL        VAR(&CMDLINEVFY) TYPE(*CHAR) LEN(1000)
@@ -13,6 +13,7 @@
              DCL        VAR(&FORMAT) TYPE(*CHAR) LEN(10)
              DCL        VAR(&OPTIONS) TYPE(*CHAR) LEN(100)
              DCL        VAR(&REPLACE) TYPE(*CHAR) LEN(4)
+             DCL        VAR(&PROMPT) TYPE(*CHAR) LEN(4)
 
              MONMSG     MSGID(CPF0000) EXEC(GOTO CMDLBL(ERRORS))
 
@@ -50,9 +51,18 @@
 /* Possibly an issue with /QOpenSys/usr/bin/tar        */
 /* being used instead of /QOpenSys/pkgs/bin/tar        */
 /* Just using QSHBASH seems to resolve the issue.      */
+
+             IF         COND(&PROMPT *EQ *YES) THEN(DO)
+             ?          QSHONI/QSHBASH ??CMDLINE(&CMDLINE) +
+                          SETPKGPATH(*YES) DSPSTDOUT(*YES) +
+                          PRTSPLF(PGDUMPC) PRTTXT('Backup database +
+                          via pg_dump')
+             ENDDO
+             IF         COND(&PROMPT *NE *YES) THEN(DO)
              QSHONI/QSHBASH CMDLINE(&CMDLINE) SETPKGPATH(*YES) +
                           DSPSTDOUT(*YES) PRTSPLF(PGDUMPC) +
                           PRTTXT('Backup database via pg_dump')
+             ENDDO
 
 /* Run tar command to verify backup tar file integrity */
              QSHONI/QSHBASH CMDLINE(&CMDLINEVFY) SETPKGPATH(*YES) +
@@ -62,13 +72,3 @@
              SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) +
                           MSGDTA('Postgres database' |> &DATABASE +
                           |> 'was dumped to' |> &OUTPUTFILE |> 'and +
-                          verified successfully') MSGTYPE(*COMP)
-
-             RETURN
-
-ERRORS:
-             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Errors +
-                          occurred during Postgres pg_dump and +
-                          verify. Check the joblog') MSGTYPE(*ESCAPE)
-
-             ENDPGM
