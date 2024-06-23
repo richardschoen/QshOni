@@ -10,8 +10,12 @@
              PARM       KWD(FORMAT) TYPE(*CHAR) LEN(10) DFT('t') +
                           CASE(*MIXED) PROMPT('Database dump output +
                           format')
-             PARM       KWD(OPTIONS) TYPE(*CHAR) LEN(100) DFT(' ') +
-                          CASE(*MIXED) PROMPT('Options')
+             PARM       KWD(OPTIONS) TYPE(*CHAR) LEN(100) DFT('-p +
+                          5432 -U postgres') CASE(*MIXED) +
+                          PROMPT('Options')
+             PARM       KWD(PROMPT) TYPE(*CHAR) LEN(4) RSTD(*YES) +
+                          DFT(*NO) VALUES(*NO *YES) CASE(*MIXED) +
+                          PROMPT('Prompt for QSHBASH')
              PARM       KWD(REPLACE) TYPE(*CHAR) LEN(4) RSTD(*YES) +
                           DFT(*NO) VALUES(*NO *YES) CASE(*MIXED) +
                           PROMPT('Replace output file')
