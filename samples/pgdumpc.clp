@@ -3,13 +3,15 @@
 /* Text: Backup Postgres Database via pg_dump to tar format */
 /* Postgres reference link: */
 /* https://www.tecmint.com/backup-and-restore-postgresql-database/   */
-             PGM        PARM(&DATABASE &OUTPUTFILE &FORMAT &REPLACE)
+             PGM        PARM(&DATABASE &OUTPUTFILE &FORMAT &OPTIONS +
+                          &REPLACE)
 
              DCL        VAR(&CMDLINE) TYPE(*CHAR) LEN(1000)
              DCL        VAR(&CMDLINEVFY) TYPE(*CHAR) LEN(1000)
              DCL        VAR(&DATABASE) TYPE(*CHAR) LEN(255)
              DCL        VAR(&OUTPUTFILE) TYPE(*CHAR) LEN(255)
              DCL        VAR(&FORMAT) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&OPTIONS) TYPE(*CHAR) LEN(100)
              DCL        VAR(&REPLACE) TYPE(*CHAR) LEN(4)
 
              MONMSG     MSGID(CPF0000) EXEC(GOTO CMDLBL(ERRORS))
@@ -17,7 +19,8 @@
 /* Build pg_dump command line for selected database dump */
              CHGVAR     VAR(&CMDLINE) +
                           VALUE('/QOpenSys/pkgs/bin/pg_dump -F' |> +
-                          &FORMAT |> &DATABASE |> '>' |> &OUTPUTFILE)
+                          &FORMAT |> '-d' |> &DATABASE |> &OPTIONS +
+                          |> '>' |> &OUTPUTFILE)
 
 /* Build tar verify command line for selected database dump */
              CHGVAR     VAR(&CMDLINEVFY) VALUE('/QOpenSys/pkgs/bin/tar +
