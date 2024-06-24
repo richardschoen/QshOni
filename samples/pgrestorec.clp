@@ -3,13 +3,18 @@
 /* Text: Restore Postgres Database via pg_restore */
 /* Postgres reference link: */
 /* https://www.tecmint.com/backup-and-restore-postgresql-database/   */
-             PGM        PARM(&DATABASE &INPUTFILE &OPTIONS &PROMPT)
+/* https://www.tecmint.com/backup-and-restore-postgresql-database/   */
+             PGM        PARM(&DATABASE &INPUTFILE &OPTIONS &PROMPT +
+                          &DSPSTDOUT &LOGSTDOUT &PRTSTDOUT)
 
              DCL        VAR(&CMDLINE) TYPE(*CHAR) LEN(1000)
              DCL        VAR(&DATABASE) TYPE(*CHAR) LEN(255)
              DCL        VAR(&INPUTFILE) TYPE(*CHAR) LEN(255)
              DCL        VAR(&OPTIONS) TYPE(*CHAR) LEN(100)
              DCL        VAR(&PROMPT) TYPE(*CHAR) LEN(4)
+             DCL        VAR(&DSPSTDOUT) TYPE(*CHAR) LEN(4)
+             DCL        VAR(&LOGSTDOUT) TYPE(*CHAR) LEN(4)
+             DCL        VAR(&PRTSTDOUT) TYPE(*CHAR) LEN(4)
 
              MONMSG     MSGID(CPF0000) EXEC(GOTO CMDLBL(ERRORS))
 
@@ -36,13 +41,15 @@
 /* Use QSHBASH because of potential issues with CCSID 37 from raw QShell call */
              IF         COND(&PROMPT *EQ *YES) THEN(DO)
              ?          QSHONI/QSHBASH ??CMDLINE(&CMDLINE) +
-                          ??SETPKGPATH(*YES) ??DSPSTDOUT(*YES) +
-                          ??PRTSTDOUT(*YES) ??PRTSPLF(PGRESTOREC)
+                          SETPKGPATH(*YES) DSPSTDOUT(&DSPSTDOUT) +
+                          LOGSTDOUT(&LOGSTDOUT) +
+                          PRTSTDOUT(&PRTSTDOUT) PRTSPLF(PGRESTOREC)
              ENDDO
              IF         COND(&PROMPT *NE *YES) THEN(DO)
              QSHONI/QSHBASH CMDLINE(&CMDLINE) SETPKGPATH(*YES) +
-                          DSPSTDOUT(*NO) PRTSTDOUT(*YES) +
-                          PRTSPLF(PGRESTOREC)
+                          DSPSTDOUT(&DSPSTDOUT) +
+                          LOGSTDOUT(&LOGSTDOUT) +
+                          PRTSTDOUT(&PRTSTDOUT) PRTSPLF(PGRESTOREC)
              ENDDO
 
              SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) +
