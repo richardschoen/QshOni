@@ -13,4 +13,13 @@
                           PROMPT('Options')
              PARM       KWD(PROMPT) TYPE(*CHAR) LEN(4) RSTD(*YES) +
                           DFT(*NO) VALUES(*NO *YES) +
-                          PROMPT('Prompt for QSH command')
+                          PROMPT('Prompt for QSHBASH')
+             PARM       KWD(DSPSTDOUT) TYPE(*CHAR) LEN(4) RSTD(*YES) +
+                          DFT(*NO) VALUES(*NO *YES) PROMPT('Display +
+                          Standard Output Result')
+             PARM       KWD(LOGSTDOUT) TYPE(*CHAR) LEN(4) RSTD(*YES) +
+                          DFT(*NO) VALUES(*NO *YES) PROMPT('Log +
+                          standard output to job log')
+             PARM       KWD(PRTSTDOUT) TYPE(*CHAR) LEN(4) RSTD(*YES) +
+                          DFT(*NO) VALUES(*NO *YES) PROMPT('Print +
+                          Standard Output Result')
