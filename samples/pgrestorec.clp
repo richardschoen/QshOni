@@ -3,7 +3,6 @@
 /* Text: Restore Postgres Database via pg_restore */
 /* Postgres reference link: */
 /* https://www.tecmint.com/backup-and-restore-postgresql-database/   */
-/* https://www.tecmint.com/backup-and-restore-postgresql-database/   */
              PGM        PARM(&DATABASE &INPUTFILE &OPTIONS &PROMPT +
                           &DSPSTDOUT &LOGSTDOUT &PRTSTDOUT)
 
