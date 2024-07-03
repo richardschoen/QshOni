@@ -5,10 +5,14 @@ The main benefit of this wrapper is to be able to integrate Qshell/Pase applicat
 
 There are several ways to build the library. Pick your favorite.
 
-# Check latest version info (Current Version 1.0.28 - 5/24/2024)  
+# Check latest version info (Current Version 1.0.29 - 7/2/2024)  
 https://github.com/richardschoen/QshOni/blob/master/VERSION.TXT   
 
 ```
+1.0.29 - Added QSHCALL procedure to the Service Program Wrapper. Service program name: QSHONISRV
+Also created RPG test program for QSHCALL:
+QSHONIPR03 - to test running a QShell/PASE commmand via QSHCALL from RPG and returning up to 10 parameter values to the calling RPG program.
+
 1.0.28 - Created RPG Service Program Wrapper for QSHEXEC and QSHBASH commands. Service program name: QSHONISRV
 Also created 2 RPG test programs:
 QSHONIPR01 - to test running a QShell/PASE commmand via QSHEXEC from RPG and processing STDOUT outfile all from a single RPG program.
