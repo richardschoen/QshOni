@@ -7,7 +7,7 @@
              DCL        VAR(&TGTRLS) TYPE(*CHAR) LEN(10) +
                           VALUE(*CURRENT)
              DCL        VAR(&VERSION) TYPE(*CHAR) LEN(30) +
-                          VALUE(V1.0.28)
+                          VALUE(V1.0.29)
              DCL        VAR(&QSHPYTHON) TYPE(*CHAR) LEN(255)
              DCL        VAR(&CMD) TYPE(*CHAR) LEN(512)
              DCL        VAR(&LEN) TYPE(*DEC) LEN(15 5)
@@ -206,9 +206,10 @@
                           DBGVIEW(*SOURCE) /* 1.0.28 */
 
              CRTSRVPGM  SRVPGM(&DESTLIB/QSHONISRV) +
-                          MODULE(&DESTLIB/QSHONISRV) EXPORT(*ALL) +
-                          BNDSRVPGM(*NONE) BNDDIR(*NONE) +
-                          ACTGRP(*CALLER) /* 1.0.28 */
+                          MODULE(&DESTLIB/QSHONISRV) +
+                          EXPORT(*SRCFILE) SRCFILE(&DESTLIB/SOURCE) +
+                          SRCMBR(QSHONISRVD) BNDSRVPGM(*NONE) +
+                          BNDDIR(*NONE) ACTGRP(*CALLER) /* 1.0.29 */
 
              CRTBNDDIR  BNDDIR(&DESTLIB/QSHONISRV) TEXT('Binding +
                           Directory for QSHONISRV Service Program') +
