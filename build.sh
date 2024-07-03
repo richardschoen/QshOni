@@ -230,12 +230,20 @@ CURFILE="QSHONISRVH.RPGLE"
 SRCTEXT="QShell on i - Wrapper Service Program - Include"
 cpy_member
 
+CURFILE="QSHONISRVD.RPGLE"
+SRCTEXT="QShell on i - Wrapper Service Program-Bind Source"
+cpy_member
+
 CURFILE="QSHONIPR01.RPGLE"
 SRCTEXT="QSHONISRV Service Program Tester 1 - QSHEXEC"
 cpy_member
 
 CURFILE="QSHONIPR02.RPGLE"
 SRCTEXT="QSHONISRV Service Program Tester 2 - QSHBASH"
+cpy_member
+
+CURFILE="QSHONIPR03.RPGLE"
+SRCTEXT="QSHONISRV Service Program Tester 3 - QSHCALL"
 cpy_member
 
 CURFILE="SRCBLDC.CLP"
