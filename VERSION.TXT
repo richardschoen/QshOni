@@ -134,21 +134,35 @@ V1.0.24/V1.0.25 - 8/4/2023
   having different parameters. Qualifying RUNSQL to QSYS should
   resolve this issue.
 
-V1.0.26 = 12/24/2023                                                  
+V1.0.26 - 12/24/2023                                                  
 -Created QSHCPYSRC command to copy source member to IFS file.         
  This will allow developers to store Python and other script files    
  in a source physical file if desired and copy to IFS at runtime      
  as a temporary file.                          
 
-V1.0.27 = 4/28/2024                                               
+V1.0.27 - 4/28/2024                                               
 -Added QSHBASHSRC command to execute a QShell .sh script stored in
  a source physical file. This is essentially a bash version of the
  QSHEXECSRC command which runs a script via QShell.               
 
-V1.0.28 = 5/24/2024
+V1.0.28 - 5/24/2024
 -Added QSHONISRV service program to execute pase commands with
  QSHEXEC OR QSHBASH.
 -Added QSHONIPR01 RPG program to test the QSHEXEC service program call 
  and process the STDOUT results outfile in a single program.           
 -Added QSHONIPR02 RPG program to test the QSHBASH service program call 
  and process the STDOUT results outfile in a single program.           
+
+V1.0.29 - 7/2/2024                                                
+-Added binder source to the QSHONISRV service program build so    
+ signature order stays consistent as we add new procedures to     
+ the service program.                                             
+                                                                  
+-Added QSHCALL subprocedure to the QSHONISRV service program      
+ so that RPG programs can run a script and return up to 10        
+ parameters directly to the RPG program. This is a complement     
+ to the QSHCALL CL command that does the same thing from a CL     
+ program.                                                         
+                                                                  
+-Added QSHONIPR03 RPG program to test the QSHCALL service program 
+ call to return parameters.                                       
