@@ -246,7 +246,7 @@
 
              CRTBNDRPG  PGM(&DESTLIB/QSHONIPR03) +
                           SRCFILE(&DESTLIB/&DESTFILE) +
-                          SRCMBR(QSHONIPR02) DFTACTGRP(*NO) +
+                          SRCMBR(QSHONIPR03) DFTACTGRP(*NO) +
                           REPLACE(*NO) TGTRLS(&TGTRLS) /* 1.0.29 */
 
  /* Create message file for any custom CPF messages */
