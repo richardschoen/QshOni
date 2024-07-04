@@ -45,8 +45,9 @@ Dcl-F STDOUTQSH  DISK(1000) Usage(*Input) usropn;
    // if there is other info we need to process from the call.
 
    // Set sample PHP comand line
-   cmdlin='cd /home/richard/richard/phpsamples;+
+   cmdlin='cd /tmp/qshoni/qshphp;+   
           php phpcallparm1.php';
+   // Run the PHP script and return parms
    rtncmd=QshCall(cmdlin:            // QSH/PASE command line
                   '*YES':            // SETPKGPATH
                   '*YES':            // DSPSTDOUT
