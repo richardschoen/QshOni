@@ -156,17 +156,14 @@ V1.0.28 - 5/24/2024
 V1.0.29 - 7/2/2024                                                
 -Added binder source to the QSHONISRV service program build so    
  signature order stays consistent as we add new procedures to     
- the service program.                                             
-                                                                  
+ the service program.            
 -Added QSHCALL subprocedure to the QSHONISRV service program      
  so that RPG programs can run a script and return up to 10        
  parameters directly to the RPG program. This is a complement     
  to the QSHCALL CL command that does the same thing from a CL     
- program.                                                         
-                                                                  
+ program.
 -Added QSHONIPR03 RPG program to test the QSHCALL service program 
  call to return parameters.                                       
-
 -Added library name qualifer to the CL command processing program    
  build process. This will insure that the version of the command     
  processing program in QSHONI library always gets used in case       
