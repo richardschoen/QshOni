@@ -230,7 +230,7 @@ CURFILE="QSHONISRVH.RPGLE"
 SRCTEXT="QShell on i - Wrapper Service Program - Include"
 cpy_member
 
-CURFILE="QSHONISRVD.RPGLE"
+CURFILE="QSHONISRVD.BNDDIR"
 SRCTEXT="QShell on i - Wrapper Service Program-Bind Source"
 cpy_member
 
