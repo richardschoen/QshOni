@@ -14,7 +14,7 @@
    // https://www.php.net/manual/en/features.commandline.webserver.php
    echo("This is a parameter return sample\n");
    echo("Send return parm info to STDOUT prefix coded  RETURNPARM01 - RETURNPARM10.\n");
-   echo("The return parmaeter data gets extracted by the QSHCALL CL command from STDOUT\n");
+   echo("The return parameter data gets extracted by the QSHCALL CL command from STDOUT\n");
 
    // Format return parameter examples for QSHCALL to pick up from STDOUT log
    echo("RETURNPARM01:" . $parm01 . "\n");
