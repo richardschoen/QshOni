@@ -16,14 +16,14 @@
              ADDLIBLE   LIB(&DESTLIB)
              MONMSG     MSGID(CPF0000)
 
-             CRTCMD     CMD(&DESTLIB/QSHPATH) PGM(QSHPATHC) +
+             CRTCMD     CMD(&DESTLIB/QSHPATH) PGM(&DESTLIB/QSHPATHC) +
                           SRCFILE(&DESTLIB/&DESTFILE) PRDLIB(&DESTLIB)
 
              CRTCLPGM   PGM(&DESTLIB/QSHPATHC) +
                           SRCFILE(&DESTLIB/&DESTFILE) REPLACE(*NO) +
                           TGTRLS(&TGTRLS)
 
-             CRTCMD     CMD(&DESTLIB/QSHEXEC) PGM(QSHEXECC) +
+             CRTCMD     CMD(&DESTLIB/QSHEXEC) PGM(&DESTLIB/QSHEXECC) +
                           SRCFILE(&DESTLIB/&DESTFILE) PRDLIB(&DESTLIB)
 
              CRTCLPGM   PGM(&DESTLIB/QSHEXECC) +
@@ -34,7 +34,8 @@
                           SRCFILE(&DESTLIB/&DESTFILE) +
                           DFTACTGRP(*NO) REPLACE(*NO) TGTRLS(&TGTRLS)
 
-             CRTCMD     CMD(&DESTLIB/QSHLOGSCAN) PGM(QSHLOGSCAC) +
+             CRTCMD     CMD(&DESTLIB/QSHLOGSCAN) +
+                          PGM(&DESTLIB/QSHLOGSCAC) +
                           SRCFILE(&DESTLIB/&DESTFILE) PRDLIB(&DESTLIB)
 
              CRTCLPGM   PGM(&DESTLIB/QSHLOGSCAC) +
@@ -45,7 +46,7 @@
                           SRCFILE(&DESTLIB/&DESTFILE) +
                           DFTACTGRP(*NO) REPLACE(*NO) TGTRLS(&TGTRLS)
 
-             CRTCMD     CMD(&DESTLIB/QSHBASH) PGM(QSHBASHC) +
+             CRTCMD     CMD(&DESTLIB/QSHBASH) PGM(&DESTLIB/QSHBASHC) +
                           SRCFILE(&DESTLIB/&DESTFILE) +
                           PRDLIB(&DESTLIB) /* V1.0.3 */
 
@@ -54,7 +55,8 @@
                           TGTRLS(&TGTRLS) /* V1.0.3 */
 
              /* 1.05 - ADD IFS CHECK AND QSHPYRUN */
-             CRTCMD     CMD(&DESTLIB/QSHIFSCHK) PGM(QSHIFSCHKC) +
+             CRTCMD     CMD(&DESTLIB/QSHIFSCHK) +
+                          PGM(&DESTLIB/QSHIFSCHKC) +
                           SRCFILE(&DESTLIB/&DESTFILE) PRDLIB(&DESTLIB)
 
              CRTCLPGM   PGM(&DESTLIB/QSHIFSCHKC) +
@@ -67,7 +69,8 @@
                           SRCMBR(QSHIFSCHKR) DFTACTGRP(*NO) +
                           REPLACE(*NO) TGTRLS(&TGTRLS)
 
-             CRTCMD     CMD(&DESTLIB/QSHPYRUN) PGM(QSHPYRUNC) +
+             CRTCMD     CMD(&DESTLIB/QSHPYRUN) +
+                          PGM(&DESTLIB/QSHPYRUNC) +
                           SRCFILE(&DESTLIB/&DESTFILE) +
                           PRDLIB(&DESTLIB) /* V1.0.5 */
 
@@ -75,7 +78,8 @@
                           SRCFILE(&DESTLIB/&DESTFILE) REPLACE(*NO) +
                           TGTRLS(&TGTRLS) /* V1.0.5 */
 
-             CRTCMD     CMD(&DESTLIB/QSHPHPRUN) PGM(QSHPHPRUNC) +
+             CRTCMD     CMD(&DESTLIB/QSHPHPRUN) +
+                          PGM(&DESTLIB/QSHPHPRUNC) +
                           SRCFILE(&DESTLIB/&DESTFILE) +
                           PRDLIB(&DESTLIB) /* V1.0.24 */
 
@@ -83,7 +87,8 @@
                           SRCFILE(&DESTLIB/&DESTFILE) REPLACE(*NO) +
                           TGTRLS(&TGTRLS) /* V1.0.24 */
 
-             CRTCMD     CMD(&DESTLIB/QSHQRYTMP) PGM(QSHQRYTMPC) +
+             CRTCMD     CMD(&DESTLIB/QSHQRYTMP) +
+                          PGM(&DESTLIB/QSHQRYTMPC) +
                           SRCFILE(&DESTLIB/&DESTFILE) +
                           PRDLIB(&DESTLIB) /* V1.0.8 */
 
@@ -91,7 +96,8 @@
                           SRCFILE(&DESTLIB/&DESTFILE) REPLACE(*NO) +
                           TGTRLS(&TGTRLS) /* V1.0.8 */
 
-             CRTCMD     CMD(&DESTLIB/QSHSETPROF) PGM(QSHSETPROC) +
+             CRTCMD     CMD(&DESTLIB/QSHSETPROF) +
+                          PGM(&DESTLIB/QSHSETPROC) +
                           SRCFILE(&DESTLIB/&DESTFILE) +
                           PRDLIB(&DESTLIB) /* V1.0.11 */
 
@@ -99,7 +105,7 @@
                           SRCFILE(&DESTLIB/&DESTFILE) REPLACE(*NO) +
                           TGTRLS(&TGTRLS) /* V1.0.11 */
 
-             CRTCMD     CMD(&DESTLIB/QSHCURL) PGM(QSHCURLC) +
+             CRTCMD     CMD(&DESTLIB/QSHCURL) PGM(&DESTLIB/QSHCURLC) +
                           SRCFILE(&DESTLIB/&DESTFILE) +
                           PRDLIB(&DESTLIB) /* V1.0.12 */
 
@@ -107,7 +113,8 @@
                           SRCFILE(&DESTLIB/&DESTFILE) REPLACE(*NO) +
                           TGTRLS(&TGTRLS) /* V1.0.12 */
 
-             CRTCMD     CMD(&DESTLIB/QSHPORTCHK) PGM(QSHPORTCHC) +
+             CRTCMD     CMD(&DESTLIB/QSHPORTCHK) +
+                          PGM(&DESTLIB/QSHPORTCHC) +
                           SRCFILE(&DESTLIB/&DESTFILE) +
                           PRDLIB(&DESTLIB) /* V1.0.13 */
 
@@ -126,7 +133,8 @@
              CHGVAR     VAR(&LEN) VALUE(85)
              CALL       PGM(QCMDEXC) PARM(&CMD &LEN) /* V1.0.14 */
 
-             CRTCMD     CMD(&DESTLIB/QSHPORTEND) PGM(QSHPORTENC) +
+             CRTCMD     CMD(&DESTLIB/QSHPORTEND) +
+                          PGM(&DESTLIB/QSHPORTENC) +
                           SRCFILE(&DESTLIB/&DESTFILE) +
                           PRDLIB(&DESTLIB) /* V1.0.14 */
 
@@ -134,21 +142,25 @@
                           SRCFILE(&DESTLIB/&DESTFILE) REPLACE(*NO) +
                           TGTRLS(&TGTRLS) /* V1.0.14 */
 
-             CRTCMD     CMD(&DESTLIB/QSHEXECSRC) PGM(QSHEXECSCC) +
-                          SRCFILE(&DESTLIB/&DESTFILE) PRDLIB(&DESTLIB) /* 1.0.18 */
+             CRTCMD     CMD(&DESTLIB/QSHEXECSRC) +
+                          PGM(&DESTLIB/QSHEXECSCC) +
+                          SRCFILE(&DESTLIB/&DESTFILE) +
+                          PRDLIB(&DESTLIB) /* 1.0.18 */
 
              CRTCLPGM   PGM(&DESTLIB/QSHEXECSCC) +
                           SRCFILE(&DESTLIB/&DESTFILE) REPLACE(*NO) +
                           TGTRLS(&TGTRLS) /* 1.0.18 */
 
-             CRTCMD     CMD(&DESTLIB/DB2UTIL) PGM(DB2UTILC) +
-                          SRCFILE(&DESTLIB/&DESTFILE) PRDLIB(&DESTLIB) /* 1.0.23 */
+             CRTCMD     CMD(&DESTLIB/DB2UTIL) PGM(&DESTLIB/DB2UTILC) +
+                          SRCFILE(&DESTLIB/&DESTFILE) +
+                          PRDLIB(&DESTLIB) /* 1.0.23 */
 
              CRTCLPGM   PGM(&DESTLIB/DB2UTILC) +
                           SRCFILE(&DESTLIB/&DESTFILE) REPLACE(*NO) +
                           TGTRLS(&TGTRLS) /* 1.0.23 */
 
-             CRTCMD     CMD(&DESTLIB/QSHGETPARM) PGM(QSHGETPARR) +
+             CRTCMD     CMD(&DESTLIB/QSHGETPARM) +
+                          PGM(&DESTLIB/QSHGETPARR) +
                           SRCFILE(&DESTLIB/&DESTFILE) ALLOW(*IPGM +
                           *BPGM *IMOD *BMOD) PRDLIB(&DESTLIB) /* +
                           1.0.25 */
@@ -158,7 +170,8 @@
                           SRCMBR(QSHGETPARR) DFTACTGRP(*NO) +
                           REPLACE(*NO) TGTRLS(&TGTRLS) /* 1.0.25 */
 
-             CRTCMD     CMD(&DESTLIB/QSHPYCALL) PGM(QSHPYCALLC) +
+             CRTCMD     CMD(&DESTLIB/QSHPYCALL) +
+                          PGM(&DESTLIB/QSHPYCALLC) +
                           SRCFILE(&DESTLIB/&DESTFILE) ALLOW(*IPGM +
                           *BPGM *IMOD *BMOD) PRDLIB(&DESTLIB) /* +
                           1.0.25 */
@@ -171,7 +184,7 @@
                           SRCFILE(&DESTLIB/&DESTFILE) REPLACE(*NO) +
                           TGTRLS(&TGTRLS) /* 1.0.25 */
 
-             CRTCMD     CMD(&DESTLIB/QSHCALL) PGM(QSHCALLC) +
+             CRTCMD     CMD(&DESTLIB/QSHCALL) PGM(&DESTLIB/QSHCALLC) +
                           SRCFILE(&DESTLIB/&DESTFILE) ALLOW(*IPGM +
                           *BPGM *IMOD *BMOD) PRDLIB(&DESTLIB) /* +
                           1.0.25 */
@@ -184,7 +197,8 @@
                           SRCFILE(&DESTLIB/&DESTFILE) REPLACE(*NO) +
                           TGTRLS(&TGTRLS) /* 1.0.25 */
 
-             CRTCMD     CMD(&DESTLIB/QSHCPYSRC) PGM(QSHCPYSRCC) +
+             CRTCMD     CMD(&DESTLIB/QSHCPYSRC) +
+                          PGM(&DESTLIB/QSHCPYSRCC) +
                           SRCFILE(&DESTLIB/&DESTFILE) ALLOW(*IPGM +
                           *BPGM *IMOD *BMOD) PRDLIB(&DESTLIB) /* +
                           1.0.26 */
@@ -193,7 +207,8 @@
                           SRCFILE(&DESTLIB/&DESTFILE) REPLACE(*NO) +
                           TGTRLS(&TGTRLS) /* 1.0.26 */
 
-             CRTCMD     CMD(&DESTLIB/QSHBASHSRC) PGM(QSHBASHSCC) +
+             CRTCMD     CMD(&DESTLIB/QSHBASHSRC) +
+                          PGM(&DESTLIB/QSHBASHSCC) +
                           SRCFILE(&DESTLIB/&DESTFILE) +
                           PRDLIB(&DESTLIB) /* 1.0.27 */
 
