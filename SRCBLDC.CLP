@@ -244,6 +244,11 @@
                           SRCMBR(QSHONIPR02) DFTACTGRP(*NO) +
                           REPLACE(*NO) TGTRLS(&TGTRLS) /* 1.0.28 */
 
+             CRTBNDRPG  PGM(&DESTLIB/QSHONIPR03) +
+                          SRCFILE(&DESTLIB/&DESTFILE) +
+                          SRCMBR(QSHONIPR02) DFTACTGRP(*NO) +
+                          REPLACE(*NO) TGTRLS(&TGTRLS) /* 1.0.29 */
+
  /* Create message file for any custom CPF messages */
  /* Initial use case is to log STDOUT msgs with own CPF ID    */
              CRTMSGF    MSGF(&DESTLIB/QSHMSG) TEXT('Qshell CPF +
