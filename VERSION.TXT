@@ -166,3 +166,8 @@ V1.0.29 - 7/2/2024
                                                                   
 -Added QSHONIPR03 RPG program to test the QSHCALL service program 
  call to return parameters.                                       
+
+-Added library name qualifer to the CL command processing program    
+ build process. This will insure that the version of the command     
+ processing program in QSHONI library always gets used in case       
+ any objects exist with the same name in your own libraries.         
