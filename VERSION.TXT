@@ -168,3 +168,6 @@ V1.0.29 - 7/2/2024
  build process. This will insure that the version of the command     
  processing program in QSHONI library always gets used in case       
  any objects exist with the same name in your own libraries.         
+
+V1.0.30 = 7/16/2024
+-Added QSHIFSSIZ command to retrieve the file size and allocated size of an IFS file. 
