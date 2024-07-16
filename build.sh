@@ -246,6 +246,14 @@ CURFILE="QSHONIPR03.RPGLE"
 SRCTEXT="QSHONISRV Service Program Tester 3 - QSHCALL"
 cpy_member
 
+CURFILE="QSHIFSSIZ.CMD"
+SRCTEXT="Retrieve IFS Object Size using stat"
+cpy_member
+
+CURFILE="QSHIFSSIZC.CLLE"
+SRCTEXT="Retrieve IFS Object Size using stat"
+cpy_member
+
 CURFILE="SRCBLDC.CLP"
 SRCTEXT="Build cmds from QSHONI/SOURCE file"   
 cpy_member
