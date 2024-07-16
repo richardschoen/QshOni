@@ -7,7 +7,7 @@
              DCL        VAR(&TGTRLS) TYPE(*CHAR) LEN(10) +
                           VALUE(*CURRENT)
              DCL        VAR(&VERSION) TYPE(*CHAR) LEN(30) +
-                          VALUE(V1.0.29)
+                          VALUE(V1.0.30)
              DCL        VAR(&QSHPYTHON) TYPE(*CHAR) LEN(255)
              DCL        VAR(&CMD) TYPE(*CHAR) LEN(512)
              DCL        VAR(&LEN) TYPE(*DEC) LEN(15 5)
@@ -248,6 +248,17 @@
                           SRCFILE(&DESTLIB/&DESTFILE) +
                           SRCMBR(QSHONIPR03) DFTACTGRP(*NO) +
                           REPLACE(*NO) TGTRLS(&TGTRLS) /* 1.0.29 */
+
+             CRTCMD     CMD(&DESTLIB/QSHIFSSIZ) +
+                          PGM(&DESTLIB/QSHIFSSIZC) +
+                          SRCFILE(&DESTLIB/&DESTFILE) ALLOW(*IPGM +
+                          *IMOD *BMOD *BPGM) PRDLIB(&DESTLIB) /* +
+                          1.0.30 */
+
+             CRTBNDCL   PGM(&DESTLIB/QSHIFSSIZC) +
+                          SRCFILE(&DESTLIB/&DESTFILE) +
+                          DFTACTGRP(*YES) REPLACE(*NO) +
+                          TGTRLS(&TGTRLS) /* 1.0.30 */
 
  /* Create message file for any custom CPF messages */
  /* Initial use case is to log STDOUT msgs with own CPF ID    */
