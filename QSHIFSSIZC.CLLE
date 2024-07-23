@@ -8,11 +8,9 @@
              DCL        VAR(&RECEIVER) TYPE(*CHAR) LEN(4096)
              DCL        VAR(&NULL) TYPE(*CHAR) LEN(1) VALUE(X'00')
              DCL        VAR(&SIZEBIN) TYPE(*CHAR) LEN(4)
-             DCL        VAR(&SIZECHR) TYPE(*CHAR) LEN(9)
-             DCL        VAR(&SIZEDEC) TYPE(*DEC) LEN(10 0)
+             DCL        VAR(&SIZEDEC) TYPE(*DEC) LEN(15 0)
              DCL        VAR(&ALLOCBIN) TYPE(*CHAR) LEN(4)
-             DCL        VAR(&ALLOCCHR) TYPE(*CHAR) LEN(9)
-             DCL        VAR(&ALLOCDEC) TYPE(*DEC) LEN(10 0)
+             DCL        VAR(&ALLOCDEC) TYPE(*DEC) LEN(15 0)
 
              MONMSG     MSGID(CPF0000) EXEC(GOTO CMDLBL(ERRORS))
 
@@ -21,7 +19,7 @@
 
              CHGVAR     VAR(&IFSFILE2) VALUE(&IFSFILE *TCAT &NULL)
 
-             CALLPRC    PRC('stat') PARM(&IFSFILE2 &RECEIVER) +
+             CALLPRC    PRC('stat') PARM((&IFSFILE2) (&RECEIVER)) +
                           RTNVAL(%BIN(&RTNVALBIN))
 
              CHGVAR     VAR(&RTNVALDEC) VALUE(%BIN(&RTNVALBIN))
@@ -35,6 +33,8 @@
                           MSGTYPE(*ESCAPE)
              ENDDO
 
+             /* Exit gracefully if not sending escape message. */
+             /* We will just return a negative number on error.*/
              IF         COND(&ESCONERROR *NE *YES) THEN(DO)
              /* Set negative return code on errors and rtn diag msg */
              CHGVAR     VAR(&SIZEDEC) VALUE(-2)
@@ -45,22 +45,34 @@
              RETURN
              ENDDO
 
-             ENDDO
+             ENDDO      /* ENDDO when &RTNVALDEC <> 0 */
 
+             /* Send diagnostic info to the joblog */
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('IFS +
+                          file' |> &IFSFILE |> 'info:') TOPGMQ(*PRV) +
+                          MSGTYPE(*INFO)
+
+             /* Write file size to joblog */
              CHGVAR     VAR(&SIZEBIN) VALUE(%SST(&RECEIVER 21 4))
              CHGVAR     VAR(&SIZEDEC) VALUE(%BIN(&SIZEBIN))
-             CHGVAR     VAR(&SIZECHR) VALUE(&SIZEDEC)
              SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('The +
                           number of data bytes in the file is' |> +
-                          &SIZECHR) TOPGMQ(*PRV)
+                          %CHAR(&SIZEDEC)) TOPGMQ(*PRV) MSGTYPE(*INFO)
 
+             /* Write allocated file size to joblog */
              CHGVAR     VAR(&ALLOCBIN) VALUE(%SST(&RECEIVER 45 4))
              CHGVAR     VAR(&ALLOCDEC) VALUE(%BIN(&ALLOCBIN))
-             CHGVAR     VAR(&ALLOCCHR) VALUE(&ALLOCDEC)
              SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('The +
                           number of bytes allocated to the file is +
-                          ' |> &ALLOCCHR) TOPGMQ(*PRV) MSGTYPE(*INFO)
+                          ' |> %CHAR(&ALLOCDEC)) TOPGMQ(*PRV) +
+                          MSGTYPE(*INFO)
+
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('IFS +
+                          file' |> &IFSFILE |> 'size info retrieved +
+                          successfully') TOPGMQ(*PRV) MSGTYPE(*COMP)
+
              RETURN
+
 ERRORS:
              /* Set negative return code on errors and rtn diag msg */
              CHGVAR     VAR(&SIZEDEC) VALUE(-2)
