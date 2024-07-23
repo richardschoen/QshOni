@@ -67,12 +67,12 @@ ERRORS:
              CHGVAR     VAR(&ALLOCDEC) VALUE(-2)
 
              IF         COND(&ESCONERROR *EQ *YES) THEN(DO)
-             SNDPGMMSG  MSGID(CPF9898) MSGF(AQCPFMSG) MSGDTA('Error +
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Error +
                           checking IFS file size for' |> &IFSFILE) +
                           TOPGMQ(*PRV) MSGTYPE(*ESCAPE)
              ENDDO
              IF         COND(&ESCONERROR *NE *YES) THEN(DO)
-             SNDPGMMSG  MSGID(CPF9898) MSGF(AQCPFMSG) MSGDTA('Error +
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Error +
                           checking IFS file size for' |> &IFSFILE) +
                           TOPGMQ(*PRV) MSGTYPE(*DIAG)
              ENDDO
