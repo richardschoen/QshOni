@@ -9,7 +9,10 @@ There are several ways to build the library. Pick your favorite.
 https://github.com/richardschoen/QshOni/blob/master/VERSION.TXT   
 
 ```
-1.0.31 - Chaged QSHIFSSIZ command return length from 9 to 15. We can currently still only return max size value of 2,147,483,647 bytes until we convert the command to use stat64 at some point, but most IFS files you might use this command with will probably by under 2gb in size. If this is not the case you can always use stat64 in your own RPG code to retreive IFS file sizes. 
+1.0.31 - Chaged QSHIFSSIZ command return length from 9 to 15. We can currently still only
+return max size value of 2,147,483,647 bytes until we convert the command to use stat64 at
+some point, but most IFS files you might use this command with will probably by under 2gb in size.
+If this is not the case you can always use stat64 in your own RPG code to retreive IFS file sizes. 
 
 1.0.30 - Added QSHIFSSIZ command to retrieve the file size and allocated size of an IFS file.
 
