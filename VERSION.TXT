@@ -171,3 +171,12 @@ V1.0.29 - 7/2/2024
 
 V1.0.30 = 7/16/2024
 -Added QSHIFSSIZ command to retrieve the file size and allocated size of an IFS file. 
+
+V1.0.31 = 7/23/2024                                                    
+-Updated QSHIFSSIZ return for size values to be 15 instead of 9 digits.
+ This stages the command to be upgraded to use stat64 at some point.   
+ CL commands can only return 15 positions in a *DEC type field so I'm  
+ not sure the best way to return larger fields when we switch to       
+ using stat64. Probably will introduce RPG to the mix for the call     
+ to stat64. Right now the return values will still be limited to the     
+ binary 4 max which appears to be: 2,147,483,647                       
