@@ -209,11 +209,27 @@ V1.0.31 = 7/23/2024
  binary 4 max which appears to be: 2,147,483,647                       
 
 V1.0.32 = 7/26/2024                                                
+-Added QSHSAVLIB command to save library to save file format       
+ in an IFS file. Creates data area QSHONI/SAVFDIR and defaults     
+ it to /tmp/savfqsh if IFS dir not found. You can change to        
+ your own default dir. The default dir is used for save file       
+ automatic naming if special keywords used for save file name.     
+ *DATETIME - library_yyyymmdd_hhmmss.savf is the save file name.   
+ *DATE - library_yyyymmdd.savf is the save file name.              
+
+-Added QSHSAVIFS command to save IFS objects to save file format   
+ in an IFS file. Creates data area QSHONI/SAVFDIR and defaults     
+ it to /tmp/savfqsh if IFS dir not found. You can change to        
+ your own default dir. The default dir is used for save file       
+ automatic naming if special keywords used for save file name.     
+ *DATETIME - savfprefix_yyyymmdd_hhmmss.savf is the save file name.
+ *DATE - savfprefix_yyyymmdd.savf is the save file name.           
+
 -Added QSHQRYSRC command to use SQL to create temp files as needed 
  for reporting or other use cases. This command differs from       
- QSHQRYTMP in that it gets the SQL query information from a source 
- physical file member or an IFS file instead via SQL statement     
- entry on the command.                                             
-                                                                   
--Updated QSHQRYTMP command to make sure prompting works for SQL    
- statement if Prompt=*YES.                                         
+ QSHQRYTMP in that it gets the SQL query information from a source
+ physical file member or an IFS file instead via SQL statement    
+ entry on the command.                                            
+                                                                 
+-Updated QSHQRYTMP command to make sure prompting works for SQL
+ statement if Prompt=*YES.                                        
