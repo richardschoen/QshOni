@@ -286,6 +286,14 @@ CURFILE="SRCBLDC.CLP"
 SRCTEXT="Build cmds from QSHONI/SOURCE file"   
 cpy_member
 
+CURFILE="SQLTEST1.SQL"
+SRCTEXT="SQL Test 1 - Query Qcustcdt - All Records"   
+cpy_member
+
+CURFILE="SQLTEST2.SQL"
+SRCTEXT="SQL Test 2 - Query Qcustcdt - Cusnum = 938472"   
+cpy_member
+
 CURFILE="README.TXT"
 SRCTEXT="Read Me Docs on Setup"
 cpy_member
