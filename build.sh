@@ -266,6 +266,22 @@ CURFILE="QSHQRYSRCR.RPGLE"
 SRCTEXT="SQL Query Data via SQL Source Member to Temp Table"
 cpy_member
 
+CURFILE="QSHSAVLIB.CMD"
+SRCTEXT="Save Library to IFS Save File"
+cpy_member
+
+CURFILE="QSHSAVLIBC.CLP"
+SRCTEXT="Save Library to IFS Save File"
+cpy_member
+
+CURFILE="QSHSAVIFS.CMD"
+SRCTEXT="Save IFS Objects to IFS Save File"
+cpy_member
+
+CURFILE="QSHSAVIFSC.CLP"
+SRCTEXT="Save IFS Objects to IFS Save File"
+cpy_member
+
 CURFILE="SRCBLDC.CLP"
 SRCTEXT="Build cmds from QSHONI/SOURCE file"   
 cpy_member
