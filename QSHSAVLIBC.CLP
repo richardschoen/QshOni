@@ -4,8 +4,8 @@
 
              DCL        VAR(&PROMPT) TYPE(*CHAR) LEN(4)
              DCL        VAR(&DLTTMPSAVF) TYPE(*CHAR) LEN(4)
-             DCL        VAR(&SIZE) TYPE(*DEC) LEN(10 0)
-             DCL        VAR(&ALLOCSIZE) TYPE(*DEC) LEN(10 0)
+             DCL        VAR(&SIZE) TYPE(*DEC) LEN(15 0)
+             DCL        VAR(&ALLOCSIZE) TYPE(*DEC) LEN(15 0)
              DCL        VAR(&LIBRARY) TYPE(*CHAR) LEN(10)
              DCL        VAR(&TOIFSFILE) TYPE(*CHAR) LEN(255)
              DCL        VAR(&REPLACE) TYPE(*CHAR) LEN(4)
