@@ -263,20 +263,20 @@
              CRTCMD     CMD(&DESTLIB/QSHSAVLIB) +
                           PGM(&DESTLIB/QSHSAVLIBC) +
                           SRCFILE(&DESTLIB/&DESTFILE) +
-                          PRDLIB(&DESTLIB) /* 1.0.31 */
+                          PRDLIB(&DESTLIB) /* 1.0.32 */
 
              CRTCLPGM   PGM(&DESTLIB/QSHSAVLIBC) +
                           SRCFILE(&DESTLIB/&DESTFILE) REPLACE(*NO) +
-                          TGTRLS(&TGTRLS) /* 1.0.31 */
+                          TGTRLS(&TGTRLS) /* 1.0.32 */
 
              CRTCMD     CMD(&DESTLIB/QSHSAVIFS) +
                           PGM(&DESTLIB/QSHSAVIFSC) +
                           SRCFILE(&DESTLIB/&DESTFILE) +
-                          PRDLIB(&DESTLIB) /* 1.0.31 */
+                          PRDLIB(&DESTLIB) /* 1.0.32 */
 
              CRTCLPGM   PGM(&DESTLIB/QSHSAVIFSC) +
                           SRCFILE(&DESTLIB/&DESTFILE) REPLACE(*NO) +
-                          TGTRLS(&TGTRLS) /* 1.0.31 */
+                          TGTRLS(&TGTRLS) /* 1.0.32 */
 
              CRTCMD     CMD(&DESTLIB/QSHQRYSRC) +
                           PGM(&DESTLIB/QSHQRYSRCC) +
