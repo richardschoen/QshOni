@@ -7,7 +7,7 @@
              DCL        VAR(&TGTRLS) TYPE(*CHAR) LEN(10) +
                           VALUE(*CURRENT)
              DCL        VAR(&VERSION) TYPE(*CHAR) LEN(30) +
-                          VALUE(V1.0.31)
+                          VALUE(V1.0.32)
              DCL        VAR(&QSHPYTHON) TYPE(*CHAR) LEN(255)
              DCL        VAR(&CMD) TYPE(*CHAR) LEN(512)
              DCL        VAR(&LEN) TYPE(*DEC) LEN(15 5)
@@ -260,6 +260,38 @@
                           DFTACTGRP(*YES) REPLACE(*NO) +
                           TGTRLS(&TGTRLS) /* 1.0.30 */
 
+             CRTCMD     CMD(&DESTLIB/QSHSAVLIB) +
+                          PGM(&DESTLIB/QSHSAVLIBC) +
+                          SRCFILE(&DESTLIB/&DESTFILE) +
+                          PRDLIB(&DESTLIB) /* 1.0.31 */
+
+             CRTCLPGM   PGM(&DESTLIB/QSHSAVLIBC) +
+                          SRCFILE(&DESTLIB/&DESTFILE) REPLACE(*NO) +
+                          TGTRLS(&TGTRLS) /* 1.0.31 */
+
+             CRTCMD     CMD(&DESTLIB/QSHSAVIFS) +
+                          PGM(&DESTLIB/QSHSAVIFSC) +
+                          SRCFILE(&DESTLIB/&DESTFILE) +
+                          PRDLIB(&DESTLIB) /* 1.0.31 */
+
+             CRTCLPGM   PGM(&DESTLIB/QSHSAVIFSC) +
+                          SRCFILE(&DESTLIB/&DESTFILE) REPLACE(*NO) +
+                          TGTRLS(&TGTRLS) /* 1.0.31 */
+
+             CRTCMD     CMD(&DESTLIB/QSHQRYSRC) +
+                          PGM(&DESTLIB/QSHQRYSRCC) +
+                          SRCFILE(&DESTLIB/&DESTFILE) +
+                          PRDLIB(&DESTLIB) /* 1.0.32 */
+
+             CRTCLPGM   PGM(&DESTLIB/QSHQRYSRCC) +
+                          SRCFILE(&DESTLIB/&DESTFILE) REPLACE(*NO) +
+                          TGTRLS(&TGTRLS) /* 1.0.32 */
+
+             CRTBNDRPG  PGM(&DESTLIB/QSHQRYSRCR) +
+                          SRCFILE(&DESTLIB/&DESTFILE) +
+                          SRCMBR(QSHQRYSRCR) DFTACTGRP(*NO) +
+                          REPLACE(*NO) TGTRLS(&TGTRLS) /* 1.0.32 */
+
  /* Create message file for any custom CPF messages */
  /* Initial use case is to log STDOUT msgs with own CPF ID    */
              CRTMSGF    MSGF(&DESTLIB/QSHMSG) TEXT('Qshell CPF +
@@ -300,6 +332,15 @@
              CRTDTAARA  DTAARA(QSHONI/QSHPATHLOC) TYPE(*CHAR) +
                           LEN(10) VALUE('*BEGIN') TEXT('Path +
                           position for open source packages')
+
+ /* Create and set data area for dft IFS save file loc - 1.31 */
+             CRTDTAARA  DTAARA(QSHONI/SAVFDIR) TYPE(*CHAR) LEN(255) +
+                          VALUE('/tmp/savfqsh') TEXT('Path to save +
+                          file IFS output')
+
+ /* Make /tmp/savf dir - 1.31 */
+             MKDIR      DIR('/tmp/savfqsh') DTAAUT(*RWX) OBJAUT(*ALL)
+             MONMSG     MSGID(CPF0000)
 
  /* Change library desc to match the version */
              CHGLIB     LIB(QSHONI) TEXT('QShell on IBM i -' |> +
