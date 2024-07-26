@@ -1,4 +1,4 @@
-        PGM        PARM(&SQLQUERY &OUTFILE &EMPTYERROR &PROMPT)
+             PGM        PARM(&SQLQUERY &OUTFILE &EMPTYERROR &PROMPT)
 
              DCL        VAR(&PROMPT) TYPE(*CHAR) LEN(4)
              DCL        VAR(&EMPTYERROR) TYPE(*CHAR) LEN(4)
@@ -72,7 +72,16 @@
              CHGVAR     VAR(&SQL) VALUE('create table' |> &TEMPLIB +
                           |< '/' |< &TEMPFILE |> 'as (' |< +
                           &SQLQUERY |< ') with data')
+
+             IF         COND(&PROMPT *EQ *YES) THEN(DO)
+             ? QSYS/RUNSQL   ??SQL(&SQL) ??COMMIT(*NONE)
+             MONMSG     MSGID(CPF0000)
+             ENDDO
+
+             IF         COND(&PROMPT *NE *YES) THEN(DO)
              QSYS/RUNSQL     SQL(&SQL) COMMIT(*NONE)
+             MONMSG     MSGID(CPF0000)
+             ENDDO
 
 /*----------------------------------------------------------------------------*/
 /* Get record count */
@@ -99,13 +108,14 @@
 
              SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Temp +
                           file' |> &TEMPLIB |< '/' |< &TEMPFILE |> +
-                          'was created from query.' |> &RECORDSC |> +
-                          'records') MSGTYPE(&COMPMSGTYP)
+                          'was created from SQL query.' |> +
+                          &RECORDSC |> 'records') MSGTYPE(&COMPMSGTYP)
 
              RETURN
 ERRORS:
-             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Errors +
-                          occurred running SQL query commands +
-                          check the job log') MSGTYPE(*ESCAPE)
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) +
+                          MSGDTA('QSHQRYTMP-Errors occurred running +
+                          SQL query command. Check the job log and +
+                          your SQL query statement') MSGTYPE(*ESCAPE)
 
              ENDPGM
