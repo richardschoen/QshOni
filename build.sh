@@ -254,6 +254,18 @@ CURFILE="QSHIFSSIZC.CLLE"
 SRCTEXT="Retrieve IFS Object Size using stat"
 cpy_member
 
+CURFILE="QSHQRYSRC.CMD"
+SRCTEXT="SQL Query Data via SQL Source Member to Temp Table"
+cpy_member
+
+CURFILE="QSHQRYSRCC.CLP"
+SRCTEXT="SQL Query Data via SQL Source Member to Temp Table"
+cpy_member
+
+CURFILE="QSHQRYSRCR.RPGLE"
+SRCTEXT="SQL Query Data via SQL Source Member to Temp Table"
+cpy_member
+
 CURFILE="SRCBLDC.CLP"
 SRCTEXT="Build cmds from QSHONI/SOURCE file"   
 cpy_member
