@@ -210,11 +210,13 @@
              CHGVAR     VAR(&COMPMSGTYP) VALUE(*COMP)
              ENDDO
 
-             /* Delete temporary source file */
-             /* If selected.                 */
-             IF         COND(&DLTTMPSRC *EQ *YES) THEN(DO)
-             DLTF       FILE(QTEMP/TMPQRYSRC)
-             ENDDO
+             /* Delete temporary source file */            
+             /* If selected.                 */            
+             IF         COND(&SQLLOC *EQ *IFSFILE) THEN(DO)
+             IF         COND(&DLTTMPSRC *EQ *YES) THEN(DO) 
+             DLTF       FILE(QTEMP/TMPQRYSRC)              
+             ENDDO                                         
+             ENDDO                                         
 
              SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Temp +
                           file' |> &TEMPLIB |< '/' |< &TEMPFILE |> +
