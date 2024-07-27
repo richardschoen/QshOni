@@ -229,7 +229,13 @@ V1.0.32 = 7/26/2024
  for reporting or other use cases. This command differs from       
  QSHQRYTMP in that it gets the SQL query information from a source
  physical file member or an IFS file instead via SQL statement    
- entry on the command.                                            
+ entry on the command.  
+                                                                 
+ Sample command to query QIWS.QCUSTCDT via SQLTEST1 source member:
+ ```QSHONI/QSHQRYSRC SQLLOC(*SRCMBR)
+                 SRCFILE(QSHONI/SOURCE)
+                 SRCMBR(SQLTEST1)
+ ```
                                                                  
 -Updated QSHQRYTMP command to make sure prompting works for SQL
  statement if Prompt=*YES.                                        
