@@ -10,7 +10,6 @@ https://github.com/richardschoen/QshOni/blob/master/VERSION.TXT
 
 ```
 1.0.32 - Added QSHQRYSRC command for querying data via a static source member in a library or IFS text file and placing results in an outfile. This is good for using SQL to prep data for a report or aggregate data for a secondary process.
-
 Added QSHSAVLIB and QSHSAVIFS commands for savng library and IFS objects and outputting an IFS save file when save is complete.
 
 1.0.31 - Changed QSHIFSSIZ command return length from 9 to 15. We can currently still only
