@@ -232,11 +232,9 @@ V1.0.32 = 7/26/2024
  entry on the command.  
                                                                  
  Sample command to query QIWS.QCUSTCDT via SQLTEST1 source member:
- ```
  QSHONI/QSHQRYSRC SQLLOC(*SRCMBR)
                  SRCFILE(QSHONI/SOURCE)
                  SRCMBR(SQLTEST1)
- ```
                                                                  
 -Updated QSHQRYTMP command to make sure prompting works for SQL
  statement if Prompt=*YES.                                        
