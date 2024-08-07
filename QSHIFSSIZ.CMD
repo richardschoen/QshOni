@@ -1,4 +1,4 @@
-             CMD        PROMPT('Retrieve IFS File Size')
+             CMD        PROMPT('Retrieve IFS Object Size')
              PARM       KWD(FILE) TYPE(*PNAME) LEN(256) PROMPT('IFS +
                           file name' 1)
              PARM       KWD(SIZE) TYPE(*DEC) LEN(15) RTNVAL(*YES) +
