@@ -5,10 +5,11 @@ The main benefit of this wrapper is to be able to integrate Qshell/Pase applicat
 
 There are several ways to build the library. Pick your favorite.
 
-# Check latest version info (Current Version 1.0.32 - 7/26/2024)  
+# Check latest version info (Current Version 1.0.33 - 8/6/2024)  
 https://github.com/richardschoen/QshOni/blob/master/VERSION.TXT   
 
 ```
+1.0.33 - Updated QSHIFSSIZ with stat64 to support up to 15 digit numeric return.
 1.0.32 - Added QSHQRYSRC command for querying data via a static source member in a library or IFS text file and placing results in an outfile. This is good for using SQL to prep data for a report or aggregate data for a secondary process.
 Added QSHSAVLIB and QSHSAVIFS commands for savng library and IFS objects and outputting an IFS save file when save is complete.
 
