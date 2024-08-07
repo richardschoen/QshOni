@@ -247,11 +247,11 @@ SRCTEXT="QSHONISRV Service Program Tester 3 - QSHCALL"
 cpy_member
 
 CURFILE="QSHIFSSIZ.CMD"
-SRCTEXT="Retrieve IFS Object Size using stat"
+SRCTEXT="Retrieve IFS Object Size using stat64"
 cpy_member
 
 CURFILE="QSHIFSSIZC.CLLE"
-SRCTEXT="Retrieve IFS Object Size using stat"
+SRCTEXT="Retrieve IFS Object Size using stat64"
 cpy_member
 
 CURFILE="QSHQRYSRC.CMD"
