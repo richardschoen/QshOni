@@ -240,6 +240,6 @@ V1.0.32 = 7/26/2024
  statement if Prompt=*YES.  
 
 V1.0.33 = 8/6/2024                                                
--Updated QSHIFSSIZ command to use state64 internally. Now we can return object lengths up to 15 positions with 0 decimals from the CL command. 15 positions is the CL command max.
+-Updated QSHIFSSIZ command to use stat64 internally. Now we can return object lengths up to 15 positions with 0 decimals from the CL command. 15 positions is the CL program max, although a CL command seems to allow a return of up to 20 positions.
 
 
