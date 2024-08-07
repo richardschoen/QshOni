@@ -1,36 +1,56 @@
+/* Retrieve IFS Object Size using stat64 */
+/* Links:                                */
+/* https://www.mcpressonline.com/forum/forum/x-archive-threads-started-bef */
+/* ore-01-01-2002/programming-aa/15194-rpg-ile-prototype-for-ifs-api-stat- */
+/* get-file-information                                                    */
+/* https://blog.faq400.com/en/system-administration-en/export-source-code-to-ifs/  */
+
              PGM        PARM(&IFSFILE &SIZEDEC &ALLOCDEC &ESCONERROR)
 
              DCL        VAR(&ESCONERROR) TYPE(*CHAR) LEN(4)
              DCL        VAR(&IFSFILE) TYPE(*CHAR) LEN(256)
-             DCL        VAR(&IFSFILE2) TYPE(*CHAR) LEN(256)
              DCL        VAR(&RTNVALBIN) TYPE(*CHAR) LEN(4)
              DCL        VAR(&RTNVALDEC) TYPE(*DEC) LEN(5 0)
              DCL        VAR(&RECEIVER) TYPE(*CHAR) LEN(4096)
              DCL        VAR(&NULL) TYPE(*CHAR) LEN(1) VALUE(X'00')
-             DCL        VAR(&SIZEBIN) TYPE(*CHAR) LEN(4)
              DCL        VAR(&SIZEDEC) TYPE(*DEC) LEN(15 0)
-             DCL        VAR(&ALLOCBIN) TYPE(*CHAR) LEN(4)
              DCL        VAR(&ALLOCDEC) TYPE(*DEC) LEN(15 0)
+
+             /* stat64 */
+             DCL        VAR(&STATRTNVAL) TYPE(*INT) LEN(4)
+             DCL        VAR(&STATPATH) TYPE(*CHAR) LEN(256)
+             DCL        VAR(&STATBUFFER) TYPE(*CHAR) LEN(4096)
+             DCL        VAR(&STATOBJSIZ) TYPE(*INT) STG(*DEFINED) +
+                          LEN(8) DEFVAR(&STATBUFFER 17)
+             DCL        VAR(&STATALCSIZ) TYPE(*UINT) STG(*DEFINED) +
+                          LEN(8) DEFVAR(&STATBUFFER 49)
+             DCL        VAR(&STATOBJTYP) TYPE(*CHAR) STG(*DEFINED) +
+                          LEN(10) DEFVAR(&STATBUFFER 61)
+             DCL        VAR(&IFSSIZ) TYPE(*INT) LEN(8)
+             DCL        VAR(&IFSALC) TYPE(*INT) LEN(8)
 
              MONMSG     MSGID(CPF0000) EXEC(GOTO CMDLBL(ERRORS))
 
              CHGVAR     VAR(&SIZEDEC) VALUE(0)
              CHGVAR     VAR(&ALLOCDEC) VALUE(0)
 
-             CHGVAR     VAR(&IFSFILE2) VALUE(&IFSFILE *TCAT &NULL)
+             /* call stat64 to get file information */
+             CHGVAR     VAR(&STATPATH) VALUE(&IFSFILE |< &NULL)
+             CALLPRC    PRC('stat64') PARM((&STATPATH) +
+                          (&STATBUFFER)) RTNVAL(&STATRTNVAL)
 
-             CALLPRC    PRC('stat') PARM((&IFSFILE2) (&RECEIVER)) +
-                          RTNVAL(%BIN(&RTNVALBIN))
-
-             CHGVAR     VAR(&RTNVALDEC) VALUE(%BIN(&RTNVALBIN))
+             IF         COND(&STATRTNVAL *EQ 0) THEN(DO)
+                   CHGVAR     VAR(&IFSSIZ) VALUE(&IFSSIZ + &STATOBJSIZ)
+                   CHGVAR     VAR(&IFSALC) VALUE(&IFSALC + &STATALCSIZ)
+             ENDDO      /* COND(&STATRTNVAL *NE 0) */
 
              /* If errors occurred */
-             IF         COND(&RTNVALDEC *NE 0) THEN(DO)
+             IF         COND(&STATRTNVAL *NE 0) THEN(DO)
 
              IF         COND(&ESCONERROR *EQ *YES) THEN(DO)
              SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('IFS +
                           object ' |> &IFSFILE |< ' not found') +
-                          MSGTYPE(*ESCAPE)
+                          TOPGMQ(*PRV) MSGTYPE(*ESCAPE)
              ENDDO
 
              /* Exit gracefully if not sending escape message. */
@@ -41,7 +61,7 @@
              CHGVAR     VAR(&ALLOCDEC) VALUE(-2)
              SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('IFS +
                           object ' |> &IFSFILE |< ' not found') +
-                          MSGTYPE(*DIAG)
+                          TOPGMQ(*PRV) MSGTYPE(*DIAG)
              RETURN
              ENDDO
 
@@ -53,15 +73,13 @@
                           MSGTYPE(*INFO)
 
              /* Write file size to joblog */
-             CHGVAR     VAR(&SIZEBIN) VALUE(%SST(&RECEIVER 21 4))
-             CHGVAR     VAR(&SIZEDEC) VALUE(%BIN(&SIZEBIN))
+             CHGVAR     VAR(&SIZEDEC) VALUE(&IFSSIZ)
              SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('The +
                           number of data bytes in the file is' |> +
                           %CHAR(&SIZEDEC)) TOPGMQ(*PRV) MSGTYPE(*INFO)
 
              /* Write allocated file size to joblog */
-             CHGVAR     VAR(&ALLOCBIN) VALUE(%SST(&RECEIVER 45 4))
-             CHGVAR     VAR(&ALLOCDEC) VALUE(%BIN(&ALLOCBIN))
+             CHGVAR     VAR(&ALLOCDEC) VALUE(&IFSALC)
              SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('The +
                           number of bytes allocated to the file is +
                           ' |> %CHAR(&ALLOCDEC)) TOPGMQ(*PRV) +
