@@ -131,6 +131,8 @@ Build the QSHONI commands
 
 `CALL PGM(QSHONI/SRCBLDC)`
 
+# Delays running QShell or bash commands qith QSHEXEC/QSHBASH   
+❗ If you experience delays running QShell Commands, it's probably related to your system DNS settings. Check out the following issue: https://github.com/richardschoen/QshOni/issues/29     
 
 # Using the QSHEXEC CL command to call a Qsh/Pase command sequence
 
