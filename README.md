@@ -42,21 +42,21 @@ https://github.com/richardschoen/QshOni/tree/master/samples
 
 ***(Important to change SRCCCSID variable in build.sh to your local CCSID before running build.sh. Default=37)***
 
-Use this install script if you want to run a single shell script to clone the repo and build the library.  
-https://github.com/richardschoen/QshOni/blob/master/getrepo-qshoni.sh
+Use the following install script if you want to run a single shell script to clone the repo and build the library.  
+https://github.com/richardschoen/QshOni/refs/heads/master/getrepo-qshoni.sh   
 
+## Download and run the getrepo-qshoni.sh script in one step, using wget
+Run this command to download, build and install QSHONI quickly in a single step
 ```
-# Download the getrepo-qshoni.sh script or create it manually in your IFS. 
-# Then run the getrepo-qshoni.sh script to automatically clone the repo 
-# and auto-run the build.sh to create the QSHONI library and associated 
-# objects.
-
-bash getrepo-qshoni.sh
-
-# To download and run the getrepo-qshoni.sh script in one step, using wget, run this command:
 wget https://github.com/richardschoen/QshOni/raw/refs/heads/master/getrepo-qshoni.sh -O - | bash
 ```
 
+## Manually download getrepo-qshoni.sh and run it
+- Download the raw getrepo-qshoni.sh script or create it manually in your IFS. https://github.com/richardschoen/QshOni/refs/heads/master/getrepo-qshoni.sh    
+- Then run the getrepo-qshoni.sh script to automatically clone the repo and auto-run the build.sh to create the QSHONI library and associated objects.   
+```
+bash getrepo-qshoni.sh
+```
 # Installing and Building QSHONI via Git clone and build.sh 
 
 ***(Important to change SRCCCSID variable in build.sh to your local CCSID before running build.sh. Default=37)***
@@ -134,7 +134,7 @@ Build the QSHONI commands
 
 `CALL PGM(QSHONI/SRCBLDC)`
 
-# Delays running QShell or bash commands qith QSHEXEC/QSHBASH   
+# Delays running QShell or bash commands with QSHEXEC/QSHBASH   
 ❗ If you experience delays running QShell Commands, it's probably related to your system DNS settings. Check out the following issue: https://github.com/richardschoen/QshOni/issues/29     
 
 # Using the QSHEXEC CL command to call a Qsh/Pase command sequence
