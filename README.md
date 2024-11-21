@@ -52,6 +52,9 @@ https://github.com/richardschoen/QshOni/blob/master/getrepo-qshoni.sh
 # objects.
 
 bash getrepo-qshoni.sh
+
+# To download and run the getrepo-qshoni.sh script in one step, using wget, run this command:
+wget https://github.com/richardschoen/QshOni/raw/refs/heads/master/getrepo-qshoni.sh -O - | bash
 ```
 
 # Installing and Building QSHONI via Git clone and build.sh 
