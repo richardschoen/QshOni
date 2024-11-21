@@ -46,7 +46,7 @@ Use the following install script if you want to run a single shell script to clo
 https://github.com/richardschoen/QshOni/refs/heads/master/getrepo-qshoni.sh   
 
 ## Download and run the getrepo-qshoni.sh script in one step, using wget
-Run this command to download, build and install QSHONI quickly in a single step
+❗This is the easiest way to instal QSHONI: Run the following wget command to download, build and install QSHONI quickly in a single step.
 ```
 wget https://github.com/richardschoen/QshOni/raw/refs/heads/master/getrepo-qshoni.sh -O - | bash
 ```
