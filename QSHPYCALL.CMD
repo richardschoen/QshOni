@@ -11,7 +11,7 @@
                           arguments')
              PARM       KWD(PYVERSION) TYPE(*CHAR) LEN(5) RSTD(*NO) +
                           DFT(3) SPCVAL((2 2) (2.7 2.7) (3 3) (3.6 +
-                          3.6) (3.9 3.9)) CASE(*MIXED) +
+                          3.6) (3.9 3.9) (3.13 3.13)) CASE(*MIXED) +
                           PROMPT('Python version')
              PARM       KWD(PYPATH) TYPE(*CHAR) LEN(255) +
                           DFT(*DEFAULT) +
