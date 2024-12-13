@@ -5,7 +5,7 @@ The main benefit of this wrapper is to be able to integrate Qshell/Pase applicat
 
 There are several ways to build the library. Pick your favorite.
 
-# IBM QShell/PASE Documentation
+# IBM Qshell/PASE Documentation
 The following IBM links take yot to documentation on the Qshell and PASE environments from IBM     
 
 IBM PASE for i      
