@@ -5,6 +5,16 @@ The main benefit of this wrapper is to be able to integrate Qshell/Pase applicat
 
 There are several ways to build the library. Pick your favorite.
 
+# IBM QShell/PASE Documentation
+The following IBM links take yot to documentation on the Qshell and PASE environments from IBM     
+
+IBM PASE for i      
+https://www.ibm.com/docs/en/i/7.5?topic=programming-pase-i
+
+IBM i QShell   
+https://www.ibm.com/docs/en/i/7.5?topic=languages-qshell
+
+
 # Check latest version info (Current Version 1.0.33 - 8/6/2024)  
 https://github.com/richardschoen/QshOni/blob/master/VERSION.TXT   
 
