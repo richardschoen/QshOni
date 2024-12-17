@@ -9,3 +9,4 @@ PFGREP CMDARGS('-i -n "sbs" /QSYS.LIB/QGPL.LIB/QCLSRC.FILE/*.MBR') DSPSTDOUT(*YE
 
 #### Example to scan all Q* files in library QGPL for the word: sbs
 PFGREP CMDARGS('-i -n "sbs" /QSYS.LIB/QGPL.LIB/Q*.FILE/*.MBR') DSPSTDOUT(*YES)                                         
+
