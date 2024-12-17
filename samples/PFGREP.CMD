@@ -1,17 +1,8 @@
-/* Text: Search Library Source Members using PFGREP */                                                      
-             CMD        PROMPT('Search Library Src Members')                                                
-             PARM       KWD(SRCLIBRARY) TYPE(*CHAR) LEN(10) MIN(1) +                                        
-                          EXPR(*YES) CASE(*MIXED) PROMPT('Source +                                          
-                          library name pattern')                                                            
-             PARM       KWD(SRCFILE) TYPE(*CHAR) LEN(10) +                                                  
-                          DFT(QCLSRC) EXPR(*YES) CASE(*MIXED) +                                             
-                          PROMPT('Source file name pattern')                                                
-             PARM       KWD(SRCMEMBER) TYPE(*CHAR) LEN(10) +                                                
-                          DFT(*) EXPR(*YES) CASE(*MIXED) +                                                  
-                          PROMPT('Source member name pattern')                                              
-             PARM       KWD(SEARCHFOR) TYPE(*CHAR) LEN(50) MIN(1) +                                         
-                          EXPR(*YES) CASE(*MIXED) PROMPT('Search +                                          
-                          for value')                                                                       
+/* Text: Run pfgrep PASE command */                                                                         
+             CMD        PROMPT('Run pfgrep PASE command')                                                   
+             PARM       KWD(CMDARGS) TYPE(*CHAR) LEN(1000) MIN(1) +                                         
+                          EXPR(*YES) CASE(*MIXED) PROMPT('pfgrep +                                          
+                          command arguments')                                                               
              PARM       KWD(PROMPTCMD) TYPE(*CHAR) LEN(4) RSTD(*YES) +                                      
                           DFT(*NO) VALUES(*NO *YES) MAX(1) +                                                
                           CASE(*MIXED) PROMPT('Prompt QSHEXEC command')                                     
