@@ -1,6 +1,5 @@
-/* Text: Search Library Source Members using PFGREP */                                                      
-             PGM        PARM(&SRCLIBRARY &SRCFILE &SRCMEMBER +                                              
-                          &SEARCHFOR &PROMPTCMD &SETPKGPATH +                                               
+/* Text: Run pfgrep PASE command */                                                                         
+             PGM        PARM(&CMDARGS &PROMPTCMD &SETPKGPATH +                                              
                           &DSPSTDOUT &LOGSTDOUT &PRTSTDOUT +                                                
                           &DLTSTDOUT &IFSSTDOUT &IFSFILE &IFSOPT +                                          
                           &CCSID &PRTSPLF &PRTUSRDTA &PRTTXT +                                              
@@ -19,6 +18,7 @@
              DCL        VAR(&PRTOUTQALL) TYPE(*CHAR) LEN(20)                                                
              DCL        VAR(&PRTOUTQ) TYPE(*CHAR) LEN(10)                                                   
              DCL        VAR(&PRTOUTQLIB) TYPE(*CHAR) LEN(10)                                                
+             DCL        VAR(&CMDARGS) TYPE(*CHAR) LEN(1000)                                                 
              DCL        VAR(&CMDLINE) TYPE(*CHAR) LEN(5000)                                                 
              DCL        VAR(&CURLCMDLIN) TYPE(*CHAR) LEN(5000)                                              
              DCL        VAR(&SETPKGPATH) TYPE(*CHAR) LEN(4)                                                 
@@ -51,26 +51,9 @@
 /*----------------------------------------------------------------------------*/                            
 /* MAIN                                                                       */                            
 /*----------------------------------------------------------------------------*/                            
-             /* Search for value is required */                                                             
-             IF         COND(&SEARCHFOR *EQ ' ') THEN(DO)                                                   
-             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Search +                                       
-                          for value must be specified') +                                                   
-                          MSGTYPE(*ESCAPE)                                                                  
-             ENDDO                                                                                          
-                                                                                                            
              /* Build grep command line to pass to qshell or bash  */                                       
              /* Make sure to use /usr/bin/grep which is QShell */                                           
-             CHGVAR     VAR(&CURLCMDLIN) VALUE('pfgrep -i -n +                                              
-                          "' |< &SEARCHFOR |< '"' |> '/QSYS.LIB/' +                                         
-                          |< &SRCLIBRARY |< '.LIB/' |< &SRCFILE |< +                                        
-                          '.FILE/' |< &SRCMEMBER |< '.MBR')                                                 
-                                                                                                            
-             /* Set search value in print text field */                                                     
-             /* in case we print.                    */                                                     
-             IF         COND(&PRTTXT *EQ ' ') THEN(DO)                                                      
-             CHGVAR     VAR(&PRTTXT) VALUE('Search for:' |< +                                               
-                          &SEARCHFOR)                                                                       
-             ENDDO                                                                                          
+             CHGVAR     VAR(&CURLCMDLIN) VALUE('pfgrep' |> &CMDARGS)                                        
                                                                                                             
              /* Run the grep command via QSHBASH */                                                         
              IF         COND(&PROMPTCMD *NE *YES) THEN(DO)                                                  
@@ -106,14 +89,14 @@
                           ??MBROPT(*REPLACE) ??PASEJOBNAM(&PASEJOBNAM)                                      
              ENDDO                                                                                          
                                                                                                             
-             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('grep +                                         
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('pfgrep +                                       
                           command completed searching for:' |> +                                            
                           &SEARCHFOR) MSGTYPE(*COMP)                                                        
                                                                                                             
              RETURN                                                                                         
                                                                                                             
 ERRORS:                                                                                                     
-             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('grep +                                         
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('pfgrep +                                       
                           command failed') MSGTYPE(*ESCAPE)                                                 
                                                                                                             
  ENDPGM:                                                                                                    
