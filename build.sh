@@ -282,6 +282,18 @@ CURFILE="QSHSAVIFSC.CLP"
 SRCTEXT="Save IFS Objects to IFS Save File"
 cpy_member
 
+CURFILE="QSHIFSSCAC.CLP"
+SRCTEXT="Scan IFS File for Values"
+cpy_member
+
+CURFILE="QSHIFSSCAN.CMD"
+SRCTEXT="Scan IFS File for Values"
+cpy_member
+
+CURFILE="QSHIFSSCAR.RPGLE"
+SRCTEXT="Scan IFS File for Values"
+cpy_member
+
 CURFILE="SRCBLDC.CLP"
 SRCTEXT="Build cmds from QSHONI/SOURCE file"   
 cpy_member
