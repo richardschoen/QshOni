@@ -87,6 +87,15 @@
                           SRCFILE(&DESTLIB/&DESTFILE) REPLACE(*NO) +
                           TGTRLS(&TGTRLS) /* V1.0.24 */
 
+             CRTCMD     CMD(&DESTLIB/QSHQRYAID) +
+                          PGM(&DESTLIB/QSHQRYAIDC) +
+                          SRCFILE(&DESTLIB/&DESTFILE) +
+                          PRDLIB(&DESTLIB) /* V1.0.36 */
+
+             CRTCLPGM   PGM(&DESTLIB/QSHQRYAIDC) +
+                          SRCFILE(&DESTLIB/&DESTFILE) REPLACE(*NO) +
+                          TGTRLS(&TGTRLS) /* V1.0.36 */
+
              CRTCMD     CMD(&DESTLIB/QSHQRYTMP) +
                           PGM(&DESTLIB/QSHQRYTMPC) +
                           SRCFILE(&DESTLIB/&DESTFILE) +
