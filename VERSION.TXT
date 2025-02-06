@@ -250,3 +250,8 @@ V1.0.34 - 11/22/2024
 
 V1.0.35 - 1/15/2025
 -Added QSHIFSSCAN command. This command can be used to scan an IFS file for specific values. The main intent is to be able to scan a STDOUT or STDERROR log file as needed for information to see if a value or value(s) exist. Currently multiple values can be entered to search for, but the command ends successfully if any of the exact matching values are found in the selected IFS file.
+
+V1.0.36 - 2/5/2025
+-Added QSHQRYAID command. This command can be used to add a unique ID field to an output file (OUTFILE) created by the QSHQRYTMP or QSHQRYSRC commands.   
+-Updated QSHQRYTMP command to allow optional adding of a unique ID field to the generated output file.   
+-Updated QSHQRYSRC command to allow optional adding of a unique ID field to the generated output file.   
