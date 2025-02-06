@@ -5,6 +5,10 @@ The main benefit of this wrapper is to be able to integrate Qshell/Pase applicat
 
 There are several ways to build the library. Pick your favorite.
 
+# News
+```2/6/2025``` - New dynamic RUNSQLPRM and RUNSQLSRC SQL action commands added. Allows passing soft coded parameters to SQL statements or SQL statements in source members from CL programs.     
+```2/6/2025``` - Updated QSHQRYTMP and QSHQRYSRC SELECT query commands to allow selection of Naming (*SQL or *SYS) and can also add a unique ID column to the OUTFILE after it's created if you need a unique ID field for your OUTFILE.    
+
 # IBM Qshell/PASE Documentation
 The following IBM links take yot to documentation on the Qshell and PASE environments from IBM     
 
