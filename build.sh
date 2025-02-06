@@ -94,6 +94,14 @@ CURFILE="QSHDEMO01R.RPGLE"
 SRCTEXT="Read Outfile STDOUTQSH and display via DSPLY cmd"
 cpy_member
 
+CURFILE="QSHQRYAID.CMD"
+SRCTEXT="SQL ADD Unique ID Field to Temp Table with RUNSQL"
+cpy_member
+
+CURFILE="QSHQRYAIDC.CLP"
+SRCTEXT="SQL ADD Unique ID Field to Temp Table with RUNSQL"
+cpy_member
+
 CURFILE="QSHQRYTMP.CMD"
 SRCTEXT="SQL Query Data to Selected Temp Table with RUNSQL"
 cpy_member
