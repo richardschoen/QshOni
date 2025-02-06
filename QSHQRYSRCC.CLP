@@ -1,6 +1,11 @@
              PGM        PARM(&SRCFILE &SRCMBR &SQLIFSFILE &OUTFILE +
-                          &EMPTYERROR &PROMPT &DLTTMPSRC &SQLLOC)
+                          &EMPTYERROR &NAMING &PROMPT &CRTIDCOL +
+                          &IDCOLNAME &DLTTMPSRC &SQLLOC)
 
+             DCL        VAR(&SQLQUAL) TYPE(*CHAR) LEN(1)
+             DCL        VAR(&NAMING) TYPE(*CHAR) LEN(4)
+             DCL        VAR(&IDCOLNAME) TYPE(*CHAR) LEN(30)
+             DCL        VAR(&CRTIDCOL) TYPE(*CHAR) LEN(4)
              DCL        VAR(&DLTTMPSRC) TYPE(*CHAR) LEN(4)
              DCL        VAR(&SQLIFSFILE) TYPE(*CHAR) LEN(255)
              DCL        VAR(&SQLLOC) TYPE(*CHAR) LEN(10)
@@ -154,6 +159,14 @@
              CHGDTAARA  DTAARA(QTEMP/SQLQRYLIB *ALL) VALUE(' ')
 
 /*----------------------------------------------------------------------------*/
+/* Determine SQL table qualifer to use for *SYS vs *SQL. */
+/*----------------------------------------------------------------------------*/
+             IF         COND(&NAMING *EQ *SYS) THEN(CHGVAR +
+                          VAR(&SQLQUAL) VALUE('/'))
+             IF         COND(&NAMING *NE *SYS) THEN(CHGVAR +
+                          VAR(&SQLQUAL) VALUE('.'))
+
+/*----------------------------------------------------------------------------*/
 /* Drop the temp table if it exists                */
 /* Catch error. Create will fail if already found. */
 /*----------------------------------------------------------------------------*/
@@ -161,12 +174,12 @@
                           '/' |< &TEMPFILE)
 
              IF         COND(&PROMPT *EQ *YES) THEN(DO)
-             ? QSYS/RUNSQL   ??SQL(&SQL) ??COMMIT(*NONE)
+             ? QSYS/RUNSQL   ??SQL(&SQL) ??COMMIT(*NONE) ??NAMING(*SYS)
              MONMSG     MSGID(CPF0000)
              ENDDO
 
              IF         COND(&PROMPT *NE *YES) THEN(DO)
-             QSYS/RUNSQL     SQL(&SQL) COMMIT(*NONE)
+             QSYS/RUNSQL     SQL(&SQL) COMMIT(*NONE) NAMING(*SYS)
              MONMSG     MSGID(CPF0000)
              ENDDO
 
@@ -174,16 +187,16 @@
 /* Create temp table from another table using SQL */
 /*----------------------------------------------------------------------------*/
              CHGVAR     VAR(&SQL) VALUE('create table' |> &TEMPLIB +
-                          |< '/' |< &TEMPFILE |> 'as (' |< +
+                          |< &SQLQUAL |< &TEMPFILE |> 'as (' |< +
                           &SQLQUERY |< ') with data')
 
              IF         COND(&PROMPT *EQ *YES) THEN(DO)
-             ? QSYS/RUNSQL   ??SQL(&SQL) ??COMMIT(*NONE)
+             ? QSYS/RUNSQL   ??SQL(&SQL) ??COMMIT(*NONE) NAMING(&NAMING)
              MONMSG     MSGID(CPF0000)
              ENDDO
 
              IF         COND(&PROMPT *NE *YES) THEN(DO)
-             QSYS/RUNSQL     SQL(&SQL) COMMIT(*NONE)
+             QSYS/RUNSQL     SQL(&SQL) COMMIT(*NONE)  NAMING(&NAMING)
              MONMSG     MSGID(CPF0000)
              ENDDO
 
@@ -210,13 +223,19 @@
              CHGVAR     VAR(&COMPMSGTYP) VALUE(*COMP)
              ENDDO
 
-             /* Delete temporary source file */            
-             /* If selected.                 */            
+             /* Delete temporary source file */
+             /* If selected.                 */
              IF         COND(&SQLLOC *EQ *IFSFILE) THEN(DO)
-             IF         COND(&DLTTMPSRC *EQ *YES) THEN(DO) 
-             DLTF       FILE(QTEMP/TMPQRYSRC)              
-             ENDDO                                         
-             ENDDO                                         
+             IF         COND(&DLTTMPSRC *EQ *YES) THEN(DO)
+             DLTF       FILE(QTEMP/TMPQRYSRC)
+             ENDDO
+             ENDDO
+
+/* If enabled, add a unique identify column to the table with values */
+             IF         COND(&CRTIDCOL *EQ *YES) THEN(DO)
+             QSHONI/QSHQRYAID OUTFILE(&TEMPLIB/&TEMPFILE) +
+                          IDCOLNAME(&IDCOLNAME) PROMPT(&PROMPT)
+             ENDDO
 
              SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Temp +
                           file' |> &TEMPLIB |< '/' |< &TEMPFILE |> +
