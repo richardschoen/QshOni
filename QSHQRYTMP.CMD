@@ -7,9 +7,18 @@
                           RSTD(*YES) DFT(*YES) VALUES(*NO *YES) +
                           MIN(0) MAX(1) PROMPT('Escape error if no +
                           result data')
+             PARM       KWD(NAMING) TYPE(*CHAR) LEN(4) RSTD(*YES) +
+                          DFT(*SYS) VALUES(*SYS *SQL) MIN(0) MAX(1) +
+                          PROMPT('Naming')
              PARM       KWD(PROMPT) TYPE(*CHAR) LEN(4) RSTD(*YES) +
                           DFT(*NO) VALUES(*NO *YES) MIN(0) MAX(1) +
                           PROMPT('Prompt RUNSQL')
+             PARM       KWD(CRTIDCOL) TYPE(*CHAR) LEN(4) RSTD(*YES) +
+                          DFT(*NO) VALUES(*NO *YES) MIN(0) MAX(1) +
+                          PROMPT('Create row identity column')
+             PARM       KWD(IDCOLNAME) TYPE(*CHAR) DFT(RECID) MIN(0) +
+                          MAX(1) CASE(*MIXED) PROMPT('Record ID +
+                          column name')
  QUAL2:      QUAL       TYPE(*NAME) LEN(10) DFT(SQLTMP0001) EXPR(*YES)
              QUAL       TYPE(*NAME) LEN(10) DFT(QTEMP) EXPR(*YES) +
                           PROMPT('Library')
