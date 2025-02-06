@@ -313,6 +313,27 @@
                           SRCFILE(&DESTLIB/&DESTFILE) +
                           DFTACTGRP(*NO) REPLACE(*NO) TGTRLS(&TGTRLS)  /* V1.0.35 */
 
+             CRTCMD     CMD(&DESTLIB/RUNSQLPRM) PGM(&DESTLIB/RUNSQLPRMC) +
+                          SRCFILE(&DESTLIB/&DESTFILE) PRDLIB(&DESTLIB) /* 1.0.36 */
+
+             CRTBNDCL     PGM(&DESTLIB/RUNSQLPRMC) +
+                          SRCFILE(&DESTLIB/&DESTFILE) REPLACE(*NO) +
+                          TGTRLS(&TGTRLS) DFTACTGRP(*NO)  /* 1.0.36 */
+
+             CRTBNDRPG  PGM(&DESTLIB/RUNSQLPRMR) +
+                          SRCFILE(&DESTLIB/&DESTFILE) +
+                          DFTACTGRP(*NO) REPLACE(*NO) TGTRLS(&TGTRLS)  /* 1.0.36 */
+
+             CRTCMD     CMD(&DESTLIB/RUNSQLSRC) PGM(&DESTLIB/RUNSQLSRCC) +
+                          SRCFILE(&DESTLIB/&DESTFILE) PRDLIB(&DESTLIB) /* 1.0.36 */
+
+             CRTBNDCL     PGM(&DESTLIB/RUNSQLSRCC) +
+                          SRCFILE(&DESTLIB/&DESTFILE) REPLACE(*NO) +
+                          TGTRLS(&TGTRLS) DFTACTGRP(*NO)  /* 1.0.36 */
+
+             CRTBNDRPG  PGM(&DESTLIB/RUNSQLSRCR) +
+                          SRCFILE(&DESTLIB/&DESTFILE) +
+                          DFTACTGRP(*NO) REPLACE(*NO) TGTRLS(&TGTRLS)  /* 1.0.36 */
 
  /* Create message file for any custom CPF messages */
  /* Initial use case is to log STDOUT msgs with own CPF ID    */
