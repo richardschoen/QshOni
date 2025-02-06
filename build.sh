@@ -314,6 +314,30 @@ CURFILE="SQLTEST2.SQL"
 SRCTEXT="SQL Test 2 - Query Qcustcdt - Cusnum = 938472"   
 cpy_member
 
+CURFILE="RUNSQLPRM.CMD"
+SRCTEXT="Run SQL Action via SQL Stmt with Parm Replacement"   
+cpy_member
+
+CURFILE="RUNSQLPRMC.CLLE"
+SRCTEXT="Run SQL Action via SQL Stmt with Parm Replacement"   
+cpy_member
+
+CURFILE="RUNSQLPRMR.RPGLE"
+SRCTEXT="Run SQL Action via SQL Stmt with Parm Replacement"   
+cpy_member
+
+CURFILE="RUNSQLSRC.CMD"
+SRCTEXT="Run SQL Action from SQL Src with Parm Replacement"   
+cpy_member
+
+CURFILE="RUNSQLSRCC.CLLE"
+SRCTEXT="Run SQL Action from SQL Src with Parm Replacement"   
+cpy_member
+
+CURFILE="RUNSQLSRCR.RPGLE"
+SRCTEXT="Run SQL Action from SQL Src with Parm Replacement"   
+cpy_member
+
 CURFILE="README.TXT"
 SRCTEXT="Read Me Docs on Setup"
 cpy_member
