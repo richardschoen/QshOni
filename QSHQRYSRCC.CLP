@@ -272,11 +272,12 @@
 
              /* Delete temporary source file */
              /* If selected.                 */
-             IF         COND(&SQLLOC *EQ *IFSFILE) THEN(DO)
+             /* IF         COND(&SQLLOC *EQ *IFSFILE) THEN(DO) */
              IF         COND(&DLTTMPSRC *EQ *YES) THEN(DO)
              DLTF       FILE(QTEMP/TMPQRYSRC)
+             MONMSG     MSGID(CPF0000)
              ENDDO
-             ENDDO
+            /*  ENDDO */
 
 /* If enabled, add a unique identify column to the table with values */
              IF         COND(&CRTIDCOL *EQ *YES) THEN(DO)
