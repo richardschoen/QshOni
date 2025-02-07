@@ -310,12 +310,16 @@ CURFILE="SQLTEST1.SQL"
 SRCTEXT="SQL Test 1 - Query Qcustcdt - All Records"   
 cpy_member
 
+CURFILE="SQLTEST2.SQL"
+SRCTEXT="SQL Test 2 - Query Qcustcdt - Cusnum = 938472"   
+cpy_member
+
 CURFILE="SQLTEST3.SQL"
 SRCTEXT="SQL Test 3 - Query Qcustcdt - Parm Placeholders"   
 cpy_member
 
-CURFILE="SQLTEST2.SQL"
-SRCTEXT="SQL Test 2 - Query Qcustcdt - Cusnum = 938472"   
+CURFILE="SQLTEST4.SQL"
+SRCTEXT="SQL Test 4 - Insert to Qcustcdt-Parm Placeholders"   
 cpy_member
 
 CURFILE="RUNSQLPRM.CMD"
