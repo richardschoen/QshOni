@@ -110,6 +110,10 @@ CURFILE="QSHQRYTMPC.CLP"
 SRCTEXT="SQL Query Data to Selected Temp Table with RUNSQL"
 cpy_member
 
+CURFILE="QSHQRYTMPR.RPGLE"
+SRCTEXT="SQL Query Data Scan/Replace Parm Values"
+cpy_member
+
 CURFILE="QSHCURL.CMD"
 SRCTEXT="Run Curl Command via QShell"
 cpy_member
@@ -272,6 +276,10 @@ cpy_member
 
 CURFILE="QSHQRYSRCR.RPGLE"
 SRCTEXT="SQL Query Data via SQL Source Member to Temp Table"
+cpy_member
+
+CURFILE="QSHQRYSR2R.RPGLE"
+SRCTEXT="SQL Query Data Scan/Replace Parm Values"
 cpy_member
 
 CURFILE="QSHSAVLIB.CMD"
