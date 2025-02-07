@@ -318,7 +318,7 @@ CURFILE="RUNSQLPRM.CMD"
 SRCTEXT="Run SQL Action via SQL Stmt with Parm Replacement"   
 cpy_member
 
-CURFILE="RUNSQLPRMC.CLLE"
+CURFILE="RUNSQLPRMC.CLP"
 SRCTEXT="Run SQL Action via SQL Stmt with Parm Replacement"   
 cpy_member
 
@@ -330,7 +330,7 @@ CURFILE="RUNSQLSRC.CMD"
 SRCTEXT="Run SQL Action from SQL Src with Parm Replacement"   
 cpy_member
 
-CURFILE="RUNSQLSRCC.CLLE"
+CURFILE="RUNSQLSRCC.CLP"
 SRCTEXT="Run SQL Action from SQL Src with Parm Replacement"   
 cpy_member
 
