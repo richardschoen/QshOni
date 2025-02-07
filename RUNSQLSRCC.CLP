@@ -88,12 +88,11 @@
 
              /* Read SQL from source member, scan and replace values */
              /* and update the temp SQL member file in QTEMP */
-             OVRDBF     FILE(TMPSRCMBR) +
-                          TOFILE(&SQLSRCLIB/&SQLSRCFILE) +
-                          MBR(&SRCMBR) OVRSCOPE(*ACTGRPDFN)
+             OVRDBF     FILE(TMPQRYSRC) TOFILE(QTEMP/TMPQRYSRC) +
+                          MBR(*FIRST) OVRSCOPE(*ACTGRPDFN)
              CALL       PGM(RUNSQLSRCR) PARM(&PARMS &PARMVALS +
                           &RTNERROR)
-             DLTOVR     FILE(TMPSRCMBR) LVL(*ACTGRPDFN)
+             DLTOVR     FILE(TMPQRYSRC) LVL(*ACTGRPDFN)
 
 
              /* If rtnerror <> '0', bail out now     */
