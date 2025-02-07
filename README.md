@@ -7,6 +7,25 @@ There are several ways to build the library. Pick your favorite.
 
 # News
 ```2/6/2025``` - New dynamic RUNSQLPRM and RUNSQLSRC SQL action commands added. Allows passing soft coded parameters to SQL statements or SQL statements in source members from CL programs.     
+
+Example of RUNSQLPRM inserting a record to QIWS/QCUSTCDT by passing SQL statement template and parms.   
+```
+RUNSQLPRM SQL('INSERT INTO @@LIB.@@FILE (CUSNUM,LSTNAM) VALUES(@@CUSNUM,@@QT@@LSTNAM@@QT)')                 
+         PARMS(@@LIB @@FILE @@CUSNUM @@LSTNAM @@QT)         
+         PARMVALS(QIWS QCUSTCDT 123456 Test '''')           
+         NAMING(*SQL)                                       
+         DSPOUTPUT(*YES)
+```
+Example of RUNSQLSRC inserting a record to QIWS/QCUSTCDT using source member with template parms   
+```
+RUNSQLSRC SRCFILE(QSHONI/SOURCE)                 
+          SRCMBR(SQLTEST4)                       
+          PARMS(@@LIB @@FILE @@CUSNUM @@LSTNAM)  
+          PARMVALS(QIWS QCUSTCDT 123456 Test)    
+          NAMING(*SQL)                           
+          DSPOUTPUT(*YES)                        
+```
+
 ```2/6/2025``` - Updated QSHQRYTMP and QSHQRYSRC SELECT query commands to allow selection of Naming (*SQL or *SYS) and can also add a unique ID column to the OUTFILE after it's created if you need a unique ID field for your OUTFILE.    
 
 # IBM Qshell/PASE Documentation
