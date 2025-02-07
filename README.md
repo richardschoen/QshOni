@@ -26,7 +26,7 @@ RUNSQLSRC SRCFILE(QSHONI/SOURCE)
           DSPOUTPUT(*YES)                        
 ```
 
-```2/6/2025``` - Updated QSHQRYTMP and QSHQRYSRC SELECT query commands to allow selection of Naming (*SQL or *SYS) and can also optionally add a unique ID column to the OUTFILE after it's created if you need a unique ID field for your OUTFILE. Also added ability to pass soft coded parameters to SQL statements or SQL statements in source members from CL programs.     
+```2/6/2025``` - Updated QSHQRYTMP and QSHQRYSRC SELECT SQL query commands to allow selection of Naming (*SQL or *SYS) and can also optionally add a unique ID column to the query results OUTFILE after it's created if a unique ID field is needed for your OUTFILE. Also added ability to pass soft coded parameters to SQL statements or SQL statements in source members from CL programs. This makes the queries much more dynamic when embedding in CL programs.     
 
 Example of QSHQRYTMP to select records from table QIWS/QCUSTCDT using soft coded file name parameter. This example also adds a unique ID to the outfile table after it's created.
 ```
