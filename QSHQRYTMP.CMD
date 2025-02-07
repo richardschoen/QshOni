@@ -1,6 +1,14 @@
              CMD        PROMPT('SQL Query Data to Temp Table')
              PARM       KWD(SQL) TYPE(*CHAR) LEN(5000) MIN(1) +
                           EXPR(*YES) CASE(*MIXED) PROMPT('SQL query')
+             PARM       KWD(PARMS) TYPE(*CHAR) LEN(100) RSTD(*NO) +
+                          MAX(30) EXPR(*YES) CASE(*MIXED) +
+                          INLPMTLEN(32) PROMPT('SQL placeholder +
+                          parm name')
+             PARM       KWD(PARMVALS) TYPE(*CHAR) LEN(100) RSTD(*NO) +
+                          MAX(30) EXPR(*YES) CASE(*MIXED) +
+                          INLPMTLEN(32) PROMPT('SQL parm +
+                          replacement value')
              PARM       KWD(OUTFILE) TYPE(QUAL2) MIN(0) MAX(1) +
                           PROMPT('Temp file to receive results')
              PARM       KWD(EMPTYERROR) TYPE(*CHAR) LEN(4) +
