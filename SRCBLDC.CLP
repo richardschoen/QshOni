@@ -16,6 +16,12 @@
              ADDLIBLE   LIB(&DESTLIB)
              MONMSG     MSGID(CPF0000)
 
+             /* Create temporary source file - 1.0.36 */
+             DLTF   FILE(QTEMP/TMPQRYSRC)
+             MONMSG     MSGID(CPF0000)
+             CRTSRCPF   FILE(QTEMP/TMPQRYSRC) RCDLEN(240)
+             MONMSG     MSGID(CPF0000)
+
              CRTCMD     CMD(&DESTLIB/QSHPATH) PGM(&DESTLIB/QSHPATHC) +
                           SRCFILE(&DESTLIB/&DESTFILE) PRDLIB(&DESTLIB)
 
