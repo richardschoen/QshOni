@@ -1,6 +1,10 @@
-             PGM        PARM(&SQLQUERY &OUTFILE &EMPTYERROR &NAMING +
-                          &PROMPT &CRTIDCOL &IDCOLNAME)
+             PGM        PARM(&SQLQUERY &PARMS &PARMVALS &OUTFILE +
+                          &EMPTYERROR &NAMING &PROMPT &CRTIDCOL +
+                          &IDCOLNAME)
 
+             DCL        VAR(&RTNERROR) TYPE(*CHAR) LEN(1)
+             DCL        VAR(&PARMS)  TYPE(*CHAR) LEN(3002)
+             DCL        VAR(&PARMVALS) TYPE(*CHAR) LEN(3002)
              DCL        VAR(&SQLQUAL) TYPE(*CHAR) LEN(1)
              DCL        VAR(&NAMING) TYPE(*CHAR) LEN(4)
              DCL        VAR(&IDCOLNAME) TYPE(*CHAR) LEN(30)
@@ -61,6 +65,28 @@
                           VAR(&SQLQUAL) VALUE('/'))
              IF         COND(&NAMING *NE *SYS) THEN(CHGVAR +
                           VAR(&SQLQUAL) VALUE('.'))
+
+             /* Replace parms in SQL statement */
+             CALL       PGM(QSHQRYTMPR) PARM((&SQLQUERY) (&PARMS) +
+                          (&PARMVALS) (&RTNERROR))
+
+             /* If rtnerror <> '0', bail out now     */
+             IF         COND(&RTNERROR *EQ '1') THEN(DO)
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Same +
+                          number of parms and parm values are +
+                          required to be passed') MSGTYPE(*ESCAPE)
+             ENDDO
+             IF         COND(&RTNERROR *EQ '2') THEN(DO)
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('At +
+                          least one parameter required error +
+                          occurred while processing SQL source +
+                          member parameters') MSGTYPE(*ESCAPE)
+             ENDDO
+             IF         COND(&RTNERROR *EQ '3') THEN(DO)
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Unknown +
+                          error occurred while handling parameters. +
+                          Check the joblog') MSGTYPE(*ESCAPE)
+             ENDDO
 
 /*----------------------------------------------------------------------------*/
 /* Drop the temp table if it exists                */
