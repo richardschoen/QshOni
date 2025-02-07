@@ -41,7 +41,10 @@
          // Assume that SQL source members are structured
          // as such.
          if %trim(srcdta) <> '';
-            p_SQL = %trim(p_SQL) +' ' + %trim(srcdta);
+           // Ignore comments
+           if %subst(srcdta:1:2) <> '--';
+               p_SQL = %trim(p_SQL) +' ' + %trim(srcdta);
+           endif;
          endif;
 
        enddo;
