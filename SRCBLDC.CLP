@@ -316,10 +316,9 @@
              CRTCMD     CMD(&DESTLIB/RUNSQLPRM) PGM(&DESTLIB/RUNSQLPRMC) +
                           SRCFILE(&DESTLIB/&DESTFILE) PRDLIB(&DESTLIB) /* 1.0.36 */
 
-             /* Create in DFTACTGRP, otherwise OVRPRTF doesn't work for reports */
-             CRTBNDCL     PGM(&DESTLIB/RUNSQLPRMC) +
+             CRTCLPGM     PGM(&DESTLIB/RUNSQLPRMC) +
                           SRCFILE(&DESTLIB/&DESTFILE) REPLACE(*NO) +
-                          TGTRLS(&TGTRLS) DFTACTGRP(*YES)  /* 1.0.36 */
+                          TGTRLS(&TGTRLS)  /* 1.0.36 */
 
              CRTBNDRPG  PGM(&DESTLIB/RUNSQLPRMR) +
                           SRCFILE(&DESTLIB/&DESTFILE) +
@@ -328,10 +327,9 @@
              CRTCMD     CMD(&DESTLIB/RUNSQLSRC) PGM(&DESTLIB/RUNSQLSRCC) +
                           SRCFILE(&DESTLIB/&DESTFILE) PRDLIB(&DESTLIB) /* 1.0.36 */
 
-             /* Create in DFTACTGRP, otherwise OVRPRTF doesn't work for reports */
-             CRTBNDCL     PGM(&DESTLIB/RUNSQLSRCC) +
+             CRTCLPGM     PGM(&DESTLIB/RUNSQLSRCC) +
                           SRCFILE(&DESTLIB/&DESTFILE) REPLACE(*NO) +
-                          TGTRLS(&TGTRLS) DFTACTGRP(*YES)  /* 1.0.36 */
+                          TGTRLS(&TGTRLS) /* 1.0.36 */
 
              CRTBNDRPG  PGM(&DESTLIB/RUNSQLSRCR) +
                           SRCFILE(&DESTLIB/&DESTFILE) +
