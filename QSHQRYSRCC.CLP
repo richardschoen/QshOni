@@ -1,7 +1,11 @@
-             PGM        PARM(&SRCFILE &SRCMBR &SQLIFSFILE &OUTFILE +
-                          &EMPTYERROR &NAMING &PROMPT &CRTIDCOL +
-                          &IDCOLNAME &DLTTMPSRC &SQLLOC)
+             PGM        PARM(&SRCFILE &SRCMBR &SQLIFSFILE &PARMS +
+                          &PARMVALS &OUTFILE &EMPTYERROR &NAMING +
+                          &PROMPT &CRTIDCOL &IDCOLNAME &DLTTMPSRC +
+                          &SQLLOC)
 
+             DCL        VAR(&RTNERROR) TYPE(*CHAR) LEN(1)
+             DCL        VAR(&PARMS)  TYPE(*CHAR) LEN(3002)
+             DCL        VAR(&PARMVALS) TYPE(*CHAR) LEN(3002)
              DCL        VAR(&SQLQUAL) TYPE(*CHAR) LEN(1)
              DCL        VAR(&NAMING) TYPE(*CHAR) LEN(4)
              DCL        VAR(&IDCOLNAME) TYPE(*CHAR) LEN(30)
@@ -53,6 +57,21 @@
                           |< &SQLSRCFILE |< '(' |< &SRCMBR |< ') is +
                           being used to run query') TOPGMQ(*SAME) +
                           MSGTYPE(*DIAG)
+
+             /* Delete temporary source file */
+             /* Make sure doesn't exist.     */
+             DLTF       FILE(QTEMP/TMPQRYSRC)
+             MONMSG     MSGID(CPF0000)
+
+             /* Create temporary source file */
+             CRTSRCPF   FILE(QTEMP/TMPQRYSRC) RCDLEN(240)
+             ADDPFM     FILE(QTEMP/TMPQRYSRC) MBR(TMPQRYSRC) +
+                          SRCTYPE(SQL)
+
+             /* Make snapshot of source member to QTEMP for our job */
+             CPYSRCF    FROMFILE(&SQLSRCLIB/&SQLSRCFILE) +
+                          TOFILE(QTEMP/TMPQRYSRC) FROMMBR(&SRCMBR) +
+                          TOMBR(TMPQRYSRC) MBROPT(*REPLACE)
 
              ENDDO        /* ENDDO *SRCMBR */
 
@@ -110,11 +129,38 @@
              ENDDO        /* ENDDO *IFSFILE */
 
 /*----------------------------------------------------------------------------*/
-/* Read SQL from source member */
+/* Read SQL from source member, scan and replace values */
+/* and update the temp SQL member file in QTEMP */
 /*----------------------------------------------------------------------------*/
-             OVRDBF     FILE(TMPSRCMBR) +
-                          TOFILE(&SQLSRCLIB/&SQLSRCFILE) +
-                          MBR(&SRCMBR) OVRSCOPE(*ACTGRPDFN)
+             OVRDBF     FILE(TMPQRYSRC) TOFILE(QTEMP/TMPQRYSRC) +
+                          MBR(*FIRST) OVRSCOPE(*ACTGRPDFN)
+             CALL       PGM(QSHQRYSR2R) PARM(&PARMS &PARMVALS +
+                          &RTNERROR)
+             DLTOVR     FILE(TMPQRYSRC) LVL(*ACTGRPDFN)
+
+             /* If rtnerror <> '0', bail out now     */
+             IF         COND(&RTNERROR *EQ '1') THEN(DO)
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Same +
+                          number of parms and parm values are +
+                          required to be passed') MSGTYPE(*ESCAPE)
+             ENDDO
+             IF         COND(&RTNERROR *EQ '2') THEN(DO)
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('At +
+                          least one parameter required error +
+                          occurred while processing SQL source +
+                          member parameters') MSGTYPE(*ESCAPE)
+             ENDDO
+             IF         COND(&RTNERROR *EQ '3') THEN(DO)
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Unknown +
+                          error occurred while handling parameters. +
+                          Check the joblog') MSGTYPE(*ESCAPE)
+             ENDDO
+
+/*----------------------------------------------------------------------------*/
+/* Read SQL from source member in QTEMP and compose final query               */
+/*----------------------------------------------------------------------------*/
+             OVRDBF     FILE(TMPSRCMBR) TOFILE(QTEMP/TMPQRYSRC) +
+                          MBR(*FIRST) OVRSCOPE(*ACTGRPDFN)
              CALL       PGM(QSHQRYSRCR) PARM(&SQLQUERY)
              DLTOVR     FILE(TMPSRCMBR) LVL(*ACTGRPDFN)
 
@@ -125,6 +171,7 @@
                           empty or has blank lines. Query +
                           cancelled') MSGTYPE(*ESCAPE)
              ENDDO
+
 /*----------------------------------------------------------------------------*/
 /* Parse outfile parm */
 /*----------------------------------------------------------------------------*/
