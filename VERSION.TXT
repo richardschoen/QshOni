@@ -253,8 +253,11 @@ V1.0.35 - 1/15/2025
 
 V1.0.36 - 2/5/2025
 -Added QSHQRYAID command. This command can be used to add a unique ID field to an output file (OUTFILE) created by the QSHQRYTMP or QSHQRYSRC commands.   
--Updated QSHQRYTMP command to allow optional adding of a unique ID field to the generated output file.   
--Updated QSHQRYSRC command to allow optional adding of a unique ID field to the generated output file.   
+
+-Updated QSHQRYTMP and QSHQRYSRC commands to allow passing of soft coded parameter values.   
+
+-Updated QSHQRYTMP and QSHQRYSRC commands to allow optional adding of a unique ID field to the generated output file.   
+
 -Added RUNSQLPRM command to allow for dynamically running SQL action statements with parameter value substitution. Great for running variable SQL action statements and commands from a CL program. Uses RUNSQL internally.
 
 Sample insert SQL command using replacement parameter markers
