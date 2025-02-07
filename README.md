@@ -733,7 +733,7 @@ The following example queries all the records from table QIWS/QCUSCTDT and place
 
 # QSHQRYSRC command parms
 
-**Overview** - This CL command is a convenience command that can be used to run an SQL data selection query and create an outfile of resulting data. Instead of an SQL input statemment parameter, the query pulls SQL source from a source member or IFS file member.  
+**Overview** - This CL command is a convenience command that can be used to run an SQL data selection query and create an outfile of resulting data. Instead of an SQL input statement parameter, the query pulls SQL source from a source member or IFS file member.  
 
 **SQLLOC** - Thie parameter determines if the SQL query is sourced from  a source member or an IFS file. Default is *SRCMBR.
 
@@ -761,7 +761,7 @@ Ex: ```QIWS``` for library or ```QCUSTCDT``` for file.
 
 **IDCOLNAME** - This parameter will allow naming of the new identify column if one is added. Default is ```RECID```.    
 
-**DLTTMPSRC** - This parameter determines if the temporary source member TMPQRYSRC created in temporary source file QTEMP/TMPQRYSRC gets deleted after query processing. 
+**DLTTMPSRC** - This parameter determines if the temporary source member TMPQRYSRC created in temporary source file QTEMP/TMPQRYSRC gets deleted after query processing. Default is *YES.
 
 Note: The following data areas are auto-created in the current job library QTEMP to track resulting query info. You can retreive a resulting record count or the name of the outfile to check for existence in case it didn't get created for some reason such as query failure.   
 ```
