@@ -26,7 +26,26 @@ RUNSQLSRC SRCFILE(QSHONI/SOURCE)
           DSPOUTPUT(*YES)                        
 ```
 
-```2/6/2025``` - Updated QSHQRYTMP and QSHQRYSRC SELECT query commands to allow selection of Naming (*SQL or *SYS) and can also add a unique ID column to the OUTFILE after it's created if you need a unique ID field for your OUTFILE.    
+```2/6/2025``` - Updated QSHQRYTMP and QSHQRYSRC SELECT query commands to allow selection of Naming (*SQL or *SYS) and can also optionally add a unique ID column to the OUTFILE after it's created if you need a unique ID field for your OUTFILE. Also added ability to pass soft coded parameters to SQL statements or SQL statements in source members from CL programs.     
+
+Example of QSHQRYTMP to select records from table QIWS/QCUSTCDT using soft coded file name parameter. This example also adds a unique ID to the outfile table after it's created.
+```
+QSHQRYTMP SQL('select * from @@LIB.@@FILE')      
+         PARMS(@@LIB @@FILE)                    
+         PARMVALS(QIWS QCUSTCDT)
+         OUTFILE(QTEMP/SQLTMP0001)
+         CRTIDCOL(*YES)
+```
+
+Example of QSHQRYSRC to select records from table QIWS/QCUSTCDT using soft coded file name parameters in source member SQLTEST3. This example also adds a unique ID to the outfile table after it's created.
+```
+QSHQRYSRC SRCFILE(QSHONI/SOURCE)   
+          SRCMBR(SQLTEST3)         
+          PARMS(@@LIB @@FILE)      
+          PARMVALS(QIWS QCUSTCDT)
+          OUTFILE(QTEMP/SQLTMP0001)
+          CRTIDCOL(*YES)
+```
 
 # IBM Qshell/PASE Documentation
 The following IBM links take yot to documentation on the Qshell and PASE environments from IBM     
