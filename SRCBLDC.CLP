@@ -111,6 +111,11 @@
                           SRCFILE(&DESTLIB/&DESTFILE) REPLACE(*NO) +
                           TGTRLS(&TGTRLS) /* V1.0.8 */
 
+             CRTBNDRPG  PGM(&DESTLIB/QSHQRYTMPR) +
+                          SRCFILE(&DESTLIB/&DESTFILE) +
+                          SRCMBR(QSHQRYTMPR) DFTACTGRP(*NO) +
+                          REPLACE(*NO) TGTRLS(&TGTRLS)  /* 1.0.36 */
+
              CRTCMD     CMD(&DESTLIB/QSHSETPROF) +
                           PGM(&DESTLIB/QSHSETPROC) +
                           SRCFILE(&DESTLIB/&DESTFILE) +
@@ -306,6 +311,11 @@
                           SRCFILE(&DESTLIB/&DESTFILE) +
                           SRCMBR(QSHQRYSRCR) DFTACTGRP(*NO) +
                           REPLACE(*NO) TGTRLS(&TGTRLS) /* 1.0.32 */
+
+             CRTBNDRPG  PGM(&DESTLIB/QSHQRYSR2R) +
+                          SRCFILE(&DESTLIB/&DESTFILE) +
+                          SRCMBR(QSHQRYSR2R) DFTACTGRP(*NO) +
+                          REPLACE(*NO) TGTRLS(&TGTRLS)  /* 1.0.36 */
 
               CRTCMD     CMD(&DESTLIB/QSHIFSSCAN) +
                           PGM(&DESTLIB/QSHIFSSCAC) +
