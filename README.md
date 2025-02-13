@@ -95,7 +95,7 @@ https://github.com/richardschoen/QshOni/tree/master/samples
 ***(Important to change SRCCCSID variable in build.sh to your local CCSID before running build.sh. Default=37)***
 
 Use the following install script if you want to run a single shell script to clone the repo and build the library.  
-https://github.com/richardschoen/QshOni/refs/heads/master/getrepo-qshoni.sh   
+https://github.com/richardschoen/QshOni/raw/refs/heads/master/getrepo-qshoni.sh   
 
 ## Download and run the getrepo-qshoni.sh script in one step, using wget
 ❗This is the easiest way to install QSHONI. Run the following wget command to download, build and install QSHONI quickly in a single step.   
