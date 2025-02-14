@@ -48,7 +48,7 @@ QSHQRYSRC SRCFILE(QSHONI/SOURCE)
 ```
 
 # IBM Qshell/PASE Documentation
-The following IBM links take yot to documentation on the Qshell and PASE environments from IBM     
+The following IBM links take you to documentation on the Qshell and PASE environments from IBM     
 
 IBM PASE for i      
 https://www.ibm.com/docs/en/i/7.5?topic=programming-pase-i
