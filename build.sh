@@ -16,7 +16,7 @@ function cpy_member
 # Copy source member and set source type
 # ----------------------------------------------------------------
   SRCMEMBER=`echo "${CURFILE^^}" | cut -d'.' -f1`  # Parse PC file name prefix to member name
-  SRCTYPE=`echo "${CURFILE^^}" | cut -d'.' -f2`    # Parse PC file name extenstion to souce type
+  SRCTYPE=`echo "${CURFILE^^}" | cut -d'.' -f2`    # Parse PC file name extension to source type
   system -v "CPYFRMSTMF FROMSTMF('${PWD}/${CURFILE}') TOMBR('/QSYS.LIB/${SRCLIB}.LIB/${SRCFILE}.FILE/${SRCMEMBER}.MBR') MBROPT(*REPLACE) DBFCCSID(*FILE)"
   system -v "CHGPFM FILE(${SRCLIB}/${SRCFILE}) MBR($SRCMEMBER) SRCTYPE(${SRCTYPE}) TEXT('${SRCTEXT}')" 
 }
@@ -31,11 +31,11 @@ system -v "CRTSRCPF FILE(${SRCLIB}/${SRCFILE}) RCDLEN(120) CCSID(${SRCCCSID})"
 
 # Copy all the source members and set source types
 CURFILE="QSHBASH.CMD"
-SRCTEXT="Run Bash Command via Qshell"
+SRCTEXT="Run Bash Command via QShell"
 cpy_member
 
 CURFILE="QSHBASHC.CLLE"              
-SRCTEXT="Run Bash Command via Qshell"                            
+SRCTEXT="Run Bash Command via QShell"                            
 cpy_member
 
 CURFILE="QSHEXEC.CMD"                
@@ -83,11 +83,11 @@ SRCTEXT="Check for IFS File Existence"
 cpy_member
 
 CURFILE="QSHPYRUN.CMD"
-SRCTEXT="Run Python Script via Qshell"
+SRCTEXT="Run Python Script via QShell"
 cpy_member
 
 CURFILE="QSHPYRUNC.CLLE"
-SRCTEXT="Run Python Script via Qshell"
+SRCTEXT="Run Python Script via QShell"
 cpy_member
 
 CURFILE="QSHDEMO01R.RPGLE"
@@ -183,11 +183,11 @@ SRCTEXT="Execute db2util Query to IFS Output File via bash"
 cpy_member
 
 CURFILE="QSHPYCALL.CMD"
-SRCTEXT="Run Python Script via Qshell and Return Parms"
+SRCTEXT="Run Python Script via QShell and Return Parms"
 cpy_member
 
 CURFILE="QSHPYCALLC.CLLE"
-SRCTEXT="Run Python Script via Qshell and Return Parms"
+SRCTEXT="Run Python Script via QShell and Return Parms"
 cpy_member
 
 CURFILE="QSHPYCALLT.CLLE"
@@ -195,11 +195,11 @@ SRCTEXT="Test Call to QSHPYCALL"
 cpy_member
 
 CURFILE="QSHGETPARM.CMD"
-SRCTEXT="Scan Qshell Log File for Parameter Values"
+SRCTEXT="Scan QShell Log File for Parameter Values"
 cpy_member
 
 CURFILE="QSHGETPARR.RPGLE"
-SRCTEXT="Run Python Script via Qshell and Return Parms"
+SRCTEXT="Run Python Script via QShell and Return Parms"
 cpy_member
 
 CURFILE="QSHPHPRUN.CMD"
