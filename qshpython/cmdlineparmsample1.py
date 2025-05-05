@@ -167,6 +167,7 @@ except SystemExit as ex:
      ###Enable the following for detailed trace
      ###print('Traceback Info') # output traceback info for stdout
      ###traceback.print_exc()      
+     sys.exit(ex.code)
 
 except argparse.ArgumentError as exc:
      exitcode=99 # set return code for stdout
