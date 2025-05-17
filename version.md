@@ -234,10 +234,11 @@ before launching and thread jobs.
  entry on the command.  
                                                                  
  Sample command to query QIWS.QCUSTCDT via SQLTEST1 source member:
- QSHONI/QSHQRYSRC SQLLOC(*SRCMBR)
+ ```
+QSHONI/QSHQRYSRC SQLLOC(*SRCMBR)
                  SRCFILE(QSHONI/SOURCE)
                  SRCMBR(SQLTEST1)
-                                                                 
+```                                                                
 - Updated QSHQRYTMP command to make sure prompting works for SQL
  statement if Prompt=*YES.  
 
@@ -263,17 +264,15 @@ before launching and thread jobs.
 - Added RUNSQLPRM command to allow for dynamically running SQL action statements with parameter value substitution. Great for running variable SQL action statements and commands from a CL program. Uses RUNSQL internally.
 
 Sample insert SQL command using replacement parameter markers
+```
 RUNSQLPRM SQL('insert into qiws/qcustcdt (cusnum,lstnam) values(@@CUSNUM,''@@LSTNAM'')')                  
           PARMS(@@CUSNUM @@LSTNAM)                          
           PARMVALS(55 Schoen)                               
           PROMPT(*YES)
+```
 
 - Added RUNSQLSRC command to allow for dynamically running SQL action scripts from source with parameter value substitution. Great for running variable SQL action statements and commands in an SQL script stored in a source member from a CL program. Uses RUNSQLSTM internally.
 
 ## V1.0.37 - 5/16/2025
 - Added QSHGETPR2 command. This command is an enhanced version of the QSHGETPARM command that can be used to get STDOUT return parameters from the call to QSHEXEC/QSHBASH and also write them to the joblog as *DIAG messages or write to auto-created temporary data areas in QTEMP (or another specified library). Data areas are named: RTNPARMxx (RTNPAMR01-RTNPARM10). There is a max of 10 returned parameters currently. See V1.0.25 for additional definition on this functionality. 
 The base use case is: The developer can send return parms from the QSH/PASE call back into the regular job so they can be consumed/utilized form the original CL/RPG calling program.
-
-
-
-
