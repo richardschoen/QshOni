@@ -2,6 +2,10 @@
              PARM       KWD(SCRIPTDIR) TYPE(*CHAR) LEN(255) MIN(1) +
                           EXPR(*YES) CASE(*MIXED) PROMPT('PHP +
                           script directory')
+             PARM       KWD(CHGSCRDIR) TYPE(*CHAR) LEN(4) RSTD(*YES) +
+                          DFT(*NO) VALUES(*NO *YES) EXPR(*YES) +
+                          CASE(*MIXED) PROMPT('Change to script +
+                          directory')
              PARM       KWD(SCRIPTFILE) TYPE(*CHAR) LEN(255) MIN(1) +
                           EXPR(*YES) CASE(*MIXED) PROMPT('PHP +
                           script file name')
@@ -9,6 +13,10 @@
                           MAX(40) EXPR(*YES) CASE(*MIXED) +
                           INLPMTLEN(32) PROMPT('PHP command line +
                           arguments')
+             PARM       KWD(ARGDLM) TYPE(*CHAR) LEN(1) +
+                          DFT(*DBLQUOTE) SPCVAL((*DBLQUOTE '"') +
+                          (*SGLQUOTE '''') (*NONE '')) +
+                          PROMPT('Command line arg delimiter')
              PARM       KWD(PHPPATH) TYPE(*CHAR) LEN(255) +
                           DFT(*DEFAULT) +
                           SPCVAL(('/QOpenSys/pkgs/bin' +
@@ -68,10 +76,6 @@
              PARM       KWD(DEBUGCMD) TYPE(*CHAR) LEN(4) RSTD(*YES) +
                           DFT(*NO) VALUES(*NO *YES) EXPR(*YES) +
                           CASE(*MIXED) PROMPT('Debug QSHEXEC command')
-             PARM       KWD(CHGSCRDIR) TYPE(*CHAR) LEN(4) RSTD(*YES) +
-                          DFT(*NO) VALUES(*NO *YES) EXPR(*YES) +
-                          CASE(*MIXED) PROMPT('Change to script +
-                          directory')
  QUAL2:      QUAL       TYPE(*NAME) LEN(10) DFT(*SAME) +
                           SPCVAL((*SAME)) EXPR(*YES)
              QUAL       TYPE(*NAME) LEN(10) DFT(*LIBL) +
