@@ -199,7 +199,15 @@ SRCTEXT="Scan QShell Log File for Parameter Values"
 cpy_member
 
 CURFILE="QSHGETPARR.RPGLE"
-SRCTEXT="Run Python Script via QShell and Return Parms"
+SRCTEXT="Scan QShell Log File for Parameter Values"
+cpy_member
+
+CURFILE="QSHGETPR2.CMD"
+SRCTEXT="Scan Qshell Log File for Parm Values V2"
+cpy_member
+
+CURFILE="QSHGETPR2.CLLE"
+SRCTEXT="Scan Qshell Log File for Parm Values V2"
 cpy_member
 
 CURFILE="QSHPHPRUN.CMD"
