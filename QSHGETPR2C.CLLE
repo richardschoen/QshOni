@@ -1,0 +1,151 @@
+             PGM        PARM(&RTNPARM01 &RTNPARM02 &RTNPARM03 +
+                          &RTNPARM04 &RTNPARM05 &RTNPARM06 +
+                          &RTNPARM07 &RTNPARM08 &RTNPARM09 +
+                          &RTNPARM10 &WRTDIAGMSG &WRTDTAARA &DTAARALIB)
+
+             DCL        VAR(&DTAARALIB) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&WRTDIAGMSG) TYPE(*CHAR) LEN(4)
+             DCL        VAR(&WRTDTAARA) TYPE(*CHAR) LEN(4)
+             DCL        VAR(&RTNPARM01) TYPE(*CHAR) LEN(255)
+             DCL        VAR(&RTNPARM02) TYPE(*CHAR) LEN(255)
+             DCL        VAR(&RTNPARM03) TYPE(*CHAR) LEN(255)
+             DCL        VAR(&RTNPARM04) TYPE(*CHAR) LEN(255)
+             DCL        VAR(&RTNPARM05) TYPE(*CHAR) LEN(255)
+             DCL        VAR(&RTNPARM06) TYPE(*CHAR) LEN(255)
+             DCL        VAR(&RTNPARM07) TYPE(*CHAR) LEN(255)
+             DCL        VAR(&RTNPARM08) TYPE(*CHAR) LEN(255)
+             DCL        VAR(&RTNPARM09) TYPE(*CHAR) LEN(255)
+             DCL        VAR(&RTNPARM10) TYPE(*CHAR) LEN(255)
+
+             MONMSG     MSGID(CPF0000) EXEC(GOTO CMDLBL(ERRORS))
+
+             /* Create temporary data areas for capturing */
+             /* return values if desired.                 */
+             IF         COND(&WRTDTAARA *EQ *YES) THEN(DO)
+
+             CRTDTAARA  DTAARA(&DTAARALIB/RTNPARM01) TYPE(*CHAR) LEN(255) +
+                          TEXT('STDOUT Return parm 01')
+             MONMSG     MSGID(CPF0000)
+             CHGDTAARA  DTAARA(&DTAARALIB/RTNPARM01 *ALL) VALUE(' ')
+
+             CRTDTAARA  DTAARA(&DTAARALIB/RTNPARM02) TYPE(*CHAR) LEN(255) +
+                          TEXT('STDOUT Return parm 02')
+             MONMSG     MSGID(CPF0000)
+             CHGDTAARA  DTAARA(&DTAARALIB/RTNPARM02 *ALL) VALUE(' ')
+
+             CRTDTAARA  DTAARA(&DTAARALIB/RTNPARM03) TYPE(*CHAR) LEN(255) +
+                          TEXT('STDOUT Return parm 03')
+             MONMSG     MSGID(CPF0000)
+             CHGDTAARA  DTAARA(&DTAARALIB/RTNPARM03 *ALL) VALUE(' ')
+
+             CRTDTAARA  DTAARA(&DTAARALIB/RTNPARM04) TYPE(*CHAR) LEN(255) +
+                          TEXT('STDOUT Return parm 04')
+             MONMSG     MSGID(CPF0000)
+             CHGDTAARA  DTAARA(&DTAARALIB/RTNPARM04 *ALL) VALUE(' ')
+
+             CRTDTAARA  DTAARA(&DTAARALIB/RTNPARM05) TYPE(*CHAR) LEN(255) +
+                          TEXT('STDOUT Return parm 05')
+             MONMSG     MSGID(CPF0000)
+             CHGDTAARA  DTAARA(&DTAARALIB/RTNPARM05 *ALL) VALUE(' ')
+
+             CRTDTAARA  DTAARA(&DTAARALIB/RTNPARM06) TYPE(*CHAR) LEN(255) +
+                          TEXT('STDOUT Return parm 06')
+             MONMSG     MSGID(CPF0000)
+             CHGDTAARA  DTAARA(&DTAARALIB/RTNPARM06 *ALL) VALUE(' ')
+
+             CRTDTAARA  DTAARA(&DTAARALIB/RTNPARM07) TYPE(*CHAR) LEN(255) +
+                          TEXT('STDOUT Return parm 07')
+             MONMSG     MSGID(CPF0000)
+             CHGDTAARA  DTAARA(&DTAARALIB/RTNPARM07 *ALL) VALUE(' ')
+
+             CRTDTAARA  DTAARA(&DTAARALIB/RTNPARM08) TYPE(*CHAR) LEN(255) +
+                          TEXT('STDOUT Return parm 08')
+             MONMSG     MSGID(CPF0000)
+             CHGDTAARA  DTAARA(&DTAARALIB/RTNPARM08 *ALL) VALUE(' ')
+
+             CRTDTAARA  DTAARA(&DTAARALIB/RTNPARM09) TYPE(*CHAR) LEN(255) +
+                          TEXT('STDOUT Return parm 09')
+             MONMSG     MSGID(CPF0000)
+             CHGDTAARA  DTAARA(&DTAARALIB/RTNPARM09 *ALL) VALUE(' ')
+
+             CRTDTAARA  DTAARA(&DTAARALIB/RTNPARM10) TYPE(*CHAR) LEN(255) +
+                          TEXT('STDOUT Return parm 10')
+             MONMSG     MSGID(CPF0000)
+             CHGDTAARA  DTAARA(&DTAARALIB/RTNPARM10 *ALL) VALUE(' ')
+
+             ENDDO
+
+             /* Get the return parms if any in STDOUT */
+             QSHONI/QSHGETPARM RETURN01(&RTNPARM01) +
+                          RETURN02(&RTNPARM02) RETURN03(&RTNPARM03) +
+                          RETURN04(&RTNPARM04) RETURN05(&RTNPARM05) +
+                          RETURN06(&RTNPARM06) RETURN07(&RTNPARM07) +
+                          RETURN08(&RTNPARM08) RETURN09(&RTNPARM09) +
+                          RETURN10(&RTNPARM10)
+
+             /* Write diagnostic messages to joblog */
+             IF         COND(&WRTDIAGMSG *EQ *YES) THEN(DO)
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) +
+                          MSGDTA('RETURN01:' |> &RTNPARM01) +
+                          TOPGMQ(*SAME) MSGTYPE(*DIAG)
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) +
+                          MSGDTA('RETURN02:' |> &RTNPARM02) +
+                          TOPGMQ(*SAME) MSGTYPE(*DIAG)
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) +
+                          MSGDTA('RETURN03:' |> &RTNPARM03) +
+                          TOPGMQ(*SAME) MSGTYPE(*DIAG)
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) +
+                          MSGDTA('RETURN04:' |> &RTNPARM04) +
+                          TOPGMQ(*SAME) MSGTYPE(*DIAG)
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) +
+                          MSGDTA('RETURN05:' |> &RTNPARM05) +
+                          TOPGMQ(*SAME) MSGTYPE(*DIAG)
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) +
+                          MSGDTA('RETURN06:' |> &RTNPARM06) +
+                          TOPGMQ(*SAME) MSGTYPE(*DIAG)
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) +
+                          MSGDTA('RETURN07:' |> &RTNPARM07) +
+                          TOPGMQ(*SAME) MSGTYPE(*DIAG)
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) +
+                          MSGDTA('RETURN08:' |> &RTNPARM08) +
+                          TOPGMQ(*SAME) MSGTYPE(*DIAG)
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) +
+                          MSGDTA('RETURN09:' |> &RTNPARM09) +
+                          TOPGMQ(*SAME) MSGTYPE(*DIAG)
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) +
+                          MSGDTA('RETURN10:' |> &RTNPARM10) +
+                          TOPGMQ(*SAME) MSGTYPE(*DIAG)
+             ENDDO
+
+             /* Set return parm data areas and write to joblog    */
+             /* in case we want to debug or use the return values */
+             IF         COND(&WRTDTAARA *EQ *YES) THEN(DO)
+             CHGDTAARA  DTAARA(&DTAARALIB/RTNPARM01 *ALL) +
+                          VALUE(&RTNPARM01)
+             CHGDTAARA  DTAARA(&DTAARALIB/RTNPARM02 *ALL) +
+                          VALUE(&RTNPARM02)
+             CHGDTAARA  DTAARA(&DTAARALIB/RTNPARM03 *ALL) +
+                          VALUE(&RTNPARM03)
+             CHGDTAARA  DTAARA(&DTAARALIB/RTNPARM04 *ALL) +
+                          VALUE(&RTNPARM04)
+             CHGDTAARA  DTAARA(&DTAARALIB/RTNPARM05 *ALL) +
+                          VALUE(&RTNPARM05)
+             CHGDTAARA  DTAARA(&DTAARALIB/RTNPARM06 *ALL) +
+                          VALUE(&RTNPARM06)
+             CHGDTAARA  DTAARA(&DTAARALIB/RTNPARM07 *ALL) +
+                          VALUE(&RTNPARM07)
+             CHGDTAARA  DTAARA(&DTAARALIB/RTNPARM08 *ALL) +
+                          VALUE(&RTNPARM08)
+             CHGDTAARA  DTAARA(&DTAARALIB/RTNPARM09 *ALL) +
+                          VALUE(&RTNPARM09)
+             CHGDTAARA  DTAARA(&DTAARALIB/RTNPARM10 *ALL) +
+                          VALUE(&RTNPARM10)
+             ENDDO
+
+             RETURN
+
+ERRORS:
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Errors +
+                          occurred')
+
+             ENDPGM
