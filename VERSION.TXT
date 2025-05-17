@@ -1,3 +1,7 @@
+Version content has been transferred to: version.md   
+
+This file will become stale so check out version.md     
+--------------------------------------------------------  
 V1.0.1 - 8/18/019
 -Initial build
 
