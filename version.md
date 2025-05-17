@@ -279,14 +279,9 @@ The base use case is: The developer can send return parms from the QSH/PASE call
 
 - Updated ```QSHPHPRUN```, ```QSHPYRUN``` and ```QSHPYCALL``` commands to include a parameter to make implied double quotes optional for the 40 parameter agument values. Parameter delimiter values are still set to double quote by default for compatability, but can be omitted by setting to *NONE if you want full control of the argument formatting from your CL or RPG code. 
 
-- Example of specifying ```*DBLQUOTE``` for the ```ARMDLM``` parameter to control the parameter delimiter used for ```QSHPHPRUN```, ```QSHPYRUN``` and ```QSHPYCALL```:       
+- Example of specifying ```*DBLQUOTE``` for the ```ARMDLM``` parameter to control the parameter delimiter used for ```QSHPHPRUN```, ```QSHPYRUN``` and ```QSHPYCALL```: 
 If you pass a value of: ```PARM VALUE 01``` it will get automatically paired with double quotes like this: ```"PARM VALUE 01"```.       
 
-- Example of specifying ```*NONE``` for the ```ARMDLM``` parameter to fully control where you want quotes in your parameters for ```QSHPHPRUN```, ```QSHPYRUN``` and ```QSHPYCALL```:              
+- Example of specifying ```*NONE``` for the ```ARMDLM``` parameter to fully control where you want quotes in your parameters for ```QSHPHPRUN```, ```QSHPYRUN``` and ```QSHPYCALL```:  
 If you pass a value of: ```--parm01="PARM VALUE 01"``` it will stay as originally formatted with quotes left in place where you put them when passed to the python command line, therefore the parameter will get passed to Python as desired.       
-
-
-
-
-
 
