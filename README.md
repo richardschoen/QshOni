@@ -59,7 +59,7 @@ https://www.ibm.com/docs/en/i/7.5?topic=languages-qshell
 
 
 # Check latest version info (Current Version 1.0.37 - 5/17/2025)  
-https://github.com/richardschoen/QshOni/blob/master/VERSION.TXT   
+https://github.com/richardschoen/QshOni/blob/master/version.md    
 
 ```
 1.0.33 - Updated QSHIFSSIZ with stat64 to support up to 15 digit numeric return.
