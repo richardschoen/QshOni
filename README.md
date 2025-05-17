@@ -5,6 +5,9 @@ The main benefit of this wrapper is to be able to integrate Qshell/Pase applicat
 
 There are several ways to build the library. Pick your favorite.
 
+# Library Build Note
+❗ If you get an error running ```build.sh``` you may need to run ```dos2unix build.sh``` to convert CR/LF to LF in the build.sh file. You must first have ```dos2unix``` installed via the IBM i open source package management.  Please open an issue to let me know if you run into this problem.
+
 # News
 ```5/17/2025``` - New command ```QSHGETPR2``` can be used to retreive STDOUT return values to the calling job. You can optionally write the RTNPARMxx values as *DIAG messages to the joblog or to data areas for use with other calling programs.     
 ```5/17/2025``` - Updated ```QSHPHPRUN```, ```QSHPYRUN``` and ```QSHPYCALL``` to make double quotes optional for command line parameter arguments. Still defaults to double quotes for backward compatability.  
