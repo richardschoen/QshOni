@@ -206,7 +206,7 @@ CURFILE="QSHGETPR2.CMD"
 SRCTEXT="Scan Qshell Log File for Parm Values V2"
 cpy_member
 
-CURFILE="QSHGETPR2.CLLE"
+CURFILE="QSHGETPR2C.CLLE"
 SRCTEXT="Scan Qshell Log File for Parm Values V2"
 cpy_member
 
