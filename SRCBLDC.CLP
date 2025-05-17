@@ -7,7 +7,7 @@
              DCL        VAR(&TGTRLS) TYPE(*CHAR) LEN(10) +
                           VALUE(*CURRENT)
              DCL        VAR(&VERSION) TYPE(*CHAR) LEN(30) +
-                          VALUE(V1.0.36)
+                          VALUE(V1.0.37)
              DCL        VAR(&QSHPYTHON) TYPE(*CHAR) LEN(255)
              DCL        VAR(&CMD) TYPE(*CHAR) LEN(512)
              DCL        VAR(&LEN) TYPE(*DEC) LEN(15 5)
@@ -189,6 +189,17 @@
                           SRCFILE(&DESTLIB/&DESTFILE) +
                           SRCMBR(QSHGETPARR) DFTACTGRP(*NO) +
                           REPLACE(*NO) TGTRLS(&TGTRLS) /* 1.0.25 */
+
+             CRTCMD     CMD(&DESTLIB/QSHGETPR2) +
+                          PGM(&DESTLIB/QSHGETPR2C) +
+                          SRCFILE(&DESTLIB/&DESTFILE) ALLOW(*IPGM +
+                          *BPGM *IMOD *BMOD) PRDLIB(&DESTLIB) /* +
+                          1.0.37 */
+
+             CRTBNDCL   PGM(&DESTLIB/QSHGETPR2C) +
+                          SRCFILE(&DESTLIB/&DESTFILE) +
+                          DFTACTGRP(*YES) REPLACE(*NO) +
+                          TGTRLS(&TGTRLS) /* 1.0.37 */
 
              CRTCMD     CMD(&DESTLIB/QSHPYCALL) +
                           PGM(&DESTLIB/QSHPYCALLC) +
