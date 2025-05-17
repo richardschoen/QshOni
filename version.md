@@ -276,4 +276,17 @@ RUNSQLPRM SQL('insert into qiws/qcustcdt (cusnum,lstnam) values(@@CUSNUM,''@@LST
 ## V1.0.37 - 5/16/2025
 - Added QSHGETPR2 command. This command is an enhanced version of the QSHGETPARM command that can be used to get STDOUT return parameters from the call to QSHEXEC/QSHBASH and also write them to the joblog as *DIAG messages or write to auto-created temporary data areas in QTEMP (or another specified library). Data areas are named: RTNPARMxx (RTNPAMR01-RTNPARM10). There is a max of 10 returned parameters currently. See V1.0.25 for additional definition on this functionality. 
 The base use case is: The developer can send return parms from the QSH/PASE call back into the regular job so they can be consumed/utilized form the original CL/RPG calling program.
-- Updated ```QSHPHPRUN```, ```QSHPYRUN``` and ```QSHPYCALL``` commands to include a parameter to make implied double quotes optional for the 40 parameter agument values. Parameter delimiter are still set to double quote by default for compatability, but can be omitted by setting to *NONE if you want full control of the argument formatting from your CL or RPG code. 
+
+- Updated ```QSHPHPRUN```, ```QSHPYRUN``` and ```QSHPYCALL``` commands to include a parameter to make implied double quotes optional for the 40 parameter agument values. Parameter delimiter values are still set to double quote by default for compatability, but can be omitted by setting to *NONE if you want full control of the argument formatting from your CL or RPG code. 
+
+- Example of specifying ```*DBLQUOTE``` for the ```ARMDLM``` parameter to control the parameter delimiter used for ```QSHPHPRUN```, ```QSHPYRUN``` and ```QSHPYCALL```:       
+If you pass a value of: ```PARM VALUE 01``` it will get automatically paired with double quotes like this: ```"PARM VALUE 01"```.       
+
+- Example of specifying ```*NONE``` for the ```ARMDLM``` parameter to fully control where you want quotes in your parameter for ```QSHPHPRUN```, ```QSHPYRUN``` and ```QSHPYCALL```:              
+If you pass a value of: ```--parm01="PARM VALUE 01"``` it will stay as originally formatted when passed to the python command line, therefore the parameter will get passed to Python as desired.       
+
+
+
+
+
+
