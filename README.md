@@ -6,8 +6,8 @@ The main benefit of this wrapper is to be able to integrate Qshell/Pase applicat
 There are several ways to build the library. Pick your favorite.
 
 # News
-```5/17/2025``` - New command QSHGETPR2 can be used to retreive STDOUT return values to the calling job. You can optionally write the RTNPARMxx values as *DIAG messages to the joblog or to data areas for use with other calling programs.     
-```5/17/2025``` - Updated QSHPHPRUN, QSHPYRUN and QSHPYCALL to make double quotes optional for command line parameter arguments. Still defaults to double quotes for backward compatability.  
+```5/17/2025``` - New command ```QSHGETPR2``` can be used to retreive STDOUT return values to the calling job. You can optionally write the RTNPARMxx values as *DIAG messages to the joblog or to data areas for use with other calling programs.     
+```5/17/2025``` - Updated ```QSHPHPRUN```, ```QSHPYRUN``` and ```QSHPYCALL``` to make double quotes optional for command line parameter arguments. Still defaults to double quotes for backward compatability.  
 ```2/6/2025``` - New dynamic RUNSQLPRM and RUNSQLSRC SQL action commands added. Allows passing soft coded parameters to SQL statements or SQL statements in source members from CL programs.     
 
 Example of RUNSQLPRM inserting a record to QIWS/QCUSTCDT by passing SQL statement template and parms.   
