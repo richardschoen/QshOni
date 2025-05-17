@@ -283,7 +283,7 @@ The base use case is: The developer can send return parms from the QSH/PASE call
 If you pass a value of: ```PARM VALUE 01``` it will get automatically paired with double quotes like this: ```"PARM VALUE 01"```.       
 
 - Example of specifying ```*NONE``` for the ```ARMDLM``` parameter to fully control where you want quotes in your parameter for ```QSHPHPRUN```, ```QSHPYRUN``` and ```QSHPYCALL```:              
-If you pass a value of: ```--parm01="PARM VALUE 01"``` it will stay as originally formatted when passed to the python command line, therefore the parameter will get passed to Python as desired.       
+If you pass a value of: ```--parm01="PARM VALUE 01"``` it will stay as originally formatted with quotes left in place where you put them when passed to the python command line, therefore the parameter will get passed to Python as desired.       
 
 
 
