@@ -1,0 +1,452 @@
+:pnlgrp.
+.************************************************************************
+.*  Help for command QSHEXEC
+.************************************************************************
+:help name='QSHEXEC'.
+Run Qshell Command Line - Help
+:p.The Run Qshell Command Line (QSHEXEC) command can be used to run a QSH/PASE command and log the results appropriately.
+.* Describe the function provided by the command.
+:p.```Stdout Logging Note:``` During execution, the CL command always creates a temporary outfile in library QTEMP 
+that gets automatically populated with standard output (stdout) from the QSH/PASE command process that gets run. 
+The temporary stdout output file name is: ```QTEMP/STDOUTQSH```. If the file already exists for a subsequent run of the 
+command, the ```QTEMP/STDOUTQSH``` temporary file is automatically cleared before running so each run gets a fresh 
+copy of ```QTEMP/STDOUTQSH```. The ```QTEMP/STDOUTQSH``` temp file gets created automatically always, 
+even if none of the switches such as: ```DSPSTDOUT, LOGSTDOUT, PRTSTDOUT or IFSSTDOUT``` are specified. 
+:ehelp.
+.*******************************************
+.*   Help for parameter CMDLINE
+.*******************************************
+:help name='QSHEXEC/CMDLINE'.
+QSH command line (CMDLINE) - Help
+:xh3.QSH command line (CMDLINE)
+:p.Specifies the Qsh/Pase command line sequence to run. Semicolons can be used to run multiple commands.
+.* Describe the function provided by the parameter.
+:p.This is a required parameter.
+:parml.
+:pt.:pv.character-value:epv.
+:pd.
+Specify the <...>
+.* Describe the function provided by the user-defined parameter value.
+:eparml.
+:ehelp.
+.*******************************************
+.*   Help for parameter SETPKGPATH
+.*******************************************
+:help name='QSHEXEC/SETPKGPATH'.
+Set QOpenSys yum package path (SETPKGPATH) - Help
+:xh3.Set QOpenSys yum package path (SETPKGPATH)
+:p.Specifies <...>
+.* Describe the function provided by the parameter.
+:parml.
+:pt.:pk.*NO:epk.
+:pd.
+<...> 
+.* Describe the function provided by the pre-defined parameter value.
+:pt.:pk def.*YES:epk.
+:pd.
+<...> 
+.* Describe the function provided by the pre-defined parameter value.
+:eparml.
+:ehelp.
+.*******************************************
+.*   Help for parameter DSPSTDOUT
+.*******************************************
+:help name='QSHEXEC/DSPSTDOUT'.
+Display standard output result (DSPSTDOUT) - Help
+:xh3.Display standard output result (DSPSTDOUT)
+:p.Specifies <...>
+.* Describe the function provided by the parameter.
+:parml.
+:pt.:pk def.*NO:epk.
+:pd.
+<...> 
+.* Describe the function provided by the pre-defined parameter value.
+:pt.:pk.*YES:epk.
+:pd.
+<...> 
+.* Describe the function provided by the pre-defined parameter value.
+:eparml.
+:ehelp.
+.*******************************************
+.*   Help for parameter LOGSTDOUT
+.*******************************************
+:help name='QSHEXEC/LOGSTDOUT'.
+Log standard output to job log (LOGSTDOUT) - Help
+:xh3.Log standard output to job log (LOGSTDOUT)
+:p.Specifies <...>
+.* Describe the function provided by the parameter.
+:parml.
+:pt.:pk def.*NO:epk.
+:pd.
+<...> 
+.* Describe the function provided by the pre-defined parameter value.
+:pt.:pk.*YES:epk.
+:pd.
+<...> 
+.* Describe the function provided by the pre-defined parameter value.
+:eparml.
+:ehelp.
+.*******************************************
+.*   Help for parameter PRTSTDOUT
+.*******************************************
+:help name='QSHEXEC/PRTSTDOUT'.
+Print standard output result (PRTSTDOUT) - Help
+:xh3.Print standard output result (PRTSTDOUT)
+:p.Specifies <...>
+.* Describe the function provided by the parameter.
+:parml.
+:pt.:pk def.*NO:epk.
+:pd.
+<...> 
+.* Describe the function provided by the pre-defined parameter value.
+:pt.:pk.*YES:epk.
+:pd.
+<...> 
+.* Describe the function provided by the pre-defined parameter value.
+:eparml.
+:ehelp.
+.*******************************************
+.*   Help for parameter DLTSTDOUT
+.*******************************************
+:help name='QSHEXEC/DLTSTDOUT'.
+Delete standard output result (DLTSTDOUT) - Help
+:xh3.Delete standard output result (DLTSTDOUT)
+:p.Specifies <...>
+.* Describe the function provided by the parameter.
+:parml.
+:pt.:pk.*NO:epk.
+:pd.
+<...> 
+.* Describe the function provided by the pre-defined parameter value.
+:pt.:pk def.*YES:epk.
+:pd.
+<...> 
+.* Describe the function provided by the pre-defined parameter value.
+:eparml.
+:ehelp.
+.*******************************************
+.*   Help for parameter IFSSTDOUT
+.*******************************************
+:help name='QSHEXEC/IFSSTDOUT'.
+Copy std output to IFS file (IFSSTDOUT) - Help
+:xh3.Copy std output to IFS file (IFSSTDOUT)
+:p.Specifies <...>
+.* Describe the function provided by the parameter.
+:parml.
+:pt.:pk def.*NO:epk.
+:pd.
+<...> 
+.* Describe the function provided by the pre-defined parameter value.
+:pt.:pk.*YES:epk.
+:pd.
+<...> 
+.* Describe the function provided by the pre-defined parameter value.
+:eparml.
+:ehelp.
+.*******************************************
+.*   Help for parameter IFSFILE
+.*******************************************
+:help name='QSHEXEC/IFSFILE'.
+IFS file for stdout results (IFSFILE) - Help
+:xh3.IFS file for stdout results (IFSFILE)
+:p.Specifies <...>
+.* Describe the function provided by the parameter.
+:parml.
+:pt.:pv.character-value:epv.
+:pd.
+Specify the <...>
+.* Describe the function provided by the user-defined parameter value.
+:eparml.
+:ehelp.
+.*******************************************
+.*   Help for parameter IFSOPT
+.*******************************************
+:help name='QSHEXEC/IFSOPT'.
+IFS file option (IFSOPT) - Help
+:xh3.IFS file option (IFSOPT)
+:p.Specifies <...>
+.* Describe the function provided by the parameter.
+:parml.
+:pt.:pk.*ADD:epk.
+:pd.
+<...> 
+.* Describe the function provided by the pre-defined parameter value.
+:pt.:pk def.*REPLACE:epk.
+:pd.
+<...> 
+.* Describe the function provided by the pre-defined parameter value.
+:pt.:pk.*NONE:epk.
+:pd.
+<...> 
+.* Describe the function provided by the pre-defined parameter value.
+:eparml.
+:ehelp.
+.*******************************************
+.*   Help for parameter CCSID
+.*******************************************
+:help name='QSHEXEC/CCSID'.
+Coded character set ID for job (CCSID) - Help
+:xh3.Coded character set ID for job (CCSID)
+:p.Specifies <...>
+.* Describe the function provided by the parameter.
+:parml.
+:pt.:pk def.*SAME:epk.
+:pd.
+<...> 
+.* Describe the function provided by the pre-defined parameter value.
+:pt.:pv.character-value:epv.
+:pd.
+Specify the <...>
+.* Describe the function provided by the user-defined parameter value.
+:eparml.
+:ehelp.
+.*******************************************
+.*   Help for parameter PRTSPLF
+.*******************************************
+:help name='QSHEXEC/PRTSPLF'.
+Print stdout spool file (PRTSPLF) - Help
+:xh3.Print stdout spool file (PRTSPLF)
+:p.Specifies <...>
+.* Describe the function provided by the parameter.
+:parml.
+:pt.:pk def.QSHEXECLOG:epk.
+:pd.
+<...> 
+.* Describe the function provided by the default parameter value.
+:pt.:pv.character-value:epv.
+:pd.
+Specify the <...>
+.* Describe the function provided by the user-defined parameter value.
+:eparml.
+:ehelp.
+.*******************************************
+.*   Help for parameter PRTUSRDTA
+.*******************************************
+:help name='QSHEXEC/PRTUSRDTA'.
+Print stdout user data (PRTUSRDTA) - Help
+:xh3.Print stdout user data (PRTUSRDTA)
+:p.Specifies <...>
+.* Describe the function provided by the parameter.
+:parml.
+:pt.:pk def.*NONE:epk.
+:pd.
+<...> 
+.* Describe the function provided by the pre-defined parameter value.
+:pt.:pv.character-value:epv.
+:pd.
+Specify the <...>
+.* Describe the function provided by the user-defined parameter value.
+:eparml.
+:ehelp.
+.*******************************************
+.*   Help for parameter PRTTXT
+.*******************************************
+:help name='QSHEXEC/PRTTXT'.
+Print stdout print text (PRTTXT) - Help
+:xh3.Print stdout print text (PRTTXT)
+:p.Specifies <...>
+.* Describe the function provided by the parameter.
+:parml.
+:pt.:pk def.*NONE:epk.
+:pd.
+<...> 
+.* Describe the function provided by the pre-defined parameter value.
+:pt.:pv.character-value:epv.
+:pd.
+Specify the <...>
+.* Describe the function provided by the user-defined parameter value.
+:eparml.
+:ehelp.
+.*******************************************
+.*   Help for parameter PRTHOLD
+.*******************************************
+:help name='QSHEXEC/PRTHOLD'.
+Print stdout hold spool file (PRTHOLD) - Help
+:xh3.Print stdout hold spool file (PRTHOLD)
+:p.Specifies <...>
+.* Describe the function provided by the parameter.
+:parml.
+:pt.:pk.*NONE:epk.
+:pd.
+<...> 
+.* Describe the function provided by the pre-defined parameter value.
+:pt.:pk.*NO:epk.
+:pd.
+<...> 
+.* Describe the function provided by the pre-defined parameter value.
+:pt.:pk def.*YES:epk.
+:pd.
+<...> 
+.* Describe the function provided by the pre-defined parameter value.
+:eparml.
+:ehelp.
+.*******************************************
+.*   Help for parameter PRTOUTQ
+.*******************************************
+:help name='QSHEXEC/PRTOUTQ'.
+Print stdout to outq (PRTOUTQ) - Help
+:xh3.Print stdout to outq (PRTOUTQ)
+:p.Specifies <...>
+.* Describe the function provided by the parameter.
+:p.:hp2.Qualifier 1: Print stdout to outq:ehp2.
+:parml.
+:pt.:pk def.*SAME:epk.
+:pd.
+<...> 
+.* Describe the function provided by the pre-defined parameter value.
+:pt.:pv.name:epv.
+:pd.
+Specify the name of <...>
+.* Describe the function provided by the user-defined parameter value.
+:eparml.
+:p.:hp2.Qualifier 2: Library:ehp2.
+:parml.
+:pt.:pk def.*LIBL:epk.
+:pd.
+<...> 
+.* Describe the function provided by the pre-defined parameter value.
+:pt.:pv.name:epv.
+:pd.
+Specify the name of <...>
+.* Describe the function provided by the user-defined parameter value.
+:eparml.
+:ehelp.
+.*******************************************
+.*   Help for parameter OUTFILE
+.*******************************************
+:help name='QSHEXEC/OUTFILE'.
+File to receive output (OUTFILE) - Help
+:xh3.File to receive output (OUTFILE)
+:p.Specifies <...>
+.* Describe the function provided by the parameter.
+:p.:hp2.Qualifier 1: File to receive output:ehp2.
+:parml.:pt.:pk def.STDOUTQSH:epk.
+:pd.
+<...> 
+.* Describe the function provided by the default parameter value.
+:pt.:pk.*SAME:epk.
+:pd.
+<...> 
+.* Describe the function provided by the pre-defined parameter value.
+:pt.:pv.name:epv.
+:pd.
+Specify the name of <...>
+.* Describe the function provided by the user-defined parameter value.
+:eparml.
+:p.:hp2.Qualifier 2: Library:ehp2.
+:parml.:pt.:pk def.QTEMP:epk.
+:pd.
+<...> 
+.* Describe the function provided by the default parameter value.
+:pt.:pk.*LIBL:epk.
+:pd.
+<...> 
+.* Describe the function provided by the pre-defined parameter value.
+:pt.:pv.name:epv.
+:pd.
+Specify the name of <...>
+.* Describe the function provided by the user-defined parameter value.
+:eparml.
+:ehelp.
+.*******************************************
+.*   Help for parameter MBROPT
+.*******************************************
+:help name='QSHEXEC/MBROPT'.
+Replace or add records (MBROPT) - Help
+:xh3.Replace or add records (MBROPT)
+:p.Specifies <...>
+.* Describe the function provided by the parameter.
+:parml.
+:pt.:pk.*ADD:epk.
+:pd.
+<...> 
+.* Describe the function provided by the pre-defined parameter value.
+:pt.:pk def.*REPLACE:epk.
+:pd.
+<...> 
+.* Describe the function provided by the pre-defined parameter value.
+:eparml.
+:ehelp.
+.*******************************************
+.*   Help for parameter PASEJOBNAM
+.*******************************************
+:help name='QSHEXEC/PASEJOBNAM'.
+PASE fork thread job names (PASEJOBNAM) - Help
+:xh3.PASE fork thread job names (PASEJOBNAM)
+:p.Specifies <...>
+.* Describe the function provided by the parameter.
+:parml.
+:pt.:pk def.*DEFAULT:epk.
+:pd.
+<...> 
+.* Describe the function provided by the default parameter value.
+:pt.:pv.character-value:epv.
+:pd.
+Specify the <...>
+.* Describe the function provided by the user-defined parameter value.
+:eparml.
+:ehelp.
+.**************************************************
+.*
+.* Examples for QSHEXEC
+.*
+.**************************************************
+:help name='QSHEXEC/COMMAND/EXAMPLES'.
+Examples for QSHEXEC - Help 
+:xh3.Examples for QSHEXEC 
+:p.:hp2.Example 1: Simple Command Example:ehp2.  
+:xmp.
+QSHEXEC  KWD1(PARMVAL1)  
+:exmp.
+:p.This command <...>
+.* Describe a simple invocation of the command.     
+.*
+:p.:hp2.Example 2: More Complex Command Example:ehp2.  
+:xmp.
+QSHEXEC   KWD1(PARMVAL1)  KWD2(PARMVAL2)
+          KWD3(PARMVAL3)
+:exmp.
+:p.This command <...>
+.* Describe a more complex invocation of the command.     
+:ehelp.
+.**************************************************
+.*
+.* Error messages for QSHEXEC
+.*
+.**************************************************
+:help name='QSHEXEC/ERROR/MESSAGES'.
+&msg(CPX0005,QCPFMSG). QSHEXEC - Help
+:xh3.&msg(CPX0005,QCPFMSG). QSHEXEC
+:p.:hp3.*ESCAPE &msg(CPX0006,QCPFMSG).:ehp3.
+.************************************************************************
+.* List the *ESCAPE, *STATUS, and *NOTIFY messages signalled from the command. 
+.* The following are generic messages defined in message file QCPFMSG. 
+.* Modify this list to match the list of error messages for the command. 
+.************************************************************************
+:DL COMPACT.
+:DT.CPF9801
+:DD.&MSG(CPF9801,QCPFMSG,*LIBL,nosub).
+:DT.CPF9802
+:DD.&MSG(CPF9802,QCPFMSG,*LIBL,nosub).
+:DT.CPF9803
+:DD.&MSG(CPF9803,QCPFMSG,*LIBL,nosub).
+:DT.CPF9807
+:DD.&MSG(CPF9807,QCPFMSG,*LIBL,nosub).
+:DT.CPF9808
+:DD.&MSG(CPF9808,QCPFMSG,*LIBL,nosub).
+:DT.CPF9810
+:DD.&MSG(CPF9810,QCPFMSG,*LIBL,nosub).
+:DT.CPF9811
+:DD.&MSG(CPF9811,QCPFMSG,*LIBL,nosub).
+:DT.CPF9812
+:DD.&MSG(CPF9812,QCPFMSG,*LIBL,nosub).
+:DT.CPF9820
+:DD.&MSG(CPF9820,QCPFMSG,*LIBL,nosub).
+:DT.CPF9830
+:DD.&MSG(CPF9830,QCPFMSG,*LIBL,nosub).
+:DT.CPF9899
+:DD.&MSG(CPF9899,QCPFMSG,*LIBL,nosub).
+:EDL.
+:ehelp.
+:epnlgrp.       
+  
