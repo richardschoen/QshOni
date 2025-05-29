@@ -2,14 +2,6 @@
              PARM       KWD(CMDLINE) TYPE(*CHAR) LEN(5000) MIN(1) +
                           EXPR(*YES) CASE(*MIXED) PROMPT('Bash +
                           command line')
-             PARM       KWD(CMDLINEDLM) TYPE(*CHAR) LEN(1) +
-                          DFT(*SGLQUOTE) SPCVAL((*DBLQUOTE '"') +
-                          (*SGLQUOTE '''') (*NONE '')) PROMPT('Bash +
-                          command line delimiter')
-             PARM       KWD(DEBUGCMD) TYPE(*CHAR) LEN(4) RSTD(*YES) +
-                          DFT(*NO) VALUES(*NO *YES) EXPR(*YES) +
-                          CASE(*MIXED) PROMPT('Debug bash command +
-                          line')
              PARM       KWD(SETPKGPATH) TYPE(*CHAR) LEN(4) +
                           RSTD(*YES) DFT(*YES) VALUES(*NO *YES) +
                           EXPR(*YES) CASE(*MIXED) PROMPT('Set +
