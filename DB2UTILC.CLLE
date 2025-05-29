@@ -3,7 +3,7 @@
                           &PRTSTDOUT &DLTSTDOUT &IFSSTDOUT &IFSFILE +
                           &IFSOPT &CCSID &PRTSPLF &PRTUSRDTA +
                           &PRTTXT &PRTHOLD &PRTOUTQALL &PASEJOBNAM +
-                          &VIEWOUTPUT)
+                          &VIEWOUTPUT) 
 
 /*----------------------------------------------------------------------------*/
 /* Variables                                                                  */
