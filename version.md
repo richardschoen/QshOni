@@ -285,3 +285,6 @@ If you pass a value of: ```PARM VALUE 01``` it will get automatically paired wit
 - Example of specifying ```*NONE``` for the ```ARGDLM``` parameter to fully control where you want quotes in your parameters for ```QSHPHPRUN```, ```QSHPYRUN``` and ```QSHPYCALL```:  
 If you pass a value of: ```--parm01="PARM VALUE 01"``` it will stay as originally formatted with quotes left in place where you put them when passed to the python command line, therefore the parameter will get passed to Python as desired.       
 
+## V1.0.38 - 5/29/2025
+- Added bash command line delimiter parameter for ```QSHBASH``` command. Defaults to single quote which is what it has been since inception.  Also added a debug parameter so developer can prompt and see the actual bash command line being called.
+
