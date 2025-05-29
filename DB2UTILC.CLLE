@@ -1,67 +1,121 @@
-             CMD        PROMPT('Run Bash Command via Qshell')
-             PARM       KWD(CMDLINE) TYPE(*CHAR) LEN(5000) MIN(1) +
-                          EXPR(*YES) CASE(*MIXED) PROMPT('Bash +
-                          command line')
-             PARM       KWD(CMDLINEDLM) TYPE(*CHAR) LEN(1) +
-                          DFT(*SGLQUOTE) SPCVAL((*DBLQUOTE '"') +
-                          (*SGLQUOTE '''') (*NONE '')) PROMPT('Bash +
-                          command line delimiter')
-             PARM       KWD(DEBUGCMD) TYPE(*CHAR) LEN(4) RSTD(*YES) +
-                          DFT(*NO) VALUES(*NO *YES) EXPR(*YES) +
-                          CASE(*MIXED) PROMPT('Debug bash command +
-                          line')
-             PARM       KWD(SETPKGPATH) TYPE(*CHAR) LEN(4) +
-                          RSTD(*YES) DFT(*YES) VALUES(*NO *YES) +
-                          EXPR(*YES) CASE(*MIXED) PROMPT('Set +
-                          QOpenSys yum package path')
-             PARM       KWD(DSPSTDOUT) TYPE(*CHAR) LEN(4) RSTD(*YES) +
-                          DFT(*NO) VALUES(*NO *YES) PROMPT('Display +
-                          Standard Output Result')
-             PARM       KWD(LOGSTDOUT) TYPE(*CHAR) LEN(4) RSTD(*YES) +
-                          DFT(*NO) VALUES(*NO *YES) PROMPT('Log +
-                          standard output to job log')
-             PARM       KWD(PRTSTDOUT) TYPE(*CHAR) LEN(4) RSTD(*YES) +
-                          DFT(*NO) VALUES(*NO *YES) PROMPT('Print +
-                          Standard Output Result')
-             PARM       KWD(DLTSTDOUT) TYPE(*CHAR) LEN(4) RSTD(*YES) +
-                          DFT(*YES) VALUES(*NO *YES) PROMPT('Delete +
-                          Standard Output Result')
-             PARM       KWD(IFSSTDOUT) TYPE(*CHAR) LEN(4) RSTD(*YES) +
-                          DFT(*NO) VALUES(*NO *YES) PROMPT('Copy +
-                          std output to IFS file')
-             PARM       KWD(IFSFILE) TYPE(*CHAR) LEN(255) +
-                          PROMPT('IFS file for stdout results')
-             PARM       KWD(IFSOPT) TYPE(*CHAR) LEN(10) RSTD(*YES) +
-                          DFT(*REPLACE) VALUES(*ADD *REPLACE *NONE) +
-                          PROMPT('IFS file option')
-             PARM       KWD(CCSID) TYPE(*CHAR) LEN(10) DFT(*SAME) +
-                          SPCVAL((*SAME *SAME)) PROMPT('Coded +
-                          character set ID for job')
-             PARM       KWD(PRTSPLF) TYPE(*CHAR) LEN(10) DFT(QSHBASHLOG) PROMPT('Print stdout spool +
-                          file')
-             PARM       KWD(PRTUSRDTA) TYPE(*CHAR) LEN(10) DFT(*NONE) SPCVAL((*NONE ' ')) +
-                          PROMPT('Print stdout user data')
-             PARM       KWD(PRTTXT) TYPE(*CHAR) LEN(30) DFT(*NONE) SPCVAL((*NONE ' ')) CASE(*MIXED) +
-                          PROMPT('Print stdout print text')
-             PARM       KWD(PRTHOLD) TYPE(*CHAR) LEN(4) RSTD(*YES) +
-                          DFT(*YES) VALUES(*NO *YES) SPCVAL((*NONE +
-                          ' ')) CASE(*MIXED) PROMPT('Print stdout +
-                          hold spool file')
-             PARM       KWD(PRTOUTQ) TYPE(QUAL2) MIN(1) +
-                          PROMPT('Print stdout to outq')
-             PARM       KWD(OUTFILE) TYPE(QUAL3) MIN(1) PROMPT('File +
-                          to receive output')
-             PARM       KWD(MBROPT) TYPE(*CHAR) LEN(10) RSTD(*YES) +
-                          DFT(*REPLACE) VALUES(*ADD *REPLACE) +
-                          PROMPT('Replace or add records')
-             PARM       KWD(PASEJOBNAM) TYPE(*CHAR) LEN(10) +
-                          DFT(*DEFAULT) CASE(*MIXED) PROMPT('PASE +
-                          fork thread job names')
- QUAL2:      QUAL       TYPE(*NAME) LEN(10) DFT(*SAME) +
-                          SPCVAL((*SAME)) EXPR(*YES)
-             QUAL       TYPE(*NAME) LEN(10) DFT(*LIBL) +
-                          SPCVAL((*LIBL)) EXPR(*YES) PROMPT('Library')
- QUAL3:      QUAL       TYPE(*NAME) LEN(10) DFT(STDOUTQSH) +
-                          SPCVAL((*SAME)) EXPR(*YES)
-             QUAL       TYPE(*NAME) LEN(10) DFT(QTEMP) +
-                          SPCVAL((*LIBL)) EXPR(*YES) PROMPT('Library')
+             PGM        PARM(&SQL &OUTPUTFMT &JSONFMT &OUTPUTFILE &OPTION +
+                          &SETPKGPATH &DSPSTDOUT &LOGSTDOUT +
+                          &PRTSTDOUT &DLTSTDOUT &IFSSTDOUT &IFSFILE +
+                          &IFSOPT &CCSID &PRTSPLF &PRTUSRDTA +
+                          &PRTTXT &PRTHOLD &PRTOUTQALL &PASEJOBNAM +
+                          &VIEWOUTPUT)
+
+/*----------------------------------------------------------------------------*/
+/* Variables                                                                  */
+/*----------------------------------------------------------------------------*/
+             DCL        VAR(&VIEWOUTPUT) TYPE(*CHAR) LEN(4)
+             DCL        VAR(&SQL) TYPE(*CHAR) LEN(1024)
+             DCL        VAR(&OUTPUTFILE) TYPE(*CHAR) LEN(255)
+             DCL        VAR(&OUTPUTFMT) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&JSONFMT) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&JSONEXPORT) TYPE(*CHAR) LEN(100)
+             DCL        VAR(&OPTION) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&PRTHOLD) TYPE(*CHAR) LEN(4)
+             DCL        VAR(&PRTOUTQALL) TYPE(*CHAR) LEN(20)
+             DCL        VAR(&PRTOUTQ) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&PRTOUTQLIB) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&CMDLINE) TYPE(*CHAR) LEN(5000)
+             DCL        VAR(&CURLCMDLIN) TYPE(*CHAR) LEN(5000)
+             DCL        VAR(&SETPKGPATH) TYPE(*CHAR) LEN(4)
+             DCL        VAR(&DSPSTDOUT) TYPE(*CHAR) LEN(4)
+             DCL        VAR(&LOGSTDOUT) TYPE(*CHAR) LEN(4)
+             DCL        VAR(&DLTSTDOUT) TYPE(*CHAR) LEN(4)
+             DCL        VAR(&PRTSTDOUT) TYPE(*CHAR) LEN(4)
+             DCL        VAR(&IFSSTDOUT) TYPE(*CHAR) LEN(4)
+             DCL        VAR(&IFSOPT) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&IFSFILE) TYPE(*CHAR) LEN(255)
+             DCL        VAR(&PRTSPLF) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&PRTUSRDTA) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&PRTTXT) TYPE(*CHAR) LEN(30)
+             DCL        VAR(&QT) TYPE(*CHAR) LEN(1) VALUE('''')
+             DCL        VAR(&CCSID) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&PASEJOBNAM) TYPE(*CHAR) LEN(10)
+
+/*----------------------------------------------------------------------------*/
+/* MONITOR FOR GLOBAL ERROR. ANY ERROR IS A CAUSE TO BLOW OUT OF HERE         */
+/* AND WE WANT A GRACEFUL EXIT.                                               */
+/*----------------------------------------------------------------------------*/
+             MONMSG     MSGID(CPF0000) EXEC(GOTO CMDLBL(ERRORS))
+
+/*----------------------------------------------------------------------------*/
+/* Extract output queue info.                                                 */
+/*----------------------------------------------------------------------------*/
+             CHGVAR     VAR(&PRTOUTQ) VALUE(%SST(&PRTOUTQALL 1 10))
+             CHGVAR     VAR(&PRTOUTQLIB) VALUE(%SST(&PRTOUTQALL 11 10))
+
+/*----------------------------------------------------------------------------*/
+/* MAIN                                                                       */
+/*----------------------------------------------------------------------------*/
+             /* Output file is required */
+             IF         COND(&OUTPUTFILE *EQ ' ') THEN(DO)
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Output +
+                          file name must be specified') +
+                          MSGTYPE(*ESCAPE)
+             ENDDO
+
+             /* Check for output file and replace if selected and exists */
+             QSHONI/QSHIFSCHK FILNAM(&OUTPUTFILE)
+             /* Not Found. Do nothing special */
+             MONMSG     MSGID(CPF9898) EXEC(DO)
+             ENDDO
+             /* Found. Delete if selected */
+             MONMSG     MSGID(CPF9897) EXEC(DO)
+             /* Delete output file if found and replace */
+             IF         COND(&OPTION *EQ *REPLACE) THEN(DO)
+             ERASE      OBJLNK(&OUTPUTFILE)
+             ENDDO
+             ENDDO
+
+
+             /* Build db2util command line to pass to qshell or bash  */
+             /* with JSON formatting export statement */
+             IF         COND(&OUTPUTFMT *EQ 'json') THEN(DO)
+             CHGVAR     VAR(&CURLCMDLIN) VALUE('export +
+                          DB2UTIL_JSON_CONTAINER=' |< &JSONFMT |< +
+                          '; db2util -o' |> &OUTPUTFMT |> '"' |< +
+                          &SQL |< '" >>' |> &OUTPUTFILE)
+             ENDDO
+             /* Build db2util command line to pass to qshell or bash  */
+             /* with JSON formatting export statement */
+             IF         COND(&OUTPUTFMT *NE 'json') THEN(DO)
+             CHGVAR     VAR(&CURLCMDLIN) VALUE('db2util -o' |> +
+                          &OUTPUTFMT |> '"' |< &SQL |< '" >>' |> +
+                          &OUTPUTFILE)
+             ENDDO
+
+             /* Run the db2util command via QSHBASH */
+             QSHONI/QSHBASH CMDLINE(&CURLCMDLIN) +
+                          SETPKGPATH(&SETPKGPATH) +
+                          DSPSTDOUT(&DSPSTDOUT) +
+                          LOGSTDOUT(&LOGSTDOUT) +
+                          PRTSTDOUT(&PRTSTDOUT) +
+                          DLTSTDOUT(&DLTSTDOUT) +
+                          IFSSTDOUT(&IFSSTDOUT) IFSFILE(&IFSFILE) +
+                          IFSOPT(&IFSOPT) CCSID(&CCSID) +
+                          PRTSPLF(&PRTSPLF) PRTUSRDTA(&PRTUSRDTA) +
+                          PRTTXT(&PRTTXT) PRTHOLD(&PRTHOLD) +
+                          PRTOUTQ(&PRTOUTQLIB/&PRTOUTQ) +
+                          MBROPT(*REPLACE) PASEJOBNAM(&PASEJOBNAM)
+
+             /* View output file after creation if selected */
+             IF         COND(&VIEWOUTPUT *EQ *YES) THEN(DO)
+             EDTF       STMF(&OUTPUTFILE)
+             ENDDO
+
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('db2util +
+                          command completed to file' |> +
+                          &OUTPUTFILE) MSGTYPE(*COMP)
+
+             RETURN
+
+ERRORS:
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('db2util +
+                          command failed') MSGTYPE(*ESCAPE)
+
+ ENDPGM:
+             ENDPGM
