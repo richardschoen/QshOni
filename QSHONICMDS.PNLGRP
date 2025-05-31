@@ -1,17 +1,59 @@
 :pnlgrp.
+
 .************************************************************************
-.*  Help for command QSHEXEC
+.*
+.*  Command: QSHEXEC
+.*
+.*           All Help
+.*
+.************************************************************************
+:HELP NAME='QSHEXEC/ALL'.
+:IMHELP NAME='QSHEXEC'.
+:IMHELP NAME='QSHEXEC/CMDLINE'.
+:IMHELP NAME='QSHEXEC/SETPKGPATH'.
+:IMHELP NAME='QSHEXEC/DSPSTDOUT'.
+:IMHELP NAME='QSHEXEC/LOGSTDOUT'.
+:IMHELP NAME='QSHEXEC/PRTSTDOUT'.
+:IMHELP NAME='QSHEXEC/DLTSTDOUT'.
+:IMHELP NAME='QSHEXEC/IFSSTDOUT'.
+:IMHELP NAME='QSHEXEC/IFSFILE'.
+:IMHELP NAME='QSHEXEC/IFSOPT'.
+:IMHELP NAME='QSHEXEC/CCSID'.
+:IMHELP NAME='QSHEXEC/PRTSPLF'.
+:IMHELP NAME='QSHEXEC/PRTUSRDTA'.
+:IMHELP NAME='QSHEXEC/PRTTXT'.
+:IMHELP NAME='QSHEXEC/PRTHOLD'.
+:IMHELP NAME='QSHEXEC/PRTOUTQ'.
+:IMHELP NAME='QSHEXEC/OUTFILE'.
+:IMHELP NAME='QSHEXEC/MBROPT'.
+:IMHELP NAME='QSHEXEC/PASEJOBNAM'.
+:IMHELP NAME='QSHEXEC/COMMAND/EXAMPLES'.
+:IMHELP NAME='QSHEXEC/ERROR/MESSAGES'.
+:EHELP.
+
+.************************************************************************
+.*  Primary Help for command QSHEXEC
 .************************************************************************
 :help name='QSHEXEC'.
 Run Qshell Command Line - Help
-:p.The Run Qshell Command Line (QSHEXEC) command can be used to run a QSH/PASE command and log the results appropriately.
+:p.The Run Qshell Command Line (QSHEXEC) command can be used to run a QSH/PASE command and log the results
+appropriately.
 .* Describe the function provided by the command.
-:p.```Stdout Logging Note:``` During execution, the CL command always creates a temporary outfile in library QTEMP 
-that gets automatically populated with standard output (stdout) from the QSH/PASE command process that gets run. 
-The temporary stdout output file name is: ```QTEMP/STDOUTQSH```. If the file already exists for a subsequent run of the 
-command, the ```QTEMP/STDOUTQSH``` temporary file is automatically cleared before running so each run gets a fresh 
-copy of ```QTEMP/STDOUTQSH```. The ```QTEMP/STDOUTQSH``` temp file gets created automatically always, 
-even if none of the switches such as: ```DSPSTDOUT, LOGSTDOUT, PRTSTDOUT or IFSSTDOUT``` are specified. 
+:p.
+:hp3.Stdout Logging Note::ehp3.
+During execution, the CL command always creates a temporary outfile in
+library QTEMP that gets automatically populated with standard output (stdout) from the
+QSH/PASE command process that gets run.
+The temporary stdout output file name is: :hp2.QTEMP/STDOUTQSH:ehp2..
+:p.
+If the file already exists for a subsequent run of the command, the :hp2.QTEMP/STDOUTQSH:ehp2.
+temporary file is automatically cleared before
+running so each run gets a fresh copy of :hp2.QTEMP/STDOUTQSH:ehp2..
+The :hp2.QTEMP/STDOUTQSH:ehp2. temp file gets created automatically always,
+even if none of the switches such as: :hp2.DSPSTDOUT, LOGSTDOUT, PRTSTDOUT or IFSSTDOUT:ehp2.
+are specified.
+:P.
+:IMHELP NAME='COMMON/ASTERISK'.
 :ehelp.
 .*******************************************
 .*   Help for parameter CMDLINE
@@ -25,7 +67,9 @@ QSH command line (CMDLINE) - Help
 :parml.
 :pt.:pv.character-value:epv.
 :pd.
-Specify the <...>
+Enter any valid Qsh/Pase commands, in sequence, to run. Semicolons can be used to run multiple commands.
+The name of a file can be specified to run a script. The script file must be in the current working
+directory or in the PATH. The script file must be a valid Qsh/Pase script file.
 .* Describe the function provided by the user-defined parameter value.
 :eparml.
 :ehelp.
@@ -35,17 +79,15 @@ Specify the <...>
 :help name='QSHEXEC/SETPKGPATH'.
 Set QOpenSys yum package path (SETPKGPATH) - Help
 :xh3.Set QOpenSys yum package path (SETPKGPATH)
-:p.Specifies <...>
-.* Describe the function provided by the parameter.
+:p.Add the IBM i Open Source Package path :hp2./QOpenSys/pkgs/bin:ehp2. to PATH environment
+variable by calling QSHPATH command before running QSH/PASE commands.
 :parml.
 :pt.:pk.*NO:epk.
 :pd.
-<...> 
-.* Describe the function provided by the pre-defined parameter value.
+Do not include the QOpenSys yum package path.
 :pt.:pk def.*YES:epk.
 :pd.
-<...> 
-.* Describe the function provided by the pre-defined parameter value.
+Include the QOpenSys yum package path.
 :eparml.
 :ehelp.
 .*******************************************
@@ -54,17 +96,14 @@ Set QOpenSys yum package path (SETPKGPATH) - Help
 :help name='QSHEXEC/DSPSTDOUT'.
 Display standard output result (DSPSTDOUT) - Help
 :xh3.Display standard output result (DSPSTDOUT)
-:p.Specifies <...>
-.* Describe the function provided by the parameter.
+:p.Display the outfile contents. Helpful when debugging.
 :parml.
 :pt.:pk def.*NO:epk.
 :pd.
-<...> 
-.* Describe the function provided by the pre-defined parameter value.
+Do not display the outfile contents to the terminal.
 :pt.:pk.*YES:epk.
 :pd.
-<...> 
-.* Describe the function provided by the pre-defined parameter value.
+Display the outfile contents to the terminal.
 :eparml.
 :ehelp.
 .*******************************************
@@ -73,17 +112,16 @@ Display standard output result (DSPSTDOUT) - Help
 :help name='QSHEXEC/LOGSTDOUT'.
 Log standard output to job log (LOGSTDOUT) - Help
 :xh3.Log standard output to job log (LOGSTDOUT)
-:p.Specifies <...>
-.* Describe the function provided by the parameter.
+:p.Place STDOUT log entries into the current job's job log.
+Use this if you want the log info in the IBM i job log.
+All STDOUT entries are written as CPF message: :hp2.QSS9898:ehp2.
 :parml.
 :pt.:pk def.*NO:epk.
 :pd.
-<...> 
-.* Describe the function provided by the pre-defined parameter value.
+Do not write the standard output log entries to the job log.
 :pt.:pk.*YES:epk.
 :pd.
-<...> 
-.* Describe the function provided by the pre-defined parameter value.
+Write the standard output log entries to the job log as :hp2.QSS9898:ehp2. messages.
 :eparml.
 :ehelp.
 .*******************************************
@@ -92,17 +130,16 @@ Log standard output to job log (LOGSTDOUT) - Help
 :help name='QSHEXEC/PRTSTDOUT'.
 Print standard output result (PRTSTDOUT) - Help
 :xh3.Print standard output result (PRTSTDOUT)
-:p.Specifies <...>
-.* Describe the function provided by the parameter.
+:p.Print STDOUT to a spool file. Use this if you want a spool file of the log output.
 :parml.
 :pt.:pk def.*NO:epk.
 :pd.
-<...> 
+Do not print the standard output result to a spool file.
 .* Describe the function provided by the pre-defined parameter value.
 :pt.:pk.*YES:epk.
 :pd.
-<...> 
-.* Describe the function provided by the pre-defined parameter value.
+Print the standard output result to a spool file named, by default, QSHEXECLOG.
+The spool file name can be changed by using the PRTSPLF parameter.
 :eparml.
 :ehelp.
 .*******************************************
@@ -111,17 +148,15 @@ Print standard output result (PRTSTDOUT) - Help
 :help name='QSHEXEC/DLTSTDOUT'.
 Delete standard output result (DLTSTDOUT) - Help
 :xh3.Delete standard output result (DLTSTDOUT)
-:p.Specifies <...>
-.* Describe the function provided by the parameter.
+:p.This option insures that the STDOUT IFS temp files get cleaned up after processing.
+All IFS log files get created in the /tmp/qsh directory.
 :parml.
 :pt.:pk.*NO:epk.
 :pd.
-<...> 
-.* Describe the function provided by the pre-defined parameter value.
+The IFS temp files are not deleted after processing.
 :pt.:pk def.*YES:epk.
 :pd.
-<...> 
-.* Describe the function provided by the pre-defined parameter value.
+The IFS temp files are deleted after processing.
 :eparml.
 :ehelp.
 .*******************************************
@@ -130,17 +165,14 @@ Delete standard output result (DLTSTDOUT) - Help
 :help name='QSHEXEC/IFSSTDOUT'.
 Copy std output to IFS file (IFSSTDOUT) - Help
 :xh3.Copy std output to IFS file (IFSSTDOUT)
-:p.Specifies <...>
-.* Describe the function provided by the parameter.
+:p.Copy standard output to an IFS file. Useful for aggregating log results to a file.
 :parml.
 :pt.:pk def.*NO:epk.
 :pd.
-<...> 
-.* Describe the function provided by the pre-defined parameter value.
+Do not copy the standard output to an IFS file.
 :pt.:pk.*YES:epk.
 :pd.
-<...> 
-.* Describe the function provided by the pre-defined parameter value.
+Copy the standard output to an IFS file.
 :eparml.
 :ehelp.
 .*******************************************
@@ -149,13 +181,13 @@ Copy std output to IFS file (IFSSTDOUT) - Help
 :help name='QSHEXEC/IFSFILE'.
 IFS file for stdout results (IFSFILE) - Help
 :xh3.IFS file for stdout results (IFSFILE)
-:p.Specifies <...>
-.* Describe the function provided by the parameter.
+:p.Used in conjunction with the IFSSTDOUT parameter (when set to :hp2.*YES:ehp2.)
+to specify the name of the
+IFS file to copy the stdout results to.
 :parml.
-:pt.:pv.character-value:epv.
+:pt.:pv.IFS file for stdout results. Needs to be specified if IFSSTDOUT = *YES.:epv.
 :pd.
-Specify the <...>
-.* Describe the function provided by the user-defined parameter value.
+Specify the name, including path, of the IFS file to copy the stdout results to
 :eparml.
 :ehelp.
 .*******************************************
@@ -164,21 +196,20 @@ Specify the <...>
 :help name='QSHEXEC/IFSOPT'.
 IFS file option (IFSOPT) - Help
 :xh3.IFS file option (IFSOPT)
-:p.Specifies <...>
-.* Describe the function provided by the parameter.
+:p.Specifies whether the copy operation replaces, adds, or
+fails to copy the records in a stream file if a stream
+file with the specified name already exists. If the stream
+file does not exist, it is created.
 :parml.
 :pt.:pk.*ADD:epk.
 :pd.
-<...> 
-.* Describe the function provided by the pre-defined parameter value.
+The stdout records are added to the end of the existing IFS file.
 :pt.:pk def.*REPLACE:epk.
 :pd.
-<...> 
-.* Describe the function provided by the pre-defined parameter value.
+The stdout records replace the existing IFS file records.
 :pt.:pk.*NONE:epk.
 :pd.
-<...> 
-.* Describe the function provided by the pre-defined parameter value.
+No stdout records are copied and the operation will fail.
 :eparml.
 :ehelp.
 .*******************************************
@@ -187,17 +218,19 @@ IFS file option (IFSOPT) - Help
 :help name='QSHEXEC/CCSID'.
 Coded character set ID for job (CCSID) - Help
 :xh3.Coded character set ID for job (CCSID)
-:p.Specifies <...>
-.* Describe the function provided by the parameter.
+:p.Specifies the coded character set identifier (CCSID) used
+for this command execution.
+:p.When using the iToolkit component for command access, I originally had some issues
+with CL commands not working correctly. However I don't currently remember exactly why.
+This may have been solved, however I recommend still passing a value of 37 unless you
+are in a non US country.
 :parml.
 :pt.:pk def.*SAME:epk.
 :pd.
-<...> 
-.* Describe the function provided by the pre-defined parameter value.
-:pt.:pv.character-value:epv.
+If you set to *SAME, the CCSID will stay the same as your current job with no change.
+:pt.:pv.1-65535:epv.
 :pd.
-Specify the <...>
-.* Describe the function provided by the user-defined parameter value.
+Specify the CCSID.
 :eparml.
 :ehelp.
 .*******************************************
@@ -206,17 +239,15 @@ Specify the <...>
 :help name='QSHEXEC/PRTSPLF'.
 Print stdout spool file (PRTSPLF) - Help
 :xh3.Print stdout spool file (PRTSPLF)
-:p.Specifies <...>
-.* Describe the function provided by the parameter.
+:p.This option holds the name of the spool file used when PRTSTDOUT = *YES.
+It's a nice way to customize the stdout log prints.
 :parml.
 :pt.:pk def.QSHEXECLOG:epk.
 :pd.
-<...> 
-.* Describe the function provided by the default parameter value.
+Default spool file name is QSHEXECLOG.
 :pt.:pv.character-value:epv.
 :pd.
-Specify the <...>
-.* Describe the function provided by the user-defined parameter value.
+Specify the name of the spool file to print the stdout results to.
 :eparml.
 :ehelp.
 .*******************************************
@@ -225,17 +256,14 @@ Specify the <...>
 :help name='QSHEXEC/PRTUSRDTA'.
 Print stdout user data (PRTUSRDTA) - Help
 :xh3.Print stdout user data (PRTUSRDTA)
-:p.Specifies <...>
-.* Describe the function provided by the parameter.
+:p.This option holds the name of the spool file user data used when PRTSTDOUT = *YES.
 :parml.
 :pt.:pk def.*NONE:epk.
 :pd.
-<...> 
-.* Describe the function provided by the pre-defined parameter value.
+No user data is specified.
 :pt.:pv.character-value:epv.
 :pd.
-Specify the <...>
-.* Describe the function provided by the user-defined parameter value.
+Specify the characters to use for the spool file user data.
 :eparml.
 :ehelp.
 .*******************************************
@@ -244,17 +272,14 @@ Specify the <...>
 :help name='QSHEXEC/PRTTXT'.
 Print stdout print text (PRTTXT) - Help
 :xh3.Print stdout print text (PRTTXT)
-:p.Specifies <...>
-.* Describe the function provided by the parameter.
+:p.This option holds the name of the spool file print txt to be used when PRTSTDOUT = *YES.
 :parml.
 :pt.:pk def.*NONE:epk.
 :pd.
-<...> 
-.* Describe the function provided by the pre-defined parameter value.
+No print text is specified.
 :pt.:pv.character-value:epv.
 :pd.
-Specify the <...>
-.* Describe the function provided by the user-defined parameter value.
+Specify the characters to use for the spool file print text.
 :eparml.
 :ehelp.
 .*******************************************
@@ -263,20 +288,19 @@ Specify the <...>
 :help name='QSHEXEC/PRTHOLD'.
 Print stdout hold spool file (PRTHOLD) - Help
 :xh3.Print stdout hold spool file (PRTHOLD)
-:p.Specifies <...>
-.* Describe the function provided by the parameter.
+:p.This option determines if the spool file is held if one is generated when PRTSTDOUT = *YES.
 :parml.
 :pt.:pk.*NONE:epk.
 :pd.
-<...> 
+<...>
 .* Describe the function provided by the pre-defined parameter value.
 :pt.:pk.*NO:epk.
 :pd.
-<...> 
+<...>
 .* Describe the function provided by the pre-defined parameter value.
 :pt.:pk def.*YES:epk.
 :pd.
-<...> 
+<...>
 .* Describe the function provided by the pre-defined parameter value.
 :eparml.
 :ehelp.
@@ -292,7 +316,7 @@ Print stdout to outq (PRTOUTQ) - Help
 :parml.
 :pt.:pk def.*SAME:epk.
 :pd.
-<...> 
+<...>
 .* Describe the function provided by the pre-defined parameter value.
 :pt.:pv.name:epv.
 :pd.
@@ -303,7 +327,7 @@ Specify the name of <...>
 :parml.
 :pt.:pk def.*LIBL:epk.
 :pd.
-<...> 
+<...>
 .* Describe the function provided by the pre-defined parameter value.
 :pt.:pv.name:epv.
 :pd.
@@ -322,11 +346,11 @@ File to receive output (OUTFILE) - Help
 :p.:hp2.Qualifier 1: File to receive output:ehp2.
 :parml.:pt.:pk def.STDOUTQSH:epk.
 :pd.
-<...> 
+<...>
 .* Describe the function provided by the default parameter value.
 :pt.:pk.*SAME:epk.
 :pd.
-<...> 
+<...>
 .* Describe the function provided by the pre-defined parameter value.
 :pt.:pv.name:epv.
 :pd.
@@ -336,11 +360,11 @@ Specify the name of <...>
 :p.:hp2.Qualifier 2: Library:ehp2.
 :parml.:pt.:pk def.QTEMP:epk.
 :pd.
-<...> 
+<...>
 .* Describe the function provided by the default parameter value.
 :pt.:pk.*LIBL:epk.
 :pd.
-<...> 
+<...>
 .* Describe the function provided by the pre-defined parameter value.
 :pt.:pv.name:epv.
 :pd.
@@ -359,11 +383,11 @@ Replace or add records (MBROPT) - Help
 :parml.
 :pt.:pk.*ADD:epk.
 :pd.
-<...> 
+<...>
 .* Describe the function provided by the pre-defined parameter value.
 :pt.:pk def.*REPLACE:epk.
 :pd.
-<...> 
+<...>
 .* Describe the function provided by the pre-defined parameter value.
 :eparml.
 :ehelp.
@@ -378,7 +402,7 @@ PASE fork thread job names (PASEJOBNAM) - Help
 :parml.
 :pt.:pk def.*DEFAULT:epk.
 :pd.
-<...> 
+<...>
 .* Describe the function provided by the default parameter value.
 :pt.:pv.character-value:epv.
 :pd.
@@ -392,22 +416,22 @@ Specify the <...>
 .*
 .**************************************************
 :help name='QSHEXEC/COMMAND/EXAMPLES'.
-Examples for QSHEXEC - Help 
-:xh3.Examples for QSHEXEC 
-:p.:hp2.Example 1: Simple Command Example:ehp2.  
+Examples for QSHEXEC - Help
+:xh3.Examples for QSHEXEC
+:p.:hp2.Example 1: Simple Command Example:ehp2.
 :xmp.
-QSHEXEC  KWD1(PARMVAL1)  
+QSHEXEC  KWD1(PARMVAL1)
 :exmp.
 :p.This command <...>
-.* Describe a simple invocation of the command.     
+.* Describe a simple invocation of the command.
 .*
-:p.:hp2.Example 2: More Complex Command Example:ehp2.  
+:p.:hp2.Example 2: More Complex Command Example:ehp2.
 :xmp.
 QSHEXEC   KWD1(PARMVAL1)  KWD2(PARMVAL2)
           KWD3(PARMVAL3)
 :exmp.
 :p.This command <...>
-.* Describe a more complex invocation of the command.     
+.* Describe a more complex invocation of the command.
 :ehelp.
 .**************************************************
 .*
@@ -419,9 +443,9 @@ QSHEXEC   KWD1(PARMVAL1)  KWD2(PARMVAL2)
 :xh3.&msg(CPX0005,QCPFMSG). QSHEXEC
 :p.:hp3.*ESCAPE &msg(CPX0006,QCPFMSG).:ehp3.
 .************************************************************************
-.* List the *ESCAPE, *STATUS, and *NOTIFY messages signalled from the command. 
-.* The following are generic messages defined in message file QCPFMSG. 
-.* Modify this list to match the list of error messages for the command. 
+.* List the *ESCAPE, *STATUS, and *NOTIFY messages signalled from the command.
+.* The following are generic messages defined in message file QCPFMSG.
+.* Modify this list to match the list of error messages for the command.
 .************************************************************************
 :DL COMPACT.
 :DT.CPF9801
@@ -448,5 +472,19 @@ QSHEXEC   KWD1(PARMVAL1)  KWD2(PARMVAL2)
 :DD.&MSG(CPF9899,QCPFMSG,*LIBL,nosub).
 :EDL.
 :ehelp.
-:epnlgrp.       
-  
+.*****************************************************************
+.*  COMMON HELP
+.*
+.*  Common help text modules (can be embedded elsewhere)
+.*
+.*****************************************************************
+:HELP NAME='COMMON/ASTERISK'.
+:NT.
+Do not precede an entry with an asterisk unless that entry is a
+"special value" that is shown (on the display itself or in the help
+information) with an asterisk.
+:ENT.
+:EHELP.
+
+:epnlgrp.
+
