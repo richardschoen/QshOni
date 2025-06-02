@@ -6,6 +6,10 @@
                           DFT(*NO) VALUES(*NO *YES) EXPR(*YES) +
                           CASE(*MIXED) PROMPT('Change to script +
                           directory')
+             PARM       KWD(PHPCMD) TYPE(*CHAR) LEN(200) +
+                          DFT(*DEFAULT) SPCVAL((*DEFAULT 'php') +
+                          (*DEBUG 'php -d error_log=')) EXPR(*YES) +
+                          CASE(*MIXED) PROMPT('PHP command')
              PARM       KWD(SCRIPTFILE) TYPE(*CHAR) LEN(255) MIN(1) +
                           EXPR(*YES) CASE(*MIXED) PROMPT('PHP +
                           script file name')
