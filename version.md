@@ -288,3 +288,5 @@ If you pass a value of: ```--parm01="PARM VALUE 01"``` it will stay as originall
 ## V1.0.38 - 5/29/2025
 - Added bash command line delimiter parameter for ```QSHBASH``` command. Defaults to single quote which is what it has been since inception.  Also added a debug parameter so developer can prompt and see the actual bash command line being called.
 
+## V1.0.39 - 6/2/2025
+- Added the ```PHPCMD``` option argument to the ```QSHPHPRUN``` command so we can run the php cli in debug mode without having to type: ```php -d error_log=``` on the PHP command line. *DEFAULT runs the ```php``` command as normal. *DEBUG runs the ```php -d error_log=``` command so we can capture any errors that occur into the STDOUT logging output. This is a convenience item for people running php command line (CLI) mode php scripts. 
