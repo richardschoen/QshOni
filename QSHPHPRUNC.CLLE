@@ -1,11 +1,12 @@
-             PGM        PARM(&PHPSCRDIR &CHGSCRDIR &SCRIPTFILE &ARGS +
-                          &ARGDLM &PHPPATH &SETPKGPATH &DSPSTDOUT +
-                          &LOGSTDOUT &PRTSTDOUT &DLTSTDOUT +
-                          &IFSSTDOUT &IFSFILE &IFSOPT &CCSID +
-                          &PRTSPLF &PRTUSRDTA &PRTTXT &PRTHOLD +
-                          &PRTOUTQALL &OUTFILE &MBROPT &PASEJOBNAM +
-                          &DEBUGCMD)
+             PGM        PARM(&PHPSCRDIR &CHGSCRDIR &PHPCMD +
+                          &SCRIPTFILE &ARGS &ARGDLM &PHPPATH +
+                          &SETPKGPATH &DSPSTDOUT &LOGSTDOUT +
+                          &PRTSTDOUT &DLTSTDOUT &IFSSTDOUT &IFSFILE +
+                          &IFSOPT &CCSID &PRTSPLF &PRTUSRDTA +
+                          &PRTTXT &PRTHOLD &PRTOUTQALL &OUTFILE +
+                          &MBROPT &PASEJOBNAM &DEBUGCMD)
 
+             DCL        VAR(&PHPCMD) TYPE(*CHAR) LEN(200)
              DCL        VAR(&OFILE) TYPE(*CHAR) LEN(10)
              DCL        VAR(&OLIB) TYPE(*CHAR) LEN(10)
              DCL        VAR(&DEBUGCMD) TYPE(*CHAR) LEN(4)
@@ -229,7 +230,7 @@
 /*----------------------------------------------------------------------------*/
 /* Set PHP executable */
 /*----------------------------------------------------------------------------*/
- CHGVAR     VAR(&PHPEXE) VALUE(&PHPPATH |< &PHPPATHSEP |< 'php')
+ CHGVAR     VAR(&PHPEXE) VALUE(&PHPPATH |< &PHPPATHSEP |< &PHPCMD)
 
 /*----------------------------------------------------------------------------*/
 /* Make sure QSHONITMP library and IFS directory created */
