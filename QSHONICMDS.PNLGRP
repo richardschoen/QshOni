@@ -1,13 +1,10 @@
 :pnlgrp.
-
-.************************************************************************
+:************************************************************************
 .*
-.*  Command: QSHEXEC
+.*  QSHONICMDS.PNLGRP - Complete Command Help for QshOni Project
 .*
-.*           All Help
-.*
-.************************************************************************
-:HELP NAME='QSHEXEC/ALL'.
+************************************************************************
+:HELP NAME='QSHONICMDS/ALL'.
 :IMHELP NAME='QSHEXEC'.
 :IMHELP NAME='COMMON/CMDLINE'.
 :IMHELP NAME='COMMON/SETPKGPATH'.
