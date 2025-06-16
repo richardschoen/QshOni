@@ -61,6 +61,27 @@ are specified.
 :help name='QSHEXEC/DSPSTDOUT'.
 :IMHELP NAME='COMMON/DSPSTDOUT'.
 :ehelp.
+:help name='QSHEXEC/LOGSTDOUT'.
+:IMHELP NAME='COMMON/LOGSTDOUT'.
+:ehelp.
+:help name='QSHEXEC/PRTSTDOUT'.
+:IMHELP NAME='COMMON/PRTSTDOUT'.
+:ehelp.
+:help name='QSHEXEC/DLTSTDOUT'.
+:IMHELP NAME='COMMON/DLTSTDOUT'.
+:ehelp.
+:help name='QSHEXEC/IFSSTDOUT'.
+:IMHELP NAME='COMMON/IFSSTDOUT'.
+:ehelp.
+:help name='QSHEXEC/IFSFILE'.
+:IMHELP NAME='COMMON/IFSFILE'.
+:ehelp.
+:help name='QSHEXEC/IFSOPT'.
+:IMHELP NAME='COMMON/IFSOPT'.
+:ehelp.
+:help name='QSHEXEC/CCSID'.
+:IMHELP NAME='COMMON/CCSID'.
+:ehelp.
 
 .**************************************************
 .*
