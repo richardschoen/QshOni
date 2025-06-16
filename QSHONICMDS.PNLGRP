@@ -52,6 +52,10 @@ are specified.
 :IMHELP NAME='COMMON/ASTERISK'.
 :ehelp.
 
+:help name='QSHEXEC/CMDLINE'.
+:IMHELP NAME='COMMON/CMDLINE'.
+:ehelp.
+
 .**************************************************
 .*
 .* Error messages
