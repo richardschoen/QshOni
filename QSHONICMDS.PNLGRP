@@ -1,9 +1,9 @@
 :pnlgrp.
-:************************************************************************
+.************************************************************************
 .*
 .*  QSHONICMDS.PNLGRP - Complete Command Help for QshOni Project
 .*
-************************************************************************
+.************************************************************************
 :HELP NAME='QSHONICMDS/ALL'.
 :IMHELP NAME='QSHEXEC'.
 :IMHELP NAME='COMMON/CMDLINE'.
@@ -189,6 +189,20 @@ IFS file option (IFSOPT) - Help
 :pd.Append to file.
 :pt.:pk.*NONE:epk.
 :pd.Fail if exists.
+:eparml.
+:ehelp.
+
+:HELP NAME='COMMON/CCSID'.
+Coded character set ID for job (CCSID) - Help
+:xh3.Coded character set ID for job (CCSID)
+:p.When using the iToolkit component for command access, I originally had some issues with CL commands not working correctly. 
+However I don't currently remember exactly why. This may have been solved, however I recommend still passing a value of 37 
+unless you are in a non US country. 
+:parml.
+:pt.:pk def.*SAME:epk.
+:pd.If you set to *SAME, the CCSID will stay the same as your current job with no change.
+:pt.:pk.1-65535:epk.
+:pd.Specify the CCSID.
 :eparml.
 :ehelp.
 
