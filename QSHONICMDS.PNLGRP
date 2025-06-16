@@ -1,444 +1,528 @@
 :pnlgrp.
-
-.************************************************************************
+:************************************************************************
 .*
-.*  Command: QSHEXEC
+.*  QSHONICMDS.PNLGRP - Complete Command Help for QshOni Project
 .*
-.*           All Help
-.*
-.************************************************************************
-:HELP NAME='QSHEXEC/ALL'.
+************************************************************************
+:HELP NAME='QSHONICMDS/ALL'.
 :IMHELP NAME='QSHEXEC'.
-:IMHELP NAME='QSHEXEC/CMDLINE'.
-:IMHELP NAME='QSHEXEC/SETPKGPATH'.
-:IMHELP NAME='QSHEXEC/DSPSTDOUT'.
-:IMHELP NAME='QSHEXEC/LOGSTDOUT'.
-:IMHELP NAME='QSHEXEC/PRTSTDOUT'.
-:IMHELP NAME='QSHEXEC/DLTSTDOUT'.
-:IMHELP NAME='QSHEXEC/IFSSTDOUT'.
-:IMHELP NAME='QSHEXEC/IFSFILE'.
-:IMHELP NAME='QSHEXEC/IFSOPT'.
-:IMHELP NAME='QSHEXEC/CCSID'.
-:IMHELP NAME='QSHEXEC/PRTSPLF'.
-:IMHELP NAME='QSHEXEC/PRTUSRDTA'.
-:IMHELP NAME='QSHEXEC/PRTTXT'.
-:IMHELP NAME='QSHEXEC/PRTHOLD'.
-:IMHELP NAME='QSHEXEC/PRTOUTQ'.
-:IMHELP NAME='QSHEXEC/OUTFILE'.
-:IMHELP NAME='QSHEXEC/MBROPT'.
-:IMHELP NAME='QSHEXEC/PASEJOBNAM'.
-:IMHELP NAME='QSHEXEC/COMMAND/EXAMPLES'.
-:IMHELP NAME='QSHEXEC/ERROR/MESSAGES'.
+:IMHELP NAME='QSHSQL'.
+:IMHELP NAME='QSHCMDOUT'.
+:IMHELP NAME='QSHCMDSQL'.
+:IMHELP NAME='QSHDEL'.
+:IMHELP NAME='QSHBASH'.
+:IMHELP NAME='QSHBASHOUT'.
+:IMHELP NAME='QSHCMDJRN'.
+:IMHELP NAME='QSHONI'.
+:IMHELP NAME='QSHONIPATH'.
+:IMHELP NAME='QSHONIENV'.
+:IMHELP NAME='QSHONICRTDIR'.
+:IMHELP NAME='QSHONICHGOWN'.
+:IMHELP NAME='QSHONICHGATH'.
+:IMHELP NAME='QSHONILOG'.
+:IMHELP NAME='QSHONISYMLNK'.
+:IMHELP NAME='QSHONIERR'.
+:IMHELP NAME='QSHONICMDLOG'.
 :EHELP.
 
-.************************************************************************
-.*  Primary Help for command QSHEXEC
-.************************************************************************
-:help name='QSHEXEC'.
-Run Qshell Command Line - Help
-:p.The Run Qshell Command Line (QSHEXEC) command can be used to run a QSH/PASE command and log the results
-appropriately.
-.* Describe the function provided by the command.
-:p.
-:hp3.Stdout Logging Note::ehp3.
-During execution, the CL command always creates a temporary outfile in
-library QTEMP that gets automatically populated with standard output (stdout) from the
-QSH/PASE command process that gets run.
-The temporary stdout output file name is: :hp2.QTEMP/STDOUTQSH:ehp2..
-:p.
-If the file already exists for a subsequent run of the command, the :hp2.QTEMP/STDOUTQSH:ehp2.
-temporary file is automatically cleared before
-running so each run gets a fresh copy of :hp2.QTEMP/STDOUTQSH:ehp2..
-The :hp2.QTEMP/STDOUTQSH:ehp2. temp file gets created automatically always,
-even if none of the switches such as: :hp2.DSPSTDOUT, LOGSTDOUT, PRTSTDOUT or IFSSTDOUT:ehp2.
-are specified.
-:P.
-:IMHELP NAME='COMMON/ASTERISK'.
-:ehelp.
-.*******************************************
-.*   Help for parameter CMDLINE
-.*******************************************
-:help name='QSHEXEC/CMDLINE'.
+************************************************************************
+.*  Command-specific help for QSHEXEC
+************************************************************************
+:HELP NAME='QSHEXEC'.
+Run Qshell Command (QSHEXEC) - Help
+:p.Runs a Qshell or PASE command and manages output logging.
+:IMHELP NAME='COMMON/CMDLINE'.
+:IMHELP NAME='COMMON/SETPKGPATH'.
+:IMHELP NAME='COMMON/DSPSTDOUT'.
+:IMHELP NAME='COMMON/DLTSTDOUT'.
+:IMHELP NAME='COMMON/IFSSTDOUT'.
+:IMHELP NAME='COMMON/IFSFILE'.
+:IMHELP NAME='COMMON/IFSOPT'.
+:IMHELP NAME='COMMON/LOGSTDOUT'.
+:IMHELP NAME='COMMON/PRTSTDOUT'.
+:IMHELP NAME='COMMON/PRTSPLF'.
+:IMHELP NAME='COMMON/PRTUSRDTA'.
+:IMHELP NAME='COMMON/PRTTXT'.
+:IMHELP NAME='COMMON/PRTHOLD'.
+:IMHELP NAME='COMMON/PRTOUTQ'.
+:IMHELP NAME='COMMON/OUTFILE'.
+:IMHELP NAME='COMMON/MBROPT'.
+:IMHELP NAME='COMMON/PASEJOBNAM'.
+:EHELP.
+
+************************************************************************
+.*  Command-specific help for QSHSQL
+************************************************************************
+:HELP NAME='QSHSQL'.
+Run SQL to stdout or outfile (QSHSQL) - Help
+:p.Runs a SQL SELECT command using DB2UTILS and logs output.
+:IMHELP NAME='COMMON/CMDLINE'.
+:IMHELP NAME='COMMON/CRTIDCOL'.
+:IMHELP NAME='COMMON/DSPSTDOUT'.
+:IMHELP NAME='COMMON/LOGSTDOUT'.
+:IMHELP NAME='COMMON/OUTFILE'.
+:IMHELP NAME='COMMON/MBROPT'.
+:EHELP.
+
+************************************************************************
+.*  Command-specific help for QSHCMDOUT
+************************************************************************
+:HELP NAME='QSHCMDOUT'.
+Run shell command with OUTFILE (QSHCMDOUT) - Help
+:p.Runs a QSH or PASE command and writes output to OUTFILE.
+:IMHELP NAME='COMMON/CMDLINE'.
+:IMHELP NAME='COMMON/OUTFILE'.
+:IMHELP NAME='COMMON/MBROPT'.
+:EHELP.
+
+************************************************************************
+.*  Command-specific help for QSHCMDSQL
+************************************************************************
+:HELP NAME='QSHCMDSQL'.
+Runs SQL command with command shell (QSHCMDSQL) - Help
+:p.Runs SQL via Qshell/PASE and logs result to OUTFILE or IFS.
+:IMHELP NAME='COMMON/CMDLINE'.
+:IMHELP NAME='COMMON/OUTFILE'.
+:IMHELP NAME='COMMON/IFSFILE'.
+:IMHELP NAME='COMMON/IFSOPT'.
+:IMHELP NAME='COMMON/MBROPT'.
+:EHELP.
+
+************************************************************************
+.*  Command-specific help for QSHDEL
+************************************************************************
+:HELP NAME='QSHDEL'.
+Delete IFS file (QSHDEL) - Help
+:p.Runs a simple command to delete an IFS file using the QSH interface.
+:IMHELP NAME='COMMON/IFSFILE'.
+:EHELP.
+
+************************************************************************
+.*  Command-specific help for QSHBASH
+************************************************************************
+:HELP NAME='QSHBASH'.
+Run Bash script file (QSHBASH) - Help
+:p.Invokes a script file with Bash interpreter.
+:IMHELP NAME='COMMON/CMDLINE'.
+:IMHELP NAME='COMMON/DSPSTDOUT'.
+:IMHELP NAME='COMMON/DLTSTDOUT'.
+:IMHELP NAME='COMMON/IFSFILE'.
+:IMHELP NAME='COMMON/IFSOPT'.
+:EHELP.
+
+************************************************************************
+.*  Command-specific help for QSHBASHOUT
+************************************************************************
+:HELP NAME='QSHBASHOUT'.
+Run Bash with OUTFILE (QSHBASHOUT) - Help
+:p.Runs a Bash script file and logs results to an OUTFILE.
+:IMHELP NAME='COMMON/CMDLINE'.
+:IMHELP NAME='COMMON/OUTFILE'.
+:IMHELP NAME='COMMON/MBROPT'.
+:EHELP.
+
+************************************************************************
+.*  Command-specific help for QSHCMDJRN
+************************************************************************
+:HELP NAME='QSHCMDJRN'.
+Run shell and write to journal (QSHCMDJRN) - Help
+:p.Runs shell command and writes stdout to a journal.
+:IMHELP NAME='COMMON/CMDLINE'.
+:IMHELP NAME='COMMON/JRN'.
+:IMHELP NAME='COMMON/JRNRCV'.
+:EHELP.
+
+************************************************************************
+.*  Command-specific help for QSHONI
+************************************************************************
+:HELP NAME='QSHONI'.
+QshOni base configuration command (QSHONI) - Help
+:p.Enables or disables shell redirection environment for QshOni scripts.
+:IMHELP NAME='COMMON/SETENV'.
+:EHELP.
+
+************************************************************************
+.*  Command-specific help for QSHONIPATH
+************************************************************************
+:HELP NAME='QSHONIPATH'.
+Set PATH environment (QSHONIPATH) - Help
+:p.Configures the PATH for QOpenSys packages for shell usage.
+:IMHELP NAME='COMMON/SETENV'.
+:EHELP.
+
+************************************************************************
+.*  Command-specific help for QSHONIENV
+************************************************************************
+:HELP NAME='QSHONIENV'.
+Display or set environment (QSHONIENV) - Help
+:p.Manages environment variables and current QshOni configuration.
+:IMHELP NAME='COMMON/SETENV'.
+:EHELP.
+
+************************************************************************
+.*  Command-specific help for QSHONICRTDIR
+************************************************************************
+:HELP NAME='QSHONICRTDIR'.
+Create IFS directory (QSHONICRTDIR) - Help
+:p.Creates an IFS directory if it doesn't exist.
+:IMHELP NAME='COMMON/IFSFILE'.
+:EHELP.
+
+************************************************************************
+.*  Command-specific help for QSHONICHGOWN
+************************************************************************
+:HELP NAME='QSHONICHGOWN'.
+Change ownership of IFS path (QSHONICHGOWN) - Help
+:p.Changes ownership of specified IFS file or directory.
+:IMHELP NAME='COMMON/IFSFILE'.
+:IMHELP NAME='COMMON/OWNER'.
+:EHELP.
+
+************************************************************************
+.*  Command-specific help for QSHONICHGATH
+************************************************************************
+:HELP NAME='QSHONICHGATH'.
+Change authority on IFS path (QSHONICHGATH) - Help
+:p.Changes authorities on specified IFS file or directory.
+:IMHELP NAME='COMMON/IFSFILE'.
+:IMHELP NAME='COMMON/AUT'.
+:EHELP.
+
+************************************************************************
+.*  Command-specific help for QSHONILOG
+************************************************************************
+:HELP NAME='QSHONILOG'.
+Display QshOni logging info (QSHONILOG) - Help
+:p.Displays summary of logging operations for QshOni activity.
+:IMHELP NAME='COMMON/LOGTYPE'.
+:EHELP.
+
+************************************************************************
+.*  Command-specific help for QSHONISYMLNK
+************************************************************************
+:HELP NAME='QSHONISYMLNK'.
+Create symlink (QSHONISYMLNK) - Help
+:p.Creates a symbolic link in the IFS.
+:IMHELP NAME='COMMON/IFSFILE'.
+:IMHELP NAME='COMMON/SYMLNKTO'.
+:EHELP.
+
+************************************************************************
+.*  Command-specific help for QSHONIERR
+************************************************************************
+:HELP NAME='QSHONIERR'.
+Simulate error for testing (QSHONIERR) - Help
+:p.Intentionally raises a custom error message for testing and handling logic.
+:IMHELP NAME='COMMON/ERRMSGID'.
+:EHELP.
+
+************************************************************************
+.*  Command-specific help for QSHONICMDLOG
+************************************************************************
+:HELP NAME='QSHONICMDLOG'.
+Show recent shell command log entries (QSHONICMDLOG) - Help
+:p.Displays history of shell commands run under QshOni.
+:EHELP.
+
+************************************************************************
+.*  COMMON PARAMETER HELP BLOCKS
+************************************************************************
+:HELP NAME='COMMON/CMDLINE'.
 QSH command line (CMDLINE) - Help
 :xh3.QSH command line (CMDLINE)
-:p.Specifies the Qsh/Pase command line sequence to run. Semicolons can be used to run multiple commands.
-.* Describe the function provided by the parameter.
-:p.This is a required parameter.
+:p.Specifies the Qshell/PASE command line sequence to run. Semicolons can chain commands.
 :parml.
 :pt.:pv.character-value:epv.
-:pd.
-Enter any valid Qsh/Pase commands, in sequence, to run. Semicolons can be used to run multiple commands.
-The name of a file can be specified to run a script. The script file must be in the current working
-directory or in the PATH. The script file must be a valid Qsh/Pase script file.
-.* Describe the function provided by the user-defined parameter value.
+:pd.Enter a valid Qshell or PASE command, or script filename if in PATH.
 :eparml.
 :ehelp.
-.*******************************************
-.*   Help for parameter SETPKGPATH
-.*******************************************
-:help name='QSHEXEC/SETPKGPATH'.
-Set QOpenSys yum package path (SETPKGPATH) - Help
-:xh3.Set QOpenSys yum package path (SETPKGPATH)
-:p.Add the IBM i Open Source Package path :hp2./QOpenSys/pkgs/bin:ehp2. to PATH environment
-variable by calling QSHPATH command before running QSH/PASE commands.
+
+:HELP NAME='COMMON/SETPKGPATH'.
+Set package path (SETPKGPATH) - Help
+:xh3.Set QOpenSys package path (SETPKGPATH)
+:p.Specifies whether to prepend /QOpenSys/pkgs/bin to PATH.
 :parml.
-:pt.:pk.*NO:epk.
-:pd.
-Do not include the QOpenSys yum package path.
 :pt.:pk def.*YES:epk.
-:pd.
-Include the QOpenSys yum package path.
+:pd.Include package path.
+:pt.:pk.*NO:epk.
+:pd.Do not include package path.
 :eparml.
 :ehelp.
-.*******************************************
-.*   Help for parameter DSPSTDOUT
-.*******************************************
-:help name='QSHEXEC/DSPSTDOUT'.
-Display standard output result (DSPSTDOUT) - Help
+
+:HELP NAME='COMMON/DSPSTDOUT'.
+Display stdout (DSPSTDOUT) - Help
 :xh3.Display standard output result (DSPSTDOUT)
-:p.Display the outfile contents. Helpful when debugging.
+:p.Specifies whether to display the stdout results on the terminal.
 :parml.
 :pt.:pk def.*NO:epk.
-:pd.
-Do not display the outfile contents to the terminal.
+:pd.Do not display stdout.
 :pt.:pk.*YES:epk.
-:pd.
-Display the outfile contents to the terminal.
+:pd.Display stdout.
 :eparml.
 :ehelp.
-.*******************************************
-.*   Help for parameter LOGSTDOUT
-.*******************************************
-:help name='QSHEXEC/LOGSTDOUT'.
-Log standard output to job log (LOGSTDOUT) - Help
-:xh3.Log standard output to job log (LOGSTDOUT)
-:p.Place STDOUT log entries into the current job's job log.
-Use this if you want the log info in the IBM i job log.
-All STDOUT entries are written as CPF message: :hp2.QSS9898:ehp2.
-:parml.
-:pt.:pk def.*NO:epk.
-:pd.
-Do not write the standard output log entries to the job log.
-:pt.:pk.*YES:epk.
-:pd.
-Write the standard output log entries to the job log as :hp2.QSS9898:ehp2. messages.
-:eparml.
-:ehelp.
-.*******************************************
-.*   Help for parameter PRTSTDOUT
-.*******************************************
-:help name='QSHEXEC/PRTSTDOUT'.
-Print standard output result (PRTSTDOUT) - Help
-:xh3.Print standard output result (PRTSTDOUT)
-:p.Print STDOUT to a spool file. Use this if you want a spool file of the log output.
-:parml.
-:pt.:pk def.*NO:epk.
-:pd.
-Do not print the standard output result to a spool file.
-.* Describe the function provided by the pre-defined parameter value.
-:pt.:pk.*YES:epk.
-:pd.
-Print the standard output result to a spool file named, by default, QSHEXECLOG.
-The spool file name can be changed by using the PRTSPLF parameter.
-:eparml.
-:ehelp.
-.*******************************************
-.*   Help for parameter DLTSTDOUT
-.*******************************************
-:help name='QSHEXEC/DLTSTDOUT'.
-Delete standard output result (DLTSTDOUT) - Help
+
+:HELP NAME='COMMON/DLTSTDOUT'.
+Delete stdout IFS file (DLTSTDOUT) - Help
 :xh3.Delete standard output result (DLTSTDOUT)
-:p.This option insures that the STDOUT IFS temp files get cleaned up after processing.
-All IFS log files get created in the /tmp/qsh directory.
+:p.Specifies whether to delete temporary IFS stdout files after run.
 :parml.
-:pt.:pk.*NO:epk.
-:pd.
-The IFS temp files are not deleted after processing.
 :pt.:pk def.*YES:epk.
-:pd.
-The IFS temp files are deleted after processing.
+:pd.Delete IFS stdout files.
+:pt.:pk.*NO:epk.
+:pd.Keep IFS stdout files.
 :eparml.
 :ehelp.
-.*******************************************
-.*   Help for parameter IFSSTDOUT
-.*******************************************
-:help name='QSHEXEC/IFSSTDOUT'.
-Copy std output to IFS file (IFSSTDOUT) - Help
+
+:HELP NAME='COMMON/IFSSTDOUT'.
+Copy stdout to IFS (IFSSTDOUT) - Help
 :xh3.Copy std output to IFS file (IFSSTDOUT)
-:p.Copy standard output to an IFS file. Useful for aggregating log results to a file.
+:p.Specifies whether to copy stdout to an IFS file.
 :parml.
 :pt.:pk def.*NO:epk.
-:pd.
-Do not copy the standard output to an IFS file.
+:pd.Do not copy stdout to IFS.
 :pt.:pk.*YES:epk.
-:pd.
-Copy the standard output to an IFS file.
+:pd.Copy stdout to IFS.
 :eparml.
 :ehelp.
-.*******************************************
-.*   Help for parameter IFSFILE
-.*******************************************
-:help name='QSHEXEC/IFSFILE'.
-IFS file for stdout results (IFSFILE) - Help
+
+:HELP NAME='COMMON/IFSFILE'.
+IFS file (IFSFILE) - Help
 :xh3.IFS file for stdout results (IFSFILE)
-:p.Used in conjunction with the IFSSTDOUT parameter (when set to :hp2.*YES:ehp2.)
-to specify the name of the
-IFS file to copy the stdout results to.
+:p.Specifies the path of the IFS file to receive stdout output.
 :parml.
-:pt.:pv.IFS file for stdout results. Needs to be specified if IFSSTDOUT = *YES.:epv.
-:pd.
-Specify the name, including path, of the IFS file to copy the stdout results to
+:pt.:pv.character-value:epv.
+:pd.Enter full IFS file path.
 :eparml.
 :ehelp.
-.*******************************************
-.*   Help for parameter IFSOPT
-.*******************************************
-:help name='QSHEXEC/IFSOPT'.
+
+:HELP NAME='COMMON/IFSOPT'.
 IFS file option (IFSOPT) - Help
 :xh3.IFS file option (IFSOPT)
-:p.Specifies whether the copy operation replaces, adds, or
-fails to copy the records in a stream file if a stream
-file with the specified name already exists. If the stream
-file does not exist, it is created.
+:p.Specifies action if IFS file exists: replace, add, or fail.
 :parml.
-:pt.:pk.*ADD:epk.
-:pd.
-The stdout records are added to the end of the existing IFS file.
 :pt.:pk def.*REPLACE:epk.
-:pd.
-The stdout records replace the existing IFS file records.
+:pd.Overwrite existing file.
+:pt.:pk.*ADD:epk.
+:pd.Append to file.
 :pt.:pk.*NONE:epk.
-:pd.
-No stdout records are copied and the operation will fail.
+:pd.Fail if exists.
 :eparml.
 :ehelp.
-.*******************************************
-.*   Help for parameter CCSID
-.*******************************************
-:help name='QSHEXEC/CCSID'.
-Coded character set ID for job (CCSID) - Help
-:xh3.Coded character set ID for job (CCSID)
-:p.Specifies the coded character set identifier (CCSID) used
-for this command execution.
-:p.When using the iToolkit component for command access, I originally had some issues
-with CL commands not working correctly. However I don't currently remember exactly why.
-This may have been solved, however I recommend still passing a value of 37 unless you
-are in a non US country.
+
+:HELP NAME='COMMON/LOGSTDOUT'.
+Log stdout (LOGSTDOUT) - Help
+:xh3.Log standard output to job log (LOGSTDOUT)
+:p.Specifies whether stdout is written to the job log.
 :parml.
-:pt.:pk def.*SAME:epk.
-:pd.
-If you set to *SAME, the CCSID will stay the same as your current job with no change.
-:pt.:pv.1-65535:epv.
-:pd.
-Specify the CCSID.
+:pt.:pk def.*NO:epk.
+:pd.Do not log stdout.
+:pt.:pk.*YES:epk.
+:pd.Write stdout lines to job log.
 :eparml.
 :ehelp.
-.*******************************************
-.*   Help for parameter PRTSPLF
-.*******************************************
-:help name='QSHEXEC/PRTSPLF'.
-Print stdout spool file (PRTSPLF) - Help
+
+:HELP NAME='COMMON/PRTSTDOUT'.
+Print stdout (PRTSTDOUT) - Help
+:xh3.Print standard output result (PRTSTDOUT)
+:p.Specifies whether to print stdout to a spool file.
+:parml.
+:pt.:pk def.*NO:epk.
+:pd.Do not print stdout.
+:pt.:pk.*YES:epk.
+:pd.Print stdout to spool.
+:eparml.
+:ehelp.
+
+:HELP NAME='COMMON/PRTSPLF'.
+Spool file name (PRTSPLF) - Help
 :xh3.Print stdout spool file (PRTSPLF)
-:p.This option holds the name of the spool file used when PRTSTDOUT = *YES.
-It's a nice way to customize the stdout log prints.
+:p.Specifies spool file name for printed stdout.
 :parml.
-:pt.:pk def.QSHEXECLOG:epk.
-:pd.
-Default spool file name is QSHEXECLOG.
 :pt.:pv.character-value:epv.
-:pd.
-Specify the name of the spool file to print the stdout results to.
+:pd.Enter spool file name.
 :eparml.
 :ehelp.
-.*******************************************
-.*   Help for parameter PRTUSRDTA
-.*******************************************
-:help name='QSHEXEC/PRTUSRDTA'.
-Print stdout user data (PRTUSRDTA) - Help
+
+:HELP NAME='COMMON/PRTUSRDTA'.
+Spool user data (PRTUSRDTA) - Help
 :xh3.Print stdout user data (PRTUSRDTA)
-:p.This option holds the name of the spool file user data used when PRTSTDOUT = *YES.
+:p.Specifies user data for spool generated by PRTSTDOUT.
 :parml.
-:pt.:pk def.*NONE:epk.
-:pd.
-No user data is specified.
 :pt.:pv.character-value:epv.
-:pd.
-Specify the characters to use for the spool file user data.
+:pd.Enter user data or none.
 :eparml.
 :ehelp.
-.*******************************************
-.*   Help for parameter PRTTXT
-.*******************************************
-:help name='QSHEXEC/PRTTXT'.
-Print stdout print text (PRTTXT) - Help
+
+:HELP NAME='COMMON/PRTTXT'.
+Spool text (PRTTXT) - Help
 :xh3.Print stdout print text (PRTTXT)
-:p.This option holds the name of the spool file print txt to be used when PRTSTDOUT = *YES.
+:p.Specifies descriptive text for spool file by PRTSTDOUT.
 :parml.
-:pt.:pk def.*NONE:epk.
-:pd.
-No print text is specified.
 :pt.:pv.character-value:epv.
-:pd.
-Specify the characters to use for the spool file print text.
+:pd.Enter descriptive text.
 :eparml.
 :ehelp.
-.*******************************************
-.*   Help for parameter PRTHOLD
-.*******************************************
-:help name='QSHEXEC/PRTHOLD'.
-Print stdout hold spool file (PRTHOLD) - Help
+
+:HELP NAME='COMMON/PRTHOLD'.
+Hold spool (PRTHOLD) - Help
 :xh3.Print stdout hold spool file (PRTHOLD)
-:p.This option determines if the spool file is held if one is generated when PRTSTDOUT = *YES.
+:p.Specifies whether generated spool is held or released.
 :parml.
-:pt.:pk.*NONE:epk.
-:pd.
-<...>
-.* Describe the function provided by the pre-defined parameter value.
-:pt.:pk.*NO:epk.
-:pd.
-<...>
-.* Describe the function provided by the pre-defined parameter value.
 :pt.:pk def.*YES:epk.
-:pd.
-<...>
-.* Describe the function provided by the pre-defined parameter value.
+:pd.Hold spool file.
+:pt.:pk.*NO:epk.
+:pd.Release spool file.
 :eparml.
 :ehelp.
-.*******************************************
-.*   Help for parameter PRTOUTQ
-.*******************************************
-:help name='QSHEXEC/PRTOUTQ'.
-Print stdout to outq (PRTOUTQ) - Help
+
+:HELP NAME='COMMON/PRTOUTQ'.
+Output queue (PRTOUTQ) - Help
 :xh3.Print stdout to outq (PRTOUTQ)
-:p.Specifies <...>
-.* Describe the function provided by the parameter.
-:p.:hp2.Qualifier 1: Print stdout to outq:ehp2.
+:p.Specifies the output queue for spool by PRTSTDOUT.
 :parml.
 :pt.:pk def.*SAME:epk.
-:pd.
-<...>
-.* Describe the function provided by the pre-defined parameter value.
+:pd.Use same output queue.
 :pt.:pv.name:epv.
-:pd.
-Specify the name of <...>
-.* Describe the function provided by the user-defined parameter value.
-:eparml.
-:p.:hp2.Qualifier 2: Library:ehp2.
-:parml.
-:pt.:pk def.*LIBL:epk.
-:pd.
-<...>
-.* Describe the function provided by the pre-defined parameter value.
-:pt.:pv.name:epv.
-:pd.
-Specify the name of <...>
-.* Describe the function provided by the user-defined parameter value.
+:pd.Enter specific output queue name.
 :eparml.
 :ehelp.
-.*******************************************
-.*   Help for parameter OUTFILE
-.*******************************************
-:help name='QSHEXEC/OUTFILE'.
-File to receive output (OUTFILE) - Help
+
+:HELP NAME='COMMON/OUTFILE'.
+Output file (OUTFILE) - Help
 :xh3.File to receive output (OUTFILE)
-:p.Specifies <...>
-.* Describe the function provided by the parameter.
-:p.:hp2.Qualifier 1: File to receive output:ehp2.
-:parml.:pt.:pk def.STDOUTQSH:epk.
-:pd.
-<...>
-.* Describe the function provided by the default parameter value.
-:pt.:pk.*SAME:epk.
-:pd.
-<...>
-.* Describe the function provided by the pre-defined parameter value.
+:p.Specifies database file to receive stdout or SQL results.
+:parml.
 :pt.:pv.name:epv.
-:pd.
-Specify the name of <...>
-.* Describe the function provided by the user-defined parameter value.
-:eparml.
-:p.:hp2.Qualifier 2: Library:ehp2.
-:parml.:pt.:pk def.QTEMP:epk.
-:pd.
-<...>
-.* Describe the function provided by the default parameter value.
-:pt.:pk.*LIBL:epk.
-:pd.
-<...>
-.* Describe the function provided by the pre-defined parameter value.
-:pt.:pv.name:epv.
-:pd.
-Specify the name of <...>
-.* Describe the function provided by the user-defined parameter value.
+:pd.Enter file name (OPTIONALLY with library).
 :eparml.
 :ehelp.
-.*******************************************
-.*   Help for parameter MBROPT
-.*******************************************
-:help name='QSHEXEC/MBROPT'.
-Replace or add records (MBROPT) - Help
+
+:HELP NAME='COMMON/MBROPT'.
+Member option (MBROPT) - Help
 :xh3.Replace or add records (MBROPT)
-:p.Specifies <...>
-.* Describe the function provided by the parameter.
+:p.Specifies replace or add records in output file.
 :parml.
-:pt.:pk.*ADD:epk.
-:pd.
-<...>
-.* Describe the function provided by the pre-defined parameter value.
 :pt.:pk def.*REPLACE:epk.
-:pd.
-<...>
-.* Describe the function provided by the pre-defined parameter value.
+:pd.Replace existing records.
+:pt.:pk.*ADD:epk.
+:pd.Add records to file.
 :eparml.
 :ehelp.
-.*******************************************
-.*   Help for parameter PASEJOBNAM
-.*******************************************
-:help name='QSHEXEC/PASEJOBNAM'.
-PASE fork thread job names (PASEJOBNAM) - Help
+
+:HELP NAME='COMMON/PASEJOBNAM'.
+PASE job name (PASEJOBNAM) - Help
 :xh3.PASE fork thread job names (PASEJOBNAM)
-:p.Specifies <...>
-.* Describe the function provided by the parameter.
+:p.Specifies job name prefix for PASE fork/thread.
 :parml.
-:pt.:pk def.*DEFAULT:epk.
-:pd.
-<...>
-.* Describe the function provided by the default parameter value.
 :pt.:pv.character-value:epv.
-:pd.
-Specify the <...>
-.* Describe the function provided by the user-defined parameter value.
+:pd.Enter prefix or *DEFAULT.
 :eparml.
 :ehelp.
-.**************************************************
-.*
-.* Examples for QSHEXEC
-.*
-.**************************************************
-:help name='QSHEXEC/COMMAND/EXAMPLES'.
-Examples for QSHEXEC - Help
-:xh3.Examples for QSHEXEC
-:p.:hp2.Example 1: Simple Command Example:ehp2.
-:xmp.
-QSHEXEC  KWD1(PARMVAL1)
-:exmp.
-:p.This command <...>
-.* Describe a simple invocation of the command.
-.*
-:p.:hp2.Example 2: More Complex Command Example:ehp2.
-:xmp.
-QSHEXEC   KWD1(PARMVAL1)  KWD2(PARMVAL2)
-          KWD3(PARMVAL3)
-:exmp.
-:p.This command <...>
-.* Describe a more complex invocation of the command.
+
+:HELP NAME='COMMON/CRTIDCOL'.
+Create identity column (CRTIDCOL) - Help
+:xh3.Create identity column (CRTIDCOL)
+:p.Specifies whether to add identity column to outfile.
+:parml.
+:pt.:pk def.*NO:epk.
+:pd.Do not add identity column.
+:pt.:pk.*YES:epk.
+:pd.Add identity column.
+:eparml.
 :ehelp.
+
+:HELP NAME='COMMON/JRN'.
+Journal name (JRN) - Help
+:xh3.Journal name (JRN)
+:p.Specifies the journal to receive journal entries.
+:parml.
+:pt.:pv.name:epv.
+:pd.Enter journal name.
+:eparml.
+:ehelp.
+
+:HELP NAME='COMMON/JRNRCV'.
+Journal receiver name (JRNRCV) - Help
+:xh3.Journal receiver name (JRNRCV)
+:p.Specifies the journal receiver for the journal.
+:parml.
+:pt.:pv.name:epv.
+:pd.Enter receiver name.
+:eparml.
+:ehelp.
+
+:HELP NAME='COMMON/SETENV'.
+Set environment (SETENV) - Help
+:xh3.Set shell environment (SETENV)
+:p.Specifies whether to enable or disable environment wrapper.
+:parml.
+:pt.:pk def.*YES:epk.
+:pd.Enable environment setup.
+:pt.:pk.*NO:epk.
+:pd.Disable environment setup.
+:eparml.
+:ehelp.
+
+:HELP NAME='COMMON/OWNER'.
+IFS file owner (OWNER) - Help
+:xh3.Owner for IFS object (OWNER)
+:p.Specifies owner profile for IFS file or directory.
+:parml.
+:pt.:pv.character-value:epv.
+:pd.Enter user profile name.
+:eparml.
+:ehelp.
+
+:HELP NAME='COMMON/AUT'.
+Authority for IFS (AUT) - Help
+:xh3.IFS authority setting (AUT)
+:p.Specifies authority for IFS file or directory (e.g., *RWX, *RX).
+:parml.
+:pt.:pk def.*RX:epk.
+:pd.Read/Execute only.
+:pt.:pk.*RWX:epk.
+:pd.Read, Write, Execute.
+:eparml.
+:ehelp.
+
+:HELP NAME='COMMON/LOGTYPE'.
+Log type (LOGTYPE) - Help
+:xh3.Log type selector (LOGTYPE)
+:p.Specifies log view: summary or detail.
+:parml.
+:pt.:pk def.*SUMMARY:epk.
+:pd.Summary view.
+:pt.:pk.*DETAIL:epk.
+:pd.Detailed view.
+:eparml.
+:ehelp.
+
+:HELP NAME='COMMON/SYMLNKTO'.
+Symbolic link target (SYMLNKTO) - Help
+:xh3.Symbolic link target path (SYMLNKTO)
+:p.Specifies IFS target path for symlink.
+:parml.
+:pt.:pv.character-value:epv.
+:pd.Enter full IFS path of target.
+:eparml.
+:ehelp.
+
+:HELP NAME='COMMON/ERRMSGID'.
+Error message file ID (ERRMSGID) - Help
+:xh3.Error message identifier (ERRMSGID)
+:p.Specifies message identifier to simulate an error.
+:parml.
+:pt.:pv.character-value:epv.
+:pd.Enter CPF or user-defined message ID.
+:eparml.
+:ehelp.
+
 .**************************************************
 .*
-.* Error messages for QSHEXEC
+.* Error messages 
 .*
 .**************************************************
-:help name='QSHEXEC/ERROR/MESSAGES'.
+:help name='COMMON/ERROR/MESSAGES'.
 &msg(CPX0005,QCPFMSG). QSHEXEC - Help
 :xh3.&msg(CPX0005,QCPFMSG). QSHEXEC
 :p.:hp3.*ESCAPE &msg(CPX0006,QCPFMSG).:ehp3.
