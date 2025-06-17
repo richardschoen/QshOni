@@ -82,7 +82,30 @@ are specified.
 :help name='QSHEXEC/CCSID'.
 :IMHELP NAME='COMMON/CCSID'.
 :ehelp.
-
+:help name='QSHEXEC/PRTSPLF'.
+:IMHELP NAME='COMMON/PRTSPLF'.
+:ehelp.
+:help name='QSHEXEC/PRTUSRDTA'.
+:IMHELP NAME='COMMON/PRTUSRDTA'.
+:ehelp.
+:help name='QSHEXEC/PRTTXT'.
+:IMHELP NAME='COMMON/PRTTXT'.
+:ehelp.
+:help name='QSHEXEC/PRTHOLD'.
+:IMHELP NAME='COMMON/PRTHOLD'.
+:ehelp.
+:help name='QSHEXEC/PRTOUTQ'.
+:IMHELP NAME='COMMON/PRTOUTQ'.
+:ehelp.
+:help name='QSHEXEC/OUTFILE'.
+:IMHELP NAME='COMMON/OUTFILE'.
+:ehelp.
+:help name='QSHEXEC/MBROPT'.
+:IMHELP NAME='COMMON/MBROPT'.
+:ehelp.
+:help name='QSHEXEC/PASEJOBNAM'.
+:IMHELP NAME='COMMON/PASEJOBNAM'.
+:ehelp.
 .**************************************************
 .*
 .* Error messages
@@ -122,6 +145,8 @@ are specified.
 :DD.&MSG(CPF9899,QCPFMSG,*LIBL,nosub).
 :EDL.
 :ehelp.
+
+
 .*****************************************************************
 .*  COMMON HELP
 .*
