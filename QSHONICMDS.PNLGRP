@@ -135,10 +135,30 @@ Do not precede an entry with an asterisk unless that entry is a
 information) with an asterisk.
 :ENT.
 :EHELP.
+
+:HELP NAME='COMMON/REQPARM'.
+:P.
+This is a required parameter.
+:EHELP.
+
+:HELP NAME='COMMON/NOPARMS'.
+:P.
+There are no parameters for this command.
+:EHELP.
+
+:HELP NAME='COMMON/LIST'.
+:P.
+You can enter multiple values for this parameter.  If you are on an
+entry display and you need additional entry fields to enter these
+multiple values, type a plus sign (+) in the entry field opposite
+the phrase "+ for more", and press the Enter key.
+:EHELP.
+
 .*******************************************
 .*   Help for common parameters used across many
 .*   QshOni commands.
 .*
+.*******************************************
 .*   Help for parameter CMDLINE
 .*******************************************
 :HELP NAME='COMMON/CMDLINE'.
@@ -149,6 +169,8 @@ QSH command line (CMDLINE) - Help
 :pt.:pv.character-value:epv.
 :pd.Enter a valid Qshell or PASE command, or script filename if in PATH.
 :eparml.
+:P.
+:IMHELP NAME='COMMON/REQPARM'.
 :ehelp.
 
 :HELP NAME='COMMON/SETPKGPATH'.
@@ -307,12 +329,28 @@ Hold spool (PRTHOLD) - Help
 Output queue (PRTOUTQ) - Help
 :xh3.Print stdout to outq (PRTOUTQ)
 :p.Specifies the output queue for spool by PRTSTDOUT.
-:parml.
-:pt.:pk def.*SAME:epk.
-:pd.Use same output queue.
-:pt.:pv.name:epv.
-:pd.Enter specific output queue name.
-:eparml.
+P.
+The possible values are:
+:P.
+:PARML.
+:PT.:PK DEF.*SAME:EPK.
+:PD.
+The stdout spool file is placed on the job's output queue.
+:PT.:PK.ouptput-queue-name:EPK.
+:PD.
+Specify the name (library-name/output-queue-name) of the output
+queue on which the stdout spool file is placed.
+:P.
+The possible library values are:
+:PARML.
+:PT.:PK DEF.*LIBL:EPK.
+:PD.
+The library list is used to locate the output queue name.
+:PT.:PK.library-name:EPK.
+:PD.
+Specify the name of the library where the output queue is located.
+:EPARML.
+:EPARML.
 :ehelp.
 
 :HELP NAME='COMMON/OUTFILE'.
