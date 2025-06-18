@@ -13,7 +13,7 @@ Run Qshell Command Line - Help
 :p.The Run Qshell Command Line (QSHEXEC) command can be used to run a QSH/PASE command and log the results
 appropriately.
 :p.
-:IMHELP NAME='COMMON/LOGGINGNOTE.
+:IMHELP NAME='COMMON/LOGGINGNOTE'.
 :P.
 :IMHELP NAME='COMMON/ASTERISK'.
 :ehelp.
