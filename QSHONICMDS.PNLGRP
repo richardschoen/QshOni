@@ -91,7 +91,18 @@ QSHEXEC command line: :hp2.bash -c cmdline:ehp2..
 :ehelp.
 
 :help name='QSHBASH/CMDLINE'.
-:IMHELP NAME='COMMON/CMDLINE'.
+Bash command line (CMDLINE) - Help
+:xh3.Bash command line (CMDLINE)
+:p.Bash command line sequence to run. Semicolons can be used to run multiple commands.
+:parml.
+:pt.:pv.character-value:epv.
+:pd.Enter a valid Bash command line, or script filename if in PATH.
+:eparml.
+:P.
+:IMHELP NAME='COMMON/REQPARM'.
+:ehelp.
+:help name='QSHBASH/SETPKGPATH'.
+:IMHELP NAME='COMMON/SETPKGPATH'.
 :ehelp.
 :help name='QSHBASH/DSPSTDOUT'.
 :IMHELP NAME='COMMON/DSPSTDOUT'.
