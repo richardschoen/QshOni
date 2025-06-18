@@ -72,6 +72,43 @@ appropriately.
 :IMHELP NAME='COMMON/PASEJOBNAM'.
 :ehelp.
 
+.***********************************************************************
+.*  Command-specific help for QSHBASH
+.***********************************************************************
+:HELP NAME='QSHBASH'.
+Run Bash command (QSHBASH) - Help
+:p.
+This CL command can be used to run a PASE bash command 
+and log the results appropriately.
+:p.
+The command is a convenience wrapper that can be used to call 
+a bash command with QSHEXEC instead of having to type the 
+following bash command sequence prefix on a 
+QSHEXEC command line: :hp2.bash -c cmdline:ehp2..
+:IMHELP NAME='COMMON/LOGGINGNOTE'.
+:P.
+:IMHELP NAME='COMMON/ASTERISK'.
+:ehelp.
+
+:IMHELP NAME='COMMON/CMDLINE'.
+:IMHELP NAME='COMMON/SETPKGPATH'.
+:IMHELP NAME='COMMON/DSPSTDOUT'.
+:IMHELP NAME='COMMON/LOGSTDOUT'.
+:IMHELP NAME='COMMON/PRTSTDOUT'.
+:IMHELP NAME='COMMON/PRTSPLF'.
+:IMHELP NAME='COMMON/PRTUSRDTA'.
+:IMHELP NAME='COMMON/PRTTXT'.
+:IMHELP NAME='COMMON/PRTHOLD'.
+:IMHELP NAME='COMMON/PRTOUTQ'.
+:IMHELP NAME='COMMON/DLTSTDOUT'.
+:IMHELP NAME='COMMON/IFSSTDOUT'.
+:IMHELP NAME='COMMON/IFSFILE'.
+:IMHELP NAME='COMMON/IFSOPT'.
+:IMHELP NAME='COMMON/OUTFILE'.
+:IMHELP NAME='COMMON/MBROPT'.
+:IMHELP NAME='COMMON/PASEJOBNAM'.
+:IMHELP NAME='COMMON/CCSID'.
+:EHELP.
 
 .*****************************************************************
 .*  COMMON HELP
