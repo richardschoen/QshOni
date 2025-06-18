@@ -4,27 +4,6 @@
 .*  QSHONICMDS.PNLGRP - Complete Command Help for QshOni Project
 .*
 .************************************************************************
-:HELP NAME='QSHONICMDS/ALL'.
-:IMHELP NAME='QSHEXEC'.
-:IMHELP NAME='COMMON/CMDLINE'.
-:IMHELP NAME='COMMON/SETPKGPATH'.
-:IMHELP NAME='COMMON/DSPSTDOUT'.
-:IMHELP NAME='COMMON/LOGSTDOUT'.
-:IMHELP NAME='COMMON/PRTSTDOUT'.
-:IMHELP NAME='COMMON/DLTSTDOUT'.
-:IMHELP NAME='COMMON/IFSSTDOUT'.
-:IMHELP NAME='COMMON/IFSFILE'.
-:IMHELP NAME='COMMON/IFSOPT'.
-:IMHELP NAME='COMMON/CCSID'.
-:IMHELP NAME='COMMON/PRTSPLF'.
-:IMHELP NAME='COMMON/PRTUSRDTA'.
-:IMHELP NAME='COMMON/PRTTXT'.
-:IMHELP NAME='COMMON/PRTHOLD'.
-:IMHELP NAME='COMMON/PRTOUTQ'.
-:IMHELP NAME='COMMON/OUTFILE'.
-:IMHELP NAME='COMMON/MBROPT'.
-:IMHELP NAME='COMMON/PASEJOBNAM'.
-:EHELP.
 
 .************************************************************************
 .*  Primary Help for command QSHEXEC
@@ -33,20 +12,8 @@
 Run Qshell Command Line - Help
 :p.The Run Qshell Command Line (QSHEXEC) command can be used to run a QSH/PASE command and log the results
 appropriately.
-.* Describe the function provided by the command.
 :p.
-:hp3.STDOUT Logging Note::ehp3.
-During execution, the CL command always creates a temporary outfile in
-library QTEMP that gets automatically populated with standard output (STDOUT) from the
-QSH/PASE command process that gets run.
-The temporary STDOUT output file name is: :hp2.QTEMP/STDOUTQSH:ehp2..
-:p.
-If the file already exists for a subsequent run of the command, the :hp2.QTEMP/STDOUTQSH:ehp2.
-temporary file is automatically cleared before
-running so each run gets a fresh copy of :hp2.QTEMP/STDOUTQSH:ehp2..
-The :hp2.QTEMP/STDOUTQSH:ehp2. temp file gets created automatically always,
-even if none of the switches such as: :hp2.DSPSTDOUT, LOGSTDOUT, PRTSTDOUT or IFSSTDOUT:ehp2.
-are specified.
+:IMHELP NAME='COMMON/LOGGINGNOTE.
 :P.
 :IMHELP NAME='COMMON/ASTERISK'.
 :ehelp.
@@ -137,6 +104,21 @@ You can enter multiple values for this parameter.  If you are on an
 entry display and you need additional entry fields to enter these
 multiple values, type a plus sign (+) in the entry field opposite
 the phrase "+ for more", and press the Enter key.
+:EHELP.
+
+:HELP NAME='COMMON/LOGGINGNOTE'.
+:hp3.STDOUT Logging Note::ehp3.
+During execution, the CL command always creates a temporary outfile in
+library QTEMP that gets automatically populated with standard output (STDOUT) from the
+QSH/PASE command process that gets run.
+The temporary STDOUT output file name is: :hp2.QTEMP/STDOUTQSH:ehp2..
+:p.
+If the file already exists for a subsequent run of the command, the :hp2.QTEMP/STDOUTQSH:ehp2.
+temporary file is automatically cleared before
+running so each run gets a fresh copy of :hp2.QTEMP/STDOUTQSH:ehp2..
+The :hp2.QTEMP/STDOUTQSH:ehp2. temp file gets created automatically always,
+even if none of the switches such as: :hp2.DSPSTDOUT, LOGSTDOUT, PRTSTDOUT or IFSSTDOUT:ehp2.
+are specified.
 :EHELP.
 
 .*******************************************
