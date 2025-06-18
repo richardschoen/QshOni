@@ -12,7 +12,6 @@
 Run Qshell Command Line - Help
 :p.The Run Qshell Command Line (QSHEXEC) command can be used to run a QSH/PASE command and log the results
 appropriately.
-:p.
 :IMHELP NAME='COMMON/LOGGINGNOTE'.
 :P.
 :IMHELP NAME='COMMON/ASTERISK'.
@@ -107,6 +106,7 @@ the phrase "+ for more", and press the Enter key.
 :EHELP.
 
 :HELP NAME='COMMON/LOGGINGNOTE'.
+:P.
 :hp3.STDOUT Logging Note::ehp3.
 During execution, the CL command always creates a temporary outfile in
 library QTEMP that gets automatically populated with standard output (STDOUT) from the
@@ -234,8 +234,8 @@ Log STDOUT (LOGSTDOUT) - Help
 :pt.:pk def.*NO:epk.
 :pd.Do not log STDOUT.
 :pt.:pk.*YES:epk.
-:pd.Write STDOUT log entries into the current job's job log. 
-Use this if you want the log info in the IBM i joblog. 
+:pd.Write STDOUT log entries into the current job's job log.
+Use this if you want the log info in the IBM i joblog.
 All STDOUT entries are written as CPF message: :hp2.QSS9898:ehp2.
 :eparml.
 :ehelp.
