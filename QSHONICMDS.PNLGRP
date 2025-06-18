@@ -24,8 +24,7 @@
 :IMHELP NAME='COMMON/OUTFILE'.
 :IMHELP NAME='COMMON/MBROPT'.
 :IMHELP NAME='COMMON/PASEJOBNAM'.
-:IMHELP NAME='QSHEXEC/MESSAGES'.
-:EHELP.
+                :EHELP.
 
 .************************************************************************
 .*  Primary Help for command QSHEXEC
@@ -381,10 +380,13 @@ Member option (MBROPT) - Help
 :HELP NAME='COMMON/PASEJOBNAM'.
 PASE job name (PASEJOBNAM) - Help
 :xh3.PASE fork thread job names (PASEJOBNAM)
-:p.Specifies job name prefix for PASE fork/thread.
+:p.Set PASE_FORK_JOBNAME environment variable to set forked thread jobs to have a 
+unique name other than QP0ZSPWP which is the default. Set the value or *DEFAULT=QP0ZSPWP.
 :parml.
+:pt.:pk def.*DEFAULT:epk.
+:pd.Use QP0ZSPWP as default PASE job name.
 :pt.:pv.character-value:epv.
-:pd.Enter prefix or *DEFAULT.
+:pd.Enter a custom PASE job name.
 :eparml.
 :ehelp.
 
