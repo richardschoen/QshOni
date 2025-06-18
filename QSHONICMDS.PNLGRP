@@ -78,18 +78,21 @@ appropriately.
 :HELP NAME='QSHBASH'.
 Run Bash command (QSHBASH) - Help
 :p.
-This CL command can be used to run a PASE bash command 
+This CL command can be used to run a PASE bash command
 and log the results appropriately.
 :p.
-The command is a convenience wrapper that can be used to call 
-a bash command with QSHEXEC instead of having to type the 
-following bash command sequence prefix on a 
+The command is a convenience wrapper that can be used to call
+a bash command with QSHEXEC instead of having to type the
+following bash command sequence prefix on a
 QSHEXEC command line: :hp2.bash -c cmdline:ehp2..
 :IMHELP NAME='COMMON/LOGGINGNOTE'.
 :P.
 :IMHELP NAME='COMMON/ASTERISK'.
 :ehelp.
 
+:help name='QSHBASH/CMDLINE'.
+:IMHELP NAME='COMMON/CMDLINE'.
+:ehelp.
 :help name='QSHBASH/DSPSTDOUT'.
 :IMHELP NAME='COMMON/DSPSTDOUT'.
 :ehelp.
