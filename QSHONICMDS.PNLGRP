@@ -315,7 +315,7 @@ Hold spool (PRTHOLD) - Help
 Output queue (PRTOUTQ) - Help
 :xh3.Print stdout to outq (PRTOUTQ)
 :p.Specifies the output queue for spool by PRTSTDOUT.
-P.
+:P.
 The possible values are:
 :P.
 :PARML.
@@ -343,10 +343,27 @@ Specify the name of the library where the output queue is located.
 Output file (OUTFILE) - Help
 :xh3.File to receive output (OUTFILE)
 :p.Specifies database file to receive stdout or SQL results.
-:parml.
-:pt.:pv.name:epv.
-:pd.Enter file name (OPTIONALLY with library).
-:eparml.
+:P.
+The possible values are:
+:P.
+:PARML.
+:PT.:PK DEF.STDOUTQSH:EPK.
+:PD.
+The database file to stdout spool file is placed on the job's output queue.
+:PT.:PK.database-file-name:EPK.
+:PD.
+Specify the name (library-name/database-file-name) of the outfile.
+:P.
+The possible library values are:
+:PARML.
+:PT.:PK DEF.QTEMP:EPK.
+:PD.
+The QTEMP library is used.
+:PT.:PK.library-name:EPK.
+:PD.
+Specify the name of the library where the outfile is located.
+:EPARML.
+:EPARML.
 :ehelp.
 
 :HELP NAME='COMMON/MBROPT'.
