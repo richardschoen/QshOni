@@ -37,7 +37,7 @@
              CRTCMD     CMD(&DESTLIB/QSHEXEC) PGM(&DESTLIB/QSHEXECC) +
                           SRCFILE(&DESTLIB/&DESTFILE) PRDLIB(&DESTLIB) +
                           HLPPNLGRP(QSHONI/QSHONICMDS) +
-                          HLPID(QSHBASH) /* V1.0.40 */
+                          HLPID(QSHEXEC) /* V1.0.40 */
 
              CRTCLPGM   PGM(&DESTLIB/QSHEXECC) +
                           SRCFILE(&DESTLIB/&DESTFILE) REPLACE(*NO) +
@@ -62,7 +62,7 @@
              CRTCMD     CMD(&DESTLIB/QSHBASH) PGM(&DESTLIB/QSHBASHC) +
                           SRCFILE(&DESTLIB/&DESTFILE) +
                           HLPPNLGRP(QSHONI/QSHONICMDS) +
-                          HLPID(QSHEXEC) +
+                          HLPID(QSHBASH) +
                           PRDLIB(&DESTLIB) /* V1.0.3-V1.0.40 */
 
              CRTCLPGM   PGM(&DESTLIB/QSHBASHC) +
