@@ -1,12 +1,15 @@
-             PGM        PARM(&CMDLINE &SETPKGPATH &DSPSTDOUT +
-                          &LOGSTDOUT &PRTSTDOUT &DLTSTDOUT +
-                          &IFSSTDOUT &IFSFILE &IFSOPT &CCSID +
-                          &PRTSPLF &PRTUSRDTA &PRTTXT &PRTHOLD +
-                          &PRTOUTQALL &OUTFILE &MBROPT &PASEJOBNAM)
+             PGM        PARM(&CMDLINE &CMDLINEDLM &DEBUGCMD +
+                          &SETPKGPATH &DSPSTDOUT &LOGSTDOUT +
+                          &PRTSTDOUT &DLTSTDOUT &IFSSTDOUT &IFSFILE +
+                          &IFSOPT &CCSID &PRTSPLF &PRTUSRDTA +
+                          &PRTTXT &PRTHOLD &PRTOUTQALL &OUTFILE +
+                          &MBROPT &PASEJOBNAM)
 
 /*----------------------------------------------------------------------------*/
 /* Variables                                                                  */
 /*----------------------------------------------------------------------------*/
+             DCL        VAR(&DEBUGCMD) TYPE(*CHAR) LEN(4)
+             DCL        VAR(&CMDLINEDLM) TYPE(*CHAR) LEN(1)
              DCL        VAR(&PASEJOBNAM) TYPE(*CHAR) LEN(10)
              DCL        VAR(&MBROPT) TYPE(*CHAR) LEN(10)
              DCL        VAR(&OUTFILE) TYPE(*CHAR) LEN(20)
@@ -31,6 +34,7 @@
              DCL        VAR(&PRTUSRDTA) TYPE(*CHAR) LEN(10)
              DCL        VAR(&PRTTXT) TYPE(*CHAR) LEN(30)
              DCL        VAR(&QT) TYPE(*CHAR) LEN(1) VALUE('''')
+             DCL        VAR(&DBQT) TYPE(*CHAR) LEN(1) VALUE('"')
              DCL        VAR(&CCSID) TYPE(*CHAR) LEN(10)
 
 /*----------------------------------------------------------------------------*/
@@ -56,10 +60,24 @@
 /*----------------------------------------------------------------------------*/
 
              /* Build bash command line to pass to qshell */
-             CHGVAR     VAR(&BSHCMDLINE) VALUE('bash -c' |> &QT |< +
-                          &CMDLINE |< &QT)
+             /* Add the selected command line delimiter   */
+             /* Dbl-quote is the ideal value to use, but  */
+             /* I left single quote as dft for backward   */
+             /* compatability to previous QSHONI versions.*/
+
+             /* Command line delimiter specified */
+             IF         COND(&CMDLINEDLM *NE ' ') THEN(DO)
+             CHGVAR     VAR(&BSHCMDLINE) VALUE('bash -c' |> +
+                          &CMDLINEDLM |< &CMDLINE |< &CMDLINEDLM)
+             ENDDO
+             /* No command line delimiter specified */
+             IF         COND(&CMDLINEDLM *EQ ' ') THEN(DO)
+             CHGVAR     VAR(&BSHCMDLINE) VALUE('bash -c' |> +
+                                         &CMDLINE)
+             ENDDO
 
              /* Run the bash command via QSHEXEC */
+             IF         COND(&DEBUGCMD *NE *YES) THEN(DO)
              QSHONI/QSHEXEC CMDLINE(&BSHCMDLINE) +
                           SETPKGPATH(&SETPKGPATH) +
                           DSPSTDOUT(&DSPSTDOUT) +
@@ -73,6 +91,23 @@
                           PRTOUTQ(&PRTOUTQLIB/&PRTOUTQ) +
                           OUTFILE(&OLIB/&OFILE) MBROPT(&MBROPT) +
                           PASEJOBNAM(&PASEJOBNAM)
+             ENDDO
+             /* Prompt the bash command via QSHEXEC */
+             IF         COND(&DEBUGCMD *EQ *YES) THEN(DO)
+             ? QSHONI/QSHEXEC ??CMDLINE(&BSHCMDLINE) +
+                          ??SETPKGPATH(&SETPKGPATH) +
+                          ??DSPSTDOUT(&DSPSTDOUT) +
+                          ??LOGSTDOUT(&LOGSTDOUT) +
+                          ??PRTSTDOUT(&PRTSTDOUT) +
+                          ??DLTSTDOUT(&DLTSTDOUT) +
+                          IFSSTDOUT(&IFSSTDOUT) IFSFILE(&IFSFILE) +
+                          IFSOPT(&IFSOPT) CCSID(&CCSID) +
+                          PRTSPLF(&PRTSPLF) PRTUSRDTA(&PRTUSRDTA) +
+                          PRTTXT(&PRTTXT) PRTHOLD(&PRTHOLD) +
+                          PRTOUTQ(&PRTOUTQLIB/&PRTOUTQ) +
+                          OUTFILE(&OLIB/&OFILE) MBROPT(&MBROPT) +
+                          PASEJOBNAM(&PASEJOBNAM)
+             ENDDO
 
              SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('QShell +
                           bash command completed') MSGTYPE(*COMP)

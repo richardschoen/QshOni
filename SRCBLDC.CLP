@@ -7,7 +7,7 @@
              DCL        VAR(&TGTRLS) TYPE(*CHAR) LEN(10) +
                           VALUE(*CURRENT)
              DCL        VAR(&VERSION) TYPE(*CHAR) LEN(30) +
-                          VALUE(V1.0.37)
+                          VALUE(V1.0.40)
              DCL        VAR(&QSHPYTHON) TYPE(*CHAR) LEN(255)
              DCL        VAR(&CMD) TYPE(*CHAR) LEN(512)
              DCL        VAR(&LEN) TYPE(*DEC) LEN(15 5)
@@ -22,6 +22,11 @@
              CRTSRCPF   FILE(QTEMP/TMPQRYSRC) RCDLEN(240)
              MONMSG     MSGID(CPF0000)
 
+             CRTPNLGRP PNLGRP(QSHONI/QSHONICMDS) +
+                 SRCFILE(QSHONI/SOURCE) +
+                 SRCMBR(QSHONICMDS) +
+                 REPLACE(*NO) /* 1.0.40 */
+
              CRTCMD     CMD(&DESTLIB/QSHPATH) PGM(&DESTLIB/QSHPATHC) +
                           SRCFILE(&DESTLIB/&DESTFILE) PRDLIB(&DESTLIB)
 
@@ -30,7 +35,9 @@
                           TGTRLS(&TGTRLS)
 
              CRTCMD     CMD(&DESTLIB/QSHEXEC) PGM(&DESTLIB/QSHEXECC) +
-                          SRCFILE(&DESTLIB/&DESTFILE) PRDLIB(&DESTLIB)
+                          SRCFILE(&DESTLIB/&DESTFILE) PRDLIB(&DESTLIB) +
+                          HLPPNLGRP(QSHONI/QSHONICMDS) +
+                          HLPID(QSHEXEC) /* V1.0.40 */
 
              CRTCLPGM   PGM(&DESTLIB/QSHEXECC) +
                           SRCFILE(&DESTLIB/&DESTFILE) REPLACE(*NO) +
@@ -54,7 +61,9 @@
 
              CRTCMD     CMD(&DESTLIB/QSHBASH) PGM(&DESTLIB/QSHBASHC) +
                           SRCFILE(&DESTLIB/&DESTFILE) +
-                          PRDLIB(&DESTLIB) /* V1.0.3 */
+                          HLPPNLGRP(QSHONI/QSHONICMDS) +
+                          HLPID(QSHBASH) +
+                          PRDLIB(&DESTLIB) /* V1.0.3-V1.0.40 */
 
              CRTCLPGM   PGM(&DESTLIB/QSHBASHC) +
                           SRCFILE(&DESTLIB/&DESTFILE) REPLACE(*NO) +
