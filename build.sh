@@ -362,6 +362,10 @@ CURFILE="RUNSQLSRCR.RPGLE"
 SRCTEXT="Run SQL Action from SQL Src with Parm Replacement"   
 cpy_member
 
+CURFILE="QSHONICMDS.PNLGRP"
+SRCTEXT="Command Help Panel Group for QSHONI Project"   
+cpy_member
+
 CURFILE="README.TXT"
 SRCTEXT="Read Me Docs on Setup"
 cpy_member
