@@ -1,0 +1,556 @@
+:pnlgrp.
+.************************************************************************
+.*
+.*  QSHONICMDS.PNLGRP - Complete Command Help for QshOni Project
+.*
+.************************************************************************
+
+.************************************************************************
+.*  Primary Help for command QSHEXEC
+.************************************************************************
+:help name='QSHEXEC'.
+Run Qshell Command Line - Help
+:p.The Run Qshell Command Line (QSHEXEC) command can be used to run a QSH/PASE command and log the results
+appropriately.
+:IMHELP NAME='COMMON/LOGGINGNOTE'.
+:P.
+:IMHELP NAME='COMMON/ASTERISK'.
+:ehelp.
+
+:help name='QSHEXEC/CMDLINE'.
+:IMHELP NAME='COMMON/CMDLINE'.
+:ehelp.
+:help name='QSHEXEC/SETPKGPATH'.
+:IMHELP NAME='COMMON/SETPKGPATH'.
+:ehelp.
+:help name='QSHEXEC/DSPSTDOUT'.
+:IMHELP NAME='COMMON/DSPSTDOUT'.
+:ehelp.
+:help name='QSHEXEC/LOGSTDOUT'.
+:IMHELP NAME='COMMON/LOGSTDOUT'.
+:ehelp.
+:help name='QSHEXEC/PRTSTDOUT'.
+:IMHELP NAME='COMMON/PRTSTDOUT'.
+:ehelp.
+:help name='QSHEXEC/DLTSTDOUT'.
+:IMHELP NAME='COMMON/DLTSTDOUT'.
+:ehelp.
+:help name='QSHEXEC/IFSSTDOUT'.
+:IMHELP NAME='COMMON/IFSSTDOUT'.
+:ehelp.
+:help name='QSHEXEC/IFSFILE'.
+:IMHELP NAME='COMMON/IFSFILE'.
+:ehelp.
+:help name='QSHEXEC/IFSOPT'.
+:IMHELP NAME='COMMON/IFSOPT'.
+:ehelp.
+:help name='QSHEXEC/CCSID'.
+:IMHELP NAME='COMMON/CCSID'.
+:ehelp.
+:help name='QSHEXEC/PRTSPLF'.
+:IMHELP NAME='COMMON/PRTSPLF'.
+:ehelp.
+:help name='QSHEXEC/PRTUSRDTA'.
+:IMHELP NAME='COMMON/PRTUSRDTA'.
+:ehelp.
+:help name='QSHEXEC/PRTTXT'.
+:IMHELP NAME='COMMON/PRTTXT'.
+:ehelp.
+:help name='QSHEXEC/PRTHOLD'.
+:IMHELP NAME='COMMON/PRTHOLD'.
+:ehelp.
+:help name='QSHEXEC/PRTOUTQ'.
+:IMHELP NAME='COMMON/PRTOUTQ'.
+:ehelp.
+:help name='QSHEXEC/OUTFILE'.
+:IMHELP NAME='COMMON/OUTFILE'.
+:ehelp.
+:help name='QSHEXEC/MBROPT'.
+:IMHELP NAME='COMMON/MBROPT'.
+:ehelp.
+:help name='QSHEXEC/PASEJOBNAM'.
+:IMHELP NAME='COMMON/PASEJOBNAM'.
+:ehelp.
+
+.***********************************************************************
+.*  Command-specific help for QSHBASH
+.***********************************************************************
+:HELP NAME='QSHBASH'.
+Run Bash command (QSHBASH) - Help
+:p.
+This CL command can be used to run a PASE bash command
+and log the results appropriately.
+:p.
+The command is a convenience wrapper that can be used to call
+a bash command with QSHEXEC instead of having to type the
+following bash command sequence prefix on a
+QSHEXEC command line: :hp2.bash -c cmdline:ehp2..
+:IMHELP NAME='COMMON/LOGGINGNOTE'.
+:P.
+:IMHELP NAME='COMMON/ASTERISK'.
+:ehelp.
+
+:help name='QSHBASH/CMDLINE'.
+Bash command line (CMDLINE) - Help
+:xh3.Bash command line (CMDLINE)
+:p.Bash command line sequence to run. Semicolons can be used to run multiple commands.
+:parml.
+:pt.:pv.character-value:epv.
+:pd.Enter a valid Bash command line, or script filename if in PATH.
+:eparml.
+:P.
+:IMHELP NAME='COMMON/REQPARM'.
+:ehelp.
+:help name='QSHBASH/SETPKGPATH'.
+:IMHELP NAME='COMMON/SETPKGPATH'.
+:ehelp.
+:help name='QSHBASH/DSPSTDOUT'.
+:IMHELP NAME='COMMON/DSPSTDOUT'.
+:ehelp.
+:help name='QSHBASH/LOGSTDOUT'.
+:IMHELP NAME='COMMON/LOGSTDOUT'.
+:ehelp.
+:help name='QSHBASH/PRTSTDOUT'.
+:IMHELP NAME='COMMON/PRTSTDOUT'.
+:ehelp.
+:help name='QSHBASH/DLTSTDOUT'.
+:IMHELP NAME='COMMON/DLTSTDOUT'.
+:ehelp.
+:help name='QSHBASH/IFSSTDOUT'.
+:IMHELP NAME='COMMON/IFSSTDOUT'.
+:ehelp.
+:help name='QSHBASH/IFSFILE'.
+:IMHELP NAME='COMMON/IFSFILE'.
+:ehelp.
+:help name='QSHBASH/IFSOPT'.
+:IMHELP NAME='COMMON/IFSOPT'.
+:ehelp.
+:help name='QSHBASH/CCSID'.
+:IMHELP NAME='COMMON/CCSID'.
+:ehelp.
+:help name='QSHBASH/PRTSPLF'.
+:IMHELP NAME='COMMON/PRTSPLF'.
+:ehelp.
+:help name='QSHBASH/PRTUSRDTA'.
+:IMHELP NAME='COMMON/PRTUSRDTA'.
+:ehelp.
+:help name='QSHBASH/PRTTXT'.
+:IMHELP NAME='COMMON/PRTTXT'.
+:ehelp.
+:help name='QSHBASH/PRTHOLD'.
+:IMHELP NAME='COMMON/PRTHOLD'.
+:ehelp.
+:help name='QSHBASH/PRTOUTQ'.
+:IMHELP NAME='COMMON/PRTOUTQ'.
+:ehelp.
+:help name='QSHBASH/OUTFILE'.
+:IMHELP NAME='COMMON/OUTFILE'.
+:ehelp.
+:help name='QSHBASH/MBROPT'.
+:IMHELP NAME='COMMON/MBROPT'.
+:ehelp.
+:help name='QSHBASH/PASEJOBNAM'.
+:IMHELP NAME='COMMON/PASEJOBNAM'.
+:EHELP.
+
+.*****************************************************************
+.*  COMMON HELP
+.*
+.*  Common help text modules (can be embedded elsewhere)
+.*
+.*****************************************************************
+:HELP NAME='COMMON/ASTERISK'.
+:NT.
+Do not precede an entry with an asterisk unless that entry is a
+"special value" that is shown (on the display itself or in the help
+information) with an asterisk.
+:ENT.
+:EHELP.
+
+:HELP NAME='COMMON/REQPARM'.
+:P.
+This is a required parameter.
+:EHELP.
+
+:HELP NAME='COMMON/NOPARMS'.
+:P.
+There are no parameters for this command.
+:EHELP.
+
+:HELP NAME='COMMON/LIST'.
+:P.
+You can enter multiple values for this parameter.  If you are on an
+entry display and you need additional entry fields to enter these
+multiple values, type a plus sign (+) in the entry field opposite
+the phrase "+ for more", and press the Enter key.
+:EHELP.
+
+:HELP NAME='COMMON/LOGGINGNOTE'.
+:P.
+:hp3.STDOUT Logging Note::ehp3.
+During execution, the CL command always creates a temporary outfile in
+library QTEMP that gets automatically populated with standard output (STDOUT) from the
+QSH/PASE command process that gets run.
+The temporary STDOUT output file name is: :hp2.QTEMP/STDOUTQSH:ehp2..
+:p.
+If the file already exists for a subsequent run of the command, the :hp2.QTEMP/STDOUTQSH:ehp2.
+temporary file is automatically cleared before
+running so each run gets a fresh copy of :hp2.QTEMP/STDOUTQSH:ehp2..
+The :hp2.QTEMP/STDOUTQSH:ehp2. temp file gets created automatically always,
+even if none of the switches such as: :hp2.DSPSTDOUT, LOGSTDOUT, PRTSTDOUT or IFSSTDOUT:ehp2.
+are specified.
+:EHELP.
+
+.*******************************************
+.*   Help for common parameters used across many
+.*   QshOni commands.
+.*
+.*******************************************
+.*   Help for parameter CMDLINE
+.*******************************************
+:HELP NAME='COMMON/CMDLINE'.
+QSH command line (CMDLINE) - Help
+:xh3.QSH command line (CMDLINE)
+:p.Specifies the Qshell/PASE command line sequence to run. Semicolons can chain commands.
+:parml.
+:pt.:pv.character-value:epv.
+:pd.Enter a valid Qshell or PASE command, or script filename if in PATH.
+:eparml.
+:P.
+:IMHELP NAME='COMMON/REQPARM'.
+:ehelp.
+
+:HELP NAME='COMMON/SETPKGPATH'.
+Set package path (SETPKGPATH) - Help
+:xh3.Set QOpenSys package path (SETPKGPATH)
+:p.Specifies whether to prepend /QOpenSys/pkgs/bin to PATH.
+:parml.
+:pt.:pk def.*YES:epk.
+:pd.Include package path.
+:pt.:pk.*NO:epk.
+:pd.Do not include package path.
+:eparml.
+:ehelp.
+
+:HELP NAME='COMMON/DSPSTDOUT'.
+Display STDOUT (DSPSTDOUT) - Help
+:xh3.Display standard output result (DSPSTDOUT)
+:p.Specifies whether to display the STDOUT results on the terminal.
+:parml.
+:pt.:pk def.*NO:epk.
+:pd.Do not display STDOUT.
+:pt.:pk.*YES:epk.
+:pd.Display STDOUT.
+:eparml.
+:ehelp.
+
+:HELP NAME='COMMON/DLTSTDOUT'.
+Delete STDOUT IFS file (DLTSTDOUT) - Help
+:xh3.Delete standard output result (DLTSTDOUT)
+:p.Specifies whether to delete temporary IFS STDOUT files after run.
+:parml.
+:pt.:pk def.*YES:epk.
+:pd.Delete IFS STDOUT files.
+:pt.:pk.*NO:epk.
+:pd.Keep IFS STDOUT files.
+:eparml.
+:ehelp.
+
+:HELP NAME='COMMON/IFSSTDOUT'.
+Copy STDOUT to IFS (IFSSTDOUT) - Help
+:xh3.Copy std output to IFS file (IFSSTDOUT)
+:p.Specifies whether to copy STDOUT to an IFS file.
+:parml.
+:pt.:pk def.*NO:epk.
+:pd.Do not copy STDOUT to IFS.
+:pt.:pk.*YES:epk.
+:pd.Copy STDOUT to IFS.
+:eparml.
+:ehelp.
+
+:HELP NAME='COMMON/IFSFILE'.
+IFS file (IFSFILE) - Help
+:xh3.IFS file for STDOUT results (IFSFILE)
+:p.Specifies the path of the IFS file to receive STDOUT output.
+:parml.
+:pt.:pv.character-value:epv.
+:pd.Enter full IFS file path.
+:eparml.
+:ehelp.
+
+:HELP NAME='COMMON/IFSOPT'.
+IFS file option (IFSOPT) - Help
+:xh3.IFS file option (IFSOPT)
+:p.Specifies action if IFS file exists: replace, add, or fail.
+:parml.
+:pt.:pk def.*REPLACE:epk.
+:pd.Overwrite existing file.
+:pt.:pk.*ADD:epk.
+:pd.Append to file.
+:pt.:pk.*NONE:epk.
+:pd.Fail if exists.
+:eparml.
+:ehelp.
+
+:HELP NAME='COMMON/CCSID'.
+Coded character set ID for job (CCSID) - Help
+:xh3.Coded character set ID for job (CCSID)
+:p.When using the iToolkit component for command access, I originally had some issues with CL commands not w
+However I don't currently remember exactly why. This may have been solved, however I recommend still passing
+unless you are in a non US country.
+:parml.
+:pt.:pk def.*SAME:epk.
+:pd.If you set to *SAME, the CCSID will stay the same as your current job with no change.
+:pt.:pk.1-65535:epk.
+:pd.Specify the CCSID.
+:eparml.
+:ehelp.
+
+:HELP NAME='COMMON/LOGSTDOUT'.
+Log STDOUT (LOGSTDOUT) - Help
+:xh3.Log standard output to job log (LOGSTDOUT)
+:p.Specifies whether STDOUT is written to the job log.
+:parml.
+:pt.:pk def.*NO:epk.
+:pd.Do not log STDOUT.
+:pt.:pk.*YES:epk.
+:pd.Write STDOUT log entries into the current job's job log.
+Use this if you want the log info in the IBM i joblog.
+All STDOUT entries are written as CPF message: :hp2.QSS9898:ehp2.
+:eparml.
+:ehelp.
+
+:HELP NAME='COMMON/PRTSTDOUT'.
+Print STDOUT (PRTSTDOUT) - Help
+:xh3.Print standard output result (PRTSTDOUT)
+:p.Specifies whether to print STDOUT to a spool file.
+:parml.
+:pt.:pk def.*NO:epk.
+:pd.Do not print STDOUT.
+:pt.:pk.*YES:epk.
+:pd.Print STDOUT to spool.
+:eparml.
+:ehelp.
+
+:HELP NAME='COMMON/PRTSPLF'.
+Spool file name (PRTSPLF) - Help
+:xh3.Print STDOUT spool file (PRTSPLF)
+:p.Specifies spool file name for printed STDOUT.
+:parml.
+:pt.:pv.character-value:epv.
+:pd.Enter spool file name.
+:eparml.
+:ehelp.
+
+:HELP NAME='COMMON/PRTUSRDTA'.
+Spool user data (PRTUSRDTA) - Help
+:xh3.Print STDOUT user data (PRTUSRDTA)
+:p.Specifies user data for spool generated by PRTSTDOUT.
+:parml.
+:pt.:pv.character-value:epv.
+:pd.Enter user data or none.
+:eparml.
+:ehelp.
+
+:HELP NAME='COMMON/PRTTXT'.
+Spool text (PRTTXT) - Help
+:xh3.Print STDOUT print text (PRTTXT)
+:p.Specifies descriptive text for spool file by PRTSTDOUT.
+:parml.
+:pt.:pv.character-value:epv.
+:pd.Enter descriptive text.
+:eparml.
+:ehelp.
+
+:HELP NAME='COMMON/PRTHOLD'.
+Hold spool (PRTHOLD) - Help
+:xh3.Print STDOUT hold spool file (PRTHOLD)
+:p.Specifies whether generated spool is held or released.
+:parml.
+:pt.:pk def.*YES:epk.
+:pd.Hold spool file.
+:pt.:pk.*NO:epk.
+:pd.Release spool file.
+:eparml.
+:ehelp.
+
+:HELP NAME='COMMON/PRTOUTQ'.
+Output queue (PRTOUTQ) - Help
+:xh3.Print STDOUT to outq (PRTOUTQ)
+:p.Specifies the output queue for spool by PRTSTDOUT.
+:P.
+The possible values are:
+:P.
+:PARML.
+:PT.:PK DEF.*SAME:EPK.
+:PD.
+The STDOUT spool file is placed on the job's output queue.
+:PT.:PK.ouptput-queue-name:EPK.
+:PD.
+Specify the name (library-name/output-queue-name) of the output
+queue on which the STDOUT spool file is placed.
+:P.
+The possible library values are:
+:PARML.
+:PT.:PK DEF.*LIBL:EPK.
+:PD.
+The library list is used to locate the output queue name.
+:PT.:PK.library-name:EPK.
+:PD.
+Specify the name of the library where the output queue is located.
+:EPARML.
+:EPARML.
+:ehelp.
+
+:HELP NAME='COMMON/OUTFILE'.
+Output file (OUTFILE) - Help
+:xh3.File to receive output (OUTFILE)
+:p.Specifies database file to receive STDOUT or SQL results.
+:P.
+The possible values are:
+:P.
+:PARML.
+:PT.:PK DEF.STDOUTQSH:EPK.
+:PD.
+The database file to STDOUT spool file is placed on the job's output queue.
+:PT.:PK.database-file-name:EPK.
+:PD.
+Specify the name (library-name/database-file-name) of the outfile.
+:P.
+The possible library values are:
+:PARML.
+:PT.:PK DEF.QTEMP:EPK.
+:PD.
+The QTEMP library is used.
+:PT.:PK.library-name:EPK.
+:PD.
+Specify the name of the library where the outfile is located.
+:EPARML.
+:EPARML.
+:ehelp.
+
+:HELP NAME='COMMON/MBROPT'.
+Member option (MBROPT) - Help
+:xh3.Replace or add records (MBROPT)
+:p.Specifies replace or add records in output file.
+:parml.
+:pt.:pk def.*REPLACE:epk.
+:pd.Replace existing records.
+:pt.:pk.*ADD:epk.
+:pd.Add records to file.
+:eparml.
+:ehelp.
+
+:HELP NAME='COMMON/PASEJOBNAM'.
+PASE job name (PASEJOBNAM) - Help
+:xh3.PASE fork thread job names (PASEJOBNAM)
+:p.Set PASE_FORK_JOBNAME environment variable to set forked thread jobs
+to have a unique name other than QP0ZSPWP which is the default.
+Set the value or *DEFAULT=QP0ZSPWP.
+:parml.
+:pt.:pk def.*DEFAULT:epk.
+:pd.Use QP0ZSPWP as default PASE job name.
+:pt.:pv.character-value:epv.
+:pd.Enter a custom PASE job name.
+:eparml.
+:ehelp.
+
+:HELP NAME='COMMON/CRTIDCOL'.
+Create identity column (CRTIDCOL) - Help
+:xh3.Create identity column (CRTIDCOL)
+:p.Specifies whether to add identity column to outfile.
+:parml.
+:pt.:pk def.*NO:epk.
+:pd.Do not add identity column.
+:pt.:pk.*YES:epk.
+:pd.Add identity column.
+:eparml.
+:ehelp.
+
+:HELP NAME='COMMON/JRN'.
+Journal name (JRN) - Help
+:xh3.Journal name (JRN)
+:p.Specifies the journal to receive journal entries.
+:parml.
+:pt.:pv.name:epv.
+:pd.Enter journal name.
+:eparml.
+:ehelp.
+
+:HELP NAME='COMMON/JRNRCV'.
+Journal receiver name (JRNRCV) - Help
+:xh3.Journal receiver name (JRNRCV)
+:p.Specifies the journal receiver for the journal.
+:parml.
+:pt.:pv.name:epv.
+:pd.Enter receiver name.
+:eparml.
+:ehelp.
+
+:HELP NAME='COMMON/SETENV'.
+Set environment (SETENV) - Help
+:xh3.Set shell environment (SETENV)
+:p.Specifies whether to enable or disable environment wrapper.
+:parml.
+:pt.:pk def.*YES:epk.
+:pd.Enable environment setup.
+:pt.:pk.*NO:epk.
+:pd.Disable environment setup.
+:eparml.
+:ehelp.
+
+:HELP NAME='COMMON/OWNER'.
+IFS file owner (OWNER) - Help
+:xh3.Owner for IFS object (OWNER)
+:p.Specifies owner profile for IFS file or directory.
+:parml.
+:pt.:pv.character-value:epv.
+:pd.Enter user profile name.
+:eparml.
+:ehelp.
+
+:HELP NAME='COMMON/AUT'.
+Authority for IFS (AUT) - Help
+:xh3.IFS authority setting (AUT)
+:p.Specifies authority for IFS file or directory (e.g., *RWX, *RX).
+:parml.
+:pt.:pk def.*RX:epk.
+:pd.Read/Execute only.
+:pt.:pk.*RWX:epk.
+:pd.Read, Write, Execute.
+:eparml.
+:ehelp.
+
+:HELP NAME='COMMON/LOGTYPE'.
+Log type (LOGTYPE) - Help
+:xh3.Log type selector (LOGTYPE)
+:p.Specifies log view: summary or detail.
+:parml.
+:pt.:pk def.*SUMMARY:epk.
+:pd.Summary view.
+:pt.:pk.*DETAIL:epk.
+:pd.Detailed view.
+:eparml.
+:ehelp.
+
+:HELP NAME='COMMON/SYMLNKTO'.
+Symbolic link target (SYMLNKTO) - Help
+:xh3.Symbolic link target path (SYMLNKTO)
+:p.Specifies IFS target path for symlink.
+:parml.
+:pt.:pv.character-value:epv.
+:pd.Enter full IFS path of target.
+:eparml.
+:ehelp.
+
+:HELP NAME='COMMON/ERRMSGID'.
+Error message file ID (ERRMSGID) - Help
+:xh3.Error message identifier (ERRMSGID)
+:p.Specifies message identifier to simulate an error.
+:parml.
+:pt.:pv.character-value:epv.
+:pd.Enter CPF or user-defined message ID.
+:eparml.
+:ehelp.
+
+:epnlgrp.
