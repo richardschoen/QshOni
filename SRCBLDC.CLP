@@ -35,9 +35,9 @@
                           TGTRLS(&TGTRLS)
 
              CRTCMD     CMD(&DESTLIB/QSHEXEC) PGM(&DESTLIB/QSHEXECC) +
-                          SRCFILE(&DESTLIB/&DESTFILE) PRDLIB(&DESTLIB)+
+                          SRCFILE(&DESTLIB/&DESTFILE) PRDLIB(&DESTLIB) +
                           HLPPNLGRP(QSHONI/QSHONICMDS) +
-                          HLPID(QSHEXEC) /* V1.0.40 */
+                          HLPID(QSHBASH) /* V1.0.40 */
 
              CRTCLPGM   PGM(&DESTLIB/QSHEXECC) +
                           SRCFILE(&DESTLIB/&DESTFILE) REPLACE(*NO) +
