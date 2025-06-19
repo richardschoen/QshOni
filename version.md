@@ -292,5 +292,5 @@ If you pass a value of: ```--parm01="PARM VALUE 01"``` it will stay as originall
 - Added the ```PHPCMD``` option argument to the ```QSHPHPRUN``` command so we can run the php cli in debug mode without having to type: ```php -d error_log=``` on the PHP command line. *DEFAULT runs the ```php``` command as normal. *DEBUG runs the ```php -d error_log=``` command so we can capture any errors that occur into the STDOUT logging output. This is a convenience item for people running php command line (CLI) mode php scripts. 
 
 ## V1.0.40 - 6/18/2025
-- Added CL command help panel group documentation for command builds. Contributed by Scott Schollenberger.
+- Added command UIM help panel group documentation for CL commands. Currently covered are QSHEXEC and QSHBASH. Contributed by Scott Schollenberger.
   
