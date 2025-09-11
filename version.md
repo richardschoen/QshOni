@@ -1,6 +1,6 @@
 # QShell on i Version Info
 
-## V1.0.1 - 8/18/019
+## V1.0.1 - 8/18/2019
 - Initial build
 
 ## V1.0.2 - 9/23/2020
