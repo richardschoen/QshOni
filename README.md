@@ -172,9 +172,10 @@ Run the following commands to copy the save file from github into a SAVF object
 
 From QSHELL/QPTERM or BASH run:
 
+❗This latest built save file version is ```V1.0.37```. To get latest, build library from the GitHub repo directly.
+
 ```
-/QOpenSys/pkgs/bin/wget https://github.com/richardschoen/QshOni/releases/download/V1.0.5/qshoni.savf
---no-check-certificate -O  /qsys.lib/qgpl.lib/qshoni.file
+/QOpenSys/pkgs/bin/wget https://github.com/richardschoen/QshOni/releases/download/v1.0.37/qshoni137.savf --no-check-certificate -O  /qsys.lib/qgpl.lib/qshoni.file
 ```
 
 Restore the QSHONI library
