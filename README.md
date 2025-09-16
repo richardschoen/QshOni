@@ -103,7 +103,7 @@ Use the following install script if you want to run a single shell script to clo
 https://github.com/richardschoen/QshOni/raw/refs/heads/master/getrepo-qshoni.sh   
 
 ## Download and run the getrepo-qshoni.sh script in one step, using wget
-❗This is the easiest way to install QSHONI most recent version. Run the following wget command to download, build and install QSHONI quickly in a single step.   
+❗This is the easiest way to install and build QSHONI using the most recent version source. Run the following wget command to download, build and install QSHONI quickly in a single step.   
 Make sure a temporary dir named /tmp/QshOni doesn't already exist before running the script or the git clone may fail to get current files from the repository.  
 ```
 rm -r /tmp/QshOni
