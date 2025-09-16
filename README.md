@@ -134,6 +134,8 @@ After building the QSHONI library the commands should be ready to use.
 
 Use this install method if you want to install from a save file object.
 
+❗The SAVF download install method is not recommended. Building from source by cloning the repository is the preferred build method so you always get current source and library objects created on your specific system.   
+
 Download the **qshoni.savf** save file from the selected releases page. 
 
 https://github.com/richardschoen/QshOni/releases  **(Latest pre-built save file version - V1.0.37. Build from source for more current)**
@@ -165,6 +167,8 @@ Build the QSHONI commands
 # Installing QSHONI library via wget and creating command objects
 
 Use this install method if you want to install from a save file object via wget
+
+❗The SAVF download install method is not recommended. Building from source by cloning the repository is the preferred build method so you always get current source and library objects created on your specific system.
 
 Run the following commands to copy the save file from github into a SAVF object
 
