@@ -62,7 +62,7 @@ IBM i QShell
 https://www.ibm.com/docs/en/i/7.5?topic=languages-qshell
 
 
-# Check latest version info (Current Version 1.0.39 - 6/2/2025)  
+# Check latest version info (Current Version 1.0.40 - 6/18/2025)  
 https://github.com/richardschoen/QshOni/blob/master/version.md    
 
 ```
