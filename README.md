@@ -136,7 +136,7 @@ Use this install method if you want to install from a save file object.
 
 Download the **qshoni.savf** save file from the selected releases page. 
 
-https://github.com/richardschoen/QshOni/releases  **(Latest pre-built save file version - V1.0.14. Build from source for more current)**
+https://github.com/richardschoen/QshOni/releases  **(Latest pre-built save file version - V1.0.37. Build from source for more current)**
 
 Upload the **qshoni.savf** to the IFS and place it in **/tmp/qshoni.savf**
 
