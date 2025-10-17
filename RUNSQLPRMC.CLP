@@ -47,14 +47,6 @@
              CHGVAR     VAR(&PRTOUTQ) VALUE(%SST(&PRTOUTQALL 1 10))
              CHGVAR     VAR(&PRTOUTQLIB) VALUE(%SST(&PRTOUTQALL 11 10))
 
-             /* Drop diag message into joblog for SQL source */
-             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('INFO: +
-                          SQL Source member' |> &SQLSRCLIB |< '/' +
-                          |< &SQLSRCFILE |< '(' |< &SRCMBR |< ') is +
-                          being used to run query') TOPGMQ(*SAME) +
-                          MSGTYPE(*DIAG)
-
-
              /* Replace parms in SQL statement */
              CALL       PGM(RUNSQLPRMR) PARM(&SQL &PARMS &PARMVALS +
                           &RTNERROR)

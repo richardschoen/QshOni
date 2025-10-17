@@ -294,3 +294,5 @@ If you pass a value of: ```--parm01="PARM VALUE 01"``` it will stay as originall
 ## V1.0.40 - 6/18/2025
 - Added command UIM help panel group documentation for CL commands. Also added the command doc info to the command creations for QSHEXEC and QSHBASH. Currently covered are QSHEXEC and QSHBASH. Contributed by Scott Schollenberger.
   
+## V1.0.41 - 10/17/2025
+- Removed unnecessary diagnostic joblog message from RUNSQLPRMC. There was a message sending SQL source file name info to the joblog as a *DIAG message. This message was not problematic, but also not necessary since the RUNSQLPRM command does not use a source file. An interactive SQL statement is passed to the command to run. This was essentially a cosmetic update. 
