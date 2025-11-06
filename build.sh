@@ -290,6 +290,10 @@ CURFILE="QSHQRYSR2R.RPGLE"
 SRCTEXT="SQL Query Data Scan/Replace Parm Values"
 cpy_member
 
+CURFILE="QSHQRYSR3R.RPGLE"
+SRCTEXT="SQL Query Data Scan and Remove SQL Comments"
+cpy_member
+
 CURFILE="QSHSAVLIB.CMD"
 SRCTEXT="Save Library to IFS Save File"
 cpy_member
@@ -360,6 +364,10 @@ cpy_member
 
 CURFILE="RUNSQLSRCR.RPGLE"
 SRCTEXT="Run SQL Action from SQL Src with Parm Replacement"   
+cpy_member
+
+CURFILE="RUNSQLSR3R.RPGLE"
+SRCTEXT="Run SQL Query Data Scan and Remove SQL Comments"   
 cpy_member
 
 CURFILE="QSHONICMDS.PNLGRP"

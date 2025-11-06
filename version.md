@@ -296,3 +296,27 @@ If you pass a value of: ```--parm01="PARM VALUE 01"``` it will stay as originall
   
 ## V1.0.41 - 10/17/2025
 - Removed unnecessary diagnostic joblog message from RUNSQLPRMC. There was a message sending SQL source file name info to the joblog as a *DIAG message. This message was not problematic, but also not necessary since the RUNSQLPRM command does not use a source file. An interactive SQL statement is passed to the command to run. This was essentially a cosmetic update. 
+
+## V1.0.42 - 11/5/2025
+- Added new parameters and functionality to QSHQRYSRC query command.    
+By default all comments are stripped from the SQL query source member dynamically before the query is run. This way we can create SQL queries in ACS and copy/paste into a source member for storage without having to remove the comments. Then queries can easily be created in ACS and stored in their original format. Comment lines start with -- characters. Inline comments are also stripped. 
+Inline comments strip all characters to the right of the comment -- placeholder characters.    
+
+DLTCMTLINE - Delete comment line from source member. This parameter determines if empty source lines are removed from the SQL source member after comment info has been stripped from a line. *YES is the default and will strip comment lines from the SQL source member. *NO will simply strip comments, but leave any blank lines intact. The runtime effect should usually be the same.
+
+DSPTMPSRC - Display the temporary source member after it's been prepared for runtime. This is a nice way to preview the SQL query that will actually run after comments were stripped from the SQL source. Good for troubleshooting. *NO - Do not display the SQL temporary source member. *YES - Display the SQL temporary source member. 
+
+- Added new parameters to RUNSQLSRC query command.    
+By default all comments are stripped from the SQL query source member dynamically before the query is run. This way we can create SQL queries in ACS and copy/paste into a source member for storage without having to remove the comments. Then queries can easily be created in ACS and stored in their original format. Comment lines start with -- characters. Inline comments are also stripped. 
+Inline comments strip all characters to the right of the comment -- placeholder characters.    
+
+DLTCMTLINE - Delete comment line from source member. This parameter determines if empty source lines are removed from the SQL source member after comment info has been stripped from a line. *YES is the default and will strip comment lines from the SQL source member. *NO will simply strip comments, but leave any blank lines intact. The runtime effect should usually be the same.
+
+DSPTMPSRC - Display the temporary source member after it's been prepared for runtime. This is a nice way to preview the SQL query that will actually run after comments were stripped from the SQL source. Good for troubleshooting. *NO - Do not display the SQL temporary source member. *YES - Display the SQL temporary source member. 
+
+Added special *SRCMBR keyword for SPLF, USRDTA and USRDFNDTA. If PRTTMPSRC is selected, the report spool file, user data and user defined data can be set to the SQL source member name if desired by using the *SRCMBR special keyword. USRDTA and USRDFNDTA now default to: *SRCMBR.    
+Previous default for spool file was: RUNSQLSRCP.    
+Previous default for usr data was: RUNSQLSRC.   
+Previous default for user defined data was: RUNSQLSRC.   
+
+

@@ -40,6 +40,13 @@
                           DFT(*SRCMBR) VALUES(*SRCMBR *IFSFILE) +
                           MIN(0) MAX(1) PROMPT('SQL source from +
                           location type' 1)
+             PARM       KWD(DLTCMTLINE) TYPE(*CHAR) LEN(4) +
+                          RSTD(*YES) DFT(*YES) VALUES(*NO *YES) +
+                          MIN(0) MAX(1) PROMPT('Del comment line +
+                          from temp src' 14)
+             PARM       KWD(DSPTMPSRC) TYPE(*CHAR) LEN(4) RSTD(*YES) +
+                          DFT(*NO) VALUES(*NO *YES) MIN(0) MAX(1) +
+                          PROMPT('Display temp source member' 15)
  QUAL2:      QUAL       TYPE(*NAME) LEN(10) DFT(SQLTMP0001) EXPR(*YES)
              QUAL       TYPE(*NAME) LEN(10) DFT(QTEMP) EXPR(*YES) +
                           PROMPT('Library')

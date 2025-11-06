@@ -1,9 +1,11 @@
              PGM        PARM(&SRCFILE &SRCMBR &PARMS &PARMVALS +
                           &PROMPT &DLTTMPSRC &COMMIT &NAMING +
                           &OPTION &OUTPUT &SECLVLTXT &DSPOUTPUT +
-                          &PRTTMPSRC &SPLF &USRDTA &USRDFNDTA +
-                          &PRTOUTQALL)
+                          &DLTCMTLINE &DSPTMPSRC &PRTTMPSRC &SPLF +
+                          &USRDTA &USRDFNDTA &PRTOUTQALL)
 
+             DCL        VAR(&DLTCMTLINE) TYPE(*CHAR) LEN(4)
+             DCL        VAR(&DSPTMPSRC) TYPE(*CHAR) LEN(4)
              DCL        VAR(&USRDFNDTA) TYPE(*CHAR) LEN(255)
              DCL        VAR(&USRDTA) TYPE(*CHAR) LEN(10)
              DCL        VAR(&PRTOUTQALL) TYPE(*CHAR) LEN(20)
@@ -86,6 +88,20 @@
                           TOFILE(QTEMP/TMPQRYSRC) FROMMBR(&SRCMBR) +
                           TOMBR(TMPQRYSRC) MBROPT(*REPLACE)
 
+             /* Read SQL from source member, remove comment values  */
+             /* and update the temp SQL member file in QTEMP */
+             OVRDBF     FILE(TMPQRYSRC) TOFILE(QTEMP/TMPQRYSRC) +
+                          MBR(*FIRST) OVRSCOPE(*ACTGRPDFN)
+             CALL       PGM(RUNSQLSR3R) PARM((&DLTCMTLINE) (&RTNERROR))
+             DLTOVR     FILE(TMPQRYSRC) LVL(*ACTGRPDFN)
+
+             /* If rtnerror <> '0', bail out now     */
+             IF         COND(&RTNERROR *EQ '1') THEN(DO)
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Error +
+                          occurred removing comments from SQL') +
+                          MSGTYPE(*ESCAPE)
+             ENDDO
+
              /* Read SQL from source member, scan and replace values */
              /* and update the temp SQL member file in QTEMP */
              OVRDBF     FILE(TMPQRYSRC) TOFILE(QTEMP/TMPQRYSRC) +
@@ -113,9 +129,29 @@
                           Check the joblog') MSGTYPE(*ESCAPE)
              ENDDO
 
+             /* Display actual query source that will run */
+             /* if DSPTMPSRC is *YES.               */
+             IF         COND(&DSPTMPSRC *EQ *YES) THEN(DO)
+             STRSEU     SRCFILE(QTEMP/TMPQRYSRC) SRCMBR(TMPQRYSRC)
+             MONMSG     MSGID(CPF0000)
+             ENDDO
+
              /* Output actual query source that will run */
              /* if PRTTMPSRC is *YES.               */
              IF         COND(&PRTTMPSRC *EQ *YES) THEN(DO)
+
+             /* If spool file name = *SRCMBR, name after source mbr */
+             IF         COND(&SPLF *EQ *SRCMBR) THEN(DO)
+             CHGVAR     VAR(&SPLF) VALUE(&SRCMBR)
+             ENDDO
+             /* If user data = *SRCMBR, name after source mbr */
+             IF         COND(&USRDTA *EQ *SRCMBR) THEN(DO)
+             CHGVAR     VAR(&USRDTA) VALUE(&SRCMBR)
+             ENDDO
+             /* If user def data=*SRCMBR, set to source mbr */
+             IF         COND(&USRDFNDTA *EQ *SRCMBR) THEN(DO)
+             CHGVAR     VAR(&USRDFNDTA) VALUE(&SRCMBR)
+             ENDDO
 
              /* Override without specific outq */
              IF         COND(&PRTOUTQ *EQ *SAME) THEN(DO)
@@ -141,15 +177,16 @@
              /* Override without specific outq */
              IF         COND(&PRTOUTQ *EQ *SAME) THEN(DO)
              OVRPRTF    FILE(QSYSPRT) TOFILE(*FILE) PAGESIZE(*N 198) +
-                          HOLD(*YES) USRDFNDTA(&USRDFNDTA) +
-                          SPLFNAME(&SPLF) OVRSCOPE(*ACTGRPDFN)
+                          HOLD(*YES) USRDTA(&USRDTA) +
+                          USRDFNDTA(&USRDFNDTA) SPLFNAME(&SPLF) +
+                          OVRSCOPE(*ACTGRPDFN)
              ENDDO
              IF         COND(&PRTOUTQ *NE *SAME) THEN(DO)
              /* Override with specific outq */
              OVRPRTF    FILE(QSYSPRT) TOFILE(*FILE) PAGESIZE(*N 198) +
                           OUTQ(&PRTOUTQLIB/&PRTOUTQ) HOLD(*YES) +
-                          USRDFNDTA(&USRDFNDTA) SPLFNAME(&SPLF) +
-                          OVRSCOPE(*ACTGRPDFN)
+                          USRDTA(&USRDTA) USRDFNDTA(&USRDFNDTA) +
+                          SPLFNAME(&SPLF) OVRSCOPE(*ACTGRPDFN)
              ENDDO
 
              IF         COND(&PROMPT *EQ *YES) THEN(DO)

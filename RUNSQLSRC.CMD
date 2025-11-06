@@ -40,18 +40,28 @@
                           RSTD(*YES) DFT(*NO) VALUES(*NO *YES) +
                           MIN(0) MAX(1) PROMPT('Display output +
                           output report')
+             PARM       KWD(DLTCMTLINE) TYPE(*CHAR) LEN(4) +
+                          RSTD(*YES) DFT(*YES) VALUES(*NO *YES) +
+                          MIN(0) MAX(1) PROMPT('Del comment line +
+                          from temp src')
+             PARM       KWD(DSPTMPSRC) TYPE(*CHAR) LEN(4) RSTD(*YES) +
+                          DFT(*NO) VALUES(*NO *YES) MIN(0) MAX(1) +
+                          PROMPT('Display temp source member')
              PARM       KWD(PRTTMPSRC) TYPE(*CHAR) LEN(4) RSTD(*YES) +
                           DFT(*NO) VALUES(*NO *YES) MIN(0) MAX(1) +
                           PROMPT('Print temp source member')
              PARM       KWD(SPLF) TYPE(*CHAR) LEN(10) +
-                          DFT(RUNSQLSRCP) MIN(0) MAX(1) +
-                          PROMPT('Print source spool file name')
+                          DFT(RUNSQLSRCP) SPCVAL((*SRCMBR *SRCMBR)) +
+                          MIN(0) MAX(1) PROMPT('Print source spool +
+                          file name')
              PARM       KWD(USRDTA) TYPE(*CHAR) LEN(10) +
-                          DFT(RUNSQLSRC) MIN(0) MAX(1) +
-                          PROMPT('Print source user data')
+                          DFT(*SRCMBR) SPCVAL((*SRCMBR *SRCMBR)) +
+                          MIN(0) MAX(1) PROMPT('Print source user +
+                          data')
              PARM       KWD(USRDFNDTA) TYPE(*CHAR) LEN(255) +
-                          DFT(RUNSQLSRC) MIN(0) MAX(1) CASE(*MIXED) +
-                          PROMPT('Print user defined data')
+                          DFT(*SRCMBR) SPCVAL((*SRCMBR *SRCMBR)) +
+                          MIN(0) MAX(1) CASE(*MIXED) PROMPT('Print +
+                          user defined data')
              PARM       KWD(PRTOUTQ) TYPE(QUAL3) MIN(1) +
                           PROMPT('Print to outq')
  QUAL3:      QUAL       TYPE(*NAME) LEN(10) DFT(*SAME) +
