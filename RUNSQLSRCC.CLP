@@ -136,10 +136,6 @@
              MONMSG     MSGID(CPF0000)
              ENDDO
 
-             /* Output actual query source that will run */
-             /* if PRTTMPSRC is *YES.               */
-             IF         COND(&PRTTMPSRC *EQ *YES) THEN(DO)
-
              /* If spool file name = *SRCMBR, name after source mbr */
              IF         COND(&SPLF *EQ *SRCMBR) THEN(DO)
              CHGVAR     VAR(&SPLF) VALUE(&SRCMBR)
@@ -152,6 +148,10 @@
              IF         COND(&USRDFNDTA *EQ *SRCMBR) THEN(DO)
              CHGVAR     VAR(&USRDFNDTA) VALUE(&SRCMBR)
              ENDDO
+
+             /* Output actual query source that will run */
+             /* if PRTTMPSRC is *YES.               */
+             IF         COND(&PRTTMPSRC *EQ *YES) THEN(DO)
 
              /* Override without specific outq */
              IF         COND(&PRTOUTQ *EQ *SAME) THEN(DO)
