@@ -339,7 +339,7 @@
 
              CRTBNDRPG  PGM(&DESTLIB/QSHQRYSR3R) +
                           SRCFILE(&DESTLIB/&DESTFILE) +
-                          SRCMBR(QSHQRYSR2R) DFTACTGRP(*NO) +
+                          SRCMBR(QSHQRYSR3R) DFTACTGRP(*NO) +
                           REPLACE(*NO) TGTRLS(&TGTRLS)  /* 1.0.42 */
 
               CRTCMD     CMD(&DESTLIB/QSHIFSSCAN) +
