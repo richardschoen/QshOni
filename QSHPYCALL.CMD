@@ -33,10 +33,6 @@
                           environment')
              PARM       KWD(VENVPATH) TYPE(*CHAR) LEN(255) DFT('') +
                           PROMPT('Virtual environment base path')
-             PARM       KWD(PARMDLM) TYPE(*CHAR) LEN(1) +
-                          DFT(*DBLQUOTE) SPCVAL((*DBLQUOTE '"') +
-                          (*SGLQUOTE '''') (*NONE '')) +
-                          PROMPT('Command line parm delimiter')
              PARM       KWD(DSPSTDOUT) TYPE(*CHAR) LEN(4) RSTD(*YES) +
                           DFT(*NO) VALUES(*NO *YES) PROMPT('Display +
                           standard output result')
