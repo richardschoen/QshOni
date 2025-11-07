@@ -319,4 +319,6 @@ Previous default for spool file was: RUNSQLSRCP.
 Previous default for usr data was: RUNSQLSRC.   
 Previous default for user defined data was: RUNSQLSRC.   
 
+## V1.0.43 - 11/7/2025
+Merged pull request for QSHPYCALL command to remove unuused parameter PARMDLM which is unused.
 
