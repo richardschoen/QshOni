@@ -15,11 +15,13 @@
              /* Optional debugging information - 1.0.44 */
              DCL        VAR(&DEBUG) TYPE(*CHAR) LEN(1)
              DCL        VAR(&DEBUGCL) TYPE(*CHAR) LEN(11) VALUE(*NOLSTDBG)
+             DCL        VAR(&DEBUGCLLE) TYPE(*CHAR) LEN(7) VALUE(*STMT)
              DCL        VAR(&DEBUGRPG) TYPE(*CHAR) LEN(7) VALUE(*STMT)
              DCL        VAR(&DEBUGMOD) TYPE(*CHAR) LEN(7) VALUE(*SOURCE)
 
              IF         COND(&DEBUG *EQ '1') THEN(DO)
              CHGVAR     VAR(&DEBUGCL) VALUE(*LSTDBG)
+             CHGVAR     VAR(&DEBUGCLLE) VALUE(*ALL)
              CHGVAR     VAR(&DEBUGRPG) VALUE(*ALL)
              CHGVAR     VAR(&DEBUGMOD) VALUE(*ALL)
              ENDDO
@@ -225,7 +227,7 @@
              CRTBNDCL   PGM(&DESTLIB/QSHGETPR2C) +
                           SRCFILE(&DESTLIB/&DESTFILE) +
                           DFTACTGRP(*YES) REPLACE(*NO) +
-                          TGTRLS(&TGTRLS) OPTION(&DEBUGCL) /* 1.0.37 */
+                          TGTRLS(&TGTRLS) DBGVIEW(&DEBUGCLLE) /* 1.0.37 */
 
              CRTCMD     CMD(&DESTLIB/QSHPYCALL) +
                           PGM(&DESTLIB/QSHPYCALLC) +
@@ -318,7 +320,7 @@
              CRTBNDCL   PGM(&DESTLIB/QSHIFSSIZC) +
                           SRCFILE(&DESTLIB/&DESTFILE) +
                           DFTACTGRP(*YES) REPLACE(*NO) +
-                          TGTRLS(&TGTRLS) OPTION(&DEBUGCL) /* 1.0.30 */
+                          TGTRLS(&TGTRLS) DBGVIEW(&DEBUGCLLE) /* 1.0.30 */
 
              CRTCMD     CMD(&DESTLIB/QSHSAVLIB) +
                           PGM(&DESTLIB/QSHSAVLIBC) +
