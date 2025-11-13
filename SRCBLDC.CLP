@@ -1,4 +1,4 @@
-             PGM
+             PGM        PARM(&DEBUG)
 
              DCL        VAR(&DESTFILE) TYPE(*CHAR) LEN(10) +
                           VALUE(SOURCE)
@@ -7,10 +7,22 @@
              DCL        VAR(&TGTRLS) TYPE(*CHAR) LEN(10) +
                           VALUE(*CURRENT)
              DCL        VAR(&VERSION) TYPE(*CHAR) LEN(30) +
-                          VALUE(V1.0.43)
+                          VALUE(V1.0.44)
              DCL        VAR(&QSHPYTHON) TYPE(*CHAR) LEN(255)
              DCL        VAR(&CMD) TYPE(*CHAR) LEN(512)
              DCL        VAR(&LEN) TYPE(*DEC) LEN(15 5)
+
+             /* Optional debugging information - 1.0.44 */
+             DCL        VAR(&DEBUG) TYPE(*CHAR) LEN(1)
+             DCL        VAR(&DEBUGCL) TYPE(*CHAR) LEN(11) VALUE(*NOLSTDBG)
+             DCL        VAR(&DEBUGRPG) TYPE(*CHAR) LEN(7) VALUE(*STMT)
+             DCL        VAR(&DEBUGMOD) TYPE(*CHAR) LEN(7) VALUE(*SOURCE)
+
+             IF         COND(&DEBUG *EQ '1') THEN(DO)
+             CHGVAR     VAR(&DEBUGCL) VALUE(*LSTDBG)
+             CHGVAR     VAR(&DEBUGRPG) VALUE(*ALL)
+             CHGVAR     VAR(&DEBUGMOD) VALUE(*ALL)
+             ENDDO
 
  /** Add libraries to library list */
              ADDLIBLE   LIB(&DESTLIB)
@@ -32,7 +44,7 @@
 
              CRTCLPGM   PGM(&DESTLIB/QSHPATHC) +
                           SRCFILE(&DESTLIB/&DESTFILE) REPLACE(*NO) +
-                          TGTRLS(&TGTRLS)
+                          TGTRLS(&TGTRLS) OPTION(&DEBUGCL)
 
              CRTCMD     CMD(&DESTLIB/QSHEXEC) PGM(&DESTLIB/QSHEXECC) +
                           SRCFILE(&DESTLIB/&DESTFILE) PRDLIB(&DESTLIB) +
@@ -41,11 +53,12 @@
 
              CRTCLPGM   PGM(&DESTLIB/QSHEXECC) +
                           SRCFILE(&DESTLIB/&DESTFILE) REPLACE(*NO) +
-                          TGTRLS(&TGTRLS)
+                          TGTRLS(&TGTRLS) OPTION(&DEBUGCL)
 
              CRTBNDRPG  PGM(&DESTLIB/QSHSTDOUTR) +
                           SRCFILE(&DESTLIB/&DESTFILE) +
-                          DFTACTGRP(*NO) REPLACE(*NO) TGTRLS(&TGTRLS)
+                          DFTACTGRP(*NO) REPLACE(*NO) TGTRLS(&TGTRLS) +
+                          DBGVIEW(&DEBUGRPG)
 
              CRTCMD     CMD(&DESTLIB/QSHLOGSCAN) +
                           PGM(&DESTLIB/QSHLOGSCAC) +
@@ -53,11 +66,12 @@
 
              CRTCLPGM   PGM(&DESTLIB/QSHLOGSCAC) +
                           SRCFILE(&DESTLIB/&DESTFILE) REPLACE(*NO) +
-                          TGTRLS(&TGTRLS)
+                          TGTRLS(&TGTRLS) OPTION(&DEBUGCL)
 
              CRTBNDRPG  PGM(&DESTLIB/QSHLOGSCAR) +
                           SRCFILE(&DESTLIB/&DESTFILE) +
-                          DFTACTGRP(*NO) REPLACE(*NO) TGTRLS(&TGTRLS)
+                          DFTACTGRP(*NO) REPLACE(*NO) TGTRLS(&TGTRLS) +
+                          DBGVIEW(&DEBUGRPG)
 
              CRTCMD     CMD(&DESTLIB/QSHBASH) PGM(&DESTLIB/QSHBASHC) +
                           SRCFILE(&DESTLIB/&DESTFILE) +
@@ -67,7 +81,7 @@
 
              CRTCLPGM   PGM(&DESTLIB/QSHBASHC) +
                           SRCFILE(&DESTLIB/&DESTFILE) REPLACE(*NO) +
-                          TGTRLS(&TGTRLS) /* V1.0.3 */
+                          TGTRLS(&TGTRLS) OPTION(&DEBUGCL) /* V1.0.3 */
 
              /* 1.05 - ADD IFS CHECK AND QSHPYRUN */
              CRTCMD     CMD(&DESTLIB/QSHIFSCHK) +
@@ -77,12 +91,13 @@
              CRTCLPGM   PGM(&DESTLIB/QSHIFSCHKC) +
                           SRCFILE(&DESTLIB/&DESTFILE) +
                           SRCMBR(QSHIFSCHKC) REPLACE(*NO) +
-                          TGTRLS(&TGTRLS)
+                          TGTRLS(&TGTRLS) OPTION(&DEBUGCL)
 
              CRTBNDRPG  PGM(&DESTLIB/QSHIFSCHKR) +
                           SRCFILE(&DESTLIB/&DESTFILE) +
                           SRCMBR(QSHIFSCHKR) DFTACTGRP(*NO) +
-                          REPLACE(*NO) TGTRLS(&TGTRLS)
+                          REPLACE(*NO) TGTRLS(&TGTRLS) +
+                          DBGVIEW(&DEBUGRPG)
 
              CRTCMD     CMD(&DESTLIB/QSHPYRUN) +
                           PGM(&DESTLIB/QSHPYRUNC) +
@@ -91,7 +106,7 @@
 
              CRTCLPGM   PGM(&DESTLIB/QSHPYRUNC) +
                           SRCFILE(&DESTLIB/&DESTFILE) REPLACE(*NO) +
-                          TGTRLS(&TGTRLS) /* V1.0.5 */
+                          TGTRLS(&TGTRLS) OPTION(&DEBUGCL) /* V1.0.5 */
 
              CRTCMD     CMD(&DESTLIB/QSHPHPRUN) +
                           PGM(&DESTLIB/QSHPHPRUNC) +
@@ -100,7 +115,7 @@
 
              CRTCLPGM   PGM(&DESTLIB/QSHPHPRUNC) +
                           SRCFILE(&DESTLIB/&DESTFILE) REPLACE(*NO) +
-                          TGTRLS(&TGTRLS) /* V1.0.24 */
+                          TGTRLS(&TGTRLS) OPTION(&DEBUGCL) /* V1.0.24 */
 
              CRTCMD     CMD(&DESTLIB/QSHQRYAID) +
                           PGM(&DESTLIB/QSHQRYAIDC) +
@@ -109,7 +124,7 @@
 
              CRTCLPGM   PGM(&DESTLIB/QSHQRYAIDC) +
                           SRCFILE(&DESTLIB/&DESTFILE) REPLACE(*NO) +
-                          TGTRLS(&TGTRLS) /* V1.0.36 */
+                          TGTRLS(&TGTRLS) OPTION(&DEBUGCL) /* V1.0.36 */
 
              CRTCMD     CMD(&DESTLIB/QSHQRYTMP) +
                           PGM(&DESTLIB/QSHQRYTMPC) +
@@ -118,12 +133,13 @@
 
              CRTCLPGM   PGM(&DESTLIB/QSHQRYTMPC) +
                           SRCFILE(&DESTLIB/&DESTFILE) REPLACE(*NO) +
-                          TGTRLS(&TGTRLS) /* V1.0.8 */
+                          TGTRLS(&TGTRLS) OPTION(&DEBUGCL) /* V1.0.8 */
 
              CRTBNDRPG  PGM(&DESTLIB/QSHQRYTMPR) +
                           SRCFILE(&DESTLIB/&DESTFILE) +
                           SRCMBR(QSHQRYTMPR) DFTACTGRP(*NO) +
-                          REPLACE(*NO) TGTRLS(&TGTRLS)  /* 1.0.36 */
+                          REPLACE(*NO) TGTRLS(&TGTRLS)     /* 1.0.36 */ +
+                          DBGVIEW(&DEBUGRPG)
 
              CRTCMD     CMD(&DESTLIB/QSHSETPROF) +
                           PGM(&DESTLIB/QSHSETPROC) +
@@ -132,7 +148,7 @@
 
              CRTCLPGM   PGM(&DESTLIB/QSHSETPROC) +
                           SRCFILE(&DESTLIB/&DESTFILE) REPLACE(*NO) +
-                          TGTRLS(&TGTRLS) /* V1.0.11 */
+                          TGTRLS(&TGTRLS) OPTION(&DEBUGCL) /* V1.0.11 */
 
              CRTCMD     CMD(&DESTLIB/QSHCURL) PGM(&DESTLIB/QSHCURLC) +
                           SRCFILE(&DESTLIB/&DESTFILE) +
@@ -140,7 +156,7 @@
 
              CRTCLPGM   PGM(&DESTLIB/QSHCURLC) +
                           SRCFILE(&DESTLIB/&DESTFILE) REPLACE(*NO) +
-                          TGTRLS(&TGTRLS) /* V1.0.12 */
+                          TGTRLS(&TGTRLS) OPTION(&DEBUGCL) /* V1.0.12 */
 
              CRTCMD     CMD(&DESTLIB/QSHPORTCHK) +
                           PGM(&DESTLIB/QSHPORTCHC) +
@@ -149,7 +165,7 @@
 
              CRTCLPGM   PGM(&DESTLIB/QSHPORTCHC) +
                           SRCFILE(&DESTLIB/&DESTFILE) REPLACE(*NO) +
-                          TGTRLS(&TGTRLS) /* V1.0.13 */
+                          TGTRLS(&TGTRLS) OPTION(&DEBUGCL) /* V1.0.13 */
 
   /*         QSHQRYTMP  SQL('SELECT JOB_NAME FROM +                       */
   /*                      QSYS2.NETSTAT_JOB_INFO') +                      */
@@ -169,7 +185,7 @@
 
              CRTCLPGM   PGM(&DESTLIB/QSHPORTENC) +
                           SRCFILE(&DESTLIB/&DESTFILE) REPLACE(*NO) +
-                          TGTRLS(&TGTRLS) /* V1.0.14 */
+                          TGTRLS(&TGTRLS) OPTION(&DEBUGCL) /* V1.0.14 */
 
              CRTCMD     CMD(&DESTLIB/QSHEXECSRC) +
                           PGM(&DESTLIB/QSHEXECSCC) +
@@ -178,7 +194,7 @@
 
              CRTCLPGM   PGM(&DESTLIB/QSHEXECSCC) +
                           SRCFILE(&DESTLIB/&DESTFILE) REPLACE(*NO) +
-                          TGTRLS(&TGTRLS) /* 1.0.18 */
+                          TGTRLS(&TGTRLS) OPTION(&DEBUGCL) /* 1.0.18 */
 
              CRTCMD     CMD(&DESTLIB/DB2UTIL) PGM(&DESTLIB/DB2UTILC) +
                           SRCFILE(&DESTLIB/&DESTFILE) +
@@ -186,7 +202,7 @@
 
              CRTCLPGM   PGM(&DESTLIB/DB2UTILC) +
                           SRCFILE(&DESTLIB/&DESTFILE) REPLACE(*NO) +
-                          TGTRLS(&TGTRLS) /* 1.0.23 */
+                          TGTRLS(&TGTRLS) OPTION(&DEBUGCL) /* 1.0.23 */
 
              CRTCMD     CMD(&DESTLIB/QSHGETPARM) +
                           PGM(&DESTLIB/QSHGETPARR) +
@@ -197,7 +213,8 @@
              CRTBNDRPG  PGM(&DESTLIB/QSHGETPARR) +
                           SRCFILE(&DESTLIB/&DESTFILE) +
                           SRCMBR(QSHGETPARR) DFTACTGRP(*NO) +
-                          REPLACE(*NO) TGTRLS(&TGTRLS) /* 1.0.25 */
+                          REPLACE(*NO) TGTRLS(&TGTRLS) /* 1.0.25 */ +
+                          DBGVIEW(&DEBUGRPG)
 
              CRTCMD     CMD(&DESTLIB/QSHGETPR2) +
                           PGM(&DESTLIB/QSHGETPR2C) +
@@ -208,7 +225,7 @@
              CRTBNDCL   PGM(&DESTLIB/QSHGETPR2C) +
                           SRCFILE(&DESTLIB/&DESTFILE) +
                           DFTACTGRP(*YES) REPLACE(*NO) +
-                          TGTRLS(&TGTRLS) /* 1.0.37 */
+                          TGTRLS(&TGTRLS) OPTION(&DEBUGCL) /* 1.0.37 */
 
              CRTCMD     CMD(&DESTLIB/QSHPYCALL) +
                           PGM(&DESTLIB/QSHPYCALLC) +
@@ -218,11 +235,11 @@
 
              CRTCLPGM   PGM(&DESTLIB/QSHPYCALLC) +
                           SRCFILE(&DESTLIB/&DESTFILE) REPLACE(*NO) +
-                          TGTRLS(&TGTRLS) /* 1.0.25 */
+                          TGTRLS(&TGTRLS) OPTION(&DEBUGCL) /* 1.0.25 */
 
              CRTCLPGM   PGM(&DESTLIB/QSHPYCALLT) +
                           SRCFILE(&DESTLIB/&DESTFILE) REPLACE(*NO) +
-                          TGTRLS(&TGTRLS) /* 1.0.25 */
+                          TGTRLS(&TGTRLS) OPTION(&DEBUGCL) /* 1.0.25 */
 
              CRTCMD     CMD(&DESTLIB/QSHCALL) PGM(&DESTLIB/QSHCALLC) +
                           SRCFILE(&DESTLIB/&DESTFILE) ALLOW(*IPGM +
@@ -231,11 +248,11 @@
 
              CRTCLPGM   PGM(&DESTLIB/QSHCALLC) +
                           SRCFILE(&DESTLIB/&DESTFILE) REPLACE(*NO) +
-                          TGTRLS(&TGTRLS) /* 1.0.25 */
+                          TGTRLS(&TGTRLS) OPTION(&DEBUGCL) /* 1.0.25 */
 
              CRTCLPGM   PGM(&DESTLIB/QSHCALLT) +
                           SRCFILE(&DESTLIB/&DESTFILE) REPLACE(*NO) +
-                          TGTRLS(&TGTRLS) /* 1.0.25 */
+                          TGTRLS(&TGTRLS) OPTION(&DEBUGCL) /* 1.0.25 */
 
              CRTCMD     CMD(&DESTLIB/QSHCPYSRC) +
                           PGM(&DESTLIB/QSHCPYSRCC) +
@@ -245,7 +262,7 @@
 
              CRTCLPGM   PGM(&DESTLIB/QSHCPYSRCC) +
                           SRCFILE(&DESTLIB/&DESTFILE) REPLACE(*NO) +
-                          TGTRLS(&TGTRLS) /* 1.0.26 */
+                          TGTRLS(&TGTRLS) OPTION(&DEBUGCL) /* 1.0.26 */
 
              CRTCMD     CMD(&DESTLIB/QSHBASHSRC) +
                           PGM(&DESTLIB/QSHBASHSCC) +
@@ -254,11 +271,11 @@
 
              CRTCLPGM   PGM(&DESTLIB/QSHBASHSCC) +
                           SRCFILE(&DESTLIB/&DESTFILE) REPLACE(*NO) +
-                          TGTRLS(&TGTRLS) /* 1.0.27 */
+                          TGTRLS(&TGTRLS) OPTION(&DEBUGCL) /* 1.0.27 */
 
              CRTRPGMOD  MODULE(&DESTLIB/QSHONISRV) +
                           SRCFILE(&DESTLIB/&DESTFILE) +
-                          DBGVIEW(*SOURCE) /* 1.0.28 */
+                          DBGVIEW(&DEBUGMOD) /* 1.0.28 */
 
              CRTSRVPGM  SRVPGM(&DESTLIB/QSHONISRV) +
                           MODULE(&DESTLIB/QSHONISRV) +
@@ -277,17 +294,20 @@
              CRTBNDRPG  PGM(&DESTLIB/QSHONIPR01) +
                           SRCFILE(&DESTLIB/&DESTFILE) +
                           SRCMBR(QSHONIPR01) DFTACTGRP(*NO) +
-                          REPLACE(*NO) TGTRLS(&TGTRLS) /* 1.0.28 */
+                          REPLACE(*NO) TGTRLS(&TGTRLS) /* 1.0.28 */ +
+                          DBGVIEW(&DEBUGRPG)
 
              CRTBNDRPG  PGM(&DESTLIB/QSHONIPR02) +
                           SRCFILE(&DESTLIB/&DESTFILE) +
                           SRCMBR(QSHONIPR02) DFTACTGRP(*NO) +
-                          REPLACE(*NO) TGTRLS(&TGTRLS) /* 1.0.28 */
+                          REPLACE(*NO) TGTRLS(&TGTRLS) /* 1.0.28 */ +
+                          DBGVIEW(&DEBUGRPG)
 
              CRTBNDRPG  PGM(&DESTLIB/QSHONIPR03) +
                           SRCFILE(&DESTLIB/&DESTFILE) +
                           SRCMBR(QSHONIPR03) DFTACTGRP(*NO) +
-                          REPLACE(*NO) TGTRLS(&TGTRLS) /* 1.0.29 */
+                          REPLACE(*NO) TGTRLS(&TGTRLS) /* 1.0.29 */ +
+                          DBGVIEW(&DEBUGRPG)
 
              CRTCMD     CMD(&DESTLIB/QSHIFSSIZ) +
                           PGM(&DESTLIB/QSHIFSSIZC) +
@@ -298,7 +318,7 @@
              CRTBNDCL   PGM(&DESTLIB/QSHIFSSIZC) +
                           SRCFILE(&DESTLIB/&DESTFILE) +
                           DFTACTGRP(*YES) REPLACE(*NO) +
-                          TGTRLS(&TGTRLS) /* 1.0.30 */
+                          TGTRLS(&TGTRLS) OPTION(&DEBUGCL) /* 1.0.30 */
 
              CRTCMD     CMD(&DESTLIB/QSHSAVLIB) +
                           PGM(&DESTLIB/QSHSAVLIBC) +
@@ -307,7 +327,7 @@
 
              CRTCLPGM   PGM(&DESTLIB/QSHSAVLIBC) +
                           SRCFILE(&DESTLIB/&DESTFILE) REPLACE(*NO) +
-                          TGTRLS(&TGTRLS) /* 1.0.32 */
+                          TGTRLS(&TGTRLS) OPTION(&DEBUGCL) /* 1.0.32 */
 
              CRTCMD     CMD(&DESTLIB/QSHSAVIFS) +
                           PGM(&DESTLIB/QSHSAVIFSC) +
@@ -316,7 +336,7 @@
 
              CRTCLPGM   PGM(&DESTLIB/QSHSAVIFSC) +
                           SRCFILE(&DESTLIB/&DESTFILE) REPLACE(*NO) +
-                          TGTRLS(&TGTRLS) /* 1.0.32 */
+                          TGTRLS(&TGTRLS) OPTION(&DEBUGCL) /* 1.0.32 */
 
              CRTCMD     CMD(&DESTLIB/QSHQRYSRC) +
                           PGM(&DESTLIB/QSHQRYSRCC) +
@@ -325,22 +345,25 @@
 
              CRTCLPGM   PGM(&DESTLIB/QSHQRYSRCC) +
                           SRCFILE(&DESTLIB/&DESTFILE) REPLACE(*NO) +
-                          TGTRLS(&TGTRLS) /* 1.0.32 */
+                          TGTRLS(&TGTRLS) OPTION(&DEBUGCL) /* 1.0.32 */
 
              CRTBNDRPG  PGM(&DESTLIB/QSHQRYSRCR) +
                           SRCFILE(&DESTLIB/&DESTFILE) +
                           SRCMBR(QSHQRYSRCR) DFTACTGRP(*NO) +
-                          REPLACE(*NO) TGTRLS(&TGTRLS) /* 1.0.32 */
+                          REPLACE(*NO) TGTRLS(&TGTRLS) /* 1.0.32 */ +
+                          DBGVIEW(&DEBUGRPG)
 
              CRTBNDRPG  PGM(&DESTLIB/QSHQRYSR2R) +
                           SRCFILE(&DESTLIB/&DESTFILE) +
                           SRCMBR(QSHQRYSR2R) DFTACTGRP(*NO) +
-                          REPLACE(*NO) TGTRLS(&TGTRLS)  /* 1.0.36 */
+                          REPLACE(*NO) TGTRLS(&TGTRLS) /* 1.0.36 */ +
+                          DBGVIEW(&DEBUGRPG)
 
              CRTBNDRPG  PGM(&DESTLIB/QSHQRYSR3R) +
                           SRCFILE(&DESTLIB/&DESTFILE) +
                           SRCMBR(QSHQRYSR3R) DFTACTGRP(*NO) +
-                          REPLACE(*NO) TGTRLS(&TGTRLS)  /* 1.0.42 */
+                          REPLACE(*NO) TGTRLS(&TGTRLS) /* 1.0.42 */ +
+                          DBGVIEW(&DEBUGRPG)
 
               CRTCMD     CMD(&DESTLIB/QSHIFSSCAN) +
                           PGM(&DESTLIB/QSHIFSSCAC) +
@@ -348,37 +371,41 @@
 
              CRTCLPGM   PGM(&DESTLIB/QSHIFSSCAC) +
                           SRCFILE(&DESTLIB/&DESTFILE) REPLACE(*NO) +
-                          TGTRLS(&TGTRLS)  /* V1.0.35 */
+                          TGTRLS(&TGTRLS) OPTION(&DEBUGCL) /* V1.0.35 */
 
              CRTBNDRPG  PGM(&DESTLIB/QSHIFSSCAR) +
                           SRCFILE(&DESTLIB/&DESTFILE) +
-                          DFTACTGRP(*NO) REPLACE(*NO) TGTRLS(&TGTRLS)  /* V1.0.35 */
+                          DFTACTGRP(*NO) REPLACE(*NO) TGTRLS(&TGTRLS) /* V1.0.35 */ +
+                          DBGVIEW(&DEBUGRPG)
 
              CRTCMD     CMD(&DESTLIB/RUNSQLPRM) PGM(&DESTLIB/RUNSQLPRMC) +
                           SRCFILE(&DESTLIB/&DESTFILE) PRDLIB(&DESTLIB) /* 1.0.36 */
 
              CRTCLPGM     PGM(&DESTLIB/RUNSQLPRMC) +
                           SRCFILE(&DESTLIB/&DESTFILE) REPLACE(*NO) +
-                          TGTRLS(&TGTRLS)  /* 1.0.36 */
+                          TGTRLS(&TGTRLS) OPTION(&DEBUGCL)  /* 1.0.36 */
 
              CRTBNDRPG  PGM(&DESTLIB/RUNSQLPRMR) +
                           SRCFILE(&DESTLIB/&DESTFILE) +
-                          DFTACTGRP(*NO) REPLACE(*NO) TGTRLS(&TGTRLS)  /* 1.0.36 */
+                          DFTACTGRP(*NO) REPLACE(*NO) TGTRLS(&TGTRLS) /* 1.0.36 */ +
+                          DBGVIEW(&DEBUGRPG)
 
              CRTCMD     CMD(&DESTLIB/RUNSQLSRC) PGM(&DESTLIB/RUNSQLSRCC) +
                           SRCFILE(&DESTLIB/&DESTFILE) PRDLIB(&DESTLIB) /* 1.0.36 */
 
              CRTCLPGM     PGM(&DESTLIB/RUNSQLSRCC) +
                           SRCFILE(&DESTLIB/&DESTFILE) REPLACE(*NO) +
-                          TGTRLS(&TGTRLS) /* 1.0.36 */
+                          TGTRLS(&TGTRLS) OPTION(&DEBUGCL) /* 1.0.36 */
 
              CRTBNDRPG  PGM(&DESTLIB/RUNSQLSRCR) +
                           SRCFILE(&DESTLIB/&DESTFILE) +
-                          DFTACTGRP(*NO) REPLACE(*NO) TGTRLS(&TGTRLS)  /* 1.0.36 */
+                          DFTACTGRP(*NO) REPLACE(*NO) TGTRLS(&TGTRLS) /* 1.0.36 */ +
+                          DBGVIEW(&DEBUGRPG)
 
              CRTBNDRPG  PGM(&DESTLIB/RUNSQLSR3R) +
                           SRCFILE(&DESTLIB/&DESTFILE) +
-                          DFTACTGRP(*NO) REPLACE(*NO) TGTRLS(&TGTRLS)  /* 1.0.42 */
+                          DFTACTGRP(*NO) REPLACE(*NO) TGTRLS(&TGTRLS) /* 1.0.42 */ +
+                          DBGVIEW(&DEBUGRPG)
 
  /* Create message file for any custom CPF messages */
  /* Initial use case is to log STDOUT msgs with own CPF ID    */
