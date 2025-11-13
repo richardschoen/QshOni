@@ -13,13 +13,13 @@
              DCL        VAR(&LEN) TYPE(*DEC) LEN(15 5)
 
              /* Optional debugging information - 1.0.44 */
-             DCL        VAR(&DEBUG) TYPE(*CHAR) LEN(1)
+             DCL        VAR(&DEBUG) TYPE(*DEC) LEN(15 5)
              DCL        VAR(&DEBUGCL) TYPE(*CHAR) LEN(11) VALUE(*NOLSTDBG)
              DCL        VAR(&DEBUGCLLE) TYPE(*CHAR) LEN(7) VALUE(*STMT)
              DCL        VAR(&DEBUGRPG) TYPE(*CHAR) LEN(7) VALUE(*STMT)
              DCL        VAR(&DEBUGMOD) TYPE(*CHAR) LEN(7) VALUE(*SOURCE)
 
-             IF         COND(&DEBUG *EQ '1') THEN(DO)
+             IF         COND(&DEBUG *EQ 1) THEN(DO)
              CHGVAR     VAR(&DEBUGCL) VALUE(*LSTDBG)
              CHGVAR     VAR(&DEBUGCLLE) VALUE(*ALL)
              CHGVAR     VAR(&DEBUGRPG) VALUE(*ALL)
