@@ -7,7 +7,10 @@
 SRCLIB="QSHONI"
 SRCLIBTEXT="QShell on IBM i"
 SRCFILE="SOURCE"
+# Change to your local CCSID before running this script. Default=37
 SRCCCSID="37"
+# Change to 1 if you want program objects with complete generated debugging information. Default=0
+DEBUG="0"                                                                                         
 dashes="---------------------------------------------------------------------------"
 
 function cpy_member
@@ -384,7 +387,7 @@ cpy_member
 
 # Create and run build program
 system -q "CRTCLPGM PGM(${SRCLIB}/SRCBLDC) SRCFILE(${SRCLIB}/${SRCFILE})"
-system -v "CALL PGM(${SRCLIB}/SRCBLDC)"
+system -v "CALL PGM(${SRCLIB}/SRCBLDC) PARM(${DEBUG})"
 
 echo "${SRCLIBTEXT} library ${SRCLIB} was created and programs compiled."
 echo "$dashes"
