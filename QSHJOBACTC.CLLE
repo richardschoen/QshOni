@@ -1,0 +1,128 @@
+             PGM        PARM(&QRYFILTER &MAXJOBFND &EXPJOBFND +
+                          &OUTFILE &EMPTYERROR)
+
+             DCL        VAR(&MSGTYPE) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&EMPTYERROR) TYPE(*CHAR) LEN(4)
+             DCL        VAR(&MAXJOBFND) TYPE(*DEC) LEN(10 0)
+             DCL        VAR(&EXPJOBFND) TYPE(*DEC) LEN(10 0)
+             DCL        VAR(&QRYFILTER) TYPE(*CHAR) LEN(500)
+             DCL        VAR(&IFILE) TYPE(*CHAR) LEN(10) VALUE(QCUSTCDT)
+             DCL        VAR(&ILIB) TYPE(*CHAR) LEN(10) VALUE(QIWS)
+             DCL        VAR(&OUTFILE) TYPE(*CHAR) LEN(20)
+             DCL        VAR(&TEMPFILE) TYPE(*CHAR) LEN(10) VALUE(CUST1)
+             DCL        VAR(&TEMPLIB) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&RECORDS) TYPE(*DEC) LEN(10)
+
+             MONMSG     MSGID(CPF0000) EXEC(GOTO CMDLBL(ERRORS))
+
+/*----------------------------------------------------------------------------*/
+/* Create record count data area */
+/*----------------------------------------------------------------------------*/
+             CHKOBJ     OBJ(QTEMP/JOBACTCNT) OBJTYPE(*DTAARA)
+             MONMSG     MSGID(CPF0000) EXEC(DO)
+             CRTDTAARA  DTAARA(QTEMP/JOBACTCNT) TYPE(*DEC) LEN(10 0) +
+                          TEXT('Active Job Count - QSHJOBACT')
+             ENDDO
+             CHGDTAARA  DTAARA(QTEMP/JOBACTCNT *ALL) VALUE(0)
+
+/*----------------------------------------------------------------------------*/
+/* Parse outfile parm */
+/*----------------------------------------------------------------------------*/
+             CHGVAR     VAR(&TEMPLIB) VALUE(%SST(&OUTFILE 11 10))
+             CHGVAR     VAR(&TEMPFILE) VALUE(%SST(&OUTFILE 1 10))
+
+/*----------------------------------------------------------------------------*/
+/* Make sure user didnt pass JOBTMP0001 */
+/*----------------------------------------------------------------------------*/
+             IF         COND(&TEMPFILE *EQ JOBTMP0001) THEN(DO)
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('You +
+                          cannot use JOBTMP0001 as an outfile name. +
+                          Please change the name and run QSHJOBACT +
+                          again') TOPGMQ(*PRV) MSGTYPE(*ESCAPE)
+             ENDDO
+
+/*----------------------------------------------------------------------------*/
+/* Delete temp file if exists */
+/*----------------------------------------------------------------------------*/
+             DLTF       FILE(QTEMP/JOBTMP0001)
+             MONMSG     MSGID(CPF0000)
+             DLTF       FILE(&TEMPLIB/&TEMPFILE)
+             MONMSG     MSGID(CPF0000)
+
+/*----------------------------------------------------------------------------*/
+/* List all jobs to temp file via DB2 services */
+/*----------------------------------------------------------------------------*/
+             QSHJOBLIST QRYFILTER(&QRYFILTER) +
+                          OUTFILE(QTEMP/JOBTMP0001) PROMPT(*NO)
+
+             /* Rtv record count from data area */
+             RTVDTAARA  DTAARA(QTEMP/SQLQRYCNT *ALL) RTNVAR(&RECORDS)
+
+/*----------------------------------------------------------------------------*/
+/* If no jobs found, bail out.                                                */
+/*----------------------------------------------------------------------------*/
+             IF         COND(&RECORDS *EQ 0) THEN(DO)
+
+             /* Only send escape message if EMPTYERROR=*YES */
+             IF         COND(&EMPTYERROR *EQ *YES) THEN(DO)
+             CHGVAR     VAR(&MSGTYPE) VALUE(*ESCAPE)
+             ENDDO
+             IF         COND(&EMPTYERROR *NE *YES) THEN(DO)
+             CHGVAR     VAR(&MSGTYPE) VALUE(*COMP)
+             ENDDO
+
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('No +
+                          matching jobs found for filter:' |> +
+                          &QRYFILTER) TOPGMQ(*PRV) MSGTYPE(&MSGTYPE)
+             ENDDO
+
+/*----------------------------------------------------------------------------*/
+/* If jobs found exceed max job tolerance, bail out                           */
+/*----------------------------------------------------------------------------*/
+             /* Only check max active if <> 0-*NOLIMIT */
+             /* *NOLIMIT means any number of instances */
+             IF         COND(&MAXJOBFND *GT 0) THEN(DO)
+             /* Bail if max active jobs exceeded */
+             IF         COND(&RECORDS *GT &MAXJOBFND) THEN(DO)
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Max +
+                          jobs found were' |> %CHAR(&RECORDS) |> +
+                          'and this exceeded the max job count +
+                          tolerance value of' |> %CHAR(&MAXJOBFND)) +
+                          TOPGMQ(*PRV) MSGTYPE(*ESCAPE)
+             ENDDO
+             ENDDO
+
+/*----------------------------------------------------------------------------*/
+/* If jobs expect xceed max job tolerance, bail out without ending jobs       */
+/*----------------------------------------------------------------------------*/
+             /* Only check max active if <> 0-*NOLIMIT */
+             /* *NOLIMIT means any number of instances */
+             IF         COND(&EXPJOBFND *GT 0) THEN(DO)
+             /* Bail if expected number of jobs not matching */
+             IF         COND(&RECORDS *NE &EXPJOBFND) THEN(DO)
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) +
+                          MSGDTA('Expected active jobs were' |> +
+                          %CHAR(&EXPJOBFND) |> '. Actual jobs found +
+                          were' |> %CHAR(&RECORDS)) TOPGMQ(*PRV) +
+                          MSGTYPE(*ESCAPE)
+             ENDDO
+             ENDDO
+
+/*----------------------------------------------------------------------------*/
+/* If jobs found, bail out with success                                       */
+/*----------------------------------------------------------------------------*/
+             IF         COND(&RECORDS *GT 0) THEN(DO)
+             CHGDTAARA  DTAARA(QTEMP/JOBACTCNT *ALL) VALUE(&RECORDS)
+             SNDPGMMSG  MSGID(CPF9897) MSGF(QCPFMSG) +
+                          MSGDTA(%CHAR(&RECORDS) |> 'matching jobs +
+                          found for filter:' |> &QRYFILTER) +
+                          TOPGMQ(*PRV) MSGTYPE(*COMP)
+             ENDDO
+
+             RETURN
+ERRORS:
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Errors +
+                          occurred while checking active jobs') +
+                          MSGTYPE(*ESCAPE)
+
+             ENDPGM 
