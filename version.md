@@ -322,3 +322,22 @@ Previous default for user defined data was: RUNSQLSRC.
 ## V1.0.43 - 11/7/2025
 Merged pull request for QSHPYCALL command to remove unuused parameter PARMDLM which is unused.
 
+## V1.0.44 - 12/10/2025
+Created new commands for listing active jobs and determining how many instances of an active job there are.   
+
+QSHJOBLIST - Create an outfile list of selected jobs on the system. By default the command lists all jobs to the outfile. However a filter can be applied.    
+
+The following example lists all jobs active on the system named: ADMIN   
+```QSHJOBLIST QRYFILTER('JOBNAME LIKE ''ADMIN''')  ``` 
+
+QSHJOBACT - Locate selected active jobs. Use this command to determine how many instances of a selected job name or generic pattern are active. This can be useful if you triggered a subsystem or app shutdown and need to know when all of the named jobs are ended.  
+
+The following example lists all jobs active on the system named: ADMIN. The count is placed into a data area named: ```QTEMP/JOBACTCNT```    
+```QSHJOBACT QRYFILTER('JOBNAME LIKE ''ADMIN''') EMPTYERROR(*NO)  ``` 
+
+
+
+
+
+
+
