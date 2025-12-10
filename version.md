@@ -335,6 +335,12 @@ QSHJOBACT - Locate selected active jobs. Use this command to determine how many 
 The following example lists all jobs active on the system named: ADMIN. The count is placed into a data area named: ```QTEMP/JOBACTCNT```    
 ```QSHJOBACT QRYFILTER('JOBNAME LIKE ''ADMIN''') EMPTYERROR(*NO)  ``` 
 
+### Overview of QSYS2.ACTIVE_JOB_INFO() for QSHJOBLIST and QSHJOBACT
+https://www.ibm.com/support/pages/qsys2activejobinfo  
+
+
+
+
 
 
 
