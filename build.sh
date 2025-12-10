@@ -374,6 +374,22 @@ CURFILE="QSHONICMDS.PNLGRP"
 SRCTEXT="Command Help Panel Group for QSHONI Project"   
 cpy_member
 
+CURFILE="QSHJOBLIST.CMD"
+SRCTEXT="List Selected Active Jobs to Output File"   
+cpy_member
+
+CURFILE="QSHJOBLISC.CLLE"
+SRCTEXT="List Selected Active Jobs to Output File"   
+cpy_member
+
+CURFILE="QSHJOBACT.CMD"
+SRCTEXT="Locate Selected Active Jobs"   
+cpy_member
+
+CURFILE="QSHJOBACTC.CLLE"
+SRCTEXT="Locate Selected Active Jobs"   
+cpy_member
+
 CURFILE="README.TXT"
 SRCTEXT="Read Me Docs on Setup"
 cpy_member
