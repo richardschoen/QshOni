@@ -336,6 +336,7 @@ The following example lists all jobs active on the system named: ADMIN. The coun
 ```QSHJOBACT QRYFILTER('JOBNAME LIKE ''ADMIN''') EMPTYERROR(*NO)  ``` 
 
 ### Overview of QSYS2.ACTIVE_JOB_INFO() for QSHJOBLIST and QSHJOBACT
+If the QSHJOBLIST and QSHJOBACT SQL fails for some reason, you could be missing appropriate PTF groups. See the following link:   
 https://www.ibm.com/support/pages/qsys2activejobinfo  
 
 
