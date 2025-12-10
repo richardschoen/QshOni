@@ -1,0 +1,92 @@
+             PGM        PARM(&JOBFILTER &OUTFILE &PROMPT)
+
+             DCL        VAR(&PROMPT) TYPE(*CHAR) LEN(4)
+             DCL        VAR(&JOBFILTER) TYPE(*CHAR) LEN(500)
+             DCL        VAR(&OUTFILE) TYPE(*CHAR) LEN(20)
+             DCL        VAR(&TEMPFILE) TYPE(*CHAR) LEN(10) VALUE(CUST1)
+             DCL        VAR(&TEMPLIB) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&RECORDS) TYPE(*DEC) LEN(10)
+             DCL        VAR(&RECORDSC) TYPE(*CHAR) LEN(10)
+
+             MONMSG     MSGID(CPF0000) EXEC(GOTO CMDLBL(ERRORS))
+
+/*----------------------------------------------------------------------------*/
+/* Create record count data area */
+/*----------------------------------------------------------------------------*/
+             CHKOBJ     OBJ(QTEMP/JOBLISTCNT) OBJTYPE(*DTAARA)
+             MONMSG     MSGID(CPF0000) EXEC(DO)
+             CRTDTAARA  DTAARA(QTEMP/JOBLISTCNT) TYPE(*DEC) LEN(10 0) +
+                          TEXT('Active Job Count - QSHJOBLIST')
+             ENDDO
+             CHGDTAARA  DTAARA(QTEMP/JOBLISTCNT *ALL) VALUE(0)
+
+/*----------------------------------------------------------------------------*/
+/* Parse outfile parm */
+/*----------------------------------------------------------------------------*/
+             CHGVAR     VAR(&TEMPLIB) VALUE(%SST(&OUTFILE 11 10))
+             CHGVAR     VAR(&TEMPFILE) VALUE(%SST(&OUTFILE 1 10))
+
+/*----------------------------------------------------------------------------*/
+/* Delete temp work file if it exists */
+/*----------------------------------------------------------------------------*/
+             DLTF       FILE(QTEMP/TMPJOBLS01)
+             MONMSG     MSGID(CPF0000)
+
+/*----------------------------------------------------------------------------*/
+/* Run job list using DB2 services to outfile with normalized job name fields */
+/* This first command lists all jobs on the system to a temp table            */
+/* named QTEMP/TMPJOBLS01                                                     */
+/*----------------------------------------------------------------------------*/
+             QSHQRYTMP  SQL('SELECT ORDINAL_POSITION AS +
+                          ORD,SUBSTR(JOB_NAME,LOCATE_IN_STRING(JOB_NA+
+                          ME,''/'',-1)+1) AS +
+                          JOBNAME,SUBSTR(JOB_NAME,LOCATE_IN_STRING(JO+
+                          B_NAME,''/'',1)+1,(LOCATE_IN_STRING(JOB_NAM+
+                          E,''/'',-1)-1) - +
+                          (LOCATE_IN_STRING(JOB_NAME,''/'',1))) AS +
+                          JOBUSER,SUBSTR(JOB_NAME,1,6) AS +
+                          JOBNUMBER,JOB_TYPE AS JOBTYPE,JOB_STATUS +
+                          AS JOBSTATUS,MEMORY_POOL AS +
+                          MEMPOOL,RUN_PRIORITY AS +
+                          RUNPTY,THREAD_COUNT AS +
+                          THREADCOUNT,TEMPORARY_STORAGE AS +
+                          TEMPSTG,CPU_TIME AS CPUTIME,SUBSYSTEM +
+                          FROM +
+                          TABLE(QSYS2.ACTIVE_JOB_INFO(JOB_NAME_FILTER +
+                          => ''*ALL'')) A') +
+                          OUTFILE(QTEMP/TMPJOBLS01) EMPTYERROR(*NO)
+
+/*----------------------------------------------------------------------------*/
+/* Now query the temp job list work file to field all selected jobs from the  */
+/* normalized temp work file.                                                 */
+/*----------------------------------------------------------------------------*/
+             IF         COND(&PROMPT *EQ *YES) THEN(DO)
+             ?          QSHQRYTMP ??SQL('SELECT * FROM +
+                          QTEMP/TMPJOBLS01 WHERE' |> &JOBFILTER) +
+                          OUTFILE(&TEMPLIB/&TEMPFILE) EMPTYERROR(*NO)
+             ENDDO
+             IF         COND(&PROMPT *NE *YES) THEN(DO)
+             QSHQRYTMP  SQL('SELECT * FROM QTEMP/TMPJOBLS01 WHERE' |> +
+                    &JOBFILTER) OUTFILE(&TEMPLIB/&TEMPFILE) +
+                          EMPTYERROR(*NO)
+             ENDDO
+
+             /* Rtv record count from data area */
+             RTVDTAARA  DTAARA(QTEMP/SQLQRYCNT *ALL) RTNVAR(&RECORDS)
+
+             /* Save count to data area */
+             CHGDTAARA  DTAARA(QTEMP/JOBLISTCNT *ALL) VALUE(&RECORDS)
+
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Output +
+                          file' |> &TEMPLIB |< '/' |< &TEMPFILE |> +
+                          'was created from job list.' |> +
+                          %CHAR(&RECORDS) |> 'entries retrieved') +
+                          MSGTYPE(*COMP)
+
+             RETURN
+ERRORS:
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Errors +
+                          occurred while listing jobs') +
+                          MSGTYPE(*ESCAPE)
+
+             ENDPGM 
