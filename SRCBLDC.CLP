@@ -7,7 +7,7 @@
              DCL        VAR(&TGTRLS) TYPE(*CHAR) LEN(10) +
                           VALUE(*CURRENT)
              DCL        VAR(&VERSION) TYPE(*CHAR) LEN(30) +
-                          VALUE(V1.0.43)
+                          VALUE(V1.0.44)
              DCL        VAR(&QSHPYTHON) TYPE(*CHAR) LEN(255)
              DCL        VAR(&CMD) TYPE(*CHAR) LEN(512)
              DCL        VAR(&LEN) TYPE(*DEC) LEN(15 5)
@@ -380,7 +380,27 @@
                           SRCFILE(&DESTLIB/&DESTFILE) +
                           DFTACTGRP(*NO) REPLACE(*NO) TGTRLS(&TGTRLS)  /* 1.0.42 */
 
- /* Create message file for any custom CPF messages */
+              CRTCMD     CMD(&DESTLIB/QSHJOBLIST) +
+                          PGM(&DESTLIB/QSHJOBLISC) +
+                          SRCFILE(&DESTLIB/&DESTFILE) PRDLIB(&DESTLIB) /* +
+                          1.0.44 */
+
+             CRTBNDCL   PGM(&DESTLIB/QSHJOBLISCC) +
+                          SRCFILE(&DESTLIB/&DESTFILE) +
+                          DFTACTGRP(*YES) REPLACE(*NO) +
+                          TGTRLS(&TGTRLS) /* 1.0.44 */
+
+              CRTCMD     CMD(&DESTLIB/QSHJOBACT) +
+                          PGM(&DESTLIB/QSHJOBACTC) +
+                          SRCFILE(&DESTLIB/&DESTFILE) PRDLIB(&DESTLIB) /* +
+                          1.0.44 */
+
+             CRTBNDCL   PGM(&DESTLIB/QSHJOBACTC) +
+                          SRCFILE(&DESTLIB/&DESTFILE) +
+                          DFTACTGRP(*YES) REPLACE(*NO) +
+                          TGTRLS(&TGTRLS) /* 1.0.44 */
+
+/* Create message file for any custom CPF messages */
  /* Initial use case is to log STDOUT msgs with own CPF ID    */
              CRTMSGF    MSGF(&DESTLIB/QSHMSG) TEXT('Qshell CPF +
                           Messages')
