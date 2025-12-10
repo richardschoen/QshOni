@@ -385,7 +385,7 @@
                           SRCFILE(&DESTLIB/&DESTFILE) PRDLIB(&DESTLIB) /* +
                           1.0.44 */
 
-             CRTBNDCL   PGM(&DESTLIB/QSHJOBLISCC) +
+             CRTBNDCL   PGM(&DESTLIB/QSHJOBLISC) +
                           SRCFILE(&DESTLIB/&DESTFILE) +
                           DFTACTGRP(*YES) REPLACE(*NO) +
                           TGTRLS(&TGTRLS) /* 1.0.44 */
