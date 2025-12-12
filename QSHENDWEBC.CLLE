@@ -1,0 +1,129 @@
+             PGM        PARM(&HTTPINST &JOBNAME &DLYJOB &WAITCYCLES +
+                          &SNDOPRMSG &TOUSR)
+
+             DCL        VAR(&CMDNAME) TYPE(*CHAR) LEN(10) +
+                          VALUE(QSHENDWEB)
+             DCL        VAR(&TOUSR) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&HTTPINST) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&JOBNAME) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&COUNT) TYPE(*DEC) LEN(10 0)
+             DCL        VAR(&WAITCYCLES) TYPE(*DEC) LEN(5 0)
+             DCL        VAR(&DLYJOB) TYPE(*DEC) LEN(5 0)
+             DCL        VAR(&JOBACTCNT) TYPE(*DEC) LEN(10 0)
+             DCL        VAR(&DONE) TYPE(*DEC) LEN(1 0) VALUE(0)
+             DCL        VAR(&FILTER) TYPE(*CHAR) LEN(100)
+             DCL        VAR(&JOBTYPE) TYPE(*CHAR) LEN(1)
+             DCL        VAR(&SNDOPRMSG) TYPE(*CHAR) LEN(4)
+
+             MONMSG     MSGID(CPF0000) EXEC(GOTO CMDLBL(ERRORS))
+
+             RTVJOBA    TYPE(&JOBTYPE)
+
+/* Set JOBNAME to watch. Ex: *ADMIN instance jobs start with ADMIN*  */
+/* usually HTTPINST and JOBNAME can be the same for HTTP servers */
+             IF         COND(&JOBNAME *EQ *HTTPINST) THEN(DO)
+             CHGVAR     VAR(&JOBNAME) VALUE(&HTTPINST)
+             ENDDO
+             IF         COND(&JOBNAME *EQ ' ') THEN(DO)
+             CHGVAR     VAR(&JOBNAME) VALUE(&HTTPINST)
+             ENDDO
+
+/* Attempt to end HTTP server */
+/* If not running, just exit */
+             ENDTCPSVR  SERVER(*HTTP) HTTPSVR(&HTTPINST)
+             MONMSG     MSGID(TCP1A77 TCP1A18 HTP8051) EXEC(DO)
+             /* Send SYSOPR message if specified */
+             IF         COND(&SNDOPRMSG *EQ *YES) THEN(DO)
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA(&CMDNAME +
+                          |< '-HTTP instance' |> &HTTPINST |> 'is +
+                          not running') TOUSR(&TOUSR) MSGTYPE(*INFO)
+             ENDDO
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('HTTP +
+                          instance' |> &HTTPINST |> 'is not +
+                          running') TOPGMQ(*PRV) MSGTYPE(*COMP)
+             RETURN
+             ENDDO
+
+/* Run QSHACTJOB and wait xx seconds and xx loop cycles */
+/* to make sure all selected job names are ended.       */
+ DOIT:
+ LOOP:       DOWHILE    COND(&COUNT *LE &WAITCYCLES *AND &DONE *NE 1)
+
+             /* Set job name filter */
+             CHGVAR     VAR(&FILTER) VALUE('JOBNAME LIKE ''' |< +
+                          &JOBNAME |< '''')
+
+             /* Are HTTP server jobs still active ? */
+             QSHONI/QSHJOBACT QRYFILTER(&FILTER) +
+                          OUTFILE(QTEMP/JOBTMPA001) EMPTYERROR(*NO)
+
+             /* Check results count */
+             RTVDTAARA  DTAARA(QTEMP/JOBACTCNT *ALL) RTNVAR(&JOBACTCNT)
+
+             /* If no more jobs running we are done */
+             IF         COND(&JOBACTCNT *EQ 0) THEN(DO)
+             CHGVAR     VAR(&DONE) VALUE(1)
+             ENDDO
+
+             CHGVAR     VAR(&COUNT) VALUE(&COUNT + 1)
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Current +
+                          wait cycle is' |> %CHAR(&COUNT)) +
+                          TOPGMQ(*SAME) MSGTYPE(*DIAG)
+             IF         COND(&JOBTYPE *EQ '1') THEN(DO)
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Current +
+                          wait cycle is' |> %CHAR(&COUNT)) +
+                          TOPGMQ(*EXT) MSGTYPE(*STATUS)
+             ENDDO
+
+             /* If not all done, let's wait a few seconds */
+             IF         COND(&DONE *EQ 0) THEN(DO)
+             DLYJOB     DLY(&DLYJOB)
+             ENDDO
+
+             ENDDO
+
+             /* If max count exceeded, throw an error message */
+             IF         COND(&COUNT *GT &WAITCYCLES) THEN(DO)
+
+             /* Send SYSOPR message if specified */
+             IF         COND(&SNDOPRMSG *EQ *YES) THEN(DO)
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA(&CMDNAME +
+                          |< '-HTTP instance' |> &HTTPINST |> 'may +
+                          not have ended successfuly. Max wait +
+                          count was exceeded. Chk act jobs') +
+                          TOUSR(&TOUSR) MSGTYPE(*INFO)
+             ENDDO
+
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('HTTP +
+                          instance' |> &HTTPINST |> 'may not have +
+                          ended successfuly. Max wait count was +
+                          exceeded. Chk act jobs') MSGTYPE(*ESCAPE)
+             ENDDO
+
+DONE:
+             /* Send SYSOPR message if specified */
+             IF         COND(&SNDOPRMSG *EQ *YES) THEN(DO)
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) +
+                          MSGDTA(&CMDNAME |< '-HTTP instance' |> +
+                          &HTTPINST |> 'was ended successfully') +
+                          TOUSR(&TOUSR) MSGTYPE(*COMP)
+             ENDDO
+
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('HTTP +
+                          instance' |> &HTTPINST |> 'was ended +
+                          successfully') MSGTYPE(*COMP)
+             RETURN
+
+ERRORS:
+             /* Send SYSOPR message if specified */
+             IF         COND(&SNDOPRMSG *EQ *YES) THEN(DO)
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA(&CMDNAME |< '-Errors +
+                          occurred while ending HTTP instance' |> +
+                          &HTTPINST) TOUSR(&TOUSR) MSGTYPE(*INFO)
+             ENDDO
+
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Errors +
+                          occurred while ending HTTP instance' |> +
+                          &HTTPINST) MSGTYPE(*ESCAPE)
+
+             ENDPGM 
