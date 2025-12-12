@@ -339,6 +339,11 @@ The following example lists all jobs active on the system named: ADMIN. The coun
 If the QSHJOBLIST and QSHJOBACT SQL fails for some reason, you could be missing appropriate PTF groups. See the following link:   
 https://www.ibm.com/support/pages/qsys2activejobinfo  
 
+## V1.0.45 - 12/12/2025
+Created QSHENDWEB command for shutting down web server via ENDTCPSVR command and then monitoring to make sure the jobs end for a selected period of time. 
+
+QSHENDWEB - End web server instance and monitor for jobs to end.
+
 
 
 
