@@ -390,6 +390,14 @@ CURFILE="QSHJOBACTC.CLLE"
 SRCTEXT="Locate Selected Active Jobs"   
 cpy_member
 
+CURFILE="QSHENDWEB.CMD"
+SRCTEXT="End Web Server Instance and Verify Jobs Ended"   
+cpy_member
+
+CURFILE="QSHENDWEBC.CLLE"
+SRCTEXT="End Web Server Instance and Verify Jobs Ended"   
+cpy_member
+
 CURFILE="README.TXT"
 SRCTEXT="Read Me Docs on Setup"
 cpy_member
