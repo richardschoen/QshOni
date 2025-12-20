@@ -1,0 +1,156 @@
+             PGM        PARM(&CMDPFXPARM &KEYFILE &USER &HOST &PORT +
+                          &ACTION &REPLLOCAL &LOCALFILE &REMOTEFILE +
+                          &DEBUGCMD &SETPKGPATH &DSPSTDOUT +
+                          &LOGSTDOUT &PRTSTDOUT &DLTSTDOUT +
+                          &IFSSTDOUT &IFSFILE &IFSOPT &CCSID +
+                          &PRTSPLF &PRTUSRDTA &PRTTXT &PRTHOLD +
+                          &PRTOUTQALL &PASEJOBNAM)
+
+/*----------------------------------------------------------------------------*/
+/* Variables                                                                  */
+/*----------------------------------------------------------------------------*/
+             DCL        VAR(&REPLLOCAL) TYPE(*CHAR) LEN(4)
+             DCL        VAR(&DEBUGCMD) TYPE(*CHAR) LEN(4)
+             DCL        VAR(&KEYFILE) TYPE(*CHAR) LEN(255)
+             DCL        VAR(&USER) TYPE(*CHAR) LEN(100)
+             DCL        VAR(&HOST) TYPE(*CHAR) LEN(100)
+             DCL        VAR(&PORT) TYPE(*CHAR) LEN(5)
+             DCL        VAR(&ACTION) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&LOCALFILE) TYPE(*CHAR) LEN(255)
+             DCL        VAR(&REMOTEFILE) TYPE(*CHAR) LEN(255)
+             DCL        VAR(&PASEJOBNAM) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&PRTHOLD) TYPE(*CHAR) LEN(4)
+             DCL        VAR(&PRTOUTQALL) TYPE(*CHAR) LEN(20)
+             DCL        VAR(&PRTOUTQ) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&PRTOUTQLIB) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&CMDPFXPARM) TYPE(*CHAR) LEN(1000)
+             DCL        VAR(&SCPCMDLINE) TYPE(*CHAR) LEN(5000)
+             DCL        VAR(&SETPKGPATH) TYPE(*CHAR) LEN(4)
+             DCL        VAR(&DSPSTDOUT) TYPE(*CHAR) LEN(4)
+             DCL        VAR(&LOGSTDOUT) TYPE(*CHAR) LEN(4)
+             DCL        VAR(&DLTSTDOUT) TYPE(*CHAR) LEN(4)
+             DCL        VAR(&PRTSTDOUT) TYPE(*CHAR) LEN(4)
+             DCL        VAR(&IFSSTDOUT) TYPE(*CHAR) LEN(4)
+             DCL        VAR(&IFSOPT) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&IFSFILE) TYPE(*CHAR) LEN(255)
+             DCL        VAR(&PRTSPLF) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&PRTUSRDTA) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&PRTTXT) TYPE(*CHAR) LEN(30)
+             DCL        VAR(&QT) TYPE(*CHAR) LEN(1) VALUE('''')
+             DCL        VAR(&CCSID) TYPE(*CHAR) LEN(10)
+
+/*----------------------------------------------------------------------------*/
+/* MONITOR FOR GLOBAL ERROR. ANY ERROR IS A CAUSE TO BLOW OUT OF HERE         */
+/* AND WE WANT A GRACEFUL EXIT.                                               */
+/*----------------------------------------------------------------------------*/
+             MONMSG     MSGID(CPF0000) EXEC(GOTO CMDLBL(ERRORS))
+
+/*----------------------------------------------------------------------------*/
+/* Extract output queue info.                                                 */
+/*----------------------------------------------------------------------------*/
+             CHGVAR     VAR(&PRTOUTQ) VALUE(%SST(&PRTOUTQALL 1 10))
+             CHGVAR     VAR(&PRTOUTQLIB) VALUE(%SST(&PRTOUTQALL 11 10))
+
+/*----------------------------------------------------------------------------*/
+/* MAIN                                                                       */
+/*----------------------------------------------------------------------------*/
+
+             /* Build scp send file command to pass to QShell */
+             IF         COND(&ACTION *EQ *SEND) THEN(DO)
+             CHGVAR     VAR(&SCPCMDLINE) VALUE('scp' |> '-P' |> +
+                          &PORT |> '-i' |> &KEYFILE |> &LOCALFILE +
+                          |> &USER |< '@' |< &HOST |< ':' |< +
+                          &REMOTEFILE)
+
+             /* Make sure local file exists */
+             QSHONI/QSHIFSCHK FILNAM(&LOCALFILE)
+             /* File exists. All good */
+             MONMSG     MSGID(CPF9897) EXEC(DO)
+             ENDDO
+             /* File does not exist for sending */
+             MONMSG     MSGID(CPF9898) EXEC(DO)
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Local +
+                          file' |> &LOCALFILE |> 'does not exist. +
+                          Transfer cancelled') MSGTYPE(*ESCAPE)
+             ENDDO
+
+             ENDDO
+             /* Build scp recv file command to pass to QShell */
+             IF         COND(&ACTION *EQ *RECEIVE) THEN(DO)
+             CHGVAR     VAR(&SCPCMDLINE) VALUE('scp' |> '-P' |> +
+                          &PORT |> '-i' |> &KEYFILE |> &USER |< '@' +
+                          |< &HOST |< ':' |< &REMOTEFILE |> &LOCALFILE)
+
+             /* Check if local file exists. If so replace must=*YES */
+             QSHONI/QSHIFSCHK FILNAM(&LOCALFILE)
+             /* File exists. and replace must *EQ *YES */
+             MONMSG     MSGID(CPF9897) EXEC(DO)
+             IF         COND(&REPLLOCAL *EQ *NO) THEN(DO)
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Local +
+                          file' |> &LOCALFILE |> 'exists but +
+                          replace not selected. Transfer +
+                          cancelled') MSGTYPE(*ESCAPE)
+             ENDDO
+             /* Erase existing local file */
+             ERASE      OBJLNK(&LOCALFILE)
+             ENDDO
+
+             /* File does not exist. All good */
+             MONMSG     MSGID(CPF9898) EXEC(DO)
+             ENDDO
+
+             ENDDO
+
+             /* Run the scp command via QSHEXEC */
+             IF         COND(&DEBUGCMD *NE *YES) THEN(DO)
+             QSHONI/QSHEXEC CMDLINE(&SCPCMDLINE) +
+                          SETPKGPATH(&SETPKGPATH) +
+                          DSPSTDOUT(&DSPSTDOUT) +
+                          LOGSTDOUT(&LOGSTDOUT) +
+                          PRTSTDOUT(&PRTSTDOUT) +
+                          DLTSTDOUT(&DLTSTDOUT) +
+                          IFSSTDOUT(&IFSSTDOUT) IFSFILE(&IFSFILE) +
+                          IFSOPT(&IFSOPT) CCSID(&CCSID) +
+                          PRTSPLF(&PRTSPLF) PRTUSRDTA(&PRTUSRDTA) +
+                          PRTTXT(&PRTTXT) PRTHOLD(&PRTHOLD) +
+                          PRTOUTQ(&PRTOUTQLIB/&PRTOUTQ) +
+                          PASEJOBNAM(&PASEJOBNAM)
+             ENDDO
+             /* Prompt the scp command line for debugging */
+             IF         COND(&DEBUGCMD *EQ *YES) THEN(DO)
+             ? QSHONI/QSHEXEC ??CMDLINE(&SCPCMDLINE) +
+                          SETPKGPATH(&SETPKGPATH) +
+                          DSPSTDOUT(&DSPSTDOUT) +
+                          LOGSTDOUT(&LOGSTDOUT) +
+                          PRTSTDOUT(&PRTSTDOUT) +
+                          DLTSTDOUT(&DLTSTDOUT) +
+                          IFSSTDOUT(&IFSSTDOUT) IFSFILE(&IFSFILE) +
+                          IFSOPT(&IFSOPT) CCSID(&CCSID) +
+                          PRTSPLF(&PRTSPLF) PRTUSRDTA(&PRTUSRDTA) +
+                          PRTTXT(&PRTTXT) PRTHOLD(&PRTHOLD) +
+                          PRTOUTQ(&PRTOUTQLIB/&PRTOUTQ) +
+                          PASEJOBNAM(&PASEJOBNAM)
+             ENDDO
+
+             /* Send completion message */
+             IF         COND(&ACTION *EQ *SEND) THEN(DO)
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Local +
+                          file' |> &LOCALFILE |> 'sent to' |> +
+                          &REMOTEFILE |> 'on host' |> &HOST) +
+                          MSGTYPE(*COMP)
+             ENDDO
+             IF         COND(&ACTION *EQ *RECEIVE) THEN(DO)
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Remote +
+                          file' |> &REMOTEFILE |> 'received to +
+                          local file' |> &LOCALFILE |> 'from host' +
+                          |> &HOST) MSGTYPE(*COMP)
+             ENDDO
+
+             RETURN
+
+ERRORS:
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('QShell +
+                          scp command failed') MSGTYPE(*ESCAPE)
+
+ ENDPGM:
+             ENDPGM
