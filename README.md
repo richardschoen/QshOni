@@ -1061,3 +1061,85 @@ The special prefix format we look for in the STDOUT log to return values from ST
 ```RETURNPARM08: I am return value 8```   
 ```RETURNPARM09: I am return value 9```   
 ```RETURNPARM10: I am return value 10```   
+
+# Using the QSHSCP CL command to perform an scp IFS file transfer
+
+The following example calls the scp command to upload a file from the local system to a remote system.
+
+ ```
+      QSHSCP CMDPFXPARM('')                                    
+       KEYFILE('/home/user1/.ssh/id_rsa.ppk')     
+       USER(user1)                                     
+       HOST(myhost.com)                       
+       PORT(22)                                       
+       ACTION(*SEND)                                  
+       REPLLOCAL(*NO)                                    
+       LOCALFILE('/home/user1/mylib.savf')          
+       REMOTEFILE('/home/user1/mylib.savf')         
+       DEBUGCMD(*NO)                                    
+       DSPSTDOUT(*NO)                                   
+       PRTSTDOUT(*NO)                                          
+```
+
+# QSHSCP command parms
+
+**Overview** - This CL command can be used to run a PASE scp command to send or receive a file from a remote IBM i or other system running SCP.   
+
+The command does require you to use an established private key.   
+
+The command is a convenience wrapper that can be used to call a scp file transfer command with QSHEXEC instead of having to type the following full scp command sequence on a QSHEXEC command line.
+
+```Stdout Logging Note:``` During execution, the CL command always creates a temporary outfile in library QTEMP that gets automatically populated with standard output (stdout) from the QSH/PASE command process that gets run. The temporary stdout output file name is: ```QTEMP/STDOUTQSH```. If the file already exists for a subsequent run of the command, the ```QTEMP/STDOUTQSH``` temporary file is automatically cleared before running so each run gets a fresh copy of ```QTEMP/STDOUTQSH```. The ```QTEMP/STDOUTQSH``` temp file gets created automatically always, even if none of the switches such as: ```DSPSTDOUT, LOGSTDOUT, PRTSTDOUT or IFSSTDOUT``` are specified. 
+
+```
+Note: scp and openssb must be already installed in your PASE/QSH environment in /QOpensys/pkgs/bin before this will work.
+```
+**CMDPFXPARM** - scp command line parameter argments that need to be inserted rights after the scp command but before the additional settings like private key file and port.
+
+**KEYFILE** - Enter the file path you an existing SSH private key file to use to connect to a remote system.
+
+**USER** - Enter the user name for the remote site.
+
+**HOST** - Enter the host name or ip address for the remote system you will connect to via SSH. 
+
+**PORT** - Enter the TCP port to connect on. Default=```22```.    
+
+**ACTION** - Enter ```*SEND``` if sending a file to a remote system. Enter ```*RECEIVE``` if you are receiving a file from a remote system.  
+
+**REPLLOCAL** - Replace local file on receive. Enter ```*YES``` if you want to replace an existing local file during a file reeive action. ```*NO``` will cause the transfer to cancel if the local file already exists.
+
+**LOCALFILE** - Enter the local IFS file you want to send for a *SEND operation. Or this becomes the local destination file to receive to if doing a file  *RECEIVE action. 
+
+**REMOTEFILE** - Enter the remote IFS file you want to send to for a *SEND operation. Or this becomes the remote file to receive from if doing a file  *RECEIVE action. 
+
+**DEBUGCMD** - Debug the PASE command line. Enter ```*YES``` to prompt the command line so you can troubleshoot interactively any command line formatting issues when calling scp. ```*NO``` runs the command normally without debugging the command line.
+
+**SETPKGPATH** - Add the IBM i Open Source Package path to PATH environment variable by calling QSHPATH command before running QSH/PASE commands. Default = *YES.
+
+**DSPSTDOUT** - Display the outfile contents. Nice when debugging. 
+
+**LOGSTDOUT** - Place STDOUT log entries into the current jobs job log. Use this if you want the log info in the IBM i joblog. All STDOUT entries are written as CPF message: **QSS9898**
+
+**PRTSTDOUT** - Print STDOUT to a spool file. Use this if you want a spool file of the log output.
+
+**DLTSTDOUT** - This option insures that the STDOUT IFS temp files get cleaned up after processing. All IFS log files get created in the /tmp/qsh directory.
+
+**IFSSTDOUT** - Copy std output to an IFS file. Nice for aggregating log results to a file.
+
+**IFSFILE** - IFS file for stdout results. Needs to be specified if IFSSTDOUT = *YES.
+
+**IFSOPT** - IFS file option. *REPLACE = replace stdout IFS file. *ADD = Add to stdout IFS file.
+
+**CCSID** - When using the iToolkit component for command access, I originally had some issues with CL commands not working correctly. However I don't currently remember exactly why. This may have been solved, however I recommend still passing a value of 37 unless you are in a non US country. If you set to `*SAME`, the CCSID will stay the same as your current job with no change.
+
+**PRTSPLF** - This option holds the name of the spool file used when PRTSTDOUT = *YES. It's a nice way to customize the stdout log prints. ***Default = QSHBASHLOG***
+
+**PRTUSRDTA** - This option holds the name of the spool file user data used when PRTSTDOUT = *YES. ***Default = *NONE ***
+
+**PRTTXT** - This option holds the name of the spool file print txt to be used when PRTSTDOUT = *YES. ***Default = *NONE ***
+
+**PRTHOLD** - This option determines if the spool file is held if one is generated when PRTSTDOUT = *YES. ***Default = *YES ***
+
+**PRTOUTQ** - This option determines the output queue where the spool file will generated to when PRTSTDOUT = *YES. ***Default = *SAME ***
+
+**PASEJOBNAM** - PASE fork thread job names. Set PASE_FORK_JOBNAME environment variable to set forked thread jobs to have a unique name other than: QP0ZSPWP which is the default. Set the value or *DEFAULT=QP0ZSPWP.
