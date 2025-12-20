@@ -344,11 +344,8 @@ Created QSHENDWEB command for shutting down web server via ENDTCPSVR command and
 
 QSHENDWEB - End web server instance and monitor for jobs to end.
 
-
-
-
-
-
+## V1.0.46 - 12/20/2025
+Created QSHSCP command for transferring files over an SSH connection as an alternative to SFTP. 
 
 
 
