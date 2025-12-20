@@ -62,32 +62,8 @@ IBM i QShell
 https://www.ibm.com/docs/en/i/7.5?topic=languages-qshell
 
 
-# Check latest version info (Current Version 1.0.42 - 11/5/2025)  
+# Check latest version info (Current Version 1.0.46 - 12/20/2025)  
 https://github.com/richardschoen/QshOni/blob/master/version.md    
-
-```
-1.0.33 - Updated QSHIFSSIZ with stat64 to support up to 15 digit numeric return.
-1.0.32 - Added QSHQRYSRC command for querying data via a static source member in a library or IFS text file and placing results in an outfile. This is good for using SQL to prep data for a report or aggregate data for a secondary process.
-Added QSHSAVLIB and QSHSAVIFS commands for savng library and IFS objects and outputting an IFS save file when save is complete.
-
-1.0.31 - Changed QSHIFSSIZ command return length from 9 to 15. We can currently still only
-return max size value of 2,147,483,647 bytes until we convert the command to use stat64 at
-some point, but most IFS files you might use this command with will probably by under 2gb in size.
-If this is not the case you can always use stat64 in your own RPG code to retreive IFS file sizes. 
-
-1.0.30 - Added QSHIFSSIZ command to retrieve the file size and allocated size of an IFS file.
-
-1.0.29 - Added QSHCALL procedure to the Service Program Wrapper. Service program name: QSHONISRV
-Also created RPG test program for QSHCALL:
-QSHONIPR03 - to test running a QShell/PASE commmand via QSHCALL from RPG and returning up to 10 parameter values to the calling RPG program.
-
-1.0.28 - Created RPG Service Program Wrapper for QSHEXEC and QSHBASH commands. Service program name: QSHONISRV
-Also created 2 RPG test programs:
-QSHONIPR01 - to test running a QShell/PASE commmand via QSHEXEC from RPG and processing STDOUT outfile all from a single RPG program.
-QSHONIPR02 - to test running a QShell/PASE commmand via QSHBASH from RPG and processing STDOUT outfile all from a single RPG program.
-
-1.0.27 - Two new commands added: QSHCALL and QSHPYCALL to call Python or other open source and return parameters.
-```
 
 # Check out one-liner Python samples
 https://github.com/richardschoen/QshOni/blob/master/samples/python-oneline-samples.md
