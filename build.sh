@@ -398,6 +398,14 @@ CURFILE="QSHENDWEBC.CLLE"
 SRCTEXT="End Web Server Instance and Verify Jobs Ended"   
 cpy_member
 
+CURFILE="QSHSCP.CMD"
+SRCTEXT="Run SCP File Transfer via QShell"   
+cpy_member
+
+CURFILE="QSHSCPC.CLLE"
+SRCTEXT="Run SCP File Transfer via QShell"   
+cpy_member
+
 CURFILE="README.TXT"
 SRCTEXT="Read Me Docs on Setup"
 cpy_member
