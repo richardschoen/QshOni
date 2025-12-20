@@ -345,8 +345,34 @@ Created QSHENDWEB command for shutting down web server via ENDTCPSVR command and
 QSHENDWEB - End web server instance and monitor for jobs to end.
 
 ## V1.0.46 - 12/20/2025
-Created QSHSCP command for transferring files over an SSH connection as an alternative to SFTP. 
+Created QSHSCP command for transferring files over an SSH connection as an alternative to SFTP.   
 
+For this command an SSH key file is required since there is no password prompt mechanism at this point.   
 
+Send IFS file to remote system. Good for transferring binary or save files between systems.   
+```
+QSHSCP CMDPFXPARM('')                                 
+       KEYFILE('/home/user1/.ssh/id_rsa.ppk')  
+       USER(user1)                                  
+       HOST(hostname.com)                    
+       PORT(22)                                    
+       ACTION(*RSEND)                               
+       LOCALFILE('/home/user1/mblib.savf')       
+       REMOTEFILE('/home/user1/mylib.savf')      
+       PRTSTDOUT(*YES)                                
+```
 
+Receive IFS file from remote system. Good for transferring binary or save files between systems.   
+```
+QSHSCP CMDPFXPARM('')                                 
+       KEYFILE('/home/user1/.ssh/id_rsa.ppk')  
+       USER(user1)                                  
+       HOST(hostname.com)                    
+       PORT(22)                                    
+       ACTION(*RECEIVE)                               
+       REPLLOCAL(*YES)                                 
+       LOCALFILE('/home/user1/mblib.savf')       
+       REMOTEFILE('/home/user1/mylib.savf')      
+       PRTSTDOUT(*YES)                                
+```
 
