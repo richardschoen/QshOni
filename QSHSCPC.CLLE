@@ -1,14 +1,15 @@
-             PGM        PARM(&CMDPFXPARM &KEYFILE &USER &HOST &PORT +
-                          &ACTION &REPLLOCAL &LOCALFILE &REMOTEFILE +
-                          &DEBUGCMD &SETPKGPATH &DSPSTDOUT +
-                          &LOGSTDOUT &PRTSTDOUT &DLTSTDOUT +
-                          &IFSSTDOUT &IFSFILE &IFSOPT &CCSID +
-                          &PRTSPLF &PRTUSRDTA &PRTTXT &PRTHOLD +
-                          &PRTOUTQALL &PASEJOBNAM)
+             PGM        PARM(&LOCALFILE &REMOTEFILE &KEYFILE &USER +
+                          &HOST &CMDPFXPARM &PORT &ACTION &FILEOPT +
+                          &REPLLOCAL &DEBUGCMD &SETPKGPATH +
+                          &DSPSTDOUT &LOGSTDOUT &PRTSTDOUT +
+                          &DLTSTDOUT &IFSSTDOUT &IFSFILE &IFSOPT +
+                          &CCSID &PRTSPLF &PRTUSRDTA &PRTTXT +
+                          &PRTHOLD &PRTOUTQALL &PASEJOBNAM)
 
 /*----------------------------------------------------------------------------*/
 /* Variables                                                                  */
 /*----------------------------------------------------------------------------*/
+             DCL        VAR(&FILEOPT) TYPE(*CHAR) LEN(5)
              DCL        VAR(&REPLLOCAL) TYPE(*CHAR) LEN(4)
              DCL        VAR(&DEBUGCMD) TYPE(*CHAR) LEN(4)
              DCL        VAR(&KEYFILE) TYPE(*CHAR) LEN(255)
@@ -57,12 +58,13 @@
 
              /* Build scp send file command to pass to QShell */
              IF         COND(&ACTION *EQ *SEND) THEN(DO)
-             CHGVAR     VAR(&SCPCMDLINE) VALUE('scp' |> '-P' |> +
-                          &PORT |> '-i' |> &KEYFILE |> &LOCALFILE +
-                          |> &USER |< '@' |< &HOST |< ':' |< +
-                          &REMOTEFILE)
+             CHGVAR     VAR(&SCPCMDLINE) VALUE('scp' |> &CMDPFXPARM +
+                          |> '-P' |> &PORT |> '-i' |> &KEYFILE |> +
+                          &LOCALFILE |> &USER |< '@' |< &HOST |< +
+                          ':' |< &REMOTEFILE)
 
-             /* Make sure local file exists */
+             /* Make sure local file exists if FILEOPT=*FILE */
+             IF         COND(&FILEOPT *EQ *FILE) THEN(DO)
              QSHONI/QSHIFSCHK FILNAM(&LOCALFILE)
              /* File exists. All good */
              MONMSG     MSGID(CPF9897) EXEC(DO)
@@ -74,12 +76,19 @@
                           Transfer cancelled') MSGTYPE(*ESCAPE)
              ENDDO
 
-             ENDDO
+             ENDDO  /* ENDDO FILEOPT=*FILE */
+
+             ENDDO  /* ENDDO ACTION=*SEND */
+
              /* Build scp recv file command to pass to QShell */
              IF         COND(&ACTION *EQ *RECEIVE) THEN(DO)
-             CHGVAR     VAR(&SCPCMDLINE) VALUE('scp' |> '-P' |> +
-                          &PORT |> '-i' |> &KEYFILE |> &USER |< '@' +
-                          |< &HOST |< ':' |< &REMOTEFILE |> &LOCALFILE)
+             CHGVAR     VAR(&SCPCMDLINE) VALUE('scp' |> &CMDPFXPARM +
+                          |> '-P' |> &PORT |> '-i' |> &KEYFILE |> +
+                          &USER |< '@' |< &HOST |< ':' |< +
+                          &REMOTEFILE |> &LOCALFILE)
+
+             /* Check if local file exists if FILEOPT=*FILE */
+             IF         COND(&FILEOPT *EQ *FILE) THEN(DO)
 
              /* Check if local file exists. If so replace must=*YES */
              QSHONI/QSHIFSCHK FILNAM(&LOCALFILE)
@@ -99,7 +108,9 @@
              MONMSG     MSGID(CPF9898) EXEC(DO)
              ENDDO
 
-             ENDDO
+             ENDDO  /* ENDDO FILEOPT=*FILE */
+
+             ENDDO  /* ENDDO ACTION=*RECEIVE */
 
              /* Run the scp command via QSHEXEC */
              IF         COND(&DEBUGCMD *NE *YES) THEN(DO)
@@ -135,15 +146,15 @@
              /* Send completion message */
              IF         COND(&ACTION *EQ *SEND) THEN(DO)
              SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Local +
-                          file' |> &LOCALFILE |> 'sent to' |> +
-                          &REMOTEFILE |> 'on host' |> &HOST) +
+                          file or dir' |> &LOCALFILE |> 'sent to' +
+                          |> &REMOTEFILE |> 'on host' |> &HOST) +
                           MSGTYPE(*COMP)
              ENDDO
              IF         COND(&ACTION *EQ *RECEIVE) THEN(DO)
              SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Remote +
-                          file' |> &REMOTEFILE |> 'received to +
-                          local file' |> &LOCALFILE |> 'from host' +
-                          |> &HOST) MSGTYPE(*COMP)
+                          file or dir' |> &REMOTEFILE |> 'received +
+                          to local file or dir' |> &LOCALFILE |> +
+                          'from host' |> &HOST) MSGTYPE(*COMP)
              ENDDO
 
              RETURN

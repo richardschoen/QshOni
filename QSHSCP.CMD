@@ -1,7 +1,10 @@
              CMD        PROMPT('Run SCP Command via QShell')
-             PARM       KWD(CMDPFXPARM) TYPE(*CHAR) LEN(1000) MIN(1) +
-                          EXPR(*YES) CASE(*MIXED) PROMPT('Scp +
-                          command prefix parms')
+             PARM       KWD(LOCALFILE) TYPE(*CHAR) LEN(255) MIN(1) +
+                          EXPR(*YES) CASE(*MIXED) PROMPT('Local +
+                          file or directory')
+             PARM       KWD(REMOTEFILE) TYPE(*CHAR) LEN(255) MIN(1) +
+                          EXPR(*YES) CASE(*MIXED) PROMPT('Remote +
+                          file or directory')
              PARM       KWD(KEYFILE) TYPE(*CHAR) LEN(255) MIN(1) +
                           EXPR(*YES) CASE(*MIXED) PROMPT('SSH +
                           private key file')
@@ -9,20 +12,28 @@
                           EXPR(*YES) CASE(*MIXED) PROMPT('User name')
              PARM       KWD(HOST) TYPE(*CHAR) LEN(100) MIN(1) +
                           EXPR(*YES) CASE(*MIXED) PROMPT('Host name')
+             PARM       KWD(CMDPFXPARM) TYPE(*CHAR) LEN(1000) +
+                          DFT(*NONE) SPCVAL((*NONE ' ') (*VERBOSE +
+                          '-v') (*VERBOSECOMPRESS '-v -C') +
+                          (*RECURSEVERBOSE '-r -v') +
+                          ('*RECURSEVERBOSECOMPRESS' '-r -v -C') +
+                          (*RECURSE '-r') (*COMPRESS '-C')) +
+                          EXPR(*YES) CASE(*MIXED) PROMPT('Scp +
+                          command prefix parms')
              PARM       KWD(PORT) TYPE(*CHAR) LEN(5) DFT(22) +
                           EXPR(*YES) CASE(*MIXED) PROMPT('TCP port')
              PARM       KWD(ACTION) TYPE(*CHAR) LEN(10) RSTD(*YES) +
                           DFT(*SEND) VALUES(*SEND *RECEIVE) +
                           EXPR(*YES) CASE(*MONO) PROMPT('Transfer +
                           action')
+             PARM       KWD(FILEOPT) TYPE(*CHAR) LEN(5) RSTD(*YES) +
+                          DFT(*FILE) VALUES(*DIR *FILE) EXPR(*YES) +
+                          CASE(*MONO) PROMPT('Sending file or +
+                          directory')
              PARM       KWD(REPLLOCAL) TYPE(*CHAR) LEN(4) RSTD(*YES) +
                           DFT(*NO) VALUES(*NO *YES) EXPR(*YES) +
                           CASE(*MONO) PROMPT('Replace local file on +
                           receive')
-             PARM       KWD(LOCALFILE) TYPE(*CHAR) LEN(255) MIN(1) +
-                          EXPR(*YES) CASE(*MIXED) PROMPT('Local file')
-             PARM       KWD(REMOTEFILE) TYPE(*CHAR) LEN(255) MIN(1) +
-                          EXPR(*YES) CASE(*MIXED) PROMPT('Remote file')
              PARM       KWD(DEBUGCMD) TYPE(*CHAR) LEN(4) RSTD(*YES) +
                           DFT(*NO) VALUES(*NO *YES) EXPR(*YES) +
                           CASE(*MIXED) PROMPT('Debug PASE command +
