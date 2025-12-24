@@ -1,4 +1,4 @@
-# List Job Descriptions
+# List IBM i Job Descriptions
 This SQL can bre good to locate job descriptions that may have been set to 4/00/*MSG or 4/00/*SECLVL
 
 ```
