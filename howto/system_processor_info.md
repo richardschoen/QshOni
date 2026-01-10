@@ -1,0 +1,20 @@
+# List system processor information
+```CALL QSYS/QLZARCAPI```   
+-or from PASE-   
+```system "CALL QSYS/QLZARCAPI"```   
+
+The following information is show in the joblog or STDOUT in PASE   
+```
+SYSTEM INFO -> SYSTEM SERIAL NUMBER: 78-00001  . SYSTEM TYPE-MODEL: 9105-
+  41B. PROCESSOR FEATURE CODE: EPG0. PROCESSOR GROUP:  P05. MAX PHYSICAL 
+  PROCS IN SYSTEM: 4. CONFIGURABLE PROCS IN SYSTEM: 4.                   
+PARTITION INFO -> NETWORK NAME: S0000002. PARTITION NAME: 78-00001.      
+  PARTITION ID: 1. SHARING TYPE: DEDICATED. MINIMUM PROCESSING UNITS:    
+  1.00.  DESIRED PROCESSING UNITS: 4.00. MAXIMUM PROCESSING CAPACITY:    
+  4.00. ENTITLED PROCESSING CAPACITY: 1.00.
+```
+
+
+## Links
+https://www.rpgpgm.com/2017/03/system-partition-and-processor-pool.html   
+
