@@ -16,5 +16,5 @@ PARTITION INFO -> NETWORK NAME: S0000002. PARTITION NAME: 78-00001.
 
 
 ## Links
-https://www.rpgpgm.com/2017/03/system-partition-and-processor-pool.html   
-
+https://www.rpgpgm.com/2017/03/system-partition-and-processor-pool.html     
+https://www.ibm.com/support/pages/ibm-i-processor-usage-seen-license-management   
