@@ -17,7 +17,7 @@ I am releasing a commercially supported product called MobiConnect. MobiConnect 
 
 If you are creating IBM i applications and services that need to integrate with other platforms or AI services, reach out and and we can talk about your requirements. MobiConnect may just be the right ticket for interconnecting your IBM i RPG, COBOL and CL apps to the world of web apps, REST services and mobile with minimal effort.     
 
-Visit the MobiGoGo web site or shoot me an email and talk to me about your IBM i connectivity and integration needs.   
+Visit the MobiGoGo web site or shoot me an email and talk to me about your IBM i connectivity and integration needs or need assistance with running QShell and PASE apps on IBM i.    
 MobiGoGo: https://www.mobigogo.net    
 Email: richard@mobigogo.net
 
