@@ -15,7 +15,7 @@ The core QShell on i library is pretty built-out so it will be generally stabili
 # MobiConnect
 I am releasing a commercially supported product called ```MobiConnect```. MobiConnect provides functionality for creating applications, integrations, REST services and connection points for Native IBM i, Windows, Linux and MacOS apps to other platforms and services. It contains a lot of functionality that is better suited for commercial support. And it uses some of the QSHONI functionality as well.
 
-If you are creating IBM i applications and services that need to integrate with other platforms, reach out and and we can talk about your requirements. ```MobiConnect``` may just be the right ticket for interconnecting your IBM i RPG, COBOL and CL apps to the world of web apps, REST services and mobile with minimal effort.    
+If you are creating IBM i applications and services that need to integrate with other platforms or AI services, reach out and and we can talk about your requirements. ```MobiConnect``` may just be the right ticket for interconnecting your IBM i RPG, COBOL and CL apps to the world of web apps, REST services and mobile with minimal effort.    
 
 Visit the MobiGoGo web site or shoot me an email and talk to me about MobiConnect and your IBM i connectivity and integration needs.      
 MobiGoGo: https://www.mobigogo.net      
