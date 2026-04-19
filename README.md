@@ -5,6 +5,19 @@ The main benefit of this wrapper is to be able to integrate Qshell/Pase applicat
 
 There are several ways to build the library. Pick your favorite.
 
+# Creating new utilities based on QshOni
+❗Any new utilities I create or others contribute around the ```QSHONI``` library will now be created as part of the ```QSHONIUTIL``` repository.    
+The QSHONIUTIL repository if meant for miscellaneous add-on utilitites that utilize the QShell on i library (QSHONI).    
+Check it out here: https://github.com/richardschoen/qshoniutil        
+
+```Why a new repo ?``` 
+- The core QShell on i library is pretty built-out so it will be generally stabilized as it's become a staple for my customers and calling their QShell and PASE applications. If there are fixes or tweaks to the core they will be made here, but I don't want to bloat this repository with a bunch of misc utilities or unrelated application code other than the repo being the core for easily running QShell and PASE code. That was its original use-case and will remain so.
+- I am releasing a commercially supported product called ```MobiConnect```. MobiConnect provides functionality for creating applications, integrations, REST services and connection points for Native IBM i, Windows, Linux and MacOS apps to other platforms and services. It contains a lot of functionality that is better suited for commercial support. And it uses some of the QSHONI functionality as well.  
+If you are creating IBM i applications and services that need to integrate with other platforms, reach out and and we can talk about your requirements. ```MobiConnect``` may just be the right ticket for interconnecting your IBM i RPG, COBOL and CL apps to the world of web apps, REST services and mobile with minimal effort.  
+Visit the MobiGoGo web site or shoot me an email and talk to me about your IBM i connectivity and integration needs.    
+MobiGoGo: https://www.mobigogo.net     
+Email: richard@mobigogo.net
+
 # Library Build Note
 ❗ If you get an error running ```build.sh``` you may need to run ```dos2unix build.sh``` to convert CR/LF to LF in the build.sh file. You must first have ```dos2unix``` installed via the IBM i open source package management.  Please open an issue to let me know if you run into this problem.
 
