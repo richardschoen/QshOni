@@ -109,7 +109,7 @@ wget https://github.com/richardschoen/QshOni/raw/refs/heads/master/getrepo-qshon
 ```
 bash getrepo-qshoni.sh
 ```
-# Installing and Building QSHONI via Git clone and build.sh 
+## Installing and Building QSHONI via Git clone and build.sh 
 
 ***(Important to change SRCCCSID variable in build.sh to your local CCSID before running build.sh. Default=37)***
 
