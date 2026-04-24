@@ -1163,11 +1163,12 @@ Note: scp and openssb must be already installed in your PASE/QSH environment in 
 
 ## Using the QSHWRTLOG CL command to write a user defined log record to a DB2 log file
 
-The following example calls the ```QSHWRTLOG``` command to write a record with message type of: INFO to a log file ```QTEMP/LOGTMP0001```. The DB2 table gets auto-created via embedded SQL in the CL command. And the record is also written via SQL using the RUNSQL command.    
-If recreate is *NO, we simply create or append to the log file if it already exists. This is good for accumumulating entries.
-If recreate is *YES, we will delate and recreate the DB2 log file and append to the log file. It's good to use the RECREATE(*YES) option for the first message in a process if you want to start with a clean/empty log file.   
+The following example calls the ```QSHWRTLOG``` command to write a record with message type of: ```INFO``` to a log file ```QTEMP/LOGTMP0001```.    
+The DB2 table gets auto-created via embedded SQL in the CL command. And the record is also written via SQL using the RUNSQL command.      
+If recreate is *NO, we simply create or append to the log file if it already exists. This is good for accumulating entries.    
+If recreate is *YES, we will delete and recreate the DB2 log file and append to the log file. It's good to use the RECREATE(*YES) option for the first message in a process if you want to start with a clean/empty log file.     
  ```
-      QSHWRTLOG MSG('This is a sample messag')      
+      QSHWRTLOG MSG('This is a sample message')      
         MSGTYPE(INFO)                       
         LOGFILE(QTEMP/LOGTMP0001)           
         RECREATE(*NO)                       
@@ -1178,11 +1179,11 @@ If recreate is *YES, we will delate and recreate the DB2 log file and append to 
 The command automatically creates the selected output file (OUTFILE) via SQL on the first record write if not found. And the file can be deleted and recreated automatically if desired.   
 Records are inserted using an SQL INSERT statement run via the RUNSQL command.     
 
-Fields in the dlog file database table:    
+Fields in the DB2 log file database table:    
  - LOGID - Unique ID sequence number - INT(identity)     
  - LOGMSGTYPE - Log message type - CHAR(10)    
- - LOGMSG - MLog mssage text - CHAR(330)    
- - CRTTIME - DB2 timestamp of created log entry - TIMESTAMP    
+ - LOGMSG - Log message text - CHAR(330)    
+ - CRTTIME - DB2 timestamp of log entry - TIMESTAMP    
 
 **MSG** - This field should have the message text you want to write to the log file. Max length is 330. Trying to make sure this will fit into the 378 character spool file limit if printed.   
 
@@ -1191,8 +1192,8 @@ Some examples might include: ```START```,```END```,```INFO```,```WARN```,```DEBU
 
 **LOGFILE** - Enter the name for your desired log file. You will enter a library name and file name.  Ex: ```QTEMP/LOGTMP0001```. If a file is created in library QTEMP, it's local to the job only and gets deleted when the IBM i job ends.  If you want to keep the log for a period of time, create the log file in your own library.    
 
-**RECREATE** - Delete log file and recreate it before writing the current new message. This is a good way to accumulate to an existing log file or clear/rebuild and start a new log file.   
-```*NO```- Create log file if not found and write/append the new message to the new or already existing log file. This is a good option to use if you want to create and continue to accumulate records to an existing log file. 
+**RECREATE** - Delete log file and recreate it before writing the current new message. This is a good way to accumulate to an existing log file or clear/rebuild and start a new log file.    
+```*NO```- Create log file if not found and write/append the new message to the new or already existing log file. This is a good option to use if you want to create and continue to accumulate records to an existing log file.    
 ```*YES```- Create log file if not found and write/append the new message to the new or already existing log file. This is a good option to use as the first message in a process if you want to delete and recreate the log file. All subsequent messages in the process should use ```*NO``` so we accumulate the messages for the job. 
 command line.
 
