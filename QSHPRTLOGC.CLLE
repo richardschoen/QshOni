@@ -2,14 +2,28 @@
 /* QSHPRTLOGC - Print log file.                        */
 /* This is a self-contained CL to print SQL log file.  */
 /*-----------------------------------------------------*/
-             PGM        PARM(&FULLFILE &SPLF)
+             PGM        PARM(&FULLFILE &IFSFILE &REPLACE +
+                          &PRTSPLF &PRTUSRDTA &PRTTXT &PRTHOLD +
+                          &PRTOUTQALL)
 
-             DCL        VAR(&SPLF) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&PRTSPLF) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&PRTUSRDTA) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&PRTTXT) TYPE(*CHAR) LEN(30)
+             DCL        VAR(&PRTHOLD) TYPE(*CHAR) LEN(4)
+             DCL        VAR(&PRTOUTQALL) TYPE(*CHAR) LEN(20)
+             DCL        VAR(&PRTOUTQ) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&PRTOUTQLIB) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&REPLACE) TYPE(*CHAR) LEN(4)
+             DCL        VAR(&IFSFILE) TYPE(*CHAR) LEN(255)
              DCL        VAR(&FULLFILE) TYPE(*CHAR) LEN(20)
              DCL        VAR(&LOGFILE) TYPE(*CHAR) LEN(10)
              DCL        VAR(&LOGLIBRARY) TYPE(*CHAR) LEN(10)
 
              MONMSG     MSGID(CPF0000) EXEC(GOTO CMDLBL(ERRORS))
+
+             /* Extract output queue info */
+             CHGVAR     VAR(&PRTOUTQ) VALUE(%SST(&PRTOUTQALL 1 10))
+             CHGVAR     VAR(&PRTOUTQLIB) VALUE(%SST(&PRTOUTQALL 11 10))
 
              /* Parse out source lib/file */
              CHGVAR     VAR(&LOGFILE) VALUE(%SST(&FULLFILE 1 10))
@@ -24,15 +38,76 @@
 
              ENDDO
 
-             /* Generate report for results if print = *YES */
+             /* Generate printed spool report of log file results */
+             /* if IFSFILE = *NONE.                               */
+             IF         COND(&IFSFILE *EQ *NONE) THEN(DO)
+
+             /* Override without specific outq */
+             IF         COND(&PRTOUTQ *EQ *SAME) THEN(DO)
              OVRPRTF    FILE(QSYSPRT) TOFILE(QSYSPRT) PAGESIZE(*N +
-                          378) HOLD(*YES) SPLFNAME(&SPLF)
+                          378) PRTTXT(&PRTTXT) HOLD(&PRTHOLD) +
+                          USRDTA(&PRTUSRDTA) SPLFNAME(&PRTSPLF)
+             ENDDO
+             /* Override with specific outq */
+             IF         COND(&PRTOUTQ *NE *SAME) THEN(DO)
+             OVRPRTF    FILE(QSYSPRT) TOFILE(QSYSPRT) PAGESIZE(*N +
+                          378) PRTTXT(&PRTTXT) +
+                          OUTQ(&PRTOUTQLIB/&PRTOUTQ) HOLD(&PRTHOLD) +
+                          USRDTA(&PRTUSRDTA) SPLFNAME(&PRTSPLF)
+             ENDDO
+
              CPYF       FROMFILE(&LOGLIBRARY/&LOGFILE) TOFILE(QSYSPRT)
              DLTOVR QSYSPRT
 
+             ENDDO
+
+             /* Generate PDF report of log file results */
+             /* if IFSFILE = IFS file name              */
+             IF         COND(&IFSFILE *NE *NONE) THEN(DO)
+
+             /* Check for existing PDF file */
+             QSHONI/QSHIFSCHK FILNAM(&IFSFILE)
+             /* Not found. Good */
+             MONMSG     MSGID(CPF9898) EXEC(DO)
+             ENDDO
+             /* Found. If replace = *YES, delete and continue */
+             MONMSG     MSGID(CPF9897) EXEC(DO)
+             IF         COND(&REPLACE *EQ *NO) THEN(DO)
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('PDF +
+                          file' |> &IFSFILE |> 'exists and replace +
+                          was set to *NO. Print cancelled') +
+                          MSGTYPE(*ESCAPE)
+             ENDDO
+             /* Erase PDF */
+             ERASE      OBJLNK(&IFSFILE)
+             ENDDO
+
+             /* Print to PDF now */
+             /* This fits it into a 18.0W x 8.5H page */
+             /* Print text is only custom property we use */
+             OVRPRTF    FILE(QSYSPRT) TOFILE(QSYSPRT) +
+                          DEVTYPE(*AFPDS) PAGESIZE(8.5 18.5 *UOM) +
+                          LPI(12) CPI(20) FRONTMGN(0 0) OVRFLW(96) +
+                          PRTTXT(&PRTTXT) HOLD(*YES) +
+                          SPLFNAME(&PRTSPLF) TOSTMF(&IFSFILE) +
+                          WSCST(*PDF)
+             CPYF       FROMFILE(&LOGLIBRARY/&LOGFILE) TOFILE(QSYSPRT)
+             DLTOVR QSYSPRT
+             ENDDO
+
+             /* Completion messages */
+             IF         COND(&IFSFILE *EQ *NONE) THEN(DO)
              SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Log +
                           file ' |> &LOGLIBRARY |< '/' |< &LOGFILE +
                           |> 'printed') MSGTYPE(*COMP)
+             ENDDO
+             IF         COND(&IFSFILE *NE *NONE) THEN(DO)
+
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Log +
+                          file ' |> &LOGLIBRARY |< '/' |< &LOGFILE +
+                          |> 'printed to PDF file:' |> &IFSFILE) +
+                          MSGTYPE(*COMP)
+             ENDDO
 
              RETURN
 ERRORS:
