@@ -1,0 +1,44 @@
+/*-----------------------------------------------------*/
+/* QSHPRTLOGC - Print log file.                        */
+/* This is a self-contained CL to print SQL log file.  */
+/*-----------------------------------------------------*/
+             PGM        PARM(&FULLFILE &SPLF)
+
+             DCL        VAR(&SPLF) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&FULLFILE) TYPE(*CHAR) LEN(20)
+             DCL        VAR(&LOGFILE) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&LOGLIBRARY) TYPE(*CHAR) LEN(10)
+
+             MONMSG     MSGID(CPF0000) EXEC(GOTO CMDLBL(ERRORS))
+
+             /* Parse out source lib/file */
+             CHGVAR     VAR(&LOGFILE) VALUE(%SST(&FULLFILE 1 10))
+             CHGVAR     VAR(&LOGLIBRARY) VALUE(%SST(&FULLFILE 11 10))
+
+             /* Check for log file and create if not found */
+             CHKOBJ     OBJ(&LOGLIBRARY/&LOGFILE) OBJTYPE(*FILE)
+             MONMSG     MSGID(CPF0000) EXEC(DO)
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Log +
+                          file ' |> &LOGLIBRARY |< '/' |< &LOGFILE +
+                          |> 'not found') MSGTYPE(*ESCAPE)
+
+             ENDDO
+
+             /* Generate report for results if print = *YES */
+             OVRPRTF    FILE(QSYSPRT) TOFILE(QSYSPRT) PAGESIZE(*N +
+                          378) HOLD(*YES) SPLFNAME(&SPLF)
+             CPYF       FROMFILE(&LOGLIBRARY/&LOGFILE) TOFILE(QSYSPRT)
+             DLTOVR QSYSPRT
+
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Log +
+                          file ' |> &LOGLIBRARY |< '/' |< &LOGFILE +
+                          |> 'printed') MSGTYPE(*COMP)
+
+             RETURN
+ERRORS:
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Errors +
+                          printing log file' |> &LOGLIBRARY |< +
+                          '/' |< &LOGFILE |> 'Pgm:SGPRTLOGC') +
+                          MSGTYPE(*ESCAPE)
+
+             ENDPGM
