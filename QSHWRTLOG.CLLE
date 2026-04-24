@@ -72,7 +72,7 @@
 ERRORS:
              SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Errors +
                           writing to log file' |> &LOGLIBRARY |< +
-                          '/' |< &LOGFILE |> 'Pgm:WRTLOGC') +
+                          '/' |< &LOGFILE |> 'Pgm:QSHWRTLOGC') +
                           MSGTYPE(*ESCAPE)
 
              ENDPGM
