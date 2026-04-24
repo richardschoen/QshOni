@@ -406,6 +406,22 @@ CURFILE="QSHSCPC.CLLE"
 SRCTEXT="Run SCP File Transfer via QShell"   
 cpy_member
 
+CURFILE="QSHWRTLOG.CMD"
+SRCTEXT="Write Simple Log Message"   
+cpy_member
+
+CURFILE="QSHWRTLOGC.CLLE"
+SRCTEXT="Write Simple Log Message"   
+cpy_member
+
+CURFILE="QSHPRTLOG.CMD"
+SRCTEXT="Print Simple Log File"   
+cpy_member
+
+CURFILE="QSHPRTLOGC.CLLE"
+SRCTEXT="Print Simple Log File"   
+cpy_member
+
 CURFILE="README.TXT"
 SRCTEXT="Read Me Docs on Setup"
 cpy_member
