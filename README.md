@@ -1160,3 +1160,56 @@ Note: scp and openssb must be already installed in your PASE/QSH environment in 
 **PRTOUTQ** - This option determines the output queue where the spool file will generated to when PRTSTDOUT = *YES. ***Default = *SAME ***
 
 **PASEJOBNAM** - PASE fork thread job names. Set PASE_FORK_JOBNAME environment variable to set forked thread jobs to have a unique name other than: QP0ZSPWP which is the default. Set the value or *DEFAULT=QP0ZSPWP.
+
+## Using the QSHWRTLOG CL command to write a user defined log record to a DB2 log file
+
+The following example calls the ```QSHWRTLOG``` command to write a record with message type of: INFO to a log file ```QTEMP/LOGTMP0001```. The DB2 table gets auto-created via embedded SQL in the CL command. And the record is also written via SQL using the RUNSQL command.    
+If recreate is *NO, we simply create or append to the log file if it already exists. This is good for accumumulating entries.
+If recreate is *YES, we will delate and recreate the DB2 log file and append to the log file. It's good to use the RECREATE(*YES) option for the first message in a process if you want to start with a clean/empty log file.   
+ ```
+      QSHWRTLOG MSG('This is a sample messag')      
+        MSGTYPE(INFO)                       
+        LOGFILE(QTEMP/LOGTMP0001)           
+        RECREATE(*NO)                       
+```
+## QSHWRTLOG command parms
+
+**Overview** - This CL command can be used to write a message to a simple DB2 log file that contains a sequence number, message type, message text and timestamp value.     
+The command automatically creates the selected output file (OUTFILE) via SQL on the first record write if not found. And the file can be deleted and recreated automatically if desired.   
+Records are inserted using an SQL INSERT statement run via the RUNSQL command.     
+
+Fields in the dlog file database table:    
+ - LOGID - Unique ID sequence number - INT(identity)     
+ - LOGMSGTYPE - Log message type - CHAR(10)    
+ - LOGMSG - MLog mssage text - CHAR(330)    
+ - CRTTIME - DB2 timestamp of created log entry - TIMESTAMP    
+
+**MSG** - This field should have the message text you want to write to the log file. Max length is 330. Trying to make sure this will fit into the 378 character spool file limit if printed.   
+
+**MSGTYPE** - This field can be used to specify a user-defined message type for informational purposes and filtering perhaps.    
+Some examples might include: ```START```,```END```,```INFO```,```WARN```,```DEBUG```,```ERROR```,```COMP```,```DIAG```      
+
+**LOGFILE** - Enter the name for your desired log file. You will enter a library name and file name.  Ex: ```QTEMP/LOGTMP0001```. If a file is created in library QTEMP, it's local to the job only and gets deleted when the IBM i job ends.  If you want to keep the log for a period of time, create the log file in your own library.    
+
+**RECREATE** - Delete log file and recreate it before writing the current new message. This is a good way to accumulate to an existing log file or clear/rebuild and start a new log file.   
+```*NO```- Create log file if not found and write/append the new message to the new or already existing log file. This is a good option to use if you want to create and continue to accumulate records to an existing log file. 
+```*YES```- Create log file if not found and write/append the new message to the new or already existing log file. This is a good option to use as the first message in a process if you want to delete and recreate the log file. All subsequent messages in the process should use ```*NO``` so we accumulate the messages for the job. 
+command line.
+
+## Using the QSHPRTLOG CL command to print the selected simple log file to a spool file.
+
+The following example calls the ```QSHPRTLOG``` command to print log file ```QTEMP/LOGTMP0001``` if it exists. The spool file name will be ```PRTLOG```.     
+ ```
+      QSHPRTLOG LOGFILE(QTEMP/LOGTMP0001)      
+        SPLF(PRTLOG)                   
+```
+
+## QSHPRTLOG command parms
+
+**Overview** - This CL command can be used to print a log file created by the QSHWRTLOG command. Sometimes it's helpful to create a log file and then write it to a spool file for later review or archival as a PDF document perhaps.   
+
+**LOGFILE** - Enter the name for your desired log file. You will enter a library name and file name.  Ex: ```QTEMP/LOGTMP0001```. If a file is created in library QTEMP, it's local to the job only and gets deleted when the IBM i job ends.  If you want to keep the log for a period of time, create the log file in your own library.    
+
+**SPLF** - Spool file name to create. Default-```PRTLOG```.  The spool file will always generate on hold.    
+
+
