@@ -376,3 +376,26 @@ QSHSCP CMDPFXPARM('')
        PRTSTDOUT(*YES)                                
 ```
 
+## V1.0.47 - 4/24/2026
+Created new self-contained simple logging commands that can be used to write messages to a log file rather than the IBM i joblog. 
+The command uses SQL to create the temp file and also to insert the log record to the database.
+
+Created ```QSHWRTLOG``` command to create simple log files for applications rather than relying on the job log for all messages. 
+
+Created ```QSHPRTLOG``` command to allow simple log files to be printed to spool file report if a print of the log file is needed.  
+
+This example writes a message via QSHWRTLOG with the message type of: INFO to the selected log file: QTEMP/LOGTMP0001. The command auto-creates the log output file (OUTFILE) if not found yet.        
+If the RECREATE parameter is set to *NO, the table is created and written to. Or if it exists the table is appended to if you want to accumulate to a single log file.   
+If the RECREATE parameter is set to *YES, the table is deleted if found and re-created.    
+❗A good thing to do would be to set the RECREATE parameter to *YES if you want to clear and recreate the log file at the beginning of a job. And then set it to *NO so the log records will accumulate. 
+```
+QSHWRTLOG MSG('This is a sample messag')          
+          MSGTYPE(INFO)                           
+          LOGFILE(QTEMP/LOGTMP0001)               
+          RECREATE(*NO)
+```
+This example prints the selected log file QTEMP/LOGTMP0001 to a 378 character width spool file named:PRTLOG via the QSHPRTLOG command.       
+```
+QSHPRTLOG LOGFILE(QTEMP/LOGTMP0001) 
+          SPLF(PRTLOG)              
+```
