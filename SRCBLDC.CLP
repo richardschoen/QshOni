@@ -289,6 +289,11 @@
                           SRCMBR(QSHONIPR03) DFTACTGRP(*NO) +
                           REPLACE(*NO) TGTRLS(&TGTRLS) /* 1.0.29 */
 
+             CRTBNDRPG  PGM(&DESTLIB/QSHONIPR04) +
+                          SRCFILE(&DESTLIB/&DESTFILE) +
+                          SRCMBR(QSHONIPR04) DFTACTGRP(*NO) +
+                          REPLACE(*NO) TGTRLS(&TGTRLS) /* 1.0.47 */
+
              CRTCMD     CMD(&DESTLIB/QSHIFSSIZ) +
                           PGM(&DESTLIB/QSHIFSSIZC) +
                           SRCFILE(&DESTLIB/&DESTFILE) ALLOW(*IPGM +
@@ -429,6 +434,11 @@
                           SRCFILE(&DESTLIB/&DESTFILE) +
                           DFTACTGRP(*YES) REPLACE(*NO) +
                           TGTRLS(&TGTRLS) /* 1.0.47 */
+
+             CRTBNDRPG  PGM(&DESTLIB/QSHWRTLOGR) +
+                          SRCFILE(&DESTLIB/&DESTFILE) +
+                          SRCMBR(QSHWRTLOGR) DFTACTGRP(*NO) +
+                          REPLACE(*NO) TGTRLS(&TGTRLS) /* 1.0.47 */
 
              CRTCMD     CMD(&DESTLIB/QSHPRTLOG) +
                           PGM(&DESTLIB/QSHPRTLOGC) +
