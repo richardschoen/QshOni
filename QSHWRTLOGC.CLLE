@@ -7,9 +7,11 @@
 
              DCL        VAR(&RECREATE) TYPE(*CHAR) LEN(4)
              DCL        VAR(&LOGMSG) TYPE(*CHAR) LEN(330)
+             DCL        VAR(&LOGMSGRTN) TYPE(*CHAR) LEN(330)
              DCL        VAR(&LOGMSGTYPE) TYPE(*CHAR) LEN(10)
              DCL        VAR(&SQLCRTTBL) TYPE(*CHAR) LEN(1024)
              DCL        VAR(&SQL) TYPE(*CHAR) LEN(1024)
+             DCL        VAR(&LOGRTNERR) TYPE(*CHAR) LEN(1)
              DCL        VAR(&FULLFILE) TYPE(*CHAR) LEN(20)
              DCL        VAR(&LOGFILE) TYPE(*CHAR) LEN(10)
              DCL        VAR(&LOGLIBRARY) TYPE(*CHAR) LEN(10)
@@ -34,11 +36,22 @@
              --PRIMARY KEY (LOGID)) +
              ')
 
+             /* Make sure to double up any single quotes */
+             CALL       PGM(QSHWRTLOGR) PARM((&LOGMSG) (&LOGMSGRTN) +
+                          (&LOGRTNERR))
+
+             IF         COND(&LOGRTNERR *NE '0') THEN(DO)
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('ERROR: +
+                          Bad single quotes in message text.' |> +
+                          &LOGLIBRARY |< '/' |< &LOGFILE |> +
+                          'Pgm:QSHWRTLOGC') MSGTYPE(*ESCAPE)
+             ENDDO
+
              /* Build SQL insert */
              CHGVAR     VAR(&SQL) VALUE('INSERT INTO ' |> +
                           &LOGLIBRARY |< '/' |< &LOGFILE |> +
                           '(LOGMSG,LOGMSGTYPE) VALUES(''' |< +
-                          &LOGMSG |< ''',''' |< &LOGMSGTYPE |< ''')')
+                          &LOGMSGRTN |< ''',''' |< &LOGMSGTYPE |< ''')')
 
              /* Check for log file and delete if recreate  */
              /* was selected                               */
