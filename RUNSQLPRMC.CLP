@@ -102,7 +102,7 @@
              DSPSPLF    FILE(&SPLF) SPLNBR(*LAST)
              MONMSG     MSGID(CPF0000) EXEC(DO)
              SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('No +
-                          RUNSQLSTM listing spool files +
+                          RUNSQL listing spool files +
                           available.') TOPGMQ(*SAME) MSGTYPE(*DIAG)
              ENDDO
              ENDDO
@@ -119,7 +119,7 @@ ERRORS:
              DSPSPLF    FILE(&SPLF) SPLNBR(*LAST)
              MONMSG     MSGID(CPF0000) EXEC(DO)
              SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('No +
-                          RUNSQLSTM listing spool files +
+                          RUNSQL listing spool files +
                           available.') TOPGMQ(*SAME) MSGTYPE(*DIAG)
              ENDDO
              ENDDO
