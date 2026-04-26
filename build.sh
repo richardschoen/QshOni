@@ -330,6 +330,10 @@ CURFILE="SRCBLDC.CLP"
 SRCTEXT="Build cmds from QSHONI/SOURCE file"   
 cpy_member
 
+CURFILE="SRCBLDSV1C.CLP"
+SRCTEXT="Build Service Program"   
+cpy_member
+
 CURFILE="SQLTEST1.SQL"
 SRCTEXT="SQL Test 1 - Query Qcustcdt - All Records"   
 cpy_member
