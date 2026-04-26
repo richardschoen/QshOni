@@ -11,6 +11,8 @@ Ctl-Opt NoMain;
 
   //  Work fields
   Dcl-S qt                    Char(1) inz('''');
+  Dcl-S sqt                   Char(1) inz('''');
+  Dcl-S dbqt                  Char(2) inz('''''');
   Dcl-S clcmd              VarChar(5000) inz('');
   dcl-s rtncmd int(10);
 
@@ -472,4 +474,123 @@ Ctl-Opt NoMain;
     EndMon;
 
  End-Proc QshCall;
+
+ //  ------------------------------------------------------
+ //  Proc: QshWrtLog
+ //  Desc: Write message to log file
+ //  Parms:
+ //  P1-cmdln - PASE/QSH command to run
+ //  Returns:
+ //  0=success, -2=errors
+ //  ------------------------------------------------------
+ Dcl-Proc QshWrtLog export;
+ Dcl-PI QshWrtLog               Int(10:0);
+    msgtext               VarChar(330) const;
+    msgtype               VarChar(10) const;
+    logfilename           VarChar(10) const;
+    logfilelib            VarChar(10) const;
+    recreate              VarChar(4) const;
+    promptcmd             VarChar(5) const;
+ End-PI;
+ Dcl-S qshcmd             VarChar(5000) inz('');
+ Dcl-S msgtexttmp         VarChar(400) inz('');
+ Dcl-S sqt                VarChar(1) inz('''');
+ Dcl-S dbqt               VarChar(2) inz('''''');
+
+    // Execute QSHWRTLOG CL command
+    Monitor;
+
+       // Set blank parm defaults
+
+       // Build QSHWRTLOG command call
+        qshcmd='QSHONI/QSHWRTLOG MSG(''@@MSGTEXT'') ' +
+                  'MSGTYPE(''@@MSGTYPE'') ' +
+                  'LOGFILE(@@LOGFILELIB/@@LOGFILENAME) ' +
+                  'RECREATE(@@RECREATE) ';
+
+        // Double up single quotes in message text
+        // so SQL won't fail if single quotes in field value
+        msgtexttmp = %scanrpl(sqt:dbqt:msgtext);
+
+        // Replace keywords with parm values
+        qshcmd = %scanrpl('@@MSGTEXT':%trim(msgtexttmp):qshcmd);
+        qshcmd = %scanrpl('@@MSGTYPE':%trim(msgtype):qshcmd);
+        qshcmd = %scanrpl('@@LOGFILENAME':%trim(logfilename):qshcmd);
+        qshcmd = %scanrpl('@@LOGFILELIB':%trim(logfilelib):qshcmd);
+        qshcmd = %scanrpl('@@RECREATE':%trim(recreate):qshcmd);
+
+        // If promptcmd = *YES add ? to ptompt CL command
+        if (%trim(promptcmd)='*YES');
+           qshcmd = '? ' + qshcmd;
+        endif;
+
+       // Run QSHWRTLOG CL command
+       QcmdExc(%trim(qshcmd):%Len(qshcmd));
+
+       Return 0;
+
+    On-Error;
+       Return -2;
+    EndMon;
+
+ End-Proc QshWrtLog;
+
+ //  ------------------------------------------------------
+ //  Proc: QshPrtLog
+ //  Desc: Print log file
+ //  Parms:
+ //  P1-logfilename - Output log DB2 file name
+ //  P2-logfilelib  - Output log DB2 file library
+ //  P3-ifsfile - IFS output file name if writing to PDF
+ //               *NONE = generate regular spool file.
+ //  P4-promptcmd - Prompt for the command interactively.
+ //  Returns:
+ //  0=success, -2=errors
+ //  ------------------------------------------------------
+ Dcl-Proc QshPrtLog export;
+ Dcl-PI QshPrtLog               Int(10:0);
+    logfilename           VarChar(10) const;
+    logfilelib            VarChar(10) const;
+    ifsfile               VarChar(255) const;
+    replace               VarChar(4) const;
+    prtsplf               VarChar(10) const;
+    prtoutq               VarChar(21) const;
+    promptcmd             VarChar(4) const;
+ End-PI;
+ Dcl-S qshcmd             VarChar(5000) inz('');
+
+    // Execute QSHPRTLOG CL command
+    Monitor;
+
+        // Build QSHPRTLOG command call
+        qshcmd='QSHONI/QSHPRTLOG ' +
+                  'LOGFILE(@@LOGFILELIB/@@LOGFILENAME) ' +
+                  'IFSFILE(''@@IFSFILE'') ' +
+                  'REPLACE(@@REPLACE) ' +
+                  'PRTSPLF(@@PRTSPLF) ' +
+                  'PRTOUTQ(@@PRTOUTQ) ';
+
+        // Replace keywords with parm values
+        qshcmd = %scanrpl('@@LOGFILENAME':%trim(logfilename):qshcmd);
+        qshcmd = %scanrpl('@@LOGFILELIB':%trim(logfilelib):qshcmd);
+        qshcmd = %scanrpl('@@IFSFILE':%trim(ifsfile):qshcmd);
+        qshcmd = %scanrpl('@@REPLACE':%trim(replace):qshcmd);
+        qshcmd = %scanrpl('@@PRTSPLF':%trim(prtsplf):qshcmd);
+        qshcmd = %scanrpl('@@PRTOUTQ':%trim(prtoutq):qshcmd);
+
+        // If promptcmd = *YES add ? to prompt CL command
+        if (%trim(promptcmd)='*YES');
+           qshcmd = '? ' + qshcmd;
+        endif;
+
+       // Run QSHPRTLOG CL command
+       QcmdExc(%trim(qshcmd):%Len(qshcmd));
+
+       Return 0;
+
+    On-Error;
+       Return -2;
+    EndMon;
+
+ End-Proc QshPrtLog;
 
