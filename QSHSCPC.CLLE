@@ -1,167 +1,92 @@
-             PGM        PARM(&LOCALFILE &REMOTEFILE &KEYFILE &USER +
-                          &HOST &CMDPFXPARM &PORT &ACTION &FILEOPT +
-                          &REPLLOCAL &DEBUGCMD &SETPKGPATH +
-                          &DSPSTDOUT &LOGSTDOUT &PRTSTDOUT +
-                          &DLTSTDOUT &IFSSTDOUT &IFSFILE &IFSOPT +
-                          &CCSID &PRTSPLF &PRTUSRDTA &PRTTXT +
-                          &PRTHOLD &PRTOUTQALL &PASEJOBNAM)
+/*-----------------------------------------------------*/
+/* QSHWRTLOGC - Write to simple log file.                 */
+/* This is a self-contained CL to create a SQL log     */
+/* file and also write to it.                          */
+/*-----------------------------------------------------*/
+             PGM        PARM(&LOGMSG &LOGMSGTYPE &FULLFILE &RECREATE)
 
-/*----------------------------------------------------------------------------*/
-/* Variables                                                                  */
-/*----------------------------------------------------------------------------*/
-             DCL        VAR(&FILEOPT) TYPE(*CHAR) LEN(5)
-             DCL        VAR(&REPLLOCAL) TYPE(*CHAR) LEN(4)
-             DCL        VAR(&DEBUGCMD) TYPE(*CHAR) LEN(4)
-             DCL        VAR(&KEYFILE) TYPE(*CHAR) LEN(255)
-             DCL        VAR(&USER) TYPE(*CHAR) LEN(100)
-             DCL        VAR(&HOST) TYPE(*CHAR) LEN(100)
-             DCL        VAR(&PORT) TYPE(*CHAR) LEN(5)
-             DCL        VAR(&ACTION) TYPE(*CHAR) LEN(10)
-             DCL        VAR(&LOCALFILE) TYPE(*CHAR) LEN(255)
-             DCL        VAR(&REMOTEFILE) TYPE(*CHAR) LEN(255)
-             DCL        VAR(&PASEJOBNAM) TYPE(*CHAR) LEN(10)
-             DCL        VAR(&PRTHOLD) TYPE(*CHAR) LEN(4)
-             DCL        VAR(&PRTOUTQALL) TYPE(*CHAR) LEN(20)
-             DCL        VAR(&PRTOUTQ) TYPE(*CHAR) LEN(10)
-             DCL        VAR(&PRTOUTQLIB) TYPE(*CHAR) LEN(10)
-             DCL        VAR(&CMDPFXPARM) TYPE(*CHAR) LEN(1000)
-             DCL        VAR(&SCPCMDLINE) TYPE(*CHAR) LEN(5000)
-             DCL        VAR(&SETPKGPATH) TYPE(*CHAR) LEN(4)
-             DCL        VAR(&DSPSTDOUT) TYPE(*CHAR) LEN(4)
-             DCL        VAR(&LOGSTDOUT) TYPE(*CHAR) LEN(4)
-             DCL        VAR(&DLTSTDOUT) TYPE(*CHAR) LEN(4)
-             DCL        VAR(&PRTSTDOUT) TYPE(*CHAR) LEN(4)
-             DCL        VAR(&IFSSTDOUT) TYPE(*CHAR) LEN(4)
-             DCL        VAR(&IFSOPT) TYPE(*CHAR) LEN(10)
-             DCL        VAR(&IFSFILE) TYPE(*CHAR) LEN(255)
-             DCL        VAR(&PRTSPLF) TYPE(*CHAR) LEN(10)
-             DCL        VAR(&PRTUSRDTA) TYPE(*CHAR) LEN(10)
-             DCL        VAR(&PRTTXT) TYPE(*CHAR) LEN(30)
-             DCL        VAR(&QT) TYPE(*CHAR) LEN(1) VALUE('''')
-             DCL        VAR(&CCSID) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&RECREATE) TYPE(*CHAR) LEN(4)
+             DCL        VAR(&LOGMSG) TYPE(*CHAR) LEN(330)
+             DCL        VAR(&LOGMSGRTN) TYPE(*CHAR) LEN(330)
+             DCL        VAR(&LOGMSGTYPE) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&SQLCRTTBL) TYPE(*CHAR) LEN(1024)
+             DCL        VAR(&SQL) TYPE(*CHAR) LEN(1024)
+             DCL        VAR(&LOGRTNERR) TYPE(*CHAR) LEN(1)
+             DCL        VAR(&FULLFILE) TYPE(*CHAR) LEN(20)
+             DCL        VAR(&LOGFILE) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&LOGLIBRARY) TYPE(*CHAR) LEN(10)
+             /* Declare return variable ('1'=True, '0'=False) */
+             /* Default to found, we reset on error */
+             DCL        VAR(&EXISTS) TYPE(*LGL) VALUE('1')
 
-/*----------------------------------------------------------------------------*/
-/* MONITOR FOR GLOBAL ERROR. ANY ERROR IS A CAUSE TO BLOW OUT OF HERE         */
-/* AND WE WANT A GRACEFUL EXIT.                                               */
-/*----------------------------------------------------------------------------*/
              MONMSG     MSGID(CPF0000) EXEC(GOTO CMDLBL(ERRORS))
 
-/*----------------------------------------------------------------------------*/
-/* Extract output queue info.                                                 */
-/*----------------------------------------------------------------------------*/
-             CHGVAR     VAR(&PRTOUTQ) VALUE(%SST(&PRTOUTQALL 1 10))
-             CHGVAR     VAR(&PRTOUTQLIB) VALUE(%SST(&PRTOUTQALL 11 10))
+             /* Parse out source lib/file */
+             CHGVAR     VAR(&LOGFILE) VALUE(%SST(&FULLFILE 1 10))
+             CHGVAR     VAR(&LOGLIBRARY) VALUE(%SST(&FULLFILE 11 10))
 
-/*----------------------------------------------------------------------------*/
-/* MAIN                                                                       */
-/*----------------------------------------------------------------------------*/
+             /* Build Log File Creation if not found */
+             CHGVAR     VAR(&SQLCRTTBL) VALUE('+
+             CREATE TABLE' |> &LOGLIBRARY |< '/' |< &LOGFILE |> '( +
+             LOGID INTEGER GENERATED ALWAYS AS IDENTITY (START +
+             WITH 1 INCREMENT BY 1), +
+             LOGMSGTYPE CHAR(10), +
+             LOGMSG CHAR(330), +
+             CRTTIME TIMESTAMP DEFAULT CURRENT TIMESTAMP) +
+             --PRIMARY KEY (LOGID)) +
+             ')
 
-             /* Build scp send file command to pass to QShell */
-             IF         COND(&ACTION *EQ *SEND) THEN(DO)
-             CHGVAR     VAR(&SCPCMDLINE) VALUE('scp' |> &CMDPFXPARM +
-                          |> '-P' |> &PORT |> '-i' |> &KEYFILE |> +
-                          &LOCALFILE |> &USER |< '@' |< &HOST |< +
-                          ':' |< &REMOTEFILE)
+             /* Make sure to double up any single quotes */
+             CALL       PGM(QSHWRTLOGR) PARM((&LOGMSG) (&LOGMSGRTN) +
+                          (&LOGRTNERR))
 
-             /* Make sure local file exists if FILEOPT=*FILE */
-             IF         COND(&FILEOPT *EQ *FILE) THEN(DO)
-             QSHONI/QSHIFSCHK FILNAM(&LOCALFILE)
-             /* File exists. All good */
-             MONMSG     MSGID(CPF9897) EXEC(DO)
-             ENDDO
-             /* File does not exist for sending */
-             MONMSG     MSGID(CPF9898) EXEC(DO)
-             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Local +
-                          file' |> &LOCALFILE |> 'does not exist. +
-                          Transfer cancelled') MSGTYPE(*ESCAPE)
+             IF         COND(&LOGRTNERR *NE '0') THEN(DO)
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('ERROR: +
+                          Bad single quotes in message text.' |> +
+                          &LOGLIBRARY |< '/' |< &LOGFILE |> +
+                          'Pgm:QSHWRTLOGC') MSGTYPE(*ESCAPE)
              ENDDO
 
-             ENDDO  /* ENDDO FILEOPT=*FILE */
+             /* Build SQL insert */
+             CHGVAR     VAR(&SQL) VALUE('INSERT INTO ' |> +
+                          &LOGLIBRARY |< '/' |< &LOGFILE |> +
+                          '(LOGMSG,LOGMSGTYPE) VALUES(''' |< +
+                          &LOGMSGRTN |< ''',''' |< &LOGMSGTYPE |< ''')')
 
-             ENDDO  /* ENDDO ACTION=*SEND */
-
-             /* Build scp recv file command to pass to QShell */
-             IF         COND(&ACTION *EQ *RECEIVE) THEN(DO)
-             CHGVAR     VAR(&SCPCMDLINE) VALUE('scp' |> &CMDPFXPARM +
-                          |> '-P' |> &PORT |> '-i' |> &KEYFILE |> +
-                          &USER |< '@' |< &HOST |< ':' |< +
-                          &REMOTEFILE |> &LOCALFILE)
-
-             /* Check if local file exists if FILEOPT=*FILE */
-             IF         COND(&FILEOPT *EQ *FILE) THEN(DO)
-
-             /* Check if local file exists. If so replace must=*YES */
-             QSHONI/QSHIFSCHK FILNAM(&LOCALFILE)
-             /* File exists. and replace must *EQ *YES */
-             MONMSG     MSGID(CPF9897) EXEC(DO)
-             IF         COND(&REPLLOCAL *EQ *NO) THEN(DO)
-             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Local +
-                          file' |> &LOCALFILE |> 'exists but +
-                          replace not selected. Transfer +
-                          cancelled') MSGTYPE(*ESCAPE)
-             ENDDO
-             /* Erase existing local file */
-             ERASE      OBJLNK(&LOCALFILE)
+             /* Check for log file and delete if recreate  */
+             /* was selected                               */
+             IF         COND(&RECREATE *EQ *YES) THEN(DO)
+             CHKOBJ     OBJ(&LOGLIBRARY/&LOGFILE) OBJTYPE(*FILE)
+             /* Reset exists flag if not found */
+             MONMSG     MSGID(CPF0000) EXEC(DO)
+             CHGVAR     VAR(&EXISTS) VALUE('0')
              ENDDO
 
-             /* File does not exist. All good */
-             MONMSG     MSGID(CPF9898) EXEC(DO)
+             /* Delete file if exists and recreating */
+             IF         COND(&EXISTS *EQ '1') THEN(DO)
+             DLTF       FILE(&LOGLIBRARY/&LOGFILE)
              ENDDO
 
-             ENDDO  /* ENDDO FILEOPT=*FILE */
+             ENDDO /* ENDDO on recreation */
 
-             ENDDO  /* ENDDO ACTION=*RECEIVE */
-
-             /* Run the scp command via QSHEXEC */
-             IF         COND(&DEBUGCMD *NE *YES) THEN(DO)
-             QSHONI/QSHEXEC CMDLINE(&SCPCMDLINE) +
-                          SETPKGPATH(&SETPKGPATH) +
-                          DSPSTDOUT(&DSPSTDOUT) +
-                          LOGSTDOUT(&LOGSTDOUT) +
-                          PRTSTDOUT(&PRTSTDOUT) +
-                          DLTSTDOUT(&DLTSTDOUT) +
-                          IFSSTDOUT(&IFSSTDOUT) IFSFILE(&IFSFILE) +
-                          IFSOPT(&IFSOPT) CCSID(&CCSID) +
-                          PRTSPLF(&PRTSPLF) PRTUSRDTA(&PRTUSRDTA) +
-                          PRTTXT(&PRTTXT) PRTHOLD(&PRTHOLD) +
-                          PRTOUTQ(&PRTOUTQLIB/&PRTOUTQ) +
-                          PASEJOBNAM(&PASEJOBNAM)
-             ENDDO
-             /* Prompt the scp command line for debugging */
-             IF         COND(&DEBUGCMD *EQ *YES) THEN(DO)
-             ? QSHONI/QSHEXEC ??CMDLINE(&SCPCMDLINE) +
-                          SETPKGPATH(&SETPKGPATH) +
-                          DSPSTDOUT(&DSPSTDOUT) +
-                          LOGSTDOUT(&LOGSTDOUT) +
-                          PRTSTDOUT(&PRTSTDOUT) +
-                          DLTSTDOUT(&DLTSTDOUT) +
-                          IFSSTDOUT(&IFSSTDOUT) IFSFILE(&IFSFILE) +
-                          IFSOPT(&IFSOPT) CCSID(&CCSID) +
-                          PRTSPLF(&PRTSPLF) PRTUSRDTA(&PRTUSRDTA) +
-                          PRTTXT(&PRTTXT) PRTHOLD(&PRTHOLD) +
-                          PRTOUTQ(&PRTOUTQLIB/&PRTOUTQ) +
-                          PASEJOBNAM(&PASEJOBNAM)
+             /* Check for log file and create if not found */
+             CHKOBJ     OBJ(&LOGLIBRARY/&LOGFILE) OBJTYPE(*FILE)
+             MONMSG     MSGID(CPF0000) EXEC(DO)
+             /* Create log file if not found */
+             RUNSQL     SQL(&SQLCRTTBL) COMMIT(*NONE) NAMING(*SYS) +
+                          OPTION(*NOLIST)
              ENDDO
 
-             /* Send completion message */
-             IF         COND(&ACTION *EQ *SEND) THEN(DO)
-             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Local +
-                          file or dir' |> &LOCALFILE |> 'sent to' +
-                          |> &REMOTEFILE |> 'on host' |> &HOST) +
-                          MSGTYPE(*COMP)
-             ENDDO
-             IF         COND(&ACTION *EQ *RECEIVE) THEN(DO)
-             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Remote +
-                          file or dir' |> &REMOTEFILE |> 'received +
-                          to local file or dir' |> &LOCALFILE |> +
-                          'from host' |> &HOST) MSGTYPE(*COMP)
-             ENDDO
+
+             /* Insert record to the log file */
+             RUNSQL     SQL(&SQL) COMMIT(*NONE) NAMING(*SYS) +
+                          OPTION(*NOLIST)
 
              RETURN
-
 ERRORS:
-             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('QShell +
-                          scp command failed') MSGTYPE(*ESCAPE)
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Errors +
+                          writing to log file' |> &LOGLIBRARY |< +
+                          '/' |< &LOGFILE |> 'Pgm:QSHWRTLOGC') +
+                          MSGTYPE(*ESCAPE)
 
- ENDPGM:
              ENDPGM
