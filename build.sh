@@ -266,6 +266,10 @@ CURFILE="QSHONIPR03.RPGLE"
 SRCTEXT="QSHONISRV Service Program Tester 3 - QSHCALL"
 cpy_member
 
+CURFILE="QSHONIPR04.RPGLE"
+SRCTEXT="QSHONISRV Service Program Tester 4 - WRTLOG/PRTLOG"
+cpy_member
+
 CURFILE="QSHIFSSIZ.CMD"
 SRCTEXT="Retrieve IFS Object Size using stat64"
 cpy_member
@@ -412,6 +416,10 @@ cpy_member
 
 CURFILE="QSHWRTLOGC.CLLE"
 SRCTEXT="Write Simple Log Message"   
+cpy_member
+
+CURFILE="QSHWRTLOGR.RPGLE"
+SRCTEXT="Write Simple Log Message-Fix Single Quotes in Msg"   
 cpy_member
 
 CURFILE="QSHPRTLOG.CMD"
