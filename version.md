@@ -399,3 +399,6 @@ This example prints the selected log file QTEMP/LOGTMP0001 to a 378 character wi
 QSHPRTLOG LOGFILE(QTEMP/LOGTMP0001) 
           SPLF(PRTLOG)              
 ```
+  
+Updated QSHONISRV RPG ILE service program with procedures that call to ```QSHWRTLOG``` and ```QSHPRTLOG``` commands.
+
