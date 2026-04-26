@@ -105,3 +105,24 @@
     rtnparm10             Char(255);
  End-PR;
 
+//  Write message to Db2 log file
+ Dcl-PR QshWrtLog               Int(10:0);
+    msgtext               VarChar(330) const;
+    msgtype               VarChar(10) const;
+    logfilename           VarChar(10) const;
+    logfilelib            VarChar(10) const;
+    recreate              VarChar(4) const;
+    promptcmd             VarChar(5) const;
+ End-PR;
+
+//  Print selected log file
+ Dcl-PR QshPrtLog         Int(10:0);
+    logfilename           VarChar(10) const;
+    logfilelib            VarChar(10) const;
+    ifsfile               VarChar(255) const;
+    replace               VarChar(4) const;
+    prtsplf               VarChar(10) const;
+    prtoutq               VarChar(21) const;
+    promptcmd             VarChar(4) const;
+ End-PR;
+
