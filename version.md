@@ -402,3 +402,11 @@ QSHPRTLOG LOGFILE(QTEMP/LOGTMP0001)
   
 Updated QSHONISRV RPG ILE service program with procedures that call to ```QSHWRTLOG``` and ```QSHPRTLOG``` commands.
 
+## V1.0.48 - 4/28/2026
+Updated ```QSHPYRUN``` command with a couple new parameter options.   
+
+Added Python 3.13 to the CL program to allow the Python 3.13 command line ```python3.13``` to be called directly. 3.13 was on the command already but not in the QSHPYRUNC CL program.    
+
+Added Skip virtual env deactivate ```SKIPDEACT``` parameter to QSHPYRUN. When set to *YES, the QSHPYRUN command will skip the virtual environment deactivation if a virtual environmnet is used to run the selected Python script. If a venv is used with QShell, there is no ```deactivate`` command available so the deactivate will fail if *YES is not selected.    
+
+Added Use bash instead of QShell ```USEBASH``` parameter to QSHPYRUN. When set to *YES, bash (QSHBASH) is used to run the selected Python script instead of QShell (QSHEXEC). When set to *NO, Python scripts run using QSHEXEC. 
