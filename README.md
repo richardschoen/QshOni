@@ -25,6 +25,7 @@ Email: richard@mobigogo.net
 ❗ If you get an error running ```build.sh``` you may need to run ```dos2unix build.sh``` to convert CR/LF to LF in the build.sh file. You must first have ```dos2unix``` installed via the IBM i open source package management.  Please open an issue to let me know if you run into this problem.
 
 ## News
+```4/28/2026``` - Updated the QSHPYRUN command with new parameters.   
 ```4/24/2026``` - Added two cool new commands for creating your own custom app logging in CL or RPG processes. ```QSHRTLOG``` and ```QSHPRTLOG```.   
 ```4/19/2026``` - New repo for QSHONI based utilities https://github.com/richardschoen/qshoniutil   
 ```5/17/2025``` - New command ```QSHGETPR2``` can be used to retreive STDOUT return values to the calling job. You can optionally write the RTNPARMxx values as *DIAG messages to the joblog or to data areas for use with other calling programs.     
@@ -80,7 +81,7 @@ IBM i QShell
 https://www.ibm.com/docs/en/i/7.5?topic=languages-qshell
 
 
-## Check latest version info (Current Version 1.0.46 - 12/20/2025)  
+## Check latest version info (Current Version 1.0.48 - 4/28/2026)  
 https://github.com/richardschoen/QshOni/blob/master/version.md    
 
 ## Check out one-liner Python samples
