@@ -4,8 +4,11 @@
                           &PRTSTDOUT &DLTSTDOUT &IFSSTDOUT &IFSFILE +
                           &IFSOPT &CCSID &PRTSPLF &PRTUSRDTA +
                           &PRTTXT &PRTHOLD &PRTOUTQALL &OUTFILE +
-                          &MBROPT &PASEJOBNAM &DEBUGCMD &CHGSCRDIR)
+                          &MBROPT &PASEJOBNAM &DEBUGCMD &CHGSCRDIR +
+                          &SKIPDEACT &USEBASH)
 
+             DCL        VAR(&USEBASH) TYPE(*CHAR) LEN(4) /* 1.0.48 */
+             DCL        VAR(&SKIPDEACT) TYPE(*CHAR) LEN(4) /* 1.0.48 */
              DCL        VAR(&PASEJOBNAM) TYPE(*CHAR) LEN(10)
              DCL        VAR(&CHGSCRDIR) TYPE(*CHAR) LEN(4)    /* 1.0.20 */
              DCL        VAR(&CHGDIRCMD) TYPE(*CHAR) LEN(255)  /* 1.0.20 */
@@ -90,7 +93,13 @@
              IF         COND(&USEVENV *EQ *YES) THEN(DO)
              CHGVAR     VAR(&VENVACT) VALUE('source' |> &VENVPATH |< +
                           '/bin/activate;')
+
+             /* Skip Python deactivate. V1.0.48 */
+             /* When running in QShell, deactivate not recognized */
+             /* so you may want to ingnore deactivate.            */
+             IF         COND(&SKIPDEACT *NE *YES) THEN(DO)
              CHGVAR     VAR(&VENVDEACT) VALUE(';deactivate')
+             ENDDO
 
              /* If env path blank, bail out */
              IF         COND(&VENVPATH *EQ ' ') THEN(DO)
@@ -274,6 +283,8 @@
                           VAR(&PYEXE) VALUE(&PYPATH |< &PYPATHSEP |< 'python3.6'))
              IF         COND(&PYVERSION *EQ '3.9') THEN(CHGVAR +
                           VAR(&PYEXE) VALUE(&PYPATH |< &PYPATHSEP |< 'python3.9'))
+             IF         COND(&PYVERSION *EQ '3.13') THEN(CHGVAR +
+                          VAR(&PYEXE) VALUE(&PYPATH |< &PYPATHSEP |< 'python3.13'))
              /* Catch all set to python3 if blank or invalid version passed */
              IF         COND(&PYEXE *EQ ' ') THEN(CHGVAR +
                           VAR(&PYEXE) VALUE(&PYPATH |< &PYPATHSEP |< 'python3'))
@@ -387,6 +398,8 @@
 /*----------------------------------------------------------------------------*/
 /* Call QSHEXEC command to run python script via Qshell */
 /*----------------------------------------------------------------------------*/
+             IF         COND(&USEBASH *NE *YES) THEN(DO)
+
              IF         COND(&DEBUGCMD *EQ *YES) THEN(DO)
            ? QSHONI/QSHEXEC CMDLINE(&CMD) SETPKGPATH(&SETPKGPATH) +
                           DSPSTDOUT(&DSPSTDOUT) +
@@ -415,6 +428,41 @@
                           OUTFILE(&OLIB/&OFILE) MBROPT(&MBROPT) +
                           PASEJOBNAM(&PASEJOBNAM)
              ENDDO
+             ENDDO   /* USEBASH <> *YES */
+/*----------------------------------------------------------------------------*/
+/* Call QSHBASH command to run python script via bash - V1.0.48 */
+/*----------------------------------------------------------------------------*/
+             IF         COND(&USEBASH *EQ *YES) THEN(DO)
+
+             IF         COND(&DEBUGCMD *EQ *YES) THEN(DO)
+           ? QSHONI/QSHBASH CMDLINE(&CMD) SETPKGPATH(&SETPKGPATH) +
+                          DSPSTDOUT(&DSPSTDOUT) +
+                          LOGSTDOUT(&LOGSTDOUT) +
+                          PRTSTDOUT(&PRTSTDOUT) +
+                          DLTSTDOUT(&DLTSTDOUT) +
+                          IFSSTDOUT(&IFSSTDOUT) IFSFILE(&IFSFILE) +
+                          IFSOPT(&IFSOPT) CCSID(&CCSID) +
+                          PRTSPLF(&PRTSPLF) PRTUSRDTA(&PRTUSRDTA) +
+                          PRTTXT(&PRTTXT) PRTHOLD(&PRTHOLD) +
+                          PRTOUTQ(&PRTOUTQLIB/&PRTOUTQ) +
+                          OUTFILE(&OLIB/&OFILE) MBROPT(&MBROPT) +
+                          PASEJOBNAM(&PASEJOBNAM)
+             ENDDO
+             IF         COND(&DEBUGCMD *NE *YES) THEN(DO)
+             QSHONI/QSHBASH CMDLINE(&CMD) SETPKGPATH(&SETPKGPATH) +
+                          DSPSTDOUT(&DSPSTDOUT) +
+                          LOGSTDOUT(&LOGSTDOUT) +
+                          PRTSTDOUT(&PRTSTDOUT) +
+                          DLTSTDOUT(&DLTSTDOUT) +
+                          IFSSTDOUT(&IFSSTDOUT) IFSFILE(&IFSFILE) +
+                          IFSOPT(&IFSOPT) CCSID(&CCSID) +
+                          PRTSPLF(&PRTSPLF) PRTUSRDTA(&PRTUSRDTA) +
+                          PRTTXT(&PRTTXT) PRTHOLD(&PRTHOLD) +
+                          PRTOUTQ(&PRTOUTQLIB/&PRTOUTQ) +
+                          OUTFILE(&OLIB/&OFILE) MBROPT(&MBROPT) +
+                          PASEJOBNAM(&PASEJOBNAM)
+             ENDDO
+             ENDDO   /* USEBASH = *YES */
 
  NORMAL:
              SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Python +
