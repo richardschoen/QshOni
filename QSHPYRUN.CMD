@@ -86,6 +86,14 @@
                           DFT(*NO) VALUES(*NO *YES) EXPR(*YES) +
                           CASE(*MIXED) PROMPT('Change to script +
                           directory')
+             PARM       KWD(SKIPDEACT) TYPE(*CHAR) LEN(4) RSTD(*YES) +
+                          DFT(*YES) VALUES(*NO *YES) EXPR(*YES) +
+                          CASE(*MIXED) PROMPT('Skip virtual env +
+                          deactivate')
+             PARM       KWD(USEBASH) TYPE(*CHAR) LEN(4) RSTD(*YES) +
+                          DFT(*YES) VALUES(*NO *YES) EXPR(*YES) +
+                          CASE(*MIXED) PROMPT('Use bash instead of +
+                          QShell')
  QUAL2:      QUAL       TYPE(*NAME) LEN(10) DFT(*SAME) +
                           SPCVAL((*SAME)) EXPR(*YES)
              QUAL       TYPE(*NAME) LEN(10) DFT(*LIBL) +
