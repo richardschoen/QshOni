@@ -410,3 +410,7 @@ Added Python 3.13 to the CL program to allow the Python 3.13 command line ```pyt
 Added Skip virtual env deactivate ```SKIPDEACT``` parameter to QSHPYRUN. When set to *YES, the QSHPYRUN command will skip the virtual environment deactivation if a virtual environmnet is used to run the selected Python script. If a venv is used with QShell, there is no ```deactivate``` command available so the deactivate will fail if *YES is not selected.    
 
 Added Use bash instead of QShell ```USEBASH``` parameter to QSHPYRUN. When set to *YES, bash (QSHBASH) is used to run the selected Python script instead of QShell (QSHEXEC). When set to *NO, Python scripts run using QSHEXEC. 
+
+## V1.0.49 - 5/22/2026
+Updated QSHSCPC.CLLE. Somehow it ended up getting a copy of QSHWRTLOGC.CLLE contents in the member. This would cause QSHSCP to fail if trying to use the command to transfer any files over SSH.
+
