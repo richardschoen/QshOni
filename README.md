@@ -21,6 +21,9 @@ Visit the MobiGoGo web site or shoot me an email and talk to me about your IBM i
 MobiGoGo: https://www.mobigogo.net    
 Email: richard@mobigogo.net
 
+## Jump Right to the Library Build
+https://github.com/richardschoen/qshoni#download-and-run-the-getrepo-qshonish-script-in-one-step-using-wget 
+
 ## Library Build Note
 ❗ If you get an error running ```build.sh``` you may need to run ```dos2unix build.sh``` to convert CR/LF to LF in the build.sh file. You must first have ```dos2unix``` installed via the IBM i open source package management.  Please open an issue to let me know if you run into this problem.
 
