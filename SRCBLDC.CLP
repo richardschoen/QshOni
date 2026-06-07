@@ -481,7 +481,7 @@
                           TGTRLS(&TGTRLS) /* 1.0.50 */
 
              CRTCMD     CMD(&DESTLIB/QSHRSTIFS) +
-                          PGM(&DESTLIB/QSHSAVOBJC) +
+                          PGM(&DESTLIB/QSHRSTIFSC) +
                           SRCFILE(&DESTLIB/&DESTFILE) PRDLIB(&DESTLIB) /* +
                           1.0.50 */
 
