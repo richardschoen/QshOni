@@ -450,7 +450,7 @@ CURFILE="QSHRSTLIBC.CLP"
 SRCTEXT="Restore Library from IFS Save File"   
 cpy_member
 
-CURFILE="QSHRSTOBJC.CMD"
+CURFILE="QSHRSTOBJ.CMD"
 SRCTEXT="Restore Objects from IFS Save File"   
 cpy_member
 
@@ -470,7 +470,7 @@ CURFILE="QSHVFYSAVF.CMD"
 SRCTEXT="Verify IFS Save File"   
 cpy_member
 
-CURFILE="QSHVFYSAVFC.CLP"
+CURFILE="QSHVFYSAVC.CLP"
 SRCTEXT="Verify IFS Save File"   
 cpy_member
 
