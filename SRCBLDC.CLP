@@ -491,11 +491,11 @@
                           TGTRLS(&TGTRLS) /* 1.0.50 */
 
              CRTCMD     CMD(&DESTLIB/QSHVFYSAVF) +
-                          PGM(&DESTLIB/QSHVFYSAVFC) +
+                          PGM(&DESTLIB/QSHVFYSAVC) +
                           SRCFILE(&DESTLIB/&DESTFILE) PRDLIB(&DESTLIB) /* +
                           1.0.50 */
 
-             CRTBNDCL   PGM(&DESTLIB/QSHVFYSAVFC) +
+             CRTBNDCL   PGM(&DESTLIB/QSHVFYSAVC) +
                           SRCFILE(&DESTLIB/&DESTFILE) +
                           DFTACTGRP(*YES) REPLACE(*NO) +
                           TGTRLS(&TGTRLS) /* 1.0.50 */
