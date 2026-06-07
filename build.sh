@@ -434,6 +434,46 @@ CURFILE="QSHPRTLOGC.CLLE"
 SRCTEXT="Print Simple Log File"   
 cpy_member
 
+CURFILE="QSHSAVOBJ.CMD"
+SRCTEXT="Save Objects to IFS Save File   "   
+cpy_member
+
+CURFILE="QSHSAVOBJC.CLP"
+SRCTEXT="Save Objects to IFS Save File"   
+cpy_member
+
+CURFILE="QSHRSTLIB.CMD"
+SRCTEXT="Restore Library from IFS Save File"   
+cpy_member
+
+CURFILE="QSHRSTLIBC.CLP"
+SRCTEXT="Restore Library from IFS Save File"   
+cpy_member
+
+CURFILE="QSHRSTOBJC.CMD"
+SRCTEXT="Restore Objects from IFS Save File"   
+cpy_member
+
+CURFILE="QSHRSTOBJC.CLP"
+SRCTEXT="Restore Objects from IFS Save File"   
+cpy_member
+
+CURFILE="QSHRSTIFS.CMD"
+SRCTEXT="Restore IFS Objects from IFS Save File"   
+cpy_member
+
+CURFILE="QSHRSTIFSC.CLP"
+SRCTEXT="Restore IFS Objects from IFS Save File"   
+cpy_member
+
+CURFILE="QSHVFYSAVF.CMD"
+SRCTEXT="Verify IFS Save File"   
+cpy_member
+
+CURFILE="QSHVFYSAVFC.CLP"
+SRCTEXT="Verify IFS Save File"   
+cpy_member
+
 CURFILE="README.TXT"
 SRCTEXT="Read Me Docs on Setup"
 cpy_member

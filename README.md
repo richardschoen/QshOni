@@ -25,6 +25,7 @@ Email: richard@mobigogo.net
 ❗ If you get an error running ```build.sh``` you may need to run ```dos2unix build.sh``` to convert CR/LF to LF in the build.sh file. You must first have ```dos2unix``` installed via the IBM i open source package management.  Please open an issue to let me know if you run into this problem.
 
 ## News
+```6/7/2026``` - Added new save and restore convenience commands for saving and restoring to IFS based asve files. V1.0.50.       
 ```5/22/2026``` - Fixed issue with QSHSCPC.CLLE. Upgrade to V1.0.49 if you are using QSHSCP to transfer files over SCP.   
 ```4/28/2026``` - Updated the QSHPYRUN command with new parameters.   
 ```4/24/2026``` - Added two cool new commands for creating your own custom app logging in CL or RPG processes. ```QSHRTLOG``` and ```QSHPRTLOG```.   

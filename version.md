@@ -414,3 +414,12 @@ Added Use bash instead of QShell ```USEBASH``` parameter to QSHPYRUN. When set t
 ## V1.0.49 - 5/22/2026
 Updated QSHSCPC.CLLE. Somehow it ended up getting a copy of QSHWRTLOGC.CLLE contents in the member. This would cause QSHSCP to fail if trying to use the command to transfer any files over SSH.
 
+## V1.0.50 
+Added additional save/restore convenience commands for saving and restoring IBM i library objects or IFS files to a save file and then store it in an IFS file for easy transport or backup to NAS/SAN or cloud locations.    
+QSHSAVOBJ - Save Objects to IFS Save File      
+QSHRSTLIB - Restore Library from IFS Save File    
+QSHRSTOBJ - Restore Objects from IFS Save File   
+QSHRSTIFS - Restore IFS Objects from IFS Save File     
+QSHVFYSAVF - Verify IFS Save File    
+
+

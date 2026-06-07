@@ -7,7 +7,7 @@
              DCL        VAR(&TGTRLS) TYPE(*CHAR) LEN(10) +
                           VALUE(*CURRENT)
              DCL        VAR(&VERSION) TYPE(*CHAR) LEN(30) +
-                          VALUE(V1.0.49)
+                          VALUE(V1.0.50)
              DCL        VAR(&QSHPYTHON) TYPE(*CHAR) LEN(255)
              DCL        VAR(&CMD) TYPE(*CHAR) LEN(512)
              DCL        VAR(&LEN) TYPE(*DEC) LEN(15 5)
@@ -449,6 +449,56 @@
                           SRCFILE(&DESTLIB/&DESTFILE) +
                           DFTACTGRP(*YES) REPLACE(*NO) +
                           TGTRLS(&TGTRLS) /* 1.0.47 */
+
+             CRTCMD     CMD(&DESTLIB/QSHSAVOBJ) +
+                          PGM(&DESTLIB/QSHSAVOBJC) +
+                          SRCFILE(&DESTLIB/&DESTFILE) PRDLIB(&DESTLIB) /* +
+                          1.0.50 */
+
+             CRTBNDCL   PGM(&DESTLIB/QSHSAVOBJC) +
+                          SRCFILE(&DESTLIB/&DESTFILE) +
+                          DFTACTGRP(*YES) REPLACE(*NO) +
+                          TGTRLS(&TGTRLS) /* 1.0.50 */
+
+             CRTCMD     CMD(&DESTLIB/QSHRSTLIB) +
+                          PGM(&DESTLIB/QSHRSTLIBC) +
+                          SRCFILE(&DESTLIB/&DESTFILE) PRDLIB(&DESTLIB) /* +
+                          1.0.50 */
+
+             CRTBNDCL   PGM(&DESTLIB/QSHRSTLIBC) +
+                          SRCFILE(&DESTLIB/&DESTFILE) +
+                          DFTACTGRP(*YES) REPLACE(*NO) +
+                          TGTRLS(&TGTRLS) /* 1.0.50 */
+
+             CRTCMD     CMD(&DESTLIB/QSHRSTOBJ) +
+                          PGM(&DESTLIB/QSHRSTOBJC) +
+                          SRCFILE(&DESTLIB/&DESTFILE) PRDLIB(&DESTLIB) /* +
+                          1.0.50 */
+
+             CRTBNDCL   PGM(&DESTLIB/QSHRSTOBJC) +
+                          SRCFILE(&DESTLIB/&DESTFILE) +
+                          DFTACTGRP(*YES) REPLACE(*NO) +
+                          TGTRLS(&TGTRLS) /* 1.0.50 */
+
+             CRTCMD     CMD(&DESTLIB/QSHRSTIFS) +
+                          PGM(&DESTLIB/QSHSAVOBJC) +
+                          SRCFILE(&DESTLIB/&DESTFILE) PRDLIB(&DESTLIB) /* +
+                          1.0.50 */
+
+             CRTBNDCL   PGM(&DESTLIB/QSHRSTIFSC) +
+                          SRCFILE(&DESTLIB/&DESTFILE) +
+                          DFTACTGRP(*YES) REPLACE(*NO) +
+                          TGTRLS(&TGTRLS) /* 1.0.50 */
+
+             CRTCMD     CMD(&DESTLIB/QSHVFYSAVF) +
+                          PGM(&DESTLIB/QSHVFYSAVFC) +
+                          SRCFILE(&DESTLIB/&DESTFILE) PRDLIB(&DESTLIB) /* +
+                          1.0.50 */
+
+             CRTBNDCL   PGM(&DESTLIB/QSHVFYSAVFC) +
+                          SRCFILE(&DESTLIB/&DESTFILE) +
+                          DFTACTGRP(*YES) REPLACE(*NO) +
+                          TGTRLS(&TGTRLS) /* 1.0.50 */
 
 /* Create message file for any custom CPF messages */
  /* Initial use case is to log STDOUT msgs with own CPF ID    */
