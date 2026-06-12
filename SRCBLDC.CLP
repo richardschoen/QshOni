@@ -5,9 +5,9 @@
              DCL        VAR(&DESTLIB) TYPE(*CHAR) LEN(10) +
                           VALUE(QSHONI)
              DCL        VAR(&TGTRLS) TYPE(*CHAR) LEN(10) +
-                          VALUE(*CURRENT)
+                          VALUE(V7R3M0)
              DCL        VAR(&VERSION) TYPE(*CHAR) LEN(30) +
-                          VALUE(V1.0.50)
+                          VALUE(V1.0.51)
              DCL        VAR(&QSHPYTHON) TYPE(*CHAR) LEN(255)
              DCL        VAR(&CMD) TYPE(*CHAR) LEN(512)
              DCL        VAR(&LEN) TYPE(*DEC) LEN(15 5)
@@ -499,6 +499,52 @@
                           SRCFILE(&DESTLIB/&DESTFILE) +
                           DFTACTGRP(*YES) REPLACE(*NO) +
                           TGTRLS(&TGTRLS) /* 1.0.50 */
+
+             /* V1.0.51 */
+             CRTCMD     CMD(&DESTLIB/QSHHOME) PGM(QSHHOMEC) +
+                          SRCFILE(&DESTLIB/&DESTFILE) ALLOW(*BPGM +
+                          *IPGM *BMOD *IMOD *BREXX *IREXX) +
+                          PRDLIB(&DESTLIB)
+
+             /* V1.0.51 */
+             CRTBNDCL   PGM(&DESTLIB/QSHHOMEC) +
+                          SRCFILE(&DESTLIB/&DESTFILE) +
+                          SRCMBR(QSHHOMEC) DFTACTGRP(*NO) +
+                          ALWRTVSRC(*NO) REPLACE(*NO) TGTRLS(&TGTRLS)
+
+             /* V1.0.51 */
+             CRTCMD     CMD(&DESTLIB/WRKIFSLIST) +
+                          PGM(&DESTLIB/WRKIFSLISC) +
+                          SRCFILE(&DESTLIB/&DESTFILE) PRDLIB(&DESTLIB)
+
+             /* V1.0.51 */
+             CRTBNDCL   PGM(&DESTLIB/WRKIFSCMD)  +
+                          SRCFILE(&DESTLIB/&DESTFILE) +
+                          SRCMBR(WRKIFSCMD) +
+                          ALWRTVSRC(*NO) REPLACE(*NO) TGTRLS(&TGTRLS)
+
+             /* V1.0.51 */
+             CRTBNDCL   PGM(&DESTLIB/WRKIFSLISC) +
+                          SRCFILE(&DESTLIB/&DESTFILE) +
+                          SRCMBR(WRKIFSLISC) +
+                          ALWRTVSRC(*NO) REPLACE(*NO) TGTRLS(&TGTRLS)
+
+             /* V1.0.51 */
+             CRTBNDCL   PGM(&DESTLIB/QSHGETHOME) +
+                          SRCFILE(&DESTLIB/&DESTFILE) +
+                          SRCMBR(QSHGETHOME) +
+                          ALWRTVSRC(*NO) REPLACE(*NO) TGTRLS(&TGTRLS)
+
+             /* V1.0.51 */
+             CRTDSPF    FILE(&DESTLIB/WRKIFSLISD) +
+                          SRCFILE(&DESTLIB/&DESTFILE) REPLACE(*NO)
+
+             /* V1.0.51 */
+             CRTSQLRPGI OBJ(&DESTLIB/WRKIFSLISR) +
+                          SRCFILE(&DESTLIB/&DESTFILE) SRCMBR(*OBJ) +
+                          COMMIT(*NONE) OBJTYPE(*PGM) +
+                          CLOSQLCSR(*ENDMOD) REPLACE(*NO)
+
 
 /* Create message file for any custom CPF messages */
  /* Initial use case is to log STDOUT msgs with own CPF ID    */
