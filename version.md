@@ -422,4 +422,9 @@ QSHRSTOBJ - Restore Objects from IFS Save File
 QSHRSTIFS - Restore IFS Objects from IFS Save File     
 QSHVFYSAVF - Verify IFS Save File    
 
-
+## V1.0.50 
+Added new WRKIFSLIST - IFS explorer command. The command can be used as a customizable alternative to WRKLNK. The command uses the IFS SQL APIs to list files and contains most main options that WRKLNK has.    
+For me the main use case was to be able to better see an entire IFS file name when it gets longer.   
+Plus now I can hang my own custom options for use as well.   
+Ex: There is a VFY command available that runs QSHVFYSAVF to verify an IFS based save file.   
+The WRKIFSLIST command is new and use with caution.    
