@@ -478,7 +478,7 @@ CURFILE="QSHHOME.CMD"
 SRCTEXT="Retrieve User Home Dir"   
 cpy_member
 
-CURFILE="QSHHOMECC.CLLE"
+CURFILE="QSHHOMEC.CLLE"
 SRCTEXT="Retrieve User Home Dir"   
 cpy_member
 
