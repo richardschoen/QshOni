@@ -35,7 +35,7 @@ dcl-pr IFSLISTCMD extpgm('WRKIFSCMD');
   topgm  char(10) const;
 end-pr;
 
-dcl-pr IFSGETHOME extpgm('WRKGETHOME');
+dcl-pr IFSGETHOME extpgm('QSHGETHOME');
   homedir char(640);
 end-pr;
 
