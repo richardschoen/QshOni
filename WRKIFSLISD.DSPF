@@ -1,0 +1,81 @@
+     A*%%TS  SD  20260612  113159  RICHARD     REL-V7R5M0  5770-WDS
+     A*%%EC
+     A                                      DSPSIZ(24 80 *DS3)
+     A                                      CF03(03 'Exit')
+     A                                      CF05(05 'Refresh')
+     A                                      CF08(08 'Home')
+     A                                      CF10(10 'Joblog')
+     A                                      CF12(12 'Prev')
+     A                                      CF21(21 'Cmdline')
+     A          R SFL01                     SFL
+     A*%%TS  SD  20260524  204601  RICHARD     REL-V7R5M0  5770-WDS
+     A            SFOPT          3A  B  9  2DSPATR(HI)
+     A  73                                  DSPATR(ND)
+     A  73                                  DSPATR(PR)
+     A N73                                  DSPATR(UL)
+     A            SFPATH        60A  O  9  6
+     A  73                                  DSPATR(ND)
+     A  52                                  COLOR(BLU)
+     A            SFTYPE        10A  O  9 67
+     A  73                                  DSPATR(ND)
+     A  52                                  COLOR(BLU)
+     A            SFSTMF       500A  H
+     A          R CTL01                     SFLCTL(SFL01)
+     A*%%TS  SD  20260612  113159  RICHARD     REL-V7R5M0  5770-WDS
+     A                                      SFLSIZ(0013)
+     A                                      SFLPAG(0012)
+     A                                      OVERLAY
+     A  31                                  SFLCLR
+     A  32                                  SFLDSP
+     A  32                                  SFLDSPCTL
+     A  34                                  SFLEND(*MORE)
+     A            RRN            4S 0H      SFLRCDNBR(CURSOR)
+     A                                  1 30'Work with IFS Files'
+     A                                      DSPATR(HI)
+     A                                  2  2'Directory:'
+     A                                      DSPATR(HI)
+     A            DIR          100A  B  2 13CHECK(LC)
+     A                                  8  2'Opt'
+     A                                      DSPATR(HI)
+     A                                  8  6'IFS file'
+     A                                      DSPATR(HI)
+     A            MSG           78A  O  7  2
+     A                                  3 34'File pattern:'
+     A                                      DSPATR(HI)
+     A            PATTERN       15A  B  3 48CHECK(LC)
+     A            OPTDESC      160A  O  5  1COLOR(BLU)
+     A                                  3 64'Type:'
+     A                                      DSPATR(HI)
+     A            FILETYPE      10A  B  3 70
+     A                                  8 67'Type'
+     A                                      DSPATR(HI)
+     A          R CMD01
+     A*%%TS  SD  20260612  090610  RICHARD     REL-V7R5M0  5770-WDS
+     A                                      OVERLAY
+     A                                      TEXT('COMMAND KEY DEFINITION')
+     A                                 22  2'F3=Exit  F5=Refresh'
+     A                                      COLOR(BLU)
+     A                                 23  2'PAGE UP=Next Page  PAGE DOWN=Prev -
+     A                                      Page  F21=Cmdline'
+     A                                      COLOR(BLU)
+     A                                 22 23'ENTER=Accept Option  F8=Home Dir  -
+     A                                      F10=Display Joblog'
+     A                                      COLOR(BLU)
+     A          R MSGSFL                    TEXT('Message SFL Data')
+     A                                      SFL
+     A                                      SFLMSGRCD(24)
+     A            MSGKEY                    SFLMSGKEY
+     A            PGMQ                      SFLPGMQ
+     A
+     A          R MSGSFLC                   TEXT('Message SFL Control')
+     A****                                  LOCK
+     A                                      OVERLAY
+     A                                      SFLCTL(MSGSFL)
+     A                                      SFLSIZ(2)
+     A                                      SFLPAG(1)
+     A N51                                  SFLDSP
+     A N51                                  SFLDSPCTL
+     A N51                                  SFLEND
+     A N51                                  SFLINZ
+     A  51                                  SFLCLR
+     A            PGMQ                      SFLPGMQ
