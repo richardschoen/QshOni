@@ -474,6 +474,38 @@ CURFILE="QSHVFYSAVC.CLP"
 SRCTEXT="Verify IFS Save File"   
 cpy_member
 
+CURFILE="QSHHOME.CMD"
+SRCTEXT="Retrieve User Home Dir"   
+cpy_member
+
+CURFILE="QSHHOMECC.CLLE"
+SRCTEXT="Retrieve User Home Dir"   
+cpy_member
+
+CURFILE="QSHGETHOME.CLLE"
+SRCTEXT="Get User Home Dir"   
+cpy_member
+
+CURFILE="WRKIFSCMD.CLLE"
+SRCTEXT="Work with IFS Files Command Option List"   
+cpy_member
+
+CURFILE="WRKIFSLIST.CMD"
+SRCTEXT="Work with IFS Files"   
+cpy_member
+
+CURFILE="WRKIFSLISC.CLLE"
+SRCTEXT="Work with IFS Files"   
+cpy_member
+
+CURFILE="WRKIFSLISR.SQLRPGLE"
+SRCTEXT="Work with IFS Files"   
+cpy_member
+
+CURFILE="WRKIFSLISD.DSPF"
+SRCTEXT="Work with IFS Files"   
+cpy_member
+
 CURFILE="README.TXT"
 SRCTEXT="Read Me Docs on Setup"
 cpy_member
