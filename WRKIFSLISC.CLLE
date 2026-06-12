@@ -1,0 +1,23 @@
+             PGM        PARM(&IFSDIR)
+             DCL        VAR(&IFSDIR) TYPE(*CHAR) LEN(25)
+             DCL        VAR(&OPTDESC) TYPE(*CHAR) LEN(160)
+             DCL        VAR(&OPTLINE1) TYPE(*CHAR) LEN(80)
+             DCL        VAR(&OPTLINE2) TYPE(*CHAR) LEN(80)
+
+             MONMSG     MSGID(CPF0000) EXEC(GOTO CMDLBL(ERRORS))
+
+             /* Set option descs */
+             CHGVAR     VAR(&OPTLINE1) VALUE('2=Edit  3=Copy  +
+                          4=Del  5=View  7=Rename  +
+                          8=Attr  9=Auth  10=Move  13=ChgAtr')
+             CHGVAR     VAR(&OPTLINE2) VALUE(' ')
+             CHGVAR     VAR(&OPTDESC) VALUE(&OPTLINE1 || &OPTLINE2)
+
+             /* Call the IFS list program */
+             CALL       PGM(WRKIFSLISR) PARM((&IFSDIR) (&OPTDESC))
+
+             RETURN
+ERRORS:
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Error +
+                         calling WRKIFSLISR. Check the joblog') +
+                          MSGTYPE(*ESCAPE)
