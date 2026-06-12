@@ -25,6 +25,7 @@ Email: richard@mobigogo.net
 ❗ If you get an error running ```build.sh``` you may need to run ```dos2unix build.sh``` to convert CR/LF to LF in the build.sh file. You must first have ```dos2unix``` installed via the IBM i open source package management.  Please open an issue to let me know if you run into this problem.
 
 ## News
+```6/12/2026``` - Added new WRKIFSLIST command for exploring IFS files. Can be used to replace WRKLNK. V1.0.51.   
 ```6/7/2026``` - Added new save and restore convenience commands for saving and restoring to IFS based save files. V1.0.50.       
 ```5/22/2026``` - Fixed issue with QSHSCPC.CLLE. Upgrade to V1.0.49 if you are using QSHSCP to transfer files over SCP.   
 ```4/28/2026``` - Updated the QSHPYRUN command with new parameters.   
@@ -83,7 +84,7 @@ IBM i QShell
 https://www.ibm.com/docs/en/i/7.5?topic=languages-qshell
 
 
-## Check latest version info (Current Version 1.0.48 - 4/28/2026)  
+## Check latest version info (Current Version 1.0.51 - 6/12/2026)  
 https://github.com/richardschoen/QshOni/blob/master/version.md    
 
 ## Check out one-liner Python samples
