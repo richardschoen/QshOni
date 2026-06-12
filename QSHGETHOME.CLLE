@@ -1,0 +1,14 @@
+             PGM        PARM(&HOMEDIR)
+             DCL        VAR(&HOMEDIR) TYPE(*CHAR) LEN(640)
+             DCL        VAR(&PGMNAME) TYPE(*CHAR) LEN(10)
+
+             MONMSG     MSGID(CPF0000) EXEC(GOTO CMDLBL(ERRORS))
+
+             /* Call API to get home dir */
+             QSHHOME    HOMEDIR(&HOMEDIR)
+
+             RETURN
+ERRORS:
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Error +
+                          calling QSHGETHOME. Check the joblog') +
+                          TOPGMQ(*SAME) MSGTYPE(*INFO)
