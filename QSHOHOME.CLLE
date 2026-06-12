@@ -1,0 +1,41 @@
+             PGM        PARM(&MYHOMEDIR)
+
+             DCL        VAR(&MYHOMEDIR) TYPE(*CHAR) LEN(640)
+
+             DCL        VAR(&UIDDEC) TYPE(*DEC) LEN(10 0)
+             DCL        VAR(&UID) TYPE(*UINT) LEN(4)
+             DCL        VAR(&DIRLEN) TYPE(*UINT) LEN(4)
+
+             DCL        VAR(&RTNVAR) TYPE(*INT) LEN(4)
+             DCL        VAR(&PWDPTR) TYPE(*PTR)
+             DCL        VAR(&PWDBUFFER) TYPE(*CHAR) LEN(641)
+             DCL        VAR(&PWDBUFLEN) TYPE(*INT) LEN(4) VALUE(641)
+
+             DCL        VAR(&TEMPPWDPTR) TYPE(*PTR)
+
+             DCL        VAR(&PASSWD) TYPE(*CHAR) LEN(64)
+             DCL        VAR(&PW_NAME) TYPE(*PTR) STG(*DEFINED) DEFVAR(&PASSWD 1)
+             DCL        VAR(&PW_UID) TYPE(*UINT) STG(*DEFINED) LEN(4) DEFVAR(&PASSWD 17)
+             DCL        VAR(&PW_GID) TYPE(*UINT) STG(*DEFINED) LEN(4) DEFVAR(&PASSWD 21)
+             DCL        VAR(&PW_HOMEDIR) TYPE(*PTR) STG(*DEFINED) DEFVAR(&PASSWD 33)
+             DCL        VAR(&PW_INLPGM) TYPE(*PTR) STG(*DEFINED) DEFVAR(&PASSWD 49)
+             DCL        VAR(&HOMEDIR) TYPE(*CHAR) STG(*BASED) LEN(640) BASPTR(&PW_HOMEDIR)
+
+             MONMSG     MSGID(CPF0000) EXEC(GOTO CMDLBL(ERRORS))
+
+             RTVUSRPRF  UID(&UIDDEC)
+             CHGVAR     VAR(&UID) VALUE(&UIDDEC)
+             CHGVAR     VAR(&PWDPTR) VALUE(%ADDR(&PASSWD))
+             CALLPRC    PRC('getpwuid_r') PARM((&UID *BYVAL) (&PWDPTR *BYVAL) (&PWDBUFFER) (&PWDBUFLEN +
+                          *BYVAL) (&TEMPPWDPTR)) RTNVAL(&RTNVAR)
+             CALLPRC    PRC('strlen') PARM((&PW_HOMEDIR *BYVAL)) RTNVAL(&DIRLEN)
+             IF         (&DIRLEN > 0) THEN(DO)
+             CHGVAR     VAR(&MYHOMEDIR) VALUE(%SST(&HOMEDIR 1 &DIRLEN))
+             enddo
+
+             RETURN
+ERRORS:
+             CHGVAR     VAR(&MYHOMEDIR) VALUE(' ')
+             RETURN
+
+             ENDPGM
