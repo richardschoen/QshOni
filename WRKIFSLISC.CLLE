@@ -10,7 +10,8 @@
              CHGVAR     VAR(&OPTLINE1) VALUE('2=Edit  3=Copy  +
                           4=Del  5=View  7=Rename  +
                           8=Attr  9=Auth  10=Move  13=ChgAtr')
-             CHGVAR     VAR(&OPTLINE2) VALUE(' ')
+             CHGVAR     VAR(&OPTLINE2) VALUE('VFY=Vfy SAVF  RST=Rst +
+                          Lib SAVF')
              CHGVAR     VAR(&OPTDESC) VALUE(&OPTLINE1 || &OPTLINE2)
 
              /* Call the IFS list program */
