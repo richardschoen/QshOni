@@ -130,10 +130,19 @@
              ENDDO
 
 /*----------------------------------------------------------------------------*/
-/* If default python path data area, retreive from data area */
+/* If default python path = *DEFAULT,retreive from data area */
+/* or set the VENV location where python binary should be located */
+/* Setting based on VENV path added V1.52 */
 /*----------------------------------------------------------------------------*/
              IF         COND(&PYPATH *EQ *DEFAULT) THEN(DO)
+             /* Use python path from PYPATH data area 1.52 */
+             IF         COND(&USEVENV *NE *YES) THEN(DO)
              RTVDTAARA  DTAARA(QSHONI/PYPATH *ALL) RTNVAR(&PYPATH)
+             ENDDO
+             /* Use python path from VENV path 1.52 */
+             IF         COND(&USEVENV *EQ *YES) THEN(DO)
+             CHGVAR     VAR(&PYPATH) VALUE(&VENVPATH |< '/bin')
+             ENDDO
              ENDDO
 
 /*----------------------------------------------------------------------------*/
