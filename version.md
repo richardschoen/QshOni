@@ -428,4 +428,6 @@ For me the main use case was to be able to better see an entire IFS file name wh
 Plus now I can hang my own custom options for use as well.   
 
 ## V1.0.52  
-Updated QSHPYRUN and QSHPYCALL to automatically use the python binary from the virtual environment path instead of /QOpenSys/pkgs/bin when *DEFAULT is selected for the python binary path. This is morre consistent to what is expected of a virtual environment.
+Updated QSHPYRUN and QSHPYCALL to automatically use the python binary from the virtual environment path instead of /QOpenSys/pkgs/bin when *DEFAULT is selected for the python binary path. This is more consistent to what is expected of a virtual environment.   
+
+Also added restore (RST) option to WRKIFSFLR command for restoring data quickly from IFS save files.     
