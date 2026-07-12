@@ -76,9 +76,17 @@
 
              /* Verify the IFS SAVF */
              IF         COND(&OPT *EQ 'VFY') THEN(DO)
-             ?  QSHONI/QSHVFYSAVF ??FRMIFSSAVF(&IFSPATH) +
-             ??DLTTMPSAVF(*YES)
+             QSHONI/QSHVFYSAVF FRMIFSSAVF(&IFSPATH) DLTTMPSAVF(*YES)
              SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Verify +
+                          completed') TOPGMQ(*PRV)
+             RETURN
+             ENDDO
+
+             /* Restore IFS file as library */
+             IF         COND(&OPT *EQ 'RST') THEN(DO)
+       ?     QSHONI/QSHRSTLIB FRMIFSFILE(&IFSPATH) +
+                          DLTTMPSAVF(*YES)
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Restore+
                           completed') TOPGMQ(*PRV)
              RETURN
              ENDDO
