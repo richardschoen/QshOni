@@ -7,7 +7,7 @@
              DCL        VAR(&TGTRLS) TYPE(*CHAR) LEN(10) +
                           VALUE(V7R3M0)
              DCL        VAR(&VERSION) TYPE(*CHAR) LEN(30) +
-                          VALUE(V1.0.52)
+                          VALUE(V1.0.53)
              DCL        VAR(&QSHPYTHON) TYPE(*CHAR) LEN(255)
              DCL        VAR(&CMD) TYPE(*CHAR) LEN(512)
              DCL        VAR(&LEN) TYPE(*DEC) LEN(15 5)
