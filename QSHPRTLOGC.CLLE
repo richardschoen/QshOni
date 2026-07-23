@@ -46,12 +46,12 @@
              IF         COND(&PRTOUTQ *EQ *SAME) THEN(DO)
              OVRPRTF    FILE(QSYSPRT) TOFILE(QSYSPRT) PAGESIZE(*N +
                           378) PRTTXT(&PRTTXT) HOLD(&PRTHOLD) +
-                          USRDTA(&PRTUSRDTA) SPLFNAME(&PRTSPLF)
+                          USRDTA(&PRTUSRDTA) SPLFNAME(&PRTSPLF) MAXRCDS(*NOMAX) 
              ENDDO
              /* Override with specific outq */
              IF         COND(&PRTOUTQ *NE *SAME) THEN(DO)
              OVRPRTF    FILE(QSYSPRT) TOFILE(QSYSPRT) PAGESIZE(*N +
-                          378) PRTTXT(&PRTTXT) +
+                          378) PRTTXT(&PRTTXT) MAXRCDS(*NOMAX) +
                           OUTQ(&PRTOUTQLIB/&PRTOUTQ) HOLD(&PRTHOLD) +
                           USRDTA(&PRTUSRDTA) SPLFNAME(&PRTSPLF)
              ENDDO
@@ -88,7 +88,7 @@
              OVRPRTF    FILE(QSYSPRT) TOFILE(QSYSPRT) +
                           DEVTYPE(*AFPDS) PAGESIZE(8.5 18.5 *UOM) +
                           LPI(12) CPI(20) FRONTMGN(0 0) OVRFLW(96) +
-                          PRTTXT(&PRTTXT) HOLD(*YES) +
+                          PRTTXT(&PRTTXT) HOLD(*YES) MAXRCDS(*NOMAX) +
                           SPLFNAME(&PRTSPLF) TOSTMF(&IFSFILE) +
                           WSCST(*PDF)
              CPYF       FROMFILE(&LOGLIBRARY/&LOGFILE) TOFILE(QSYSPRT)
