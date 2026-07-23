@@ -431,3 +431,6 @@ Plus now I can hang my own custom options for use as well.
 Updated QSHPYRUN and QSHPYCALL to automatically use the python binary from the virtual environment path instead of /QOpenSys/pkgs/bin when *DEFAULT is selected for the python binary path. This is more consistent to what is expected of a virtual environment.   
 
 Also added restore (RST) option to WRKIFSFLR command for restoring data quickly from IFS save files.     
+
+## V1.0.53   
+Updated QSHPRTLOGC command program to use MAXRCDS(*NOMAX) when printing an audit report.    
