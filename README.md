@@ -25,7 +25,7 @@ Email: richard@mobigogo.net
 ❗ If you get an error running ```build.sh``` you may need to run ```dos2unix build.sh``` to convert CR/LF to LF in the build.sh file. You must first have ```dos2unix``` installed via the IBM i open source package management.  Please open an issue to let me know if you run into this problem.
 
 ## News
-```7/24/2026``` - Updated QSHQRYSRC and RUNSQLSRC to allow DLTCMTLINE to work correctly when removing comments from SQL source members at runtime. V1.0.54   
+```7/24/2026``` - Updated QSHQRYSRC and RUNSQLSRC commands to allow the DLTCMTLINE parameter to work correctly when removing comments from SQL source members at runtime. V1.0.54   
 ```7/23/2026``` - Updated QSHPRTLOG to allow unlimited report sizes when printing. V1.0.53   
 ```7/12/2026``` - Updated QSHPYRUN and QSHPYCALL to use default python binary from virtual environment if *DEFAULT specified for Python binary path. V1.0.52
 ```6/12/2026``` - Added new WRKIFSLIST command for exploring IFS files. Can be used to replace WRKLNK. V1.0.51.   
