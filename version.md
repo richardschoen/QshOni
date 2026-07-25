@@ -441,4 +441,5 @@ Added logic to skip source member manipulation when not deleting comments. Also 
 
 How the Delete comment line from temp source (DLTCMTLINE) parm now works:     
 When *YES (Default), we will look for and remove comment lines from the temp source member we create at runtime. But we only remove lines where there is a -- at the beginning of the data.  
-When *NO, we leave source member alone when copying it to the temp source member so all comments are preserved and should be properly ignored by the SQL runtime as well because they are just comments. The SQL statement runs as is from the source member with all comments intact. Technically *NO should be the default use case for this parameter now so we don't attempt to manipulate comment lines.
+When *NO, we leave source member alone when copying it to the temp source member so all comments are preserved and should be properly ignored by the SQL runtime as well because they are just comments. The SQL statement runs as is from the source member with all comments intact.   
+❗Technically *NO should be used as the default use case for this parameter now so we don't attempt to manipulate the original SQL source member comments.   
