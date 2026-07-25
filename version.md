@@ -414,7 +414,7 @@ Added Use bash instead of QShell ```USEBASH``` parameter to QSHPYRUN. When set t
 ## V1.0.49 - 5/22/2026
 Updated QSHSCPC.CLLE. Somehow it ended up getting a copy of QSHWRTLOGC.CLLE contents in the member. This would cause QSHSCP to fail if trying to use the command to transfer any files over SSH.
 
-## V1.0.50 
+## V1.0.50 - 6/7/2026
 Added additional save/restore convenience commands for saving and restoring IBM i library objects or IFS files to a save file and then store it in an IFS file for easy transport or backup to NAS/SAN or cloud locations.    
 QSHSAVOBJ - Save Objects to IFS Save File      
 QSHRSTLIB - Restore Library from IFS Save File    
@@ -422,20 +422,19 @@ QSHRSTOBJ - Restore Objects from IFS Save File
 QSHRSTIFS - Restore IFS Objects from IFS Save File     
 QSHVFYSAVF - Verify IFS Save File    
 
-## V1.0.51 
+## V1.0.51 - 6/12/2026
 Added new WRKIFSLIST - IFS explorer command. The command can be used as a customizable alternative to WRKLNK. The command uses the IFS SQL APIs to list files and contains most main options that WRKLNK has.    
 For me the main use case was to be able to better see an entire IFS file name when it gets longer.   
 Plus now I can hang my own custom options for use as well.   
 
-## V1.0.52  
+## V1.0.52  - 7/12/2026
 Updated QSHPYRUN and QSHPYCALL to automatically use the python binary from the virtual environment path instead of /QOpenSys/pkgs/bin when *DEFAULT is selected for the python binary path. This is more consistent to what is expected of a virtual environment.   
 
-Also added restore (RST) option to WRKIFSFLR command for restoring data quickly from IFS save files.     
-
-## V1.0.53   
+Also added restore (RST) option to WRKIFSFLR command for restoring data quickly from IFS save files.    
+## V1.0.53 - 7/23/2026  
 Updated QSHPRTLOGC command program to use MAXRCDS(*NOMAX) when printing an audit report.    
 
-## V1.0.54 
+## V1.0.54 - 7/24/2026  
 Updated programs RUNSQLSR3R and QSHQRYSR3R that are used to remove comment lines when running SQL via the following commands: ```QSHQRYSRC``` and ```RUNSQLSRC```.   
 Added logic to skip source member manipulation when not deleting comments. Also updated comment handling to only remove comments when marked as ```--``` at the beginning of lines. We no longer attempt to scrub any line data if a line contains legitimate ```--``` characters that are not in trimmed pos 1 and 2. I found an issue where the SQL statement was being inaccurately truncated because the SQL statement line contained valid use of the ```--``` characters in a text constant.
 How the Delete comment line from temp source (DLTCMTLINE) parm now works:   
