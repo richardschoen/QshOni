@@ -435,8 +435,10 @@ Also added restore (RST) option to WRKIFSFLR command for restoring data quickly 
 Updated QSHPRTLOGC command program to use MAXRCDS(*NOMAX) when printing an audit report.    
 
 ## V1.0.54 - 7/24/2026  
-Updated programs RUNSQLSR3R and QSHQRYSR3R that are used to remove comment lines when running SQL via the following commands: ```QSHQRYSRC``` and ```RUNSQLSRC```.   
-Added logic to skip source member manipulation when not deleting comments. Also updated comment handling to only remove comments when marked as ```--``` at the beginning of lines. We no longer attempt to scrub any line data if a line contains legitimate ```--``` characters that are not in trimmed pos 1 and 2. I found an issue where the SQL statement was being inaccurately truncated because the SQL statement line contained valid use of the ```--``` characters in a text constant.
-How the Delete comment line from temp source (DLTCMTLINE) parm now works:   
+Updated programs RUNSQLSR3R and QSHQRYSR3R that are used to remove comment lines when running SQL via the following commands: ```QSHQRYSRC``` and ```RUNSQLSRC```.    
+
+Added logic to skip source member manipulation when not deleting comments. Also updated comment handling to only remove comments when marked as ```--``` at the beginning of lines. We no longer attempt to scrub any line data if a line contains legitimate ```--``` characters that are not in trimmed pos 1 and 2. I found an issue where the SQL statement was being inaccurately truncated because the SQL statement line contained valid use of the ```--``` characters in a text constant.   
+
+How the Delete comment line from temp source (DLTCMTLINE) parm now works:     
 When *YES (Default), we will look for and remove comment lines from the temp source member we create at runtime. But we only remove lines where there is a -- at the beginning of the data.  
 When *NO, we leave source member alone when copying it to the temp source member so all comments are preserved and should be properly ignored by the SQL runtime as well because they are just comments. The SQL statement runs as is from the source member with all comments intact. Technically *NO should be the default use case for this parameter now so we don't attempt to manipulate comment lines.
