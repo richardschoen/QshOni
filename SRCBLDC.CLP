@@ -460,6 +460,16 @@
                           DFTACTGRP(*YES) REPLACE(*NO) +
                           TGTRLS(&TGTRLS) /* 1.0.50 */
 
+             CRTCMD     CMD(&DESTLIB/QSHSAVCHG) +
+                          PGM(&DESTLIB/QSHSAVCHGC) +
+                          SRCFILE(&DESTLIB/&DESTFILE) PRDLIB(&DESTLIB) /* +
+                          1.0.54 */
+
+             CRTBNDCL   PGM(&DESTLIB/QSHSAVCHGC) +
+                          SRCFILE(&DESTLIB/&DESTFILE) +
+                          DFTACTGRP(*YES) REPLACE(*NO) +
+                          TGTRLS(&TGTRLS) /* 1.0.54 */
+
              CRTCMD     CMD(&DESTLIB/QSHRSTLIB) +
                           PGM(&DESTLIB/QSHRSTLIBC) +
                           SRCFILE(&DESTLIB/&DESTFILE) PRDLIB(&DESTLIB) /* +
