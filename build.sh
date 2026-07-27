@@ -442,6 +442,14 @@ CURFILE="QSHSAVOBJC.CLP"
 SRCTEXT="Save Objects to IFS Save File"   
 cpy_member
 
+CURFILE="QSHSAVCHG.CMD"
+SRCTEXT="Save Changed Objects to IFS Save File   "   
+cpy_member
+
+CURFILE="QSHSAVCHGC.CLP"
+SRCTEXT="Save Changed Objects to IFS Save File"   
+cpy_member
+
 CURFILE="QSHRSTLIB.CMD"
 SRCTEXT="Restore Library from IFS Save File"   
 cpy_member
