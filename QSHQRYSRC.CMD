@@ -47,9 +47,32 @@
              PARM       KWD(DSPTMPSRC) TYPE(*CHAR) LEN(4) RSTD(*YES) +
                           DFT(*NO) VALUES(*NO *YES) MIN(0) MAX(1) +
                           PROMPT('Display temp source member' 15)
- QUAL2:      QUAL       TYPE(*NAME) LEN(10) DFT(SQLTMP0001) EXPR(*YES)
-             QUAL       TYPE(*NAME) LEN(10) DFT(QTEMP) EXPR(*YES) +
-                          PROMPT('Library')
+             PARM       KWD(CPYRESULTS) TYPE(*CHAR) LEN(4) +
+                          RSTD(*YES) DFT(*NO) VALUES(*NO *YES) +
+                          MIN(0) MAX(1) PROMPT('Copy results via CPYF')
+             PARM       KWD(CPYTOFILE) TYPE(QUAL3) MIN(0) MAX(1) +
+                          PROMPT('File to receive CPYF results')
+             PARM       KWD(CRTFILE) TYPE(*CHAR) LEN(4) +
+                          RSTD(*YES) DFT(*YES) VALUES(*NO *YES) +
+                          MIN(0) MAX(1) PROMPT('Create results file')
+             PARM       KWD(MBROPT) TYPE(*CHAR) LEN(10) RSTD(*YES) +
+                          DFT(*ADD) VALUES(*NONE *ADD *REPLACE +
+                          *UPDADD) MAX(1) PROMPT('Replace or add +
+                          records')
+             PARM       KWD(PROMPTCPYF) TYPE(*CHAR) LEN(4) +
+                          RSTD(*YES) DFT(*NO) VALUES(*NO *YES) +
+                          MIN(0) MAX(1) PROMPT('Prompt the CPYF +
+                          command')
+             PARM       KWD(CLRAFTCPYF) TYPE(*CHAR) LEN(4) +
+                          RSTD(*YES) DFT(*YES) VALUES(*NO *YES) +
+                          MIN(0) MAX(1) PROMPT('Clear temp outfile +
+                          after CPYF')
  QUAL1:      QUAL       TYPE(*NAME) LEN(10) MIN(1) EXPR(*YES)
              QUAL       TYPE(*NAME) LEN(10) DFT(*LIBL) SPCVAL((*LIBL +
                           *LIBL)) EXPR(*YES) PROMPT('Library')
+ QUAL2:      QUAL       TYPE(*NAME) LEN(10) DFT(SQLTMP0001) EXPR(*YES)
+             QUAL       TYPE(*NAME) LEN(10) DFT(QTEMP) EXPR(*YES) +
+                          PROMPT('Library')
+ QUAL3:      QUAL       TYPE(*NAME) LEN(10) DFT(SQLCPY0001) EXPR(*YES)
+             QUAL       TYPE(*NAME) LEN(10) DFT(QTEMP) EXPR(*YES) +
+                          PROMPT('Library')
