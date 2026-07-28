@@ -446,3 +446,19 @@ When *NO, we leave source member alone when copying it to the temp source member
 
 Added ```QSHSAVCHG``` command to save changed objects to IFS file.   
 
+## V1.0.55 - 7/28/2026  
+Updated the ```QSHQRYTMP``` and ```QSHQRYSRC``` commands to have new parameters which allow copying and aggregating results to another output file. This is good is you want to run multiple iterations of these SQL commands and merge the results with results from more than one query. Of course you can always use CPYF standalone for this as well. 
+
+❗By default the commands work as they did before unless you specify ```CPYRESULTS=*YES```.  
+
+New parameters:    
+```
+Copy results via CPYF  . . . . . CPYRESULTS   > *YES          
+File to receive CPYF results . . CPYTOFILE    > SALCPY0001    
+  Library  . . . . . . . . . . .                  QTEMP       
+Create results file  . . . . . . CRTFILE        *YES          
+Replace or add records . . . . . MBROPT       > *REPLACE      
+Prompt the CPYF command  . . . . PROMPTCPYF   > *YES          
+Clear temp outfile after CPYF  . CLRAFTCPYF     *YES                  
+```
+
