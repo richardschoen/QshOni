@@ -452,6 +452,8 @@ where there is a comment line that is at the end of a line.
 All comment lines in an SQL source member must be on a line by themselves and the data for the comment must start with ```--``` even if the comment is indented for readability. 
 And the Delete comment line parm should always be - *YES. 
 
+Observe the above advice for the ```QSHQRYSRC``` command for sure because it does more than just run an SQL statement. It creates a table based on the selected query which is why comments need to be removed at runtime. In the case of the ```RUNSQLSRC``` command, the *NO setting may work just fine since it just runs the SQL statement essentially verbatim except for any parms that get passed.
+
 Added ```QSHSAVCHG``` command to save changed objects to IFS file.   
 
 ## V1.0.55 - 7/28/2026  
