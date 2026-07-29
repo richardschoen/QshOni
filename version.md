@@ -437,10 +437,10 @@ Updated QSHPRTLOGC command program to use MAXRCDS(*NOMAX) when printing an audit
 ## V1.0.54 - 7/24/2026  
 Updated programs RUNSQLSR3R and QSHQRYSR3R that are used to remove comment lines when running SQL via the following commands: ```QSHQRYSRC``` and ```RUNSQLSRC```.    
 
-Added logic to skip source member manipulation when not deleting comments. Also updated comment handling to only remove comments when marked as ```--``` at the beginning of lines. We no longer attempt to scrub any line data if a line contains legitimate ```--``` characters that are not in trimmed pos 1 and 2. I found an issue where the SQL statement was being inaccurately truncated because the SQL statement line contained valid use of the ```--``` characters in a text constant.   
+Added logic to skip source member manipulation when not deleting comments. Also updated comment handling to only remove comments when marked as ```--``` at the beginning of lines. We no longer attempt to scrub any line data if a line contains legitimate ```--``` characters that are not in trimmed pos 1 and 2. I found an issue where the SQL statement was being inaccurately truncated because the SQL statement line contained valid use of the ```--``` characters in a text constant and so we accidentally truncated the rest of the line even those the ```---``` were part of the SQL member data.   
 
 How the Delete comment line from temp source (DLTCMTLINE) parm now works:     
-When *YES (Default), we will look for and remove comment lines from the temp source member we create at runtime. But we only remove lines where there is a -- at the beginning of the data.  
+When *YES (Default), we will look for and remove comment lines from the temp source member we create at runtime. But we only remove lines where there is a ```--``` at the beginning of the SQL line data. Data can be indented for comments but must start with ```--``` so we properliy scrub them out of the SQL member.    
 When *NO, we leave source member alone when copying it to the temp source member so all comments are preserved and should be properly ignored by the SQL runtime as well because they are just comments. The SQL statement runs as is from the source member with all comments intact. *NO was previously still triggering partial scrubbing instead of fully ignoring the scrubbing logic altogether.  
 ❗Technically *NO should be used as the default use case for this parameter so we don't attempt to manipulate the original SQL source member comments. However 
 it looks like when *NO is specified, an error occurs if there are any comments in the 
@@ -448,7 +448,8 @@ source member, so for now, *YES should be specified for delete comment lines so 
 remove comment lines from the SQL statement before running the SELECT query.   
 ❗Also I did discover an new issue with this change that can break an SQL query 
 where there is a comment line that is at the end of a line.   
-** All comment lines must be on a line by themselves and the data for the comment must start with ```--``` even if the comment is indented for readability.** 
+#### The summary takeaway: 
+All comment lines in an SQL source member must be on a line by themselves and the data for the comment must start with ```--``` even if the comment is indented for readability. 
 And the Delete comment line parm should always be - *YES. 
 
 Added ```QSHSAVCHG``` command to save changed objects to IFS file.   
