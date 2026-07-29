@@ -475,3 +475,6 @@ Prompt the CPYF command  . . . . PROMPTCPYF   > *YES
 Clear temp outfile after CPYF  . CLRAFTCPYF     *YES                  
 ```
 
+Updated programs RUNSQLSR3R and QSHQRYSR3R to allow removal of comments that have a delimiter of ```--//```. With this change comments can now reside anywhere in an SQL line and when the delimiter is encountered, the data after the comment delimiter is scrubbed when removing comments is set to *YES.  
+
+
