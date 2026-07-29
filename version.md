@@ -441,8 +441,15 @@ Added logic to skip source member manipulation when not deleting comments. Also 
 
 How the Delete comment line from temp source (DLTCMTLINE) parm now works:     
 When *YES (Default), we will look for and remove comment lines from the temp source member we create at runtime. But we only remove lines where there is a -- at the beginning of the data.  
-When *NO, we leave source member alone when copying it to the temp source member so all comments are preserved and should be properly ignored by the SQL runtime as well because they are just comments. The SQL statement runs as is from the source member with all comments intact. *NO was previously still triggering partial scrubbing instead of fully ignoring the scrubbing logic altogether.       
-❗Technically *NO should be used as the default use case for this parameter now so we don't attempt to manipulate the original SQL source member comments.     
+When *NO, we leave source member alone when copying it to the temp source member so all comments are preserved and should be properly ignored by the SQL runtime as well because they are just comments. The SQL statement runs as is from the source member with all comments intact. *NO was previously still triggering partial scrubbing instead of fully ignoring the scrubbing logic altogether.  
+❗Technically *NO should be used as the default use case for this parameter so we don't attempt to manipulate the original SQL source member comments. However 
+it looks like when *NO is specified, an error occurs if there are any comments in the 
+source member, so for now, *YES should be specified for delete comment lines so we
+remove comment lines from the SQL statement before running the SELECT query.   
+❗Also I did discover an new issue with this change that can break an SQL query 
+where there is a comment line that is at the end of a line.   
+** All comment lines must be on a line by themselves and the data for the comment must start with ```--``` even if the comment is indented for readability.** 
+And the Delete comment line parm should always be - *YES. 
 
 Added ```QSHSAVCHG``` command to save changed objects to IFS file.   
 
