@@ -5,6 +5,9 @@ The main benefit of this wrapper is to be able to integrate Qshell/Pase applicat
 
 There are several ways to build the library. Pick your favorite.
 
+## Jump right to the build link
+https://github.com/richardschoen/qshoni#download-and-run-the-getrepo-qshonish-script-in-one-step-using-wget
+
 ## Creating new utilities based on QshOni
 ❗Any new utilities I create or others contribute around the ```QSHONI``` library will now be created as part of the ```QSHONIUTIL``` repository.    
 The QSHONIUTIL repository if meant for miscellaneous add-on utilitites that utilize the QShell on i library (QSHONI).    
