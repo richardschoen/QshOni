@@ -477,3 +477,8 @@ Clear temp outfile after CPYF  . CLRAFTCPYF     *YES
 
 New comment delimiter of ```--//``` is allowed in SQL source members.   
 Updated programs RUNSQLSR3R and QSHQRYSR3R to allow removal of comments that have a delimiter of ```--//```. With this change comments can now reside anywhere in an SQL line and when the delimiter is encountered, the data after the comment delimiter is scrubbed when deleting comments is set to *YES for the QSHQRYSRC or RUNSQLSRC commands.   
+
+## V1.0.56 - 8/4/2026  
+Added the ```QSHLFTP``` command as a CL command interface to the lftp file transfer utility. This version of the command currently focused on SFTP only. I like LFTP as a simple to use SFTP utility from the PASE command line and now from a CL command as well.
+
+
