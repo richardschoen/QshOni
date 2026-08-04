@@ -25,6 +25,7 @@ Email: richard@mobigogo.net
 ❗ If you get an error running ```build.sh``` you may need to run ```dos2unix build.sh``` to convert CR/LF to LF in the build.sh file. You must first have ```dos2unix``` installed via the IBM i open source package management.  Please open an issue to let me know if you run into this problem.
 
 ## News
+```8/4/2026``` - Added the QSHLFTP command to upload and download files using the SFTP functionality in the lftp transfer utility.
 ```7/28/2026``` - Updated QSHQRYTMP and QSHQRYSRC commands to be able to copy the outfile results to another file via CPYF after generating the temp output file. Useful for aggregating results for multiple queries into a single final results table. V1.0.55   
 ```7/27/2026``` - Updated QSHQRYSRC and RUNSQLSRC commands to allow the DLTCMTLINE parameter to work correctly when removing comments from SQL source members at runtime. Also added QSHSAVCHG command for SAVCHGOBJ to IFS. V1.0.54   
 ```7/23/2026``` - Updated QSHPRTLOG to allow unlimited report sizes when printing. V1.0.53   
@@ -88,7 +89,7 @@ IBM i QShell
 https://www.ibm.com/docs/en/i/7.5?topic=languages-qshell
 
 
-## Check latest version info (Current Version 1.0.55 - 7/28/2026)  
+## Check latest version info (Current Version 1.0.56 - 8/4/2026)  
 https://github.com/richardschoen/QshOni/blob/master/version.md    
 
 ## Check out one-liner Python samples
