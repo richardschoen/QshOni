@@ -514,6 +514,14 @@ CURFILE="WRKIFSLISD.DSPF"
 SRCTEXT="Work with IFS Files"   
 cpy_member
 
+CURFILE="QSHLFTP.CMD"
+SRCTEXT="Send/Receive Files using lftp and SFTP Transfer"   
+cpy_member
+
+CURFILE="QSHLFTPC.CLLE"
+SRCTEXT="Send/Receive Files using lftp and SFTP Transfer"   
+cpy_member
+
 CURFILE="README.TXT"
 SRCTEXT="Read Me Docs on Setup"
 cpy_member
