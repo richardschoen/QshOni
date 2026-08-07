@@ -1,0 +1,169 @@
+/* TODO: */
+/* Hook up ability to use password prtected private keys */
+
+             PGM        PARM(&SSHHOST &SSHPORT &SSHUSER &SSHPASS +
+                          &KEYFILE &KEYPASSWD &CMDLINE &SETPKGPATH     +
+                          &DSPSTDOUT &LOGSTDOUT &PRTSTDOUT +
+                          &DLTSTDOUT &IFSSTDOUT &IFSFILE &IFSOPT +
+                          &CCSID &PRTSPLF &PRTUSRDTA &PRTTXT +
+                          &PRTHOLD &PRTOUTQALL &PROMPTQSH)
+
+             DCL        VAR(&KEYPATH) TYPE(*CHAR) LEN(512)
+             DCL        VAR(&PROMPTQSH) TYPE(*CHAR) LEN(4)
+             DCL        VAR(&KEYFILE) TYPE(*CHAR) LEN(255)
+             DCL        VAR(&KEYPASSWD) TYPE(*CHAR) LEN(100)
+             DCL        VAR(&SSHHOST) TYPE(*CHAR) LEN(255)
+             DCL        VAR(&SSHPORT) TYPE(*CHAR) LEN(5)
+             DCL        VAR(&SSHUSER) TYPE(*CHAR) LEN(50)
+             DCL        VAR(&SSHPASS) TYPE(*CHAR) LEN(50)
+             DCL        VAR(&OPTION) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&REPLACE) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&LOCALFILE) TYPE(*CHAR) LEN(255)
+             DCL        VAR(&REMOTEFILE) TYPE(*CHAR) LEN(255)
+             DCL        VAR(&PRTHOLD) TYPE(*CHAR) LEN(4)
+             DCL        VAR(&PRTOUTQALL) TYPE(*CHAR) LEN(20)
+             DCL        VAR(&PRTOUTQ) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&PRTOUTQLIB) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&SETPKGPATH) TYPE(*CHAR) LEN(4)
+             DCL        VAR(&INPUTFILE) TYPE(*CHAR) LEN(255)
+             DCL        VAR(&USERPW) TYPE(*CHAR) LEN(100)
+             DCL        VAR(&OWNERPW) TYPE(*CHAR) LEN(100)
+             DCL        VAR(&PDFOPTS) TYPE(*CHAR) LEN(8)
+             DCL        VAR(&TEMPLATE) TYPE(*CHAR) LEN(255)
+             DCL        VAR(&OUTPUTFILE) TYPE(*CHAR) LEN(255)
+             DCL        VAR(&OUTPUTTYPE) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&PARMS) TYPE(*CHAR) LEN(2048)
+             DCL        VAR(&PARMLIST)  TYPE(*CHAR) LEN(1024)
+             DCL        VAR(&TYPE)      TYPE(*CHAR) LEN(1)
+             DCL        VAR(&CURDIR)    TYPE(*CHAR) LEN(128)
+             DCL        VAR(&CDLEN)     TYPE(*DEC)  LEN(7 0)
+             DCL        VAR(&OUTPUTDST) TYPE(*CHAR) LEN(10) VALUE('*NONE')
+             DCL        VAR(&OUTPUTACT) TYPE(*CHAR) LEN(10) VALUE('*N')
+             DCL        VAR(&QSHRTN) TYPE(*DEC) LEN(5 0)
+             DCL        VAR(&QSHRTNC) TYPE(*CHAR) LEN(5)
+             DCL        VAR(&MSGDTA) TYPE(*CHAR) LEN(200)
+             DCL        VAR(&MSGDTA4) TYPE(*CHAR) LEN(4)
+             DCL        VAR(&CPFID) TYPE(*CHAR) LEN(7)
+             DCL        VAR(&PASECMD) TYPE(*CHAR) LEN(9999)
+             DCL        VAR(&CMDLINE) TYPE(*CHAR) LEN(2000)
+             DCL        VAR(&STDOUTIFS) TYPE(*CHAR) LEN(255)
+             DCL        VAR(&STDOUTFILE) TYPE(*CHAR) LEN(255)
+             DCL        VAR(&JOB) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&JOBNBR) TYPE(*CHAR) LEN(6)
+             DCL        VAR(&USER) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&TEMPDIR) TYPE(*CHAR) LEN(255) +
+                          VALUE('/tmp')
+             DCL        VAR(&QSHTEMP) TYPE(*CHAR) LEN(255) +
+                          VALUE('/tmp/qsh')
+             DCL        VAR(&DSPSTDOUT) TYPE(*CHAR) LEN(4)
+             DCL        VAR(&LOGSTDOUT) TYPE(*CHAR) LEN(4)
+             DCL        VAR(&DLTSTDOUT) TYPE(*CHAR) LEN(4)
+             DCL        VAR(&PRTSTDOUT) TYPE(*CHAR) LEN(4)
+             DCL        VAR(&IFSSTDOUT) TYPE(*CHAR) LEN(4)
+             DCL        VAR(&IFSOPT) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&IFSFILE) TYPE(*CHAR) LEN(255)
+             DCL        VAR(&RTNVAL) TYPE(*CHAR) LEN(6)
+             DCL        VAR(&CURJOB) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&CURUSER) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&CURNBR) TYPE(*CHAR) LEN(6)
+             DCL        VAR(&QDATE) TYPE(*CHAR) LEN(6)
+             DCL        VAR(&QTIME) TYPE(*CHAR) LEN(9)
+             DCL        VAR(&PRTSPLF) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&PRTUSRDTA) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&PRTTXT) TYPE(*CHAR) LEN(30)
+             DCL        VAR(&CCSID) TYPE(*CHAR) LEN(10)
+
+             MONMSG     MSGID(CPF0000) EXEC(GOTO CMDLBL(ERRORS))
+
+/*----------------------------------------------------------------------------*/
+/* Extract output queue info.                                                 */
+/*----------------------------------------------------------------------------*/
+             CHGVAR     VAR(&PRTOUTQ) VALUE(%SST(&PRTOUTQALL 1 10))
+             CHGVAR     VAR(&PRTOUTQLIB) VALUE(%SST(&PRTOUTQALL 11 10))
+
+/*----------------------------------------------------------------------------*/
+/* Build ssh command line                                                     */
+/*----------------------------------------------------------------------------*/
+
+             /* No password so try to use private key if found */
+             /* and run regular ssh command line utility.      */
+             IF         COND(&SSHPASS *EQ ' ') THEN(DO)
+             CHGVAR     VAR(&PASECMD) VALUE('ssh')
+             ENDDO
+
+             /* Password so try to use ssh password and no key */
+             IF         COND(&SSHPASS *NE ' ') THEN(DO)
+             CHGVAR     VAR(&PASECMD) VALUE('sshpass -p' |> +
+                          &SSHPASS |> 'ssh')
+             /* sshpass util must exist in open source pkgs */
+             /* when using a password.                      */
+             QSHONI/QSHIFSCHK FILNAM('/QOpenSys/pkgs/bin/sshpass')
+             MONMSG     MSGID(CPF9898) EXEC(DO)
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('sshpass +
+                          utility not found. Please install the +
+                          open source sshpass package') +
+                          MSGTYPE(*ESCAPE)
+             ENDDO
+             MONMSG     MSGID(CPF9897) EXEC(DO)
+             ENDDO
+
+             ENDDO /* ENDDO PASSWORD <> '' */
+
+             /* Set specific key path if no pasword */
+             /* is specified and key is specified  */
+             IF         COND(&SSHPASS *EQ ' ') THEN(DO)
+             IF         COND(&KEYFILE *NE ' ') THEN(DO)
+             CHGVAR     VAR(&KEYPATH) VALUE('-i'|> &KEYFILE)
+             CHGVAR     VAR(&PASECMD) VALUE(&PASECMD |> &KEYPATH)
+             ENDDO
+             ENDDO
+
+             /* Set user and host and port */
+             CHGVAR     VAR(&PASECMD) VALUE(&PASECMD |> &SSHUSER |< '@' |< +
+                          &SSHHOST |> '-p' |> &SSHPORT)
+             CHGVAR     VAR(&PASECMD) VALUE(&PASECMD |> '"' |< &CMDLINE |> '"')
+
+/*----------------------------------------------------------------------------*/
+/* Run ssh or sshpass command line via QSHBASH */
+/*----------------------------------------------------------------------------*/
+             IF         COND(&PROMPTQSH *EQ *YES) THEN(DO)
+             ?          QSHONI/QSHBASH ??CMDLINE(&PASECMD) +
+                          ??DSPSTDOUT(&DSPSTDOUT) +
+                          ??LOGSTDOUT(&LOGSTDOUT) +
+                          ??PRTSTDOUT(&PRTSTDOUT) +
+                          ??DLTSTDOUT(&DLTSTDOUT) +
+                          ??IFSSTDOUT(&IFSSTDOUT) ??IFSFILE(&IFSFILE) +
+                          ??IFSOPT(&IFSOPT) ??CCSID(&CCSID) +
+                          ??PRTSPLF(&PRTSPLF) ??PRTUSRDTA(&PRTUSRDTA)  +
+                          ??PRTTXT(&PRTTXT) ??PRTHOLD(&PRTHOLD) +
+                          ??PRTOUTQ(&PRTOUTQLIB/&PRTOUTQ)
+             ENDDO
+
+             IF         COND(&PROMPTQSH *NE *YES) THEN(DO)
+             QSHONI/QSHBASH CMDLINE(&PASECMD) +
+                          DSPSTDOUT(&DSPSTDOUT) +
+                          LOGSTDOUT(&LOGSTDOUT) +
+                          PRTSTDOUT(&PRTSTDOUT) +
+                          DLTSTDOUT(&DLTSTDOUT) +
+                          IFSSTDOUT(&IFSSTDOUT) IFSFILE(&IFSFILE) +
+                          IFSOPT(&IFSOPT) CCSID(&CCSID) +
+                          PRTSPLF(&PRTSPLF) PRTUSRDTA(&PRTUSRDTA) +
+                          PRTTXT(&PRTTXT) PRTHOLD(&PRTHOLD) +
+                          PRTOUTQ(&PRTOUTQLIB/&PRTOUTQ)
+             ENDDO
+
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('SSH +
+                          command line ran successfully') +
+                          MSGTYPE(*COMP)
+             RETURN
+
+/*----------------------------------------------------------------------------*/
+/* HANDLE ERRORS     */
+/*----------------------------------------------------------------------------*/
+ERRORS:
+
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Error +
+                          occurred while running SSH command line. +
+                          Please check the joblog') MSGTYPE(*ESCAPE)
+
+             ENDPGM
