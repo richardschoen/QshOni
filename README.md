@@ -93,7 +93,7 @@ IBM i QShell
 https://www.ibm.com/docs/en/i/7.5?topic=languages-qshell
 
 
-## Check latest version info (Current Version 1.0.56 - 8/4/2026)  
+## Check latest version info (Current Version 1.0.57 - 8/6/2026)  
 https://github.com/richardschoen/QshOni/blob/master/version.md    
 
 ## Check out one-liner Python samples
