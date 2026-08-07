@@ -481,4 +481,8 @@ Updated programs RUNSQLSR3R and QSHQRYSR3R to allow removal of comments that hav
 ## V1.0.56 - 8/4/2026  
 Added the ```QSHLFTP``` command as a CL command interface to the lftp file transfer utility. This version of the command currently focused on SFTP only. I like LFTP as a simple to use SFTP utility from the PASE command line and now from a CL command as well.
 
+## V1.0.57 - 8/4/2026  
+Added the ```QSHSSH``` command as a CL convenience command interface to the ssh PASE command line on a remote system and capture the STDOUT return data. This is a great way to run or submit a job on a remote IBM I or other system. 
+
+
 
