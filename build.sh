@@ -522,6 +522,14 @@ CURFILE="QSHLFTPC.CLLE"
 SRCTEXT="Send/Receive Files using lftp and SFTP Transfer"   
 cpy_member
 
+CURFILE="QSHSSH.CMD"
+SRCTEXT="Run Remote Command over SSH"   
+cpy_member
+
+CURFILE="QSHSSHC.CLLE"
+SRCTEXT="Run Remote Command over SSH"   
+cpy_member
+
 CURFILE="README.TXT"
 SRCTEXT="Read Me Docs on Setup"
 cpy_member
