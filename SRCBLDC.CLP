@@ -574,7 +574,7 @@
              /* V1.0.57 */
              CRTBNDCL   PGM(&DESTLIB/QSHSSHC)  +
                           SRCFILE(&DESTLIB/&DESTFILE) +
-                          SRCMBR(QSHLFTPC) +
+                          SRCMBR(QSHSSHC) +
                           ALWRTVSRC(*NO) REPLACE(*NO) TGTRLS(&TGTRLS)
 
 /* Create message file for any custom CPF messages */
