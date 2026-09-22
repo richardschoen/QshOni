@@ -30,8 +30,8 @@
                           DFT(*NO) VALUES(*NO *YES) CASE(*MIXED) +
                           PROMPT('Save active')
              PARM       KWD(DTACPR) TYPE(*CHAR) LEN(7) RSTD(*YES) +
-                          DFT(*HIGH) VALUES(*NONE *DEV *NO *YES +
-                          *LOW *MEDIUM *HIGH) CASE(*MIXED) +
+                          DFT(*HIGH) VALUES(*DEV *NO *YES +
+                          *LOW *MEDIUM *HIGH *ZLIB) CASE(*MONO) +
                           PROMPT('Data compression')
              PARM       KWD(DLTTMPSAVF) TYPE(*CHAR) LEN(4) +
                           RSTD(*YES) DFT(*YES) VALUES(*NO *YES) +
