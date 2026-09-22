@@ -485,5 +485,5 @@ Added the ```QSHLFTP``` command as a CL command interface to the lftp file trans
 Added the ```QSHSSH``` command as a CL convenience command interface to the ssh PASE command line on a remote system and capture the STDOUT return data. This is a great way to run or submit a job on a remote IBM I or other system. The command works with ssh private keys or user and password by internally utilizing the sshpass PASE command. The open source sshpass yum package is required to be installed in PASE before user and password will work if you plan to use user id and password va private key file.  
 Note: Password protected private key files are not currently supported. 
 
-
-
+## V1.0.58 - 9/22/2026  
+Added the ```*ZLIB``` selection to all the QSHSAV* commands and changed case from ```*MIXED``` to ```*MONO```.
