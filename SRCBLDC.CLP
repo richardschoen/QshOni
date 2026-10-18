@@ -258,12 +258,14 @@
 
              CRTRPGMOD  MODULE(&DESTLIB/QSHONISRV) +
                           SRCFILE(&DESTLIB/&DESTFILE) +
+                          TGTRLS(&TGTRLS) +
                           DBGVIEW(*SOURCE) /* 1.0.28 */
 
              CRTSRVPGM  SRVPGM(&DESTLIB/QSHONISRV) +
                           MODULE(&DESTLIB/QSHONISRV) +
                           EXPORT(*SRCFILE) SRCFILE(&DESTLIB/SOURCE) +
                           SRCMBR(QSHONISRVD) BNDSRVPGM(*NONE) +
+                          TGTRLS(&TGTRLS) +
                           BNDDIR(*NONE) ACTGRP(*CALLER) /* 1.0.29 */
 
              CRTBNDDIR  BNDDIR(&DESTLIB/QSHONISRV) TEXT('Binding +
@@ -553,6 +555,7 @@
              CRTSQLRPGI OBJ(&DESTLIB/WRKIFSLISR) +
                           SRCFILE(&DESTLIB/&DESTFILE) SRCMBR(*OBJ) +
                           COMMIT(*NONE) OBJTYPE(*PGM) +
+                          TGTRLS(&TGTRLS) +
                           CLOSQLCSR(*ENDMOD) REPLACE(*NO)
 
              /* V1.0.56 */
