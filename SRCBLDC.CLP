@@ -631,6 +631,10 @@
              CHGLIB     LIB(QSHONI) TEXT('QShell on IBM i -' |> +
                           &VERSION)
 
+             CRTLIB     LIB(QSHONITMP) TEXT('Qshoni Temp File +
+                          Library') AUT(*ALL)
+             MONMSG     MSGID(CPF0000)
+
  /* Make /tmp/qsh dir */
              MKDIR      DIR('/tmp/qsh') DTAAUT(*RWX) OBJAUT(*ALL)
              MONMSG     MSGID(CPF0000)

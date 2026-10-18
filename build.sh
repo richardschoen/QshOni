@@ -8,6 +8,7 @@ SRCLIB="QSHONI"
 SRCLIBTEXT="QShell on IBM i"
 SRCFILE="SOURCE"
 SRCCCSID="37"
+TGTRLSBLD="V7R3M0"
 dashes="---------------------------------------------------------------------------"
 
 function cpy_member
@@ -539,7 +540,7 @@ SRCTEXT="Version Notes"
 cpy_member
 
 # Create and run build program
-system -q "CRTCLPGM PGM(${SRCLIB}/SRCBLDC) SRCFILE(${SRCLIB}/${SRCFILE})"
+system -q "CRTCLPGM PGM(${SRCLIB}/SRCBLDC) SRCFILE(${SRCLIB}/${SRCFILE}) TGTRLS(${TGTRLSBLD})"
 system -v "CALL PGM(${SRCLIB}/SRCBLDC)"
 
 echo "${SRCLIBTEXT} library ${SRCLIB} was created and programs compiled."

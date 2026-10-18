@@ -163,7 +163,7 @@
 ERRORS:
              SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Errors +
                           occurred saving IFS files ' |> &OBJECTS +
-                          |< 'to IFS file' |> &TOIFSFILE |> '. See +
+                          |> 'to IFS file' |> &TOIFSFILE |> '. See +
                           the job log') MSGTYPE(*ESCAPE)
 
              ENDPGM

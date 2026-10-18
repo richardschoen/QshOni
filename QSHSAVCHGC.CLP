@@ -192,7 +192,7 @@
 ERRORS:
              SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Errors +
                           occured while saving changed objects from +
-                          library ' |> &LIBRARY |< 'to IFS file' |> +
+                          library ' |> &LIBRARY |> 'to IFS file' |> +
                           &TOIFSFILE |> '. Check the job log') +
                           MSGTYPE(*ESCAPE)
 

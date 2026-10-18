@@ -165,7 +165,7 @@
 
 ERRORS:
              SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('Errors +
-                          occurred saving Library ' |> &LIBRARY |< +
+                          occurred saving Library ' |> &LIBRARY |> +
                           'to IFS file' |> &TOIFSFILE |> '. Check the +
                           job log') MSGTYPE(*ESCAPE)
 

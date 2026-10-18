@@ -487,3 +487,8 @@ Note: Password protected private key files are not currently supported.
 
 ## V1.0.58 - 9/22/2026  
 Added the ```*ZLIB``` selection to all the QSHSAV* commands and changed case from ```*MIXED``` to ```*MONO```.
+
+## V1.0.58 - 10/18/2026
+Minor changes to build.sh to add V7R3 for version.
+
+Minor syntax changes on QSHSAV* CL programs to fix message spacing.
