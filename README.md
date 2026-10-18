@@ -26,6 +26,11 @@ And importantly, ```MOBIQSH will remain completely FREE to use!```
 
 MOBIQSH will also play a key role in ```MobiGoGo Connect```, my expanding commercial integration and modernization platform designed to help IBM i businesses connect systems, streamline workflows, and extend the value of their existing applications.
 
+You can continue to use QSHONI safely, but you can also start also installing ```MOBIQSH``` side by side. It will co-exist with QSHONI.
+
+MobiGoGo Connect - QShell on I.  
+https://github.com/richardschoen/MobiQsh  
+
 ## MobiGoGo Connect - Modernizing and Connecting IBM i to the World
 For many new IBM i system and connectivity utilities I am creating for IBM I, Windows, Linux and Cloud connectivity I have released a commercially supported product called ```MobiGoGo Connect```. https://www.mobigogo.net     
 
