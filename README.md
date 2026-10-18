@@ -28,7 +28,7 @@ MOBIQSH will also play a key role in ```MobiGoGo Connect```, my expanding commer
 
 You can continue to use QSHONI safely, but you can also start also installing ```MOBIQSH``` side by side. It will co-exist with QSHONI.
 
-MobiGoGo Connect - QShell on I.  
+MobiGoGo Connect - QShell on i.  
 https://github.com/richardschoen/MobiQsh  
 
 ## MobiGoGo Connect - Modernizing and Connecting IBM i to the World
