@@ -8,10 +8,23 @@ There are several ways to build the library. Pick your favorite.
 ## Jump right to the build link
 [Download and run the getrepo-qshoni.sh script in one step, using wget](https://github.com/richardschoen/QshOni/blob/master/README.md#download-and-run-the-getrepo-qshonish-script-in-one-step-using-wget)
 
-## Creating new utilities based on QshOni
-The core QShell on i library is pretty built-out so it will be generally stabilized as it's become a staple for my customers and calling their QShell and PASE applications. If there are fixes or tweaks to the core they will be made here, but I don't want to bloat this repository with a bunch of misc utilities or unrelated application code other than the repo being the core for easily running QShell and PASE code. That was its original use-case and will remain so.
+## QShell on i – Project Status & What's Next
+The QShell on i (QSHONI) library has grown into a mature, reliable, and proven solution for IBM i developers and businesses that need a simple, powerful way to execute QShell and PASE applications.   
 
-❗Many of the new utilities I create or others contribute around the ```QSHONI``` library will now be created as part of the ```MOBIQSH``` repository or as part of the MobiGoGo Connect product.
+With QSHONI now an established part of many customer environments, my focus is on keeping the core library stable, dependable, and easy to maintain.
+
+QSHONI will continue to receive important bug fixes, refinements, and enhancements to its core functionality. However, the repository will remain focused on its original mission: making it easy for IBM i developers to execute and integrate QShell and PASE applications without unnecessary complexity.
+
+Rather than expanding QSHONI into a collection of unrelated utilities and integrations, I'm taking the next step in its evolution.
+
+## Introducing MOBIQSH – The Next Chapter
+I'm excited to introduce MOBIQSH, a new fork of QShell on i that will serve as the foundation for a growing collection of IBM i utilities, integrations, and modernization tools.
+
+While QSHONI remains the stable, trusted core, MOBIQSH is where much of the new development and innovation will take place.
+
+And importantly, ```MOBIQSH will remain completely FREE to use!```
+
+MOBIQSH will also play a key role in ```MobiGoGo Connect```, my expanding commercial integration and modernization platform designed to help IBM i businesses connect systems, streamline workflows, and extend the value of their existing applications.
 
 ## MobiGoGo Connect - Modernizing and Connecting IBM i to the World
 For many new IBM i system and connectivity utilities I am creating for IBM I, Windows, Linux and Cloud connectivity I have released a commercially supported product called ```MobiGoGo Connect```. https://www.mobigogo.net     
