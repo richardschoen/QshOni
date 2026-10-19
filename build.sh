@@ -243,6 +243,14 @@ CURFILE="QSHCPYSRCC.CLLE"
 SRCTEXT="Copy Source Member to IFS File"
 cpy_member
 
+CURFILE="QSHSRCIFS.CMD"
+SRCTEXT="Copy Source Mbr to IFS File"
+cpy_member
+
+CURFILE="QSHSRCIFSC.CLLE"
+SRCTEXT="Copy Source Mbr to IFS File"
+cpy_member
+
 CURFILE="QSHONISRV.RPGLE"
 SRCTEXT="QShell on i - Wrapper Service Program"
 cpy_member

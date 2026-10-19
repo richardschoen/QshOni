@@ -283,6 +283,17 @@
                           SRCFILE(&DESTLIB/&DESTFILE) REPLACE(*NO) +
                           TGTRLS(&TGTRLS) /* 1.0.26 */
 
+             CRTCMD     CMD(&DESTLIB/QSHSRCIFS) +
+                          HLPPNLGRP(QSHONI/QSHONICMDS) +
+                          HLPID(QSHSRCIFS) +
+                          PGM(&DESTLIB/QSHSRCIFSC) +
+                          SRCFILE(&DESTLIB/&DESTFILE) PRDLIB(&DESTLIB)
+
+             CRTBNDCL   PGM(&DESTLIB/QSHSRCIFSC) +
+                          SRCFILE(&DESTLIB/&DESTFILE) +
+                          DFTACTGRP(*YES) REPLACE(*NO) +
+                          TGTRLS(&TGTRLS)
+
              CRTCMD     CMD(&DESTLIB/QSHBASHSRC) +
                           HLPPNLGRP(QSHONI/QSHONICMDS) +
                           HLPID(QSHBASHSRC) +
