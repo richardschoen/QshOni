@@ -492,3 +492,7 @@ Added the ```*ZLIB``` selection to all the QSHSAV* commands and changed case fro
 Minor changes to build.sh to add V7R3 for version.
 
 Minor syntax changes on QSHSAV* CL programs to fix message spacing.
+
+## V1.0.59 - 10/31/2026
+Updated SRCBLDC to *CURRENT from V7R3 to support V7R6 and beyond.
+
