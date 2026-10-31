@@ -5,7 +5,7 @@
              DCL        VAR(&DESTLIB) TYPE(*CHAR) LEN(10) +
                           VALUE(QSHONI)
              DCL        VAR(&TGTRLS) TYPE(*CHAR) LEN(10) +
-                          VALUE(V7R3M0)
+                          VALUE(*CURRENT)
              DCL        VAR(&VERSION) TYPE(*CHAR) LEN(30) +
                           VALUE(V1.0.58)
              DCL        VAR(&QSHPYTHON) TYPE(*CHAR) LEN(255)
